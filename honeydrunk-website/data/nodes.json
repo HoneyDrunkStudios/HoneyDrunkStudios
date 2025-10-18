@@ -1,0 +1,348 @@
+[
+  {
+    "id": "honeydrunk-build",
+    "name": "HoneyDrunk.Build",
+    "short": "Central MSBuild & analyzers package",
+    "description": "Foundational build infrastructure for all HoneyDrunk projects. MSBuild conventions, code analyzers, and quality gates.",
+    "sector": "Core",
+    "signal": "Wiring",
+    "cluster": "foundation",
+    "energy": 92,
+    "priority": 100,
+    "tags": ["infrastructure", "build", "msbuild"],
+    "connections": ["honeydrunk-kernel", "honeydrunk-pipelines"],
+    "links": {
+      "repo": "https://github.com/honeydrunk/build"
+    }
+  },
+  {
+    "id": "honeydrunk-pipelines",
+    "name": "HoneyDrunk.Pipelines",
+    "short": "Azure DevOps YAML templates library",
+    "description": "Reusable CI/CD pipeline templates for Azure DevOps. Zero-bloat deployment automation.",
+    "sector": "Ops",
+    "signal": "Wiring",
+    "cluster": "foundation",
+    "energy": 88,
+    "priority": 95,
+    "tags": ["devops", "ci-cd", "azure"],
+    "connections": ["honeydrunk-build"],
+    "links": {
+      "repo": "https://github.com/honeydrunk/pipelines"
+    }
+  },
+  {
+    "id": "honeydrunk-kernel",
+    "name": "HoneyDrunk.Kernel",
+    "short": "Foundational primitives. Lowest layer.",
+    "description": "Core primitives and abstractions that power the entire HoneyDrunk ecosystem. The bedrock upon which everything is built.",
+    "sector": "Core",
+    "signal": "Wiring",
+    "cluster": "foundation",
+    "energy": 95,
+    "priority": 98,
+    "tags": ["infrastructure", "primitives", "core"],
+    "connections": ["honeydrunk-transport", "honeycore-web-rest"],
+    "links": {
+      "repo": "https://github.com/honeydrunk/kernel",
+      "docs": "https://docs.honeydrunk.studio/kernel"
+    }
+  },
+  {
+    "id": "honeydrunk-transport",
+    "name": "HoneyDrunk.Transport",
+    "short": "Outbox, messaging abstractions",
+    "description": "Reliable messaging and transport layer. Outbox pattern, event sourcing primitives, and communication infrastructure.",
+    "sector": "Core",
+    "signal": "Awake",
+    "cluster": "foundation",
+    "energy": 75,
+    "priority": 85,
+    "tags": ["messaging", "outbox", "events"],
+    "connections": ["honeydrunk-kernel"],
+    "links": {
+      "repo": "https://github.com/honeydrunk/transport"
+    }
+  },
+  {
+    "id": "honeycore-web-rest",
+    "name": "HoneyCore.Web.Rest",
+    "short": "REST scaffolding & conventions",
+    "description": "Opinionated REST API conventions and scaffolding. Clean, consistent HTTP interfaces across all HoneyDrunk services.",
+    "sector": "Core",
+    "signal": "Awake",
+    "cluster": "foundation",
+    "energy": 70,
+    "priority": 80,
+    "tags": ["rest", "api", "web"],
+    "connections": ["honeydrunk-transport"],
+    "links": {
+      "repo": "https://github.com/honeydrunk/web-rest"
+    }
+  },
+  {
+    "id": "honeydrunk-testing",
+    "name": "HoneyDrunk.Testing",
+    "short": "Shared test helpers, fixtures",
+    "description": "Common testing utilities, fixtures, and patterns. Making quality assurance as elegant as the code itself.",
+    "sector": "Core",
+    "signal": "Awake",
+    "cluster": "foundation",
+    "energy": 68,
+    "priority": 75,
+    "tags": ["testing", "qa", "fixtures"],
+    "connections": [],
+    "links": {
+      "repo": "https://github.com/honeydrunk/testing"
+    }
+  },
+  {
+    "id": "honeydrunk-tools",
+    "name": "HoneyDrunk.Tools",
+    "short": "Dev CLIs (DACPAC runner, etc)",
+    "description": "Developer command-line tools. From database migrations to code generation, automating the tedious.",
+    "sector": "Ops",
+    "signal": "Awake",
+    "cluster": "tooling",
+    "energy": 65,
+    "priority": 70,
+    "tags": ["cli", "tools", "automation"],
+    "connections": [],
+    "links": {
+      "repo": "https://github.com/honeydrunk/tools"
+    }
+  },
+  {
+    "id": "vault",
+    "name": "Vault",
+    "short": "Secrets & config manager",
+    "description": "Secure secrets and configuration management. Zero-trust vault for sensitive data across all environments.",
+    "sector": "Core",
+    "signal": "Wiring",
+    "cluster": "infrastructure",
+    "energy": 85,
+    "priority": 90,
+    "tags": ["security", "secrets", "config"],
+    "connections": ["honeydrunk-kernel"],
+    "links": {
+      "repo": "https://github.com/honeydrunk/vault"
+    }
+  },
+  {
+    "id": "pulse",
+    "name": "Pulse",
+    "short": "Observability suite (logs/traces/metrics)",
+    "description": "Unified observability platform. Logs, traces, and metrics in one clean interface. See the heartbeat of The Hive.",
+    "sector": "Ops",
+    "signal": "Awake",
+    "cluster": "infrastructure",
+    "energy": 72,
+    "priority": 82,
+    "tags": ["observability", "monitoring", "telemetry"],
+    "connections": ["vault"],
+    "links": {
+      "repo": "https://github.com/honeydrunk/pulse"
+    }
+  },
+  {
+    "id": "honey-auth",
+    "name": "HoneyAuth",
+    "short": "JWT + Passkeys/MFA",
+    "description": "Modern authentication system. JWT tokens, passkeys, MFA, and zero-password flows.",
+    "sector": "Core",
+    "signal": "Seed",
+    "cluster": "infrastructure",
+    "energy": 60,
+    "priority": 78,
+    "tags": ["auth", "security", "jwt"],
+    "connections": ["vault"],
+    "links": {}
+  },
+  {
+    "id": "ledger",
+    "name": "Ledger",
+    "short": "Finance layer",
+    "description": "Double-entry bookkeeping and financial tracking. Structure meets spreadsheets.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "business",
+    "energy": 45,
+    "priority": 60,
+    "tags": ["finance", "accounting", "ledger"],
+    "connections": ["invoice", "pay"],
+    "links": {}
+  },
+  {
+    "id": "invoice",
+    "name": "Invoice",
+    "short": "Invoicing + Stripe/PayPal",
+    "description": "Professional invoicing with payment integration. Send, track, and get paid.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "business",
+    "energy": 48,
+    "priority": 58,
+    "tags": ["invoicing", "payments", "stripe"],
+    "connections": ["ledger", "pay"],
+    "links": {}
+  },
+  {
+    "id": "crm",
+    "name": "CRM",
+    "short": "Lightweight CRM",
+    "description": "Customer relationship management without the bloat. Contacts, deals, and pipelines that actually make sense.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "business",
+    "energy": 42,
+    "priority": 55,
+    "tags": ["crm", "contacts", "sales"],
+    "connections": ["invoice"],
+    "links": {}
+  },
+  {
+    "id": "pay",
+    "name": "Pay",
+    "short": "Payment portal & subs",
+    "description": "Customer-facing payment portal. Subscriptions, one-time payments, and receipts.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "business",
+    "energy": 50,
+    "priority": 62,
+    "tags": ["payments", "portal", "subscriptions"],
+    "connections": ["invoice", "subs"],
+    "links": {}
+  },
+  {
+    "id": "subs",
+    "name": "Subs",
+    "short": "Subscription & expense tracker",
+    "description": "Track recurring subscriptions and expenses. Know where every dollar flows.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "business",
+    "energy": 40,
+    "priority": 50,
+    "tags": ["subscriptions", "expenses", "tracking"],
+    "connections": ["ledger"],
+    "links": {}
+  },
+  {
+    "id": "forge",
+    "name": "Forge",
+    "short": "Asset & theme marketplace",
+    "description": "Marketplace for digital assets, themes, and creator resources. Where craft meets commerce.",
+    "sector": "Creator",
+    "signal": "Seed",
+    "cluster": "marketplace",
+    "energy": 55,
+    "priority": 65,
+    "tags": ["marketplace", "assets", "themes"],
+    "connections": [],
+    "links": {}
+  },
+  {
+    "id": "tether",
+    "name": "Tether",
+    "short": "Relationship tracker",
+    "description": "Maintain meaningful connections. Track conversations, shared moments, and relationship health.",
+    "sector": "Life",
+    "signal": "Seed",
+    "cluster": "personal",
+    "energy": 38,
+    "priority": 45,
+    "tags": ["relationships", "personal", "crm"],
+    "connections": [],
+    "links": {}
+  },
+  {
+    "id": "draft",
+    "name": "Draft",
+    "short": "Fantasy media league",
+    "description": "Fantasy leagues for movies, shows, books, and music. Compete with friends on cultural consumption.",
+    "sector": "Play",
+    "signal": "Seed",
+    "cluster": "gaming",
+    "energy": 62,
+    "priority": 52,
+    "tags": ["fantasy", "media", "gaming"],
+    "connections": [],
+    "links": {}
+  },
+  {
+    "id": "game-prototype",
+    "name": "Game #1 (TBD)",
+    "short": "Original IP prototype",
+    "description": "First original game IP in development. Details TBD. Prototyping the fun.",
+    "sector": "Play",
+    "signal": "Awake",
+    "cluster": "gaming",
+    "energy": 75,
+    "priority": 48,
+    "tags": ["game", "prototype", "original"],
+    "connections": [],
+    "links": {}
+  },
+  {
+    "id": "honeyhub",
+    "name": "HoneyHub",
+    "short": "AI-assisted PM/creator platform",
+    "description": "AI-powered project management and creator coordination platform. Agents amplifying human creativity at scale.",
+    "sector": "Meta",
+    "signal": "Seed",
+    "cluster": "ecosystem",
+    "energy": 58,
+    "priority": 68,
+    "tags": ["ai", "pm", "platform"],
+    "connections": ["honeyconnect"],
+    "links": {}
+  },
+  {
+    "id": "honeyconnect",
+    "name": "HoneyConnect",
+    "short": "Networking layer",
+    "description": "Professional networking and collaboration infrastructure. Connect creators, share resources, build together.",
+    "sector": "Meta",
+    "signal": "Seed",
+    "cluster": "ecosystem",
+    "energy": 52,
+    "priority": 64,
+    "tags": ["networking", "collaboration", "platform"],
+    "connections": ["honeyhub"],
+    "links": {}
+  },
+  {
+    "id": "grid-visualizer",
+    "name": "Grid.Visualizer",
+    "short": "The neon lattice. Visual representation of The Hive.",
+    "description": "This website! Interactive visualization of The Grid with cyberpunk aesthetics. Real-time node relationships and signal states.",
+    "sector": "Creator",
+    "signal": "Live",
+    "cluster": "visualization",
+    "energy": 90,
+    "priority": 92,
+    "tags": ["visualization", "ui", "nextjs"],
+    "connections": ["honeydrunk-kernel"],
+    "links": {
+      "repo": "https://github.com/honeydrunk/grid-visualizer",
+      "live": "https://honeydrunk.studio"
+    }
+  },
+  {
+    "id": "archive-legacy",
+    "name": "Archive.Legacy",
+    "short": "Lessons learned. Code that taught us.",
+    "description": "Retired projects and experiments preserved for reference. Every failure is a lesson; every sunset makes room for sunrise.",
+    "sector": "Meta",
+    "signal": "Archive",
+    "cluster": "history",
+    "energy": 20,
+    "priority": 10,
+    "tags": ["archive", "legacy", "lessons"],
+    "connections": [],
+    "links": {
+      "docs": "https://docs.honeydrunk.studio/archive"
+    }
+  }
+]

@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* Brand Colors - Cyberpunk Realism × Neon Craft v1.2 */
+
+  /* Primary & Secondary Accents */
+  --aurum-gold: #F5B700;      /* Aurum Gold - signature HoneyDrunk hue */
+  --violet-flux: #7B61FF;     /* Violet Flux - matches TattedDev link glow */
+  --electric-blue: #00D1FF;   /* Electric Edge - data strokes, active grid beams */
+  --neon-pink: #FF2A6D;       /* Neon Pink - cyberpunk accent, hot highlights */
+
+  /* Backgrounds */
+  --deep-space: #0A0E12;      /* Deep Space - base 950 */
+  --gunmetal: #111827;        /* Gunmetal - section contrast / card base */
+  --graphite: #1E293B;        /* Graphite - divider lines, subtle borders */
+
+  /* Text */
+  --off-white: #E5E7EB;       /* Off-White - default readable text */
+  --slate-light: #94A3B8;     /* Slate Light - muted secondary text */
+
+  /* Signals */
+  --signal-green: #22C55E;    /* Signal Green - online/connected states */
+  --pulse-red: #F43F5E;       /* Pulse Red - critical/error states */
+
+  /* Legacy aliases */
+  --violet-core: var(--violet-flux);
+  --alert-green: var(--signal-green);
+  --alert-red: var(--pulse-red);
+
+  /* Semantic mappings */
+  --background: var(--deep-space);
+  --foreground: var(--off-white);
+  --primary: var(--violet-flux);
+  --secondary: var(--electric-blue);
+  --accent: var(--aurum-gold);
+  --muted: var(--gunmetal);
+  --border: var(--graphite);
+
+  /* Additional color tokens */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+
+  /* Brand palette */
+  --color-aurum-gold: var(--aurum-gold);
+  --color-electric-blue: var(--electric-blue);
+  --color-violet-flux: var(--violet-flux);
+  --color-neon-pink: var(--neon-pink);
+  --color-deep-space: var(--deep-space);
+  --color-gunmetal: var(--gunmetal);
+  --color-graphite: var(--graphite);
+  --color-slate-light: var(--slate-light);
+  --color-off-white: var(--off-white);
+  --color-signal-green: var(--signal-green);
+  --color-pulse-red: var(--pulse-red);
+
+  /* Legacy aliases */
+  --color-violet-core: var(--violet-flux);
+  --color-alert-green: var(--signal-green);
+  --color-alert-red: var(--pulse-red);
+
+  /* Typography */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Layout scale (8pt grid) */
+  --spacing-0: 0;
+  --spacing-1: 0.5rem;   /* 8px */
+  --spacing-2: 1rem;     /* 16px */
+  --spacing-3: 1.5rem;   /* 24px */
+  --spacing-4: 2rem;     /* 32px */
+  --spacing-6: 3rem;     /* 48px */
+  --spacing-8: 4rem;     /* 64px */
+
+  /* Border radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+
+  /* Shadows with neon edge */
+  --shadow-neon-gold: 0 0 20px rgba(245, 183, 0, 0.35);
+  --shadow-neon-blue: 0 0 20px rgba(0, 209, 255, 0.35);
+  --shadow-neon-violet: 0 0 20px rgba(123, 97, 255, 0.35);
+  --shadow-neon-pink: 0 0 20px rgba(255, 42, 109, 0.5);
+
+  /* Transitions */
+  --transition-enter: 160ms ease-out;
+  --transition-exit: 120ms ease-in;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Better default spacing for content areas */
+main {
+  padding: 2rem;
+}
+
+/* Ensure proper box model for all interactive elements */
+button, a, input, select, textarea {
+  padding: 0.5rem 1rem;
+}
+
+/* Display typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Code/mono */
+code, pre, kbd {
+  font-family: var(--font-mono);
+}
+
+/* Neon text utilities */
+.neon-gold {
+  color: var(--aurum-gold);
+  text-shadow: 0 0 10px rgba(245, 183, 0, 0.5);
+}
+
+.neon-blue {
+  color: var(--electric-blue);
+  text-shadow: 0 0 10px rgba(0, 209, 255, 0.5);
+}
+
+.neon-violet {
+  color: var(--violet-flux);
+  text-shadow: 0 0 10px rgba(123, 97, 255, 0.5);
+}
+
+.neon-pink {
+  color: var(--neon-pink);
+  text-shadow: 0 0 15px rgba(255, 42, 109, 0.6);
+}
+
+/* Scanline overlay */
+.scanlines {
+  position: relative;
+  overflow: hidden;
+}
+
+.scanlines::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.03) 0px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Noise overlay */
+.noise {
+  position: relative;
+  overflow: hidden;
+}
+
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.05;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus visible for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--violet-flux);
+  outline-offset: 2px;
+  box-shadow: var(--shadow-neon-violet);
+}

@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --import-alias \"@/*\" --eslint)",
+      "Read(//c/Users/tatte/source/repos/HoneyDrunkStudios/**)",
+      "Bash(npx create-next-app@latest honeydrunk-website --typescript --tailwind --app --no-src-dir --import-alias \"@/*\" --eslint --turbopack --use-npm --yes)",
+      "Bash(cp -r honeydrunk-website/app .)",
+      "Bash(cp -r honeydrunk-website/public .)",
+      "Bash(cp -r honeydrunk-website/node_modules .)",
+      "Bash(cp honeydrunk-website/package.json .)",
+      "Bash(cp honeydrunk-website/package-lock.json .)",
+      "Bash(cp honeydrunk-website/tsconfig.json .)",
+      "Bash(cp honeydrunk-website/next.config.ts .)",
+      "Bash(cp honeydrunk-website/next-env.d.ts .)",
+      "Bash(cp honeydrunk-website/postcss.config.mjs .)",
+      "Bash(cp honeydrunk-website/eslint.config.mjs .)",
+      "Bash(cp honeydrunk-website/tailwind.config.ts)",
+      "Bash(cp honeydrunk-website/tailwind.config.js .)",
+      "Bash(npx shadcn@latest init -y)",
+      "Bash(npm run build)",
+      "Bash(npm run dev)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
