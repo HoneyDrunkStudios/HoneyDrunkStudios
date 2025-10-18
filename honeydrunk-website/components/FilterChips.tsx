@@ -88,9 +88,9 @@ export function getSignalColor(signal: Signal): string {
     Seed: colors.slateLight,
     Awake: colors.violetFlux,
     Wiring: colors.aurumGold,
-    Live: colors.neonPink,
+    Live: colors.signalGreen,
     Echo: colors.electricBlue,
-    Archive: colors.gunmetal,
+    Archive: colors.neonPink,
   };
   return map[signal];
 }

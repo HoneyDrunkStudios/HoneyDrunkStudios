@@ -9,10 +9,11 @@ export const metadata = {
 
 export default function BrandPage() {
   const brandColors = [
-    { name: 'Neon Pink', hex: colors.neonPink, desc: 'Primary brand accent - headers, borders, hot highlights' },
     { name: 'Aurum Gold', hex: colors.aurumGold, desc: 'Signature HoneyDrunk hue - accents, highlights' },
+    { name: 'Signal Green', hex: colors.signalGreen, desc: 'Terminal green - Live/operational states' },
     { name: 'Electric Blue', hex: colors.electricBlue, desc: 'Data strokes, active grid beams, links' },
     { name: 'Violet Flux', hex: colors.violetFlux, desc: 'Secondary accent - gradients, glows' },
+    { name: 'Neon Pink', hex: colors.neonPink, desc: 'Archive state - retired nodes, hot accents' },
     { name: 'Deep Space', hex: colors.deepSpace, desc: 'Base background (#0A0E12)' },
     { name: 'Gunmetal', hex: colors.gunmetal, desc: 'Section contrast, card backgrounds' },
     { name: 'Slate Light', hex: colors.slateLight, desc: 'Muted secondary text' },

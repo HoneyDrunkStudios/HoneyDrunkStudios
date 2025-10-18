@@ -37,7 +37,7 @@ const signalVisualsMap: Record<Signal, SignalVisuals> = {
     opacity: 0.85,
   },
   Live: {
-    color: colors.neonPink,
+    color: colors.signalGreen,
     glowIntensity: 0.75,
     pulseSpeed: 1,
     particleCount: 40,
@@ -51,11 +51,11 @@ const signalVisualsMap: Record<Signal, SignalVisuals> = {
     opacity: 0.6,
   },
   Archive: {
-    color: colors.gunmetal,
-    glowIntensity: 0.1,
+    color: colors.neonPink,
+    glowIntensity: 0.2,
     pulseSpeed: 0,
     particleCount: 0,
-    opacity: 0.3,
+    opacity: 0.5,
   },
 };
 

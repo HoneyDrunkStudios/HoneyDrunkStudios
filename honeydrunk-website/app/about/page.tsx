@@ -83,7 +83,7 @@ export default function AboutPage() {
         {/* Pillars */}
         <section className="space-y-8">
           <h2
-            className="text-3xl md:text-4xl font-display font-bold py-3"
+            className="text-3xl md:text-4xl font-display font-bold pt-8 pb-4"
             style={{ color: colors.electricBlue }}
           >
             Core Pillars
@@ -124,7 +124,7 @@ export default function AboutPage() {
         {/* Philosophy */}
         <section className="space-y-8">
           <h2
-            className="text-3xl md:text-4xl font-display font-bold py-3"
+            className="text-3xl md:text-4xl font-display font-bold pt-8 pb-4"
             style={{ color: colors.electricBlue }}
           >
             Philosophy
@@ -161,7 +161,7 @@ export default function AboutPage() {
         {/* Signal States */}
         <section className="space-y-8">
           <h2
-            className="text-3xl md:text-4xl font-display font-bold py-3"
+            className="text-3xl md:text-4xl font-display font-bold pt-8 pb-4"
             style={{ color: colors.electricBlue }}
           >
             The Signal System
@@ -173,21 +173,28 @@ export default function AboutPage() {
 
           <div className="grid gap-6 px-2">
             {[
-              { signal: 'Seed', desc: 'Concept stage. Idea germinating. Potential energy.' },
-              { signal: 'Awake', desc: 'Prototyping. Testing. Finding its form.' },
-              { signal: 'Wiring', desc: 'Active development. Systems connecting. Energy building.' },
-              { signal: 'Live', desc: 'Production. Full power. Serving its purpose.' },
-              { signal: 'Echo', desc: 'Maintenance mode. Stable. Occasional updates.' },
-              { signal: 'Archive', desc: 'Retired. Lessons preserved. Memory honored.' },
+              { signal: 'Seed', color: colors.slateLight, desc: 'Concept stage. Idea germinating. Potential energy.' },
+              { signal: 'Awake', color: colors.violetCore, desc: 'Prototyping. Testing. Finding its form.' },
+              { signal: 'Wiring', color: colors.aurumGold, desc: 'Active development. Systems connecting. Energy building.' },
+              { signal: 'Live', color: colors.signalGreen, desc: 'Production. Full power. Serving its purpose.' },
+              { signal: 'Echo', color: colors.electricBlue, desc: 'Maintenance mode. Stable. Occasional updates.' },
+              { signal: 'Archive', color: colors.neonPink, desc: 'Retired. Lessons preserved. Memory honored.' },
             ].map((item) => (
               <div
                 key={item.signal}
-                className="flex items-start gap-6 p-6 rounded-lg"
+                className="flex items-start gap-6 p-6 rounded-lg border"
                 style={{
                   backgroundColor: `${colors.gunmetal}40`,
+                  borderColor: `${item.color}30`,
                 }}
               >
-                <div className="font-mono font-bold text-sm min-w-[80px]" style={{ color: colors.electricBlue }}>
+                <div 
+                  className="font-mono font-bold text-sm min-w-[80px]" 
+                  style={{ 
+                    color: item.color,
+                    textShadow: `0 0 10px ${item.color}60`,
+                  }}
+                >
                   {item.signal}
                 </div>
                 <div className="text-sm" style={{ color: colors.slateLight }}>

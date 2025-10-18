@@ -26,6 +26,7 @@ export default function NodeGlyph({
 }: NodeGlyphProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [pulsePhase, setPulsePhase] = useState(0);
+  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
 
   // Pulse animation
   useEffect(() => {
@@ -39,11 +40,25 @@ export default function NodeGlyph({
   }, [node.signalVisuals.pulseSpeed]);
 
   const handleMouseEnter = () => {
+    if (hoverTimeout) clearTimeout(hoverTimeout);
     setIsHovered(true);
     onHover?.(true);
   };
 
   const handleMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setIsHovered(false);
+      onHover?.(false);
+    }, 300); // 300ms delay before hiding
+    setHoverTimeout(timeout);
+  };
+
+  const handleTooltipEnter = () => {
+    if (hoverTimeout) clearTimeout(hoverTimeout);
+    setIsHovered(true);
+  };
+
+  const handleTooltipLeave = () => {
     setIsHovered(false);
     onHover?.(false);
   };
@@ -121,16 +136,14 @@ export default function NodeGlyph({
 
         {/* Node name */}
         <div
-          className="relative z-10 text-center font-display font-bold text-xs leading-tight px-2"
+          className="relative z-10 text-center font-display font-bold text-xs leading-tight px-2 flex items-center justify-center"
           style={{
             color: colors.offWhite,
             textShadow: `0 0 8px ${colors.deepSpace}`,
             maxWidth: '100%',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            display: '-webkit-box',
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: 'vertical',
+            wordWrap: 'break-word',
+            overflowWrap: 'break-word',
+            hyphens: 'auto',
           }}
         >
           {node.name}
@@ -141,54 +154,116 @@ export default function NodeGlyph({
       {isHovered && (
         <div
           className="absolute top-full mt-4 left-1/2 transform -translate-x-1/2
-                     px-6 py-3 rounded-lg text-xs font-mono max-w-xs
-                     backdrop-blur-sm pointer-events-none"
+                     px-6 py-4 rounded-lg text-xs font-mono max-w-sm
+                     backdrop-blur-sm pointer-events-auto space-y-2"
           style={{
             backgroundColor: `${colors.deepSpace}f0`,
-            border: `1px solid ${node.sectorVisuals.color}60`,
+            border: `2px solid ${colors.electricBlue}60`,
             color: colors.offWhite,
+            boxShadow: `0 0 20px ${colors.electricBlue}40`,
           }}
+          onMouseEnter={handleTooltipEnter}
+          onMouseLeave={handleTooltipLeave}
         >
-          <div className="text-xs leading-relaxed">{node.short}</div>
+          <div className="font-display font-bold text-sm mb-2" style={{ color: colors.neonPink, textShadow: `0 0 10px ${colors.neonPink}60` }}>
+            {node.name}
+          </div>
+          <div className="text-xs leading-relaxed mb-2">{node.short}</div>
+          <div className="flex items-center gap-2 text-xs">
+            <span style={{ color: colors.electricBlue }}>Sector:</span>
+            <span style={{ color: node.sectorVisuals.color }}>{node.sector}</span>
+          </div>
+          <div className="flex items-center gap-2 text-xs">
+            <span style={{ color: colors.electricBlue }}>Signal:</span>
+            <span style={{ color: node.signalVisuals.color }}>{node.signal}</span>
+          </div>
+          {node.tags && node.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1 mt-2 pt-2 border-t" style={{ borderColor: `${colors.electricBlue}30` }}>
+              {node.tags.slice(0, 3).map((tag) => (
+                <span
+                  key={tag}
+                  className="px-2 py-0.5 rounded text-xs"
+                  style={{
+                    backgroundColor: `${colors.electricBlue}20`,
+                    color: colors.electricBlue,
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
       {/* Quick links (visible on hover) */}
       {isHovered && node.links && (
-        <div className="absolute -top-14 left-1/2 transform -translate-x-1/2 flex gap-3">
+        <div 
+          className="absolute -top-14 left-1/2 transform -translate-x-1/2 flex gap-3"
+          onMouseEnter={handleTooltipEnter}
+          onMouseLeave={handleTooltipLeave}
+        >
           {node.links.repo && (
-            <a
-              href={node.links.repo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full bg-gunmetal/80 backdrop-blur-sm
-                       flex items-center justify-center hover:scale-110 transition-transform
-                       border"
-              style={{
-                borderColor: `${node.signalVisuals.color}60`,
-                backgroundColor: `${colors.gunmetal}cc`,
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <span className="text-base">🔗</span>
-            </a>
+            <div className="relative group">
+              <a
+                href={node.links.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-gunmetal/80 backdrop-blur-sm
+                         flex items-center justify-center hover:scale-110 transition-transform
+                         border"
+                style={{
+                  borderColor: `${node.signalVisuals.color}60`,
+                  backgroundColor: `${colors.gunmetal}cc`,
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span className="text-base">🔗</span>
+              </a>
+              <div
+                className="absolute -bottom-8 left-1/2 transform -translate-x-1/2
+                           px-2 py-1 rounded text-xs font-mono whitespace-nowrap
+                           opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+                style={{
+                  backgroundColor: `${colors.deepSpace}f0`,
+                  border: `1px solid ${colors.electricBlue}60`,
+                  color: colors.electricBlue,
+                }}
+              >
+                Repo
+              </div>
+            </div>
           )}
           {node.links.live && (
-            <a
-              href={node.links.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full bg-gunmetal/80 backdrop-blur-sm
-                       flex items-center justify-center hover:scale-110 transition-transform
-                       border"
-              style={{
-                borderColor: `${node.signalVisuals.color}60`,
-                backgroundColor: `${colors.gunmetal}cc`,
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <span className="text-base">🚀</span>
-            </a>
+            <div className="relative group">
+              <a
+                href={node.links.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-gunmetal/80 backdrop-blur-sm
+                         flex items-center justify-center hover:scale-110 transition-transform
+                         border"
+                style={{
+                  borderColor: `${node.signalVisuals.color}60`,
+                  backgroundColor: `${colors.gunmetal}cc`,
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span className="text-base">🌐</span>
+              </a>
+              <div
+                className="absolute -bottom-8 left-1/2 transform -translate-x-1/2
+                           px-2 py-1 rounded text-xs font-mono whitespace-nowrap
+                           opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+                style={{
+                  backgroundColor: `${colors.deepSpace}f0`,
+                  border: `1px solid ${colors.electricBlue}60`,
+                  color: colors.electricBlue,
+                }}
+              >
+                Live Site
+              </div>
+            </div>
           )}
         </div>
       )}

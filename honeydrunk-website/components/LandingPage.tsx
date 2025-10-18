@@ -5,7 +5,7 @@
  * Orchestrates gate → grid reveal sequence
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { getFeaturedNodes, getNodeById, getConnectedNodes } from '@/lib/nodes';
 import NeonGridCanvas from './NeonGridCanvas';
@@ -15,19 +15,39 @@ import NodeDrawer from './NodeDrawer';
 import Link from 'next/link';
 import { colors } from '@/lib/tokens';
 
+const STORAGE_KEY = 'honeydrunk_has_entered';
+
 export default function LandingPage() {
   const [hasEntered, setHasEntered] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
   const [selectedNodeId, setSelectedNodeId] = useState<string | undefined>();
 
   const featuredNodes = getFeaturedNodes(); // Show all active nodes (non-Seed, non-Archive)
   const selectedNode = selectedNodeId ? getNodeById(selectedNodeId) : null;
   const connectedNodes = selectedNodeId ? getConnectedNodes(selectedNodeId) : [];
 
+  // Check if user has already entered during this session
+  useEffect(() => {
+    const hasEnteredBefore = sessionStorage.getItem(STORAGE_KEY) === 'true';
+    setHasEntered(hasEnteredBefore);
+    setIsChecking(false);
+  }, []);
+
+  const handleEnterComplete = () => {
+    sessionStorage.setItem(STORAGE_KEY, 'true');
+    setHasEntered(true);
+  };
+
+  // Show nothing while checking storage to prevent flash
+  if (isChecking) {
+    return null;
+  }
+
   if (!hasEntered) {
     return (
       <>
         <NeonGridCanvas particleCount={100} enableMotion={true} />
-        <EnterTheHive onComplete={() => setHasEntered(true)} />
+        <EnterTheHive onComplete={handleEnterComplete} />
       </>
     );
   }

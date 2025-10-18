@@ -51,6 +51,7 @@ const colors = {
     // Signals
     signalGreen: '#22C55E',
     pulseRed: '#F43F5E',
+    archiveRed: '#8B2635',
     // Legacy aliases for backward compatibility
     violetCore: '#7B61FF',
     alertGreen: '#22C55E',
@@ -229,7 +230,7 @@ const nodes = __TURBOPACK__imported__module__$5b$project$5d2f$data$2f$nodes$2e$j
         opacity: 0.85
     },
     Live: {
-        color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink,
+        color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].signalGreen,
         glowIntensity: 0.75,
         pulseSpeed: 1,
         particleCount: 40,
@@ -243,11 +244,11 @@ const nodes = __TURBOPACK__imported__module__$5b$project$5d2f$data$2f$nodes$2e$j
         opacity: 0.6
     },
     Archive: {
-        color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].gunmetal,
-        glowIntensity: 0.1,
+        color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink,
+        glowIntensity: 0.2,
         pulseSpeed: 0,
         particleCount: 0,
-        opacity: 0.3
+        opacity: 0.5
     }
 };
 /**
@@ -970,6 +971,7 @@ function NodeGlyph(param) {
     _s();
     const [isHovered, setIsHovered] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [pulsePhase, setPulsePhase] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
+    const [hoverTimeout, setHoverTimeout] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     // Pulse animation
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "NodeGlyph.useEffect": ()=>{
@@ -989,10 +991,22 @@ function NodeGlyph(param) {
         node.signalVisuals.pulseSpeed
     ]);
     const handleMouseEnter = ()=>{
+        if (hoverTimeout) clearTimeout(hoverTimeout);
         setIsHovered(true);
         onHover === null || onHover === void 0 ? void 0 : onHover(true);
     };
     const handleMouseLeave = ()=>{
+        const timeout = setTimeout(()=>{
+            setIsHovered(false);
+            onHover === null || onHover === void 0 ? void 0 : onHover(false);
+        }, 300); // 300ms delay before hiding
+        setHoverTimeout(timeout);
+    };
+    const handleTooltipEnter = ()=>{
+        if (hoverTimeout) clearTimeout(hoverTimeout);
+        setIsHovered(true);
+    };
+    const handleTooltipLeave = ()=>{
         setIsHovered(false);
         onHover === null || onHover === void 0 ? void 0 : onHover(false);
     };
@@ -1033,7 +1047,7 @@ function NodeGlyph(param) {
                 }
             }, void 0, false, {
                 fileName: "[project]/components/NodeGlyph.tsx",
-                lineNumber: 78,
+                lineNumber: 93,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1054,7 +1068,7 @@ function NodeGlyph(param) {
                         }
                     }, void 0, false, {
                         fileName: "[project]/components/NodeGlyph.tsx",
-                        lineNumber: 104,
+                        lineNumber: 119,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1066,106 +1080,247 @@ function NodeGlyph(param) {
                         }
                     }, void 0, false, {
                         fileName: "[project]/components/NodeGlyph.tsx",
-                        lineNumber: 113,
+                        lineNumber: 128,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "relative z-10 text-center font-display font-bold text-xs leading-tight px-2",
+                        className: "relative z-10 text-center font-display font-bold text-xs leading-tight px-2 flex items-center justify-center",
                         style: {
                             color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].offWhite,
                             textShadow: "0 0 8px ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].deepSpace),
                             maxWidth: '100%',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            display: '-webkit-box',
-                            WebkitLineClamp: 3,
-                            WebkitBoxOrient: 'vertical'
+                            wordWrap: 'break-word',
+                            overflowWrap: 'break-word',
+                            hyphens: 'auto'
                         },
                         children: node.name
                     }, void 0, false, {
                         fileName: "[project]/components/NodeGlyph.tsx",
-                        lineNumber: 123,
+                        lineNumber: 138,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/NodeGlyph.tsx",
-                lineNumber: 93,
+                lineNumber: 108,
                 columnNumber: 7
             }, this),
             isHovered && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute top-full mt-4 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg text-xs font-mono max-w-xs backdrop-blur-sm pointer-events-none",
+                className: "absolute top-full mt-4 left-1/2 transform -translate-x-1/2 px-6 py-4 rounded-lg text-xs font-mono max-w-sm backdrop-blur-sm pointer-events-auto space-y-2",
                 style: {
                     backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].deepSpace, "f0"),
-                    border: "1px solid ".concat(node.sectorVisuals.color, "60"),
-                    color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].offWhite
+                    border: "2px solid ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue, "60"),
+                    color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].offWhite,
+                    boxShadow: "0 0 20px ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue, "40")
                 },
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "text-xs leading-relaxed",
-                    children: node.short
-                }, void 0, false, {
-                    fileName: "[project]/components/NodeGlyph.tsx",
-                    lineNumber: 152,
-                    columnNumber: 11
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/components/NodeGlyph.tsx",
-                lineNumber: 142,
-                columnNumber: 9
-            }, this),
-            isHovered && node.links && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute -top-14 left-1/2 transform -translate-x-1/2 flex gap-3",
+                onMouseEnter: handleTooltipEnter,
+                onMouseLeave: handleTooltipLeave,
                 children: [
-                    node.links.repo && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                        href: node.links.repo,
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                        className: "w-10 h-10 rounded-full bg-gunmetal/80 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform border",
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "font-display font-bold text-sm mb-2",
                         style: {
-                            borderColor: "".concat(node.signalVisuals.color, "60"),
-                            backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].gunmetal, "cc")
+                            color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink,
+                            textShadow: "0 0 10px ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "60")
                         },
-                        onClick: (e)=>e.stopPropagation(),
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                            className: "text-base",
-                            children: "🔗"
-                        }, void 0, false, {
-                            fileName: "[project]/components/NodeGlyph.tsx",
-                            lineNumber: 173,
-                            columnNumber: 15
-                        }, this)
+                        children: node.name
                     }, void 0, false, {
                         fileName: "[project]/components/NodeGlyph.tsx",
-                        lineNumber: 160,
-                        columnNumber: 13
+                        lineNumber: 168,
+                        columnNumber: 11
                     }, this),
-                    node.links.live && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                        href: node.links.live,
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                        className: "w-10 h-10 rounded-full bg-gunmetal/80 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform border",
-                        style: {
-                            borderColor: "".concat(node.signalVisuals.color, "60"),
-                            backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].gunmetal, "cc")
-                        },
-                        onClick: (e)=>e.stopPropagation(),
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                            className: "text-base",
-                            children: "🚀"
-                        }, void 0, false, {
-                            fileName: "[project]/components/NodeGlyph.tsx",
-                            lineNumber: 190,
-                            columnNumber: 15
-                        }, this)
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "text-xs leading-relaxed mb-2",
+                        children: node.short
                     }, void 0, false, {
                         fileName: "[project]/components/NodeGlyph.tsx",
-                        lineNumber: 177,
+                        lineNumber: 171,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex items-center gap-2 text-xs",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                style: {
+                                    color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue
+                                },
+                                children: "Sector:"
+                            }, void 0, false, {
+                                fileName: "[project]/components/NodeGlyph.tsx",
+                                lineNumber: 173,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                style: {
+                                    color: node.sectorVisuals.color
+                                },
+                                children: node.sector
+                            }, void 0, false, {
+                                fileName: "[project]/components/NodeGlyph.tsx",
+                                lineNumber: 174,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/NodeGlyph.tsx",
+                        lineNumber: 172,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex items-center gap-2 text-xs",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                style: {
+                                    color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue
+                                },
+                                children: "Signal:"
+                            }, void 0, false, {
+                                fileName: "[project]/components/NodeGlyph.tsx",
+                                lineNumber: 177,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                style: {
+                                    color: node.signalVisuals.color
+                                },
+                                children: node.signal
+                            }, void 0, false, {
+                                fileName: "[project]/components/NodeGlyph.tsx",
+                                lineNumber: 178,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/NodeGlyph.tsx",
+                        lineNumber: 176,
+                        columnNumber: 11
+                    }, this),
+                    node.tags && node.tags.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex flex-wrap gap-1 mt-2 pt-2 border-t",
+                        style: {
+                            borderColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue, "30")
+                        },
+                        children: node.tags.slice(0, 3).map((tag)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "px-2 py-0.5 rounded text-xs",
+                                style: {
+                                    backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue, "20"),
+                                    color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue
+                                },
+                                children: tag
+                            }, tag, false, {
+                                fileName: "[project]/components/NodeGlyph.tsx",
+                                lineNumber: 183,
+                                columnNumber: 17
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/components/NodeGlyph.tsx",
+                        lineNumber: 181,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/NodeGlyph.tsx",
-                lineNumber: 158,
+                lineNumber: 155,
+                columnNumber: 9
+            }, this),
+            isHovered && node.links && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "absolute -top-14 left-1/2 transform -translate-x-1/2 flex gap-3",
+                onMouseEnter: handleTooltipEnter,
+                onMouseLeave: handleTooltipLeave,
+                children: [
+                    node.links.repo && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "relative group",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                href: node.links.repo,
+                                target: "_blank",
+                                rel: "noopener noreferrer",
+                                className: "w-10 h-10 rounded-full bg-gunmetal/80 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform border",
+                                style: {
+                                    borderColor: "".concat(node.signalVisuals.color, "60"),
+                                    backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].gunmetal, "cc")
+                                },
+                                onClick: (e)=>e.stopPropagation(),
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-base",
+                                    children: "🔗"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/NodeGlyph.tsx",
+                                    lineNumber: 221,
+                                    columnNumber: 17
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/components/NodeGlyph.tsx",
+                                lineNumber: 208,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "absolute -bottom-8 left-1/2 transform -translate-x-1/2 px-2 py-1 rounded text-xs font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none",
+                                style: {
+                                    backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].deepSpace, "f0"),
+                                    border: "1px solid ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue, "60"),
+                                    color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue
+                                },
+                                children: "Repo"
+                            }, void 0, false, {
+                                fileName: "[project]/components/NodeGlyph.tsx",
+                                lineNumber: 223,
+                                columnNumber: 15
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/NodeGlyph.tsx",
+                        lineNumber: 207,
+                        columnNumber: 13
+                    }, this),
+                    node.links.live && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "relative group",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                href: node.links.live,
+                                target: "_blank",
+                                rel: "noopener noreferrer",
+                                className: "w-10 h-10 rounded-full bg-gunmetal/80 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform border",
+                                style: {
+                                    borderColor: "".concat(node.signalVisuals.color, "60"),
+                                    backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].gunmetal, "cc")
+                                },
+                                onClick: (e)=>e.stopPropagation(),
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-base",
+                                    children: "🌐"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/NodeGlyph.tsx",
+                                    lineNumber: 252,
+                                    columnNumber: 17
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/components/NodeGlyph.tsx",
+                                lineNumber: 239,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "absolute -bottom-8 left-1/2 transform -translate-x-1/2 px-2 py-1 rounded text-xs font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none",
+                                style: {
+                                    backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].deepSpace, "f0"),
+                                    border: "1px solid ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue, "60"),
+                                    color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue
+                                },
+                                children: "Live Site"
+                            }, void 0, false, {
+                                fileName: "[project]/components/NodeGlyph.tsx",
+                                lineNumber: 254,
+                                columnNumber: 15
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/NodeGlyph.tsx",
+                        lineNumber: 238,
+                        columnNumber: 13
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/NodeGlyph.tsx",
+                lineNumber: 201,
                 columnNumber: 9
             }, this),
             isConnected && !isSelected && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1180,17 +1335,17 @@ function NodeGlyph(param) {
                 }
             }, void 0, false, {
                 fileName: "[project]/components/NodeGlyph.tsx",
-                lineNumber: 198,
+                lineNumber: 273,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/NodeGlyph.tsx",
-        lineNumber: 61,
+        lineNumber: 76,
         columnNumber: 5
     }, this);
 }
-_s(NodeGlyph, "xwP6N3hib0MvumHYERpdLgvQk88=");
+_s(NodeGlyph, "vMUV5Of8FdL7Qw8rO6o2yCPzo8U=");
 _c = NodeGlyph;
 var _c;
 __turbopack_context__.k.register(_c, "NodeGlyph");
@@ -1468,7 +1623,7 @@ function TheGrid(param) {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute top-12 right-12 px-5 py-3 rounded-lg bg-gunmetal/80 backdrop-blur-sm border border-slate-light/20 text-xs font-mono text-slate-light",
+                className: "absolute bottom-6 right-6 px-5 py-3 rounded-lg bg-gunmetal/80 backdrop-blur-sm border border-slate-light/20 text-xs font-mono text-slate-light",
                 children: [
                     Math.round(zoom * 100),
                     "%"
@@ -2234,13 +2389,31 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
+const STORAGE_KEY = 'honeydrunk_has_entered';
 function LandingPage() {
     _s();
     const [hasEntered, setHasEntered] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [isChecking, setIsChecking] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
     const [selectedNodeId, setSelectedNodeId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])();
     const featuredNodes = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$nodes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getFeaturedNodes"])(); // Show all active nodes (non-Seed, non-Archive)
     const selectedNode = selectedNodeId ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$nodes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getNodeById"])(selectedNodeId) : null;
     const connectedNodes = selectedNodeId ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$nodes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getConnectedNodes"])(selectedNodeId) : [];
+    // Check if user has already entered during this session
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "LandingPage.useEffect": ()=>{
+            const hasEnteredBefore = sessionStorage.getItem(STORAGE_KEY) === 'true';
+            setHasEntered(hasEnteredBefore);
+            setIsChecking(false);
+        }
+    }["LandingPage.useEffect"], []);
+    const handleEnterComplete = ()=>{
+        sessionStorage.setItem(STORAGE_KEY, 'true');
+        setHasEntered(true);
+    };
+    // Show nothing while checking storage to prevent flash
+    if (isChecking) {
+        return null;
+    }
     if (!hasEntered) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
             children: [
@@ -2249,14 +2422,14 @@ function LandingPage() {
                     enableMotion: true
                 }, void 0, false, {
                     fileName: "[project]/components/LandingPage.tsx",
-                    lineNumber: 29,
+                    lineNumber: 49,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$EnterTheHive$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                    onComplete: ()=>setHasEntered(true)
+                    onComplete: handleEnterComplete
                 }, void 0, false, {
                     fileName: "[project]/components/LandingPage.tsx",
-                    lineNumber: 30,
+                    lineNumber: 50,
                     columnNumber: 9
                 }, this)
             ]
@@ -2272,12 +2445,12 @@ function LandingPage() {
                     enableMotion: true
                 }, void 0, false, {
                     fileName: "[project]/components/LandingPage.tsx",
-                    lineNumber: 39,
+                    lineNumber: 59,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/LandingPage.tsx",
-                lineNumber: 38,
+                lineNumber: 58,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2310,7 +2483,7 @@ function LandingPage() {
                                             }
                                         }, void 0, false, {
                                             fileName: "[project]/components/LandingPage.tsx",
-                                            lineNumber: 58,
+                                            lineNumber: 78,
                                             columnNumber: 13
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -2322,13 +2495,13 @@ function LandingPage() {
                                             children: "[HONEYDRUNK]"
                                         }, void 0, false, {
                                             fileName: "[project]/components/LandingPage.tsx",
-                                            lineNumber: 68,
+                                            lineNumber: 88,
                                             columnNumber: 13
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/LandingPage.tsx",
-                                    lineNumber: 57,
+                                    lineNumber: 77,
                                     columnNumber: 11
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -2357,7 +2530,7 @@ function LandingPage() {
                                             children: "GRID"
                                         }, void 0, false, {
                                             fileName: "[project]/components/LandingPage.tsx",
-                                            lineNumber: 80,
+                                            lineNumber: 100,
                                             columnNumber: 13
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -2383,7 +2556,7 @@ function LandingPage() {
                                             children: "SIGNAL"
                                         }, void 0, false, {
                                             fileName: "[project]/components/LandingPage.tsx",
-                                            lineNumber: 103,
+                                            lineNumber: 123,
                                             columnNumber: 13
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -2409,7 +2582,7 @@ function LandingPage() {
                                             children: "BRAND"
                                         }, void 0, false, {
                                             fileName: "[project]/components/LandingPage.tsx",
-                                            lineNumber: 126,
+                                            lineNumber: 146,
                                             columnNumber: 13
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -2435,24 +2608,24 @@ function LandingPage() {
                                             children: "ABOUT"
                                         }, void 0, false, {
                                             fileName: "[project]/components/LandingPage.tsx",
-                                            lineNumber: 149,
+                                            lineNumber: 169,
                                             columnNumber: 13
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/LandingPage.tsx",
-                                    lineNumber: 79,
+                                    lineNumber: 99,
                                     columnNumber: 11
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/LandingPage.tsx",
-                            lineNumber: 56,
+                            lineNumber: 76,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/LandingPage.tsx",
-                        lineNumber: 45,
+                        lineNumber: 65,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2463,12 +2636,12 @@ function LandingPage() {
                             onNodeClick: (node)=>setSelectedNodeId(node.id)
                         }, void 0, false, {
                             fileName: "[project]/components/LandingPage.tsx",
-                            lineNumber: 178,
+                            lineNumber: 198,
                             columnNumber: 9
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/LandingPage.tsx",
-                        lineNumber: 177,
+                        lineNumber: 197,
                         columnNumber: 7
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2489,7 +2662,7 @@ function LandingPage() {
                                 children: ">> SYSTEM.STATUS"
                             }, void 0, false, {
                                 fileName: "[project]/components/LandingPage.tsx",
-                                lineNumber: 196,
+                                lineNumber: 216,
                                 columnNumber: 9
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2505,13 +2678,13 @@ function LandingPage() {
                                         children: ">"
                                     }, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 209,
+                                        lineNumber: 229,
                                         columnNumber: 11
                                     }, this),
                                     " Build-in-Public.exe --running",
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 209,
+                                        lineNumber: 229,
                                         columnNumber: 94
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2521,13 +2694,13 @@ function LandingPage() {
                                         children: ">"
                                     }, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 210,
+                                        lineNumber: 230,
                                         columnNumber: 11
                                     }, this),
                                     " Zero-Bloat Architecture --enabled",
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 210,
+                                        lineNumber: 230,
                                         columnNumber: 98
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2537,19 +2710,19 @@ function LandingPage() {
                                         children: ">"
                                     }, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 211,
+                                        lineNumber: 231,
                                         columnNumber: 11
                                     }, this),
                                     " AI Agents --amplifying",
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 211,
+                                        lineNumber: 231,
                                         columnNumber: 87
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/LandingPage.tsx",
-                                lineNumber: 205,
+                                lineNumber: 225,
                                 columnNumber: 9
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2561,7 +2734,7 @@ function LandingPage() {
                                 children: "A living grid of interconnected nodes. Every project earns its keep. Every line of code tells a story. Structure meets soul."
                             }, void 0, false, {
                                 fileName: "[project]/components/LandingPage.tsx",
-                                lineNumber: 213,
+                                lineNumber: 233,
                                 columnNumber: 9
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2590,7 +2763,7 @@ function LandingPage() {
                                         children: ">> EXPLORE GRID"
                                     }, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 224,
+                                        lineNumber: 244,
                                         columnNumber: 11
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -2607,19 +2780,19 @@ function LandingPage() {
                                         children: "[ INFO ]"
                                     }, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 247,
+                                        lineNumber: 267,
                                         columnNumber: 11
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/LandingPage.tsx",
-                                lineNumber: 223,
+                                lineNumber: 243,
                                 columnNumber: 9
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/LandingPage.tsx",
-                        lineNumber: 186,
+                        lineNumber: 206,
                         columnNumber: 7
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$NodeDrawer$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -2628,23 +2801,23 @@ function LandingPage() {
                         connectedNodes: connectedNodes
                     }, void 0, false, {
                         fileName: "[project]/components/LandingPage.tsx",
-                        lineNumber: 265,
+                        lineNumber: 285,
                         columnNumber: 7
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/LandingPage.tsx",
-                lineNumber: 43,
+                lineNumber: 63,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/LandingPage.tsx",
-        lineNumber: 36,
+        lineNumber: 56,
         columnNumber: 5
     }, this);
 }
-_s(LandingPage, "MUtUucgJCMuatBMOupYlI7z8jI0=");
+_s(LandingPage, "eKeyg4RX8gDr3Nv5eFfyV9u9US8=");
 _c = LandingPage;
 var _c;
 __turbopack_context__.k.register(_c, "LandingPage");

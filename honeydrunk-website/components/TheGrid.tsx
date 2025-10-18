@@ -226,7 +226,7 @@ export default function TheGrid({
 
       {/* Zoom indicator */}
       <div
-        className="absolute top-12 right-12 px-5 py-3 rounded-lg
+        className="absolute bottom-6 right-6 px-5 py-3 rounded-lg
                    bg-gunmetal/80 backdrop-blur-sm border border-slate-light/20
                    text-xs font-mono text-slate-light"
       >

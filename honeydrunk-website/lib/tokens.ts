@@ -23,6 +23,7 @@ export const colors = {
   // Signals
   signalGreen: '#22C55E',      // Signal Green - online/connected states
   pulseRed: '#F43F5E',         // Pulse Red - critical/error states
+  archiveRed: '#8B2635',       // Archive Red - deep crimson for archived/terminated states
 
   // Legacy aliases for backward compatibility
   violetCore: '#7B61FF',       // Alias for violetFlux

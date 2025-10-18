@@ -81,7 +81,7 @@ function NodesContent() {
       <Header />
 
       {/* Search and Filter Bar */}
-      <div className="absolute top-20 left-0 right-0 z-20 px-8 py-4 flex items-center justify-end gap-4">
+      <div className="absolute top-20 left-0 right-0 z-40 px-8 py-4 flex items-center justify-end gap-4">
         {/* Search */}
         <input
           type="text"
@@ -180,10 +180,10 @@ function NodesContent() {
 
       {/* Legend */}
       <div
-        className="absolute right-6 z-30
+        className="absolute right-6 z-10
                    p-4 rounded-lg backdrop-blur-sm border space-y-3"
         style={{
-          top: '7rem',
+          top: '10.5rem',
           backgroundColor: `${colors.deepSpace}90`,
           borderColor: `${colors.slateLight}30`,
         }}
