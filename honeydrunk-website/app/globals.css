@@ -96,6 +96,10 @@
 
 * {
   box-sizing: border-box;
+}
+
+/* Reset margins and paddings selectively, not universally */
+h1, h2, h3, h4, h5, h6, p, ul, ol, li, blockquote, figure, pre {
   margin: 0;
   padding: 0;
 }
@@ -123,8 +127,13 @@ main {
 }
 
 /* Ensure proper box model for all interactive elements */
-button, a, input, select, textarea {
-  padding: 0.5rem 1rem;
+button,
+a,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
 }
 
 /* Display typography */

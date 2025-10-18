@@ -6,6 +6,7 @@
  */
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { getFeaturedNodes, getNodeById, getConnectedNodes } from '@/lib/nodes';
 import NeonGridCanvas from './NeonGridCanvas';
 import EnterTheHive from './EnterTheHive';
@@ -38,12 +39,11 @@ export default function LandingPage() {
         <NeonGridCanvas particleCount={150} enableMotion={true} />
       </div>
 
-      {/* Content container with padding */}
-      <div className="relative z-10 w-full h-full p-8">
+      {/* Content container */}
+      <div className="relative z-10 w-full h-full">
         {/* Header */}
         <header
-          className="absolute z-20 px-16 py-6
-                     border-b-2 backdrop-blur-sm"
+          className="absolute z-20 border-b-2 backdrop-blur-sm"
           style={{
             top: 0,
             left: 0,
@@ -53,21 +53,33 @@ export default function LandingPage() {
             boxShadow: `0 4px 20px ${colors.neonPink}20`,
           }}
         >
-          <div className="max-w-7xl mx-auto px-8 flex items-center justify-between">
-          <h1
-            className="text-2xl font-mono font-bold px-6 py-3 uppercase tracking-wider"
-            style={{
-              color: colors.neonPink,
-              textShadow: `0 0 20px ${colors.neonPink}80`,
-            }}
-          >
-            [HONEYDRUNK]
-          </h1>
+          <div className="w-full px-8 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Image 
+              src="/honeydrunk.png" 
+              alt="HoneyDrunk Logo" 
+              width={40}
+              height={40}
+              className="w-10 h-10"
+              style={{
+                filter: 'drop-shadow(0 0 10px rgba(255, 42, 109, 0.5))',
+              }}
+            />
+            <h1
+              className="text-2xl font-mono font-bold uppercase tracking-wider"
+              style={{
+                color: colors.neonPink,
+                textShadow: `0 0 20px ${colors.neonPink}80`,
+              }}
+            >
+              [HONEYDRUNK]
+            </h1>
+          </div>
 
-          <nav className="flex gap-8 text-sm font-mono font-bold uppercase tracking-wider">
+          <nav className="flex gap-6 text-sm font-mono font-bold uppercase tracking-wider">
             <Link
               href="/nodes"
-              className="transition-all px-6 py-3 border"
+              className="transition-all px-4 py-2 border"
               style={{
                 color: colors.electricBlue,
                 borderColor: `${colors.electricBlue}40`,
@@ -90,7 +102,7 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/signal"
-              className="transition-all px-6 py-3 border"
+              className="transition-all px-4 py-2 border"
               style={{
                 color: colors.electricBlue,
                 borderColor: `${colors.electricBlue}40`,
@@ -113,7 +125,7 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/brand"
-              className="transition-all px-6 py-3 border"
+              className="transition-all px-4 py-2 border"
               style={{
                 color: colors.electricBlue,
                 borderColor: `${colors.electricBlue}40`,
@@ -136,7 +148,7 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/about"
-              className="transition-all px-6 py-3 border"
+              className="transition-all px-4 py-2 border"
               style={{
                 color: colors.electricBlue,
                 borderColor: `${colors.electricBlue}40`,
@@ -172,8 +184,8 @@ export default function LandingPage() {
 
       {/* Featured content overlay */}
       <div
-        className="absolute bottom-20 right-20 z-20 max-w-2xl
-                   px-12 py-10 backdrop-blur-sm border-2"
+        className="absolute bottom-8 right-8 z-20 max-w-2xl
+                   p-6 backdrop-blur-sm border-2"
         style={{
           backgroundColor: `${colors.deepSpace}95`,
           borderColor: colors.neonPink,
@@ -182,7 +194,7 @@ export default function LandingPage() {
         }}
       >
         <h2
-          className="text-2xl font-mono font-bold mb-6 uppercase tracking-wide"
+          className="text-2xl font-mono font-bold mb-4 uppercase tracking-wide"
           style={{
             color: colors.neonPink,
             textShadow: `0 0 20px ${colors.neonPink}80`,
@@ -191,7 +203,7 @@ export default function LandingPage() {
           &gt;&gt; SYSTEM.STATUS
         </h2>
         <p
-          className="text-sm mb-6 leading-relaxed font-mono"
+          className="text-sm mb-4 leading-loose font-mono"
           style={{ color: colors.electricBlue }}
         >
           <span style={{ color: colors.aurumGold }}>&gt;</span> Build-in-Public.exe --running<br />
@@ -199,23 +211,27 @@ export default function LandingPage() {
           <span style={{ color: colors.aurumGold }}>&gt;</span> AI Agents --amplifying<br />
         </p>
         <p
-          className="text-sm mb-6 leading-relaxed"
-          style={{ color: colors.slateLight }}
+          className="text-sm leading-relaxed"
+          style={{ 
+            color: colors.slateLight,
+            marginBottom: '1.5rem'
+          }}
         >
           A living grid of interconnected nodes. Every project earns its keep.
           Every line of code tells a story. Structure meets soul.
         </p>
-        <div className="flex gap-6">
+        <div className="flex gap-3">
           <Link
             href="/nodes"
-            className="px-10 py-4 font-mono font-bold text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105 group"
+            className="font-mono font-bold text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105 group"
             style={{
+              padding: '0.5rem 1rem',
               backgroundColor: `${colors.neonPink}20`,
-              borderWidth: '3px',
+              borderWidth: '2px',
               borderColor: colors.neonPink,
               color: colors.offWhite,
               boxShadow: `0 0 30px ${colors.neonPink}60, inset 0 0 10px ${colors.neonPink}20`,
-              clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
+              clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = `${colors.neonPink}30`;
@@ -226,13 +242,13 @@ export default function LandingPage() {
               e.currentTarget.style.boxShadow = `0 0 30px ${colors.neonPink}60, inset 0 0 10px ${colors.neonPink}20`;
             }}
           >
-            &gt;&gt; Explore Grid
+            &gt;&gt; EXPLORE GRID
           </Link>
           <Link
             href="/about"
-            className="px-10 py-4 font-mono font-bold text-sm uppercase tracking-wider
-                     transition-all duration-200 hover:scale-105"
+            className="font-mono font-bold text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105"
             style={{
+              padding: '0.5rem 1rem',
               backgroundColor: `${colors.electricBlue}15`,
               borderWidth: '2px',
               borderColor: colors.electricBlue,
@@ -240,7 +256,7 @@ export default function LandingPage() {
               boxShadow: `0 0 20px ${colors.electricBlue}40`,
             }}
           >
-            [ Info ]
+            [ INFO ]
           </Link>
         </div>
       </div>

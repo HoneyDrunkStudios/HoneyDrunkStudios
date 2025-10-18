@@ -38,11 +38,7 @@ export default function TheGrid({
     const minX = Math.min(...nodes.map(n => n.position.x));
     const maxX = Math.max(...nodes.map(n => n.position.x));
     const minY = Math.min(...nodes.map(n => n.position.y));
-    const maxY = Math.max(...nodes.map(n => n.position.y));
-
     const nodesWidth = maxX - minX;
-    const nodesHeight = maxY - minY;
-
     // Center horizontally, but position higher vertically (top-aligned with margin)
     const centerX = (container.clientWidth - nodesWidth) / 2 - minX;
     const topMargin = 150; // Add some space from the top
@@ -218,11 +214,11 @@ export default function TheGrid({
 
       {/* Controls hint */}
       <div
-        className="absolute bottom-12 left-12 px-6 py-4 rounded-lg
+        className="absolute bottom-16 left-16 px-8 py-5 rounded-lg
                    bg-gunmetal/80 backdrop-blur-sm border border-slate-light/20
-                   text-xs font-mono text-slate-light"
+                   text-sm font-mono text-slate-light leading-relaxed"
       >
-        <div className="mb-2">Drag to pan • Scroll to zoom • Arrow keys to navigate</div>
+        <div className="mb-3">Drag to pan • Scroll to zoom • Arrow keys to navigate</div>
         <div className="opacity-60">
           Press 0 to reset zoom • +/- to zoom in/out
         </div>

@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import Header from '@/components/Header';
+import NeonGridCanvas from '@/components/NeonGridCanvas';
 import { colors } from '@/lib/tokens';
 
 export const metadata = {
@@ -8,31 +9,32 @@ export const metadata = {
 
 export default function BrandPage() {
   const brandColors = [
-    { name: 'Aurum Gold', hex: colors.aurumGold, desc: 'Primary accent' },
-    { name: 'Electric Blue', hex: colors.electricBlue, desc: 'Secondary accent' },
-    { name: 'Violet Core', hex: colors.violetCore, desc: 'Primary brand' },
-    { name: 'Deep Space', hex: colors.deepSpace, desc: 'Background' },
-    { name: 'Gunmetal', hex: colors.gunmetal, desc: 'Surface' },
-    { name: 'Slate Light', hex: colors.slateLight, desc: 'Muted text' },
-    { name: 'Off-White', hex: colors.offWhite, desc: 'Foreground' },
+    { name: 'Neon Pink', hex: colors.neonPink, desc: 'Primary brand accent - headers, borders, hot highlights' },
+    { name: 'Aurum Gold', hex: colors.aurumGold, desc: 'Signature HoneyDrunk hue - accents, highlights' },
+    { name: 'Electric Blue', hex: colors.electricBlue, desc: 'Data strokes, active grid beams, links' },
+    { name: 'Violet Flux', hex: colors.violetFlux, desc: 'Secondary accent - gradients, glows' },
+    { name: 'Deep Space', hex: colors.deepSpace, desc: 'Base background (#0A0E12)' },
+    { name: 'Gunmetal', hex: colors.gunmetal, desc: 'Section contrast, card backgrounds' },
+    { name: 'Slate Light', hex: colors.slateLight, desc: 'Muted secondary text' },
+    { name: 'Off-White', hex: colors.offWhite, desc: 'Default readable text' },
   ];
 
   return (
-    <div
-      className="min-h-screen p-12 md:p-16"
-      style={{ backgroundColor: colors.deepSpace, color: colors.offWhite }}
-    >
-      <div className="max-w-4xl mx-auto space-y-16">
-        {/* Header */}
-        <header className="space-y-6">
-          <Link
-            href="/"
-            className="inline-block text-sm font-mono hover:underline px-3 py-2"
-            style={{ color: colors.electricBlue }}
-          >
-            ← Back to Grid
-          </Link>
-          <h1
+    <div className="relative min-h-screen" style={{ backgroundColor: colors.deepSpace, color: colors.offWhite }}>
+      {/* Background */}
+      <div className="fixed inset-0">
+        <NeonGridCanvas particleCount={100} enableMotion={true} />
+      </div>
+
+      {/* Header */}
+      <Header />
+
+      {/* Content */}
+      <div className="relative z-10 pt-32 px-12 md:px-16 pb-16">
+        <div className="max-w-4xl mx-auto space-y-16">
+          {/* Page Title */}
+          <header className="space-y-6">
+            <h1
             className="text-5xl md:text-6xl font-display font-bold py-4"
             style={{
               background: `linear-gradient(135deg, ${colors.aurumGold} 0%, ${colors.violetCore} 100%)`,
@@ -50,17 +52,22 @@ export default function BrandPage() {
 
         {/* Colors */}
         <section className="space-y-8">
-          <h2
-            className="text-3xl md:text-4xl font-display font-bold py-3"
-            style={{ color: colors.electricBlue }}
-          >
-            Color Palette
-          </h2>
-          <p className="px-2" style={{ color: colors.slateLight }}>
-            Cyberpunk Realism. Neon glows against deep space.
-          </p>
+          <div>
+            <h2
+              className="text-3xl md:text-4xl font-display font-bold"
+              style={{ 
+                color: colors.electricBlue,
+                marginBottom: '1rem'
+              }}
+            >
+              Color Palette
+            </h2>
+            <p className="px-2" style={{ color: colors.slateLight }}>
+              Cyberpunk Realism. Neon glows against deep space.
+            </p>
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6" style={{ marginTop: '2rem' }}>
             {brandColors.map((color) => (
               <div
                 key={color.name}
@@ -99,7 +106,10 @@ export default function BrandPage() {
         <section className="space-y-6">
           <h2
             className="text-3xl font-display font-bold"
-            style={{ color: colors.electricBlue }}
+            style={{ 
+              color: colors.electricBlue,
+              marginBottom: '1.5rem'
+            }}
           >
             Typography
           </h2>
@@ -156,7 +166,10 @@ export default function BrandPage() {
         <section className="space-y-6">
           <h2
             className="text-3xl font-display font-bold"
-            style={{ color: colors.electricBlue }}
+            style={{ 
+              color: colors.electricBlue,
+              marginBottom: '1.5rem'
+            }}
           >
             Voice & Tone
           </h2>
@@ -195,7 +208,10 @@ export default function BrandPage() {
         <section className="space-y-6">
           <h2
             className="text-3xl font-display font-bold"
-            style={{ color: colors.electricBlue }}
+            style={{ 
+              color: colors.electricBlue,
+              marginBottom: '1.5rem'
+            }}
           >
             Taglines
           </h2>
@@ -206,6 +222,7 @@ export default function BrandPage() {
             <div>Build-in-Public • Zero-Bloat • Agents Amplify</div>
           </div>
         </section>
+        </div>
       </div>
     </div>
   );

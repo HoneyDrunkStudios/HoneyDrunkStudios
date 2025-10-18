@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import Header from '@/components/Header';
+import NeonGridCanvas from '@/components/NeonGridCanvas';
 import { colors } from '@/lib/tokens';
 
 export const metadata = {
@@ -30,24 +31,24 @@ export default function SignalPage() {
   ];
 
   return (
-    <div
-      className="min-h-screen p-12 md:p-16"
-      style={{ backgroundColor: colors.deepSpace, color: colors.offWhite }}
-    >
-      <div className="max-w-3xl mx-auto space-y-16">
-        {/* Header */}
-        <header className="space-y-6">
-          <Link
-            href="/"
-            className="inline-block text-sm font-mono hover:underline px-3 py-2"
-            style={{ color: colors.electricBlue }}
-          >
-            ← Back to Grid
-          </Link>
-          <h1
-            className="text-5xl md:text-6xl font-display font-bold py-4"
-            style={{
-              background: `linear-gradient(135deg, ${colors.aurumGold} 0%, ${colors.violetCore} 100%)`,
+    <div className="relative min-h-screen" style={{ backgroundColor: colors.deepSpace, color: colors.offWhite }}>
+      {/* Background */}
+      <div className="fixed inset-0">
+        <NeonGridCanvas particleCount={100} enableMotion={true} />
+      </div>
+
+      {/* Header */}
+      <Header />
+
+      {/* Content */}
+      <div className="relative z-10 pt-32 px-12 md:px-16 pb-16">
+        <div className="max-w-3xl mx-auto space-y-16">
+          {/* Page Title */}
+          <header className="space-y-6">
+            <h1
+              className="text-5xl md:text-6xl font-display font-bold py-4"
+              style={{
+                background: `linear-gradient(135deg, ${colors.aurumGold} 0%, ${colors.violetCore} 100%)`,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
@@ -117,6 +118,7 @@ export default function SignalPage() {
           <p style={{ color: colors.slateLight }}>
             More signals incoming. Subscribe to stay updated.
           </p>
+        </div>
         </div>
       </div>
     </div>

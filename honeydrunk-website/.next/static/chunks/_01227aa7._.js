@@ -915,11 +915,7 @@ function TheGrid(param) {
             const minY = Math.min(...nodes.map({
                 "TheGrid.useEffect.minY": (n)=>n.position.y
             }["TheGrid.useEffect.minY"]));
-            const maxY = Math.max(...nodes.map({
-                "TheGrid.useEffect.maxY": (n)=>n.position.y
-            }["TheGrid.useEffect.maxY"]));
             const nodesWidth = maxX - minX;
-            const nodesHeight = maxY - minY;
             // Center horizontally, but position higher vertically (top-aligned with margin)
             const centerX = (container.clientWidth - nodesWidth) / 2 - minX;
             const topMargin = 150; // Add some space from the top
@@ -1060,7 +1056,7 @@ function TheGrid(param) {
                     className: isHighlighted ? "animate-pulse" : ""
                 }, "connection-".concat(connectionKey), false, {
                     fileName: "[project]/components/TheGrid.tsx",
-                    lineNumber: 151,
+                    lineNumber: 147,
                     columnNumber: 11
                 }, this));
             });
@@ -1076,7 +1072,7 @@ function TheGrid(param) {
             children: allConnections
         }, void 0, false, {
             fileName: "[project]/components/TheGrid.tsx",
-            lineNumber: 170,
+            lineNumber: 166,
             columnNumber: 7
         }, this);
     };
@@ -1107,24 +1103,24 @@ function TheGrid(param) {
                             onClick: ()=>onNodeClick === null || onNodeClick === void 0 ? void 0 : onNodeClick(node)
                         }, node.id, false, {
                             fileName: "[project]/components/TheGrid.tsx",
-                            lineNumber: 209,
+                            lineNumber: 205,
                             columnNumber: 11
                         }, this))
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/TheGrid.tsx",
-                lineNumber: 197,
+                lineNumber: 193,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute bottom-4 left-4 px-6 py-4 rounded-lg bg-gunmetal/80 backdrop-blur-sm border border-slate-light/20 text-xs font-mono text-slate-light",
+                className: "absolute bottom-16 left-16 px-8 py-5 rounded-lg bg-gunmetal/80 backdrop-blur-sm border border-slate-light/20 text-sm font-mono text-slate-light leading-relaxed",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "mb-2",
+                        className: "mb-3",
                         children: "Drag to pan • Scroll to zoom • Arrow keys to navigate"
                     }, void 0, false, {
                         fileName: "[project]/components/TheGrid.tsx",
-                        lineNumber: 225,
+                        lineNumber: 221,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1132,30 +1128,30 @@ function TheGrid(param) {
                         children: "Press 0 to reset zoom • +/- to zoom in/out"
                     }, void 0, false, {
                         fileName: "[project]/components/TheGrid.tsx",
-                        lineNumber: 226,
+                        lineNumber: 222,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/TheGrid.tsx",
-                lineNumber: 220,
+                lineNumber: 216,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute top-4 right-4 px-5 py-3 rounded-lg bg-gunmetal/80 backdrop-blur-sm border border-slate-light/20 text-xs font-mono text-slate-light",
+                className: "absolute top-12 right-12 px-5 py-3 rounded-lg bg-gunmetal/80 backdrop-blur-sm border border-slate-light/20 text-xs font-mono text-slate-light",
                 children: [
                     Math.round(zoom * 100),
                     "%"
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/TheGrid.tsx",
-                lineNumber: 232,
+                lineNumber: 228,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/TheGrid.tsx",
-        lineNumber: 184,
+        lineNumber: 180,
         columnNumber: 5
     }, this);
 }
@@ -1982,414 +1978,11 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
 }
 }),
-"[project]/app/nodes/page.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
-"use strict";
+"[project]/app/nodes/page.tsx [app-client] (ecmascript)", ((__turbopack_context__, module, exports) => {
 
-__turbopack_context__.s([
-    "default",
-    ()=>NodesPage
-]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
-/**
- * /nodes — Full Grid view with filters
- */ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$nodes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/nodes.ts [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$NeonGridCanvas$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/NeonGridCanvas.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$TheGrid$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/TheGrid.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$NodeDrawer$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/NodeDrawer.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$FilterChips$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/FilterChips.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/tokens.ts [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
-;
-var _s = __turbopack_context__.k.signature();
-'use client';
-;
-;
-;
-;
-;
-;
-;
-;
-;
-function NodesContent() {
-    _s();
-    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
-    const searchParams = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSearchParams"])();
-    const [selectedSectors, setSelectedSectors] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    const [selectedSignals, setSelectedSignals] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    const [searchQuery, setSearchQuery] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
-    const [selectedNodeId, setSelectedNodeId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])();
-    const [showFilters, setShowFilters] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
-    // Initialize from URL params
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "NodesContent.useEffect": ()=>{
-            const sectorsParam = searchParams.get('sectors');
-            const signalsParam = searchParams.get('signals');
-            const searchParam = searchParams.get('search');
-            if (sectorsParam) {
-                setSelectedSectors(sectorsParam.split(','));
-            }
-            if (signalsParam) {
-                setSelectedSignals(signalsParam.split(','));
-            }
-            if (searchParam) {
-                setSearchQuery(searchParam);
-            }
-        }
-    }["NodesContent.useEffect"], [
-        searchParams
-    ]);
-    // Update URL when filters change
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "NodesContent.useEffect": ()=>{
-            const params = new URLSearchParams();
-            if (selectedSectors.length > 0) {
-                params.set('sectors', selectedSectors.join(','));
-            }
-            if (selectedSignals.length > 0) {
-                params.set('signals', selectedSignals.join(','));
-            }
-            if (searchQuery) {
-                params.set('search', searchQuery);
-            }
-            const newUrl = params.toString() ? "/nodes?".concat(params.toString()) : '/nodes';
-            router.replace(newUrl, {
-                scroll: false
-            });
-        }
-    }["NodesContent.useEffect"], [
-        selectedSectors,
-        selectedSignals,
-        searchQuery,
-        router
-    ]);
-    const allSectors = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$nodes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAllSectors"])();
-    const allSignals = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$nodes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAllSignals"])();
-    const filteredNodes = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$nodes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["filterNodes"])(selectedSectors.length > 0 ? selectedSectors : undefined, selectedSignals.length > 0 ? selectedSignals : undefined, searchQuery || undefined);
-    const selectedNode = selectedNodeId ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$nodes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getNodeById"])(selectedNodeId) : null;
-    const connectedNodes = selectedNodeId ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$nodes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getConnectedNodes"])(selectedNodeId) : [];
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "relative w-full h-screen overflow-hidden",
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$NeonGridCanvas$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                particleCount: 200,
-                enableMotion: true
-            }, void 0, false, {
-                fileName: "[project]/app/nodes/page.tsx",
-                lineNumber: 78,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
-                className: "absolute top-0 left-0 right-0 z-30 px-12 py-6 border-b backdrop-blur-sm",
-                style: {
-                    borderColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].slateLight, "20"),
-                    backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].deepSpace, "90")
-                },
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex items-center justify-between",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                            href: "/",
-                            className: "text-xl font-display font-bold px-4 py-2",
-                            style: {
-                                background: "linear-gradient(135deg, ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].aurumGold, " 0%, ").concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].violetCore, " 100%)"),
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                                backgroundClip: 'text'
-                            },
-                            children: "← HoneyDrunk"
-                        }, void 0, false, {
-                            fileName: "[project]/app/nodes/page.tsx",
-                            lineNumber: 90,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex items-center gap-6",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                    type: "text",
-                                    value: searchQuery,
-                                    onChange: (e)=>setSearchQuery(e.target.value),
-                                    placeholder: "Search nodes...",
-                                    className: "px-6 py-4 rounded-lg text-sm font-mono focus:outline-none focus:ring-2",
-                                    style: {
-                                        backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].gunmetal, "80"),
-                                        borderWidth: '1px',
-                                        borderColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].slateLight, "40"),
-                                        color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].offWhite
-                                    }
-                                }, void 0, false, {
-                                    fileName: "[project]/app/nodes/page.tsx",
-                                    lineNumber: 105,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: ()=>setShowFilters(!showFilters),
-                                    className: "px-6 py-4 rounded-lg text-sm font-mono transition-all duration-200 hover:scale-105 whitespace-nowrap",
-                                    style: {
-                                        backgroundColor: showFilters ? "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].violetCore, "30") : "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].gunmetal, "80"),
-                                        borderWidth: '1px',
-                                        borderColor: showFilters ? __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].violetCore : "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].slateLight, "40"),
-                                        color: showFilters ? __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].violetCore : __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].slateLight
-                                    },
-                                    children: [
-                                        showFilters ? '✓ ' : '',
-                                        "Filters (",
-                                        filteredNodes.length,
-                                        ")"
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/app/nodes/page.tsx",
-                                    lineNumber: 121,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/app/nodes/page.tsx",
-                            lineNumber: 103,
-                            columnNumber: 11
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/app/nodes/page.tsx",
-                    lineNumber: 89,
-                    columnNumber: 9
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/app/nodes/page.tsx",
-                lineNumber: 81,
-                columnNumber: 7
-            }, this),
-            showFilters && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
-                className: "absolute top-24 left-8 z-30 w-72 p-6 rounded-lg backdrop-blur-sm border space-y-6",
-                style: {
-                    backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].deepSpace, "90"),
-                    borderColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].slateLight, "30")
-                },
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$FilterChips$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                        label: "Sector",
-                        options: allSectors,
-                        selected: selectedSectors,
-                        onChange: setSelectedSectors,
-                        getColor: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$FilterChips$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSectorColor"]
-                    }, void 0, false, {
-                        fileName: "[project]/app/nodes/page.tsx",
-                        lineNumber: 152,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$FilterChips$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                        label: "Signal",
-                        options: allSignals,
-                        selected: selectedSignals,
-                        onChange: setSelectedSignals,
-                        getColor: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$FilterChips$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSignalColor"]
-                    }, void 0, false, {
-                        fileName: "[project]/app/nodes/page.tsx",
-                        lineNumber: 160,
-                        columnNumber: 11
-                    }, this),
-                    (selectedSectors.length > 0 || selectedSignals.length > 0 || searchQuery) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: ()=>{
-                            setSelectedSectors([]);
-                            setSelectedSignals([]);
-                            setSearchQuery('');
-                        },
-                        className: "w-full px-5 py-4 rounded-lg text-xs font-mono transition-all duration-200 hover:scale-105",
-                        style: {
-                            backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].gunmetal, "60"),
-                            borderWidth: '1px',
-                            borderColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].slateLight, "40"),
-                            color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].slateLight
-                        },
-                        children: "Clear All Filters"
-                    }, void 0, false, {
-                        fileName: "[project]/app/nodes/page.tsx",
-                        lineNumber: 171,
-                        columnNumber: 13
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/app/nodes/page.tsx",
-                lineNumber: 144,
-                columnNumber: 9
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "relative z-20 w-full h-full pt-20",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$TheGrid$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                    nodes: filteredNodes,
-                    selectedNodeId: selectedNodeId,
-                    onNodeClick: (node)=>setSelectedNodeId(node.id)
-                }, void 0, false, {
-                    fileName: "[project]/app/nodes/page.tsx",
-                    lineNumber: 194,
-                    columnNumber: 9
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/app/nodes/page.tsx",
-                lineNumber: 193,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute top-24 right-8 z-30 p-6 rounded-lg backdrop-blur-sm border space-y-4",
-                style: {
-                    backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].deepSpace, "90"),
-                    borderColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].slateLight, "30")
-                },
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "text-xs font-mono uppercase tracking-wider",
-                        style: {
-                            color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].slateLight
-                        },
-                        children: "Legend"
-                    }, void 0, false, {
-                        fileName: "[project]/app/nodes/page.tsx",
-                        lineNumber: 210,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "space-y-3",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "text-xs font-mono",
-                            style: {
-                                color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].slateLight
-                            },
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "font-semibold mb-3 text-sm",
-                                    children: "Signals"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/nodes/page.tsx",
-                                    lineNumber: 219,
-                                    columnNumber: 13
-                                }, this),
-                                allSignals.map((signal)=>{
-                                    const descriptions = {
-                                        Seed: 'Queued/Backlog',
-                                        Awake: 'Planning/Starting',
-                                        Wiring: 'Active Development',
-                                        Live: 'Production/Deployed',
-                                        Echo: 'Maintenance/Iteration',
-                                        Archive: 'Retired/Deprecated'
-                                    };
-                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-start gap-3 mb-2",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "w-3 h-3 rounded-full mt-0.5 flex-shrink-0",
-                                                style: {
-                                                    backgroundColor: (0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$FilterChips$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSignalColor"])(signal)
-                                                }
-                                            }, void 0, false, {
-                                                fileName: "[project]/app/nodes/page.tsx",
-                                                lineNumber: 231,
-                                                columnNumber: 19
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "flex-1",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "font-semibold",
-                                                        style: {
-                                                            color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].offWhite
-                                                        },
-                                                        children: signal
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/app/nodes/page.tsx",
-                                                        lineNumber: 236,
-                                                        columnNumber: 21
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "text-xs opacity-75",
-                                                        children: descriptions[signal]
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/app/nodes/page.tsx",
-                                                        lineNumber: 239,
-                                                        columnNumber: 21
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/app/nodes/page.tsx",
-                                                lineNumber: 235,
-                                                columnNumber: 19
-                                            }, this)
-                                        ]
-                                    }, signal, true, {
-                                        fileName: "[project]/app/nodes/page.tsx",
-                                        lineNumber: 230,
-                                        columnNumber: 17
-                                    }, this);
-                                })
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/app/nodes/page.tsx",
-                            lineNumber: 218,
-                            columnNumber: 11
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/app/nodes/page.tsx",
-                        lineNumber: 217,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/app/nodes/page.tsx",
-                lineNumber: 202,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$NodeDrawer$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                node: selectedNode || null,
-                onClose: ()=>setSelectedNodeId(undefined),
-                connectedNodes: connectedNodes
-            }, void 0, false, {
-                fileName: "[project]/app/nodes/page.tsx",
-                lineNumber: 249,
-                columnNumber: 7
-            }, this)
-        ]
-    }, void 0, true, {
-        fileName: "[project]/app/nodes/page.tsx",
-        lineNumber: 76,
-        columnNumber: 5
-    }, this);
-}
-_s(NodesContent, "pyblpenyDJhO5aHybY8l5OgBTXE=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSearchParams"]
-    ];
-});
-_c = NodesContent;
-function NodesPage() {
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Suspense"], {
-        fallback: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "min-h-screen bg-deep-space"
-        }, void 0, false, {
-            fileName: "[project]/app/nodes/page.tsx",
-            lineNumber: 260,
-            columnNumber: 25
-        }, void 0),
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(NodesContent, {}, void 0, false, {
-            fileName: "[project]/app/nodes/page.tsx",
-            lineNumber: 261,
-            columnNumber: 7
-        }, this)
-    }, void 0, false, {
-        fileName: "[project]/app/nodes/page.tsx",
-        lineNumber: 260,
-        columnNumber: 5
-    }, this);
-}
-_c1 = NodesPage;
-var _c, _c1;
-__turbopack_context__.k.register(_c, "NodesContent");
-__turbopack_context__.k.register(_c1, "NodesPage");
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
-}
+const e = new Error("Could not parse module '[project]/app/nodes/page.tsx'\n\nUnterminated regexp literal");
+e.code = 'MODULE_UNPARSABLE';
+throw e;
 }),
 ]);
 

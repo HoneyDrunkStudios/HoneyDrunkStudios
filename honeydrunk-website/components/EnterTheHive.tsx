@@ -167,11 +167,11 @@ export default function EnterTheHive({ onComplete }: EnterTheHiveProps) {
       />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center px-8 w-full max-w-6xl min-h-screen">
+      <div className="relative z-10 flex flex-col items-center justify-center px-8 w-full min-h-screen">
         {/* Tagline */}
-        <div className="text-center w-full flex flex-col items-center justify-center flex-1 gap-4">
+        <div className="text-center w-full flex flex-col items-center justify-center flex-1 gap-2">
           <h1
-            className="text-6xl md:text-8xl font-display font-bold tracking-tight uppercase mb-8"
+            className="text-6xl md:text-8xl font-display font-bold tracking-tight uppercase mb-2"
             style={{
               background: `linear-gradient(135deg, ${colors.neonPink} 0%, ${colors.violetFlux} 50%, ${colors.electricBlue} 100%)`,
               WebkitBackgroundClip: 'text',
@@ -183,7 +183,7 @@ export default function EnterTheHive({ onComplete }: EnterTheHiveProps) {
             HoneyDrunk
           </h1>
           <div
-            className="text-xl md:text-2xl font-mono font-bold tracking-widest uppercase mb-20"
+            className="text-xl md:text-2xl font-mono font-bold tracking-widest uppercase mb-8"
             style={{
               color: colors.aurumGold,
               textShadow: `0 0 20px ${colors.aurumGold}80`,
@@ -195,14 +195,14 @@ export default function EnterTheHive({ onComplete }: EnterTheHiveProps) {
         <button
           onClick={handleEnter}
           onKeyDown={handleKeyPress}
-          className="group relative px-16 py-6 font-mono font-bold text-lg md:text-xl uppercase tracking-wider transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2"
+          className="group relative px-10 py-4 font-mono font-bold text-base md:text-lg uppercase tracking-wider transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2"
           style={{
             backgroundColor: `${colors.neonPink}20`,
-            borderWidth: '3px',
+            borderWidth: '2px',
             borderColor: colors.neonPink,
             color: colors.offWhite,
-            boxShadow: `0 0 60px ${colors.neonPink}80, inset 0 0 20px ${colors.neonPink}20`,
-            clipPath: 'polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)',
+            boxShadow: `0 0 40px ${colors.neonPink}70, inset 0 0 15px ${colors.neonPink}20`,
+            clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
           }}
         >
         {/* Animated glow */}
@@ -220,9 +220,9 @@ export default function EnterTheHive({ onComplete }: EnterTheHiveProps) {
         <div
           className="absolute inset-0 animate-ping opacity-20"
           style={{
-            borderWidth: '3px',
+            borderWidth: '2px',
             borderColor: colors.neonPink,
-            clipPath: 'polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)',
+            clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
           }}
         />
         </button>

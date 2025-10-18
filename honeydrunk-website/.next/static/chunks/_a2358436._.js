@@ -827,13 +827,13 @@ function EnterTheHive(param) {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "relative z-10 flex flex-col items-center justify-center px-8 w-full max-w-6xl min-h-screen",
+                className: "relative z-10 flex flex-col items-center justify-center px-8 w-full min-h-screen",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "text-center w-full flex flex-col items-center justify-center flex-1 gap-4",
+                        className: "text-center w-full flex flex-col items-center justify-center flex-1 gap-2",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                className: "text-6xl md:text-8xl font-display font-bold tracking-tight uppercase mb-8",
+                                className: "text-6xl md:text-8xl font-display font-bold tracking-tight uppercase mb-2",
                                 style: {
                                     background: "linear-gradient(135deg, ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, " 0%, ").concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].violetFlux, " 50%, ").concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue, " 100%)"),
                                     WebkitBackgroundClip: 'text',
@@ -848,7 +848,7 @@ function EnterTheHive(param) {
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "text-xl md:text-2xl font-mono font-bold tracking-widest uppercase mb-20",
+                                className: "text-xl md:text-2xl font-mono font-bold tracking-widest uppercase mb-8",
                                 style: {
                                     color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].aurumGold,
                                     textShadow: "0 0 20px ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].aurumGold, "80")
@@ -862,14 +862,14 @@ function EnterTheHive(param) {
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: handleEnter,
                                 onKeyDown: handleKeyPress,
-                                className: "group relative px-16 py-6 font-mono font-bold text-lg md:text-xl uppercase tracking-wider transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2",
+                                className: "group relative px-10 py-4 font-mono font-bold text-base md:text-lg uppercase tracking-wider transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2",
                                 style: {
                                     backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "20"),
-                                    borderWidth: '3px',
+                                    borderWidth: '2px',
                                     borderColor: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink,
                                     color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].offWhite,
-                                    boxShadow: "0 0 60px ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "80, inset 0 0 20px ").concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "20"),
-                                    clipPath: 'polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)'
+                                    boxShadow: "0 0 40px ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "70, inset 0 0 15px ").concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "20"),
+                                    clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)'
                                 },
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -893,9 +893,9 @@ function EnterTheHive(param) {
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "absolute inset-0 animate-ping opacity-20",
                                         style: {
-                                            borderWidth: '3px',
+                                            borderWidth: '2px',
                                             borderColor: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink,
-                                            clipPath: 'polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)'
+                                            clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)'
                                         }
                                     }, void 0, false, {
                                         fileName: "[project]/components/EnterTheHive.tsx",
@@ -1245,11 +1245,7 @@ function TheGrid(param) {
             const minY = Math.min(...nodes.map({
                 "TheGrid.useEffect.minY": (n)=>n.position.y
             }["TheGrid.useEffect.minY"]));
-            const maxY = Math.max(...nodes.map({
-                "TheGrid.useEffect.maxY": (n)=>n.position.y
-            }["TheGrid.useEffect.maxY"]));
             const nodesWidth = maxX - minX;
-            const nodesHeight = maxY - minY;
             // Center horizontally, but position higher vertically (top-aligned with margin)
             const centerX = (container.clientWidth - nodesWidth) / 2 - minX;
             const topMargin = 150; // Add some space from the top
@@ -1390,7 +1386,7 @@ function TheGrid(param) {
                     className: isHighlighted ? "animate-pulse" : ""
                 }, "connection-".concat(connectionKey), false, {
                     fileName: "[project]/components/TheGrid.tsx",
-                    lineNumber: 151,
+                    lineNumber: 147,
                     columnNumber: 11
                 }, this));
             });
@@ -1406,7 +1402,7 @@ function TheGrid(param) {
             children: allConnections
         }, void 0, false, {
             fileName: "[project]/components/TheGrid.tsx",
-            lineNumber: 170,
+            lineNumber: 166,
             columnNumber: 7
         }, this);
     };
@@ -1437,24 +1433,24 @@ function TheGrid(param) {
                             onClick: ()=>onNodeClick === null || onNodeClick === void 0 ? void 0 : onNodeClick(node)
                         }, node.id, false, {
                             fileName: "[project]/components/TheGrid.tsx",
-                            lineNumber: 209,
+                            lineNumber: 205,
                             columnNumber: 11
                         }, this))
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/TheGrid.tsx",
-                lineNumber: 197,
+                lineNumber: 193,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute bottom-12 left-12 px-6 py-4 rounded-lg bg-gunmetal/80 backdrop-blur-sm border border-slate-light/20 text-xs font-mono text-slate-light",
+                className: "absolute bottom-16 left-16 px-8 py-5 rounded-lg bg-gunmetal/80 backdrop-blur-sm border border-slate-light/20 text-sm font-mono text-slate-light leading-relaxed",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "mb-2",
+                        className: "mb-3",
                         children: "Drag to pan • Scroll to zoom • Arrow keys to navigate"
                     }, void 0, false, {
                         fileName: "[project]/components/TheGrid.tsx",
-                        lineNumber: 225,
+                        lineNumber: 221,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1462,13 +1458,13 @@ function TheGrid(param) {
                         children: "Press 0 to reset zoom • +/- to zoom in/out"
                     }, void 0, false, {
                         fileName: "[project]/components/TheGrid.tsx",
-                        lineNumber: 226,
+                        lineNumber: 222,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/TheGrid.tsx",
-                lineNumber: 220,
+                lineNumber: 216,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1479,13 +1475,13 @@ function TheGrid(param) {
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/TheGrid.tsx",
-                lineNumber: 232,
+                lineNumber: 228,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/TheGrid.tsx",
-        lineNumber: 184,
+        lineNumber: 180,
         columnNumber: 5
     }, this);
 }
@@ -2218,6 +2214,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
  * LandingPage — Main landing experience
  * Orchestrates gate → grid reveal sequence
  */ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/image.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$nodes$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/nodes.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$NeonGridCanvas$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/NeonGridCanvas.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$EnterTheHive$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/EnterTheHive.tsx [app-client] (ecmascript)");
@@ -2228,6 +2225,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app
 ;
 var _s = __turbopack_context__.k.signature();
 'use client';
+;
 ;
 ;
 ;
@@ -2251,14 +2249,14 @@ function LandingPage() {
                     enableMotion: true
                 }, void 0, false, {
                     fileName: "[project]/components/LandingPage.tsx",
-                    lineNumber: 28,
+                    lineNumber: 29,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$EnterTheHive$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                     onComplete: ()=>setHasEntered(true)
                 }, void 0, false, {
                     fileName: "[project]/components/LandingPage.tsx",
-                    lineNumber: 29,
+                    lineNumber: 30,
                     columnNumber: 9
                 }, this)
             ]
@@ -2274,19 +2272,19 @@ function LandingPage() {
                     enableMotion: true
                 }, void 0, false, {
                     fileName: "[project]/components/LandingPage.tsx",
-                    lineNumber: 38,
+                    lineNumber: 39,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/LandingPage.tsx",
-                lineNumber: 37,
+                lineNumber: 38,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "relative z-10 w-full h-full p-8",
+                className: "relative z-10 w-full h-full",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
-                        className: "absolute z-20 px-16 py-6 border-b-2 backdrop-blur-sm",
+                        className: "absolute z-20 border-b-2 backdrop-blur-sm",
                         style: {
                             top: 0,
                             left: 0,
@@ -2296,26 +2294,49 @@ function LandingPage() {
                             boxShadow: "0 4px 20px ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "20")
                         },
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "max-w-7xl mx-auto px-8 flex items-center justify-between",
+                            className: "w-full px-8 py-4 flex items-center justify-between",
                             children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                    className: "text-2xl font-mono font-bold px-6 py-3 uppercase tracking-wider",
-                                    style: {
-                                        color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink,
-                                        textShadow: "0 0 20px ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "80")
-                                    },
-                                    children: "[HONEYDRUNK]"
-                                }, void 0, false, {
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex items-center gap-3",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                            src: "/honeydrunk.png",
+                                            alt: "HoneyDrunk Logo",
+                                            width: 40,
+                                            height: 40,
+                                            className: "w-10 h-10",
+                                            style: {
+                                                filter: 'drop-shadow(0 0 10px rgba(255, 42, 109, 0.5))'
+                                            }
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/LandingPage.tsx",
+                                            lineNumber: 58,
+                                            columnNumber: 13
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                                            className: "text-2xl font-mono font-bold uppercase tracking-wider",
+                                            style: {
+                                                color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink,
+                                                textShadow: "0 0 20px ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "80")
+                                            },
+                                            children: "[HONEYDRUNK]"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/LandingPage.tsx",
+                                            lineNumber: 68,
+                                            columnNumber: 13
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
                                     fileName: "[project]/components/LandingPage.tsx",
                                     lineNumber: 57,
                                     columnNumber: 11
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
-                                    className: "flex gap-8 text-sm font-mono font-bold uppercase tracking-wider",
+                                    className: "flex gap-6 text-sm font-mono font-bold uppercase tracking-wider",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                             href: "/nodes",
-                                            className: "transition-all px-6 py-3 border",
+                                            className: "transition-all px-4 py-2 border",
                                             style: {
                                                 color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue,
                                                 borderColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue, "40"),
@@ -2336,12 +2357,12 @@ function LandingPage() {
                                             children: "GRID"
                                         }, void 0, false, {
                                             fileName: "[project]/components/LandingPage.tsx",
-                                            lineNumber: 68,
+                                            lineNumber: 80,
                                             columnNumber: 13
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                             href: "/signal",
-                                            className: "transition-all px-6 py-3 border",
+                                            className: "transition-all px-4 py-2 border",
                                             style: {
                                                 color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue,
                                                 borderColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue, "40"),
@@ -2362,12 +2383,12 @@ function LandingPage() {
                                             children: "SIGNAL"
                                         }, void 0, false, {
                                             fileName: "[project]/components/LandingPage.tsx",
-                                            lineNumber: 91,
+                                            lineNumber: 103,
                                             columnNumber: 13
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                             href: "/brand",
-                                            className: "transition-all px-6 py-3 border",
+                                            className: "transition-all px-4 py-2 border",
                                             style: {
                                                 color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue,
                                                 borderColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue, "40"),
@@ -2388,12 +2409,12 @@ function LandingPage() {
                                             children: "BRAND"
                                         }, void 0, false, {
                                             fileName: "[project]/components/LandingPage.tsx",
-                                            lineNumber: 114,
+                                            lineNumber: 126,
                                             columnNumber: 13
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                             href: "/about",
-                                            className: "transition-all px-6 py-3 border",
+                                            className: "transition-all px-4 py-2 border",
                                             style: {
                                                 color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue,
                                                 borderColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue, "40"),
@@ -2414,13 +2435,13 @@ function LandingPage() {
                                             children: "ABOUT"
                                         }, void 0, false, {
                                             fileName: "[project]/components/LandingPage.tsx",
-                                            lineNumber: 137,
+                                            lineNumber: 149,
                                             columnNumber: 13
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/LandingPage.tsx",
-                                    lineNumber: 67,
+                                    lineNumber: 79,
                                     columnNumber: 11
                                 }, this)
                             ]
@@ -2431,7 +2452,7 @@ function LandingPage() {
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/LandingPage.tsx",
-                        lineNumber: 44,
+                        lineNumber: 45,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2442,16 +2463,16 @@ function LandingPage() {
                             onNodeClick: (node)=>setSelectedNodeId(node.id)
                         }, void 0, false, {
                             fileName: "[project]/components/LandingPage.tsx",
-                            lineNumber: 166,
+                            lineNumber: 178,
                             columnNumber: 9
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/LandingPage.tsx",
-                        lineNumber: 165,
+                        lineNumber: 177,
                         columnNumber: 7
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "absolute bottom-20 right-20 z-20 max-w-2xl px-12 py-10 backdrop-blur-sm border-2",
+                        className: "absolute bottom-8 right-8 z-20 max-w-2xl p-6 backdrop-blur-sm border-2",
                         style: {
                             backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].deepSpace, "95"),
                             borderColor: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink,
@@ -2460,7 +2481,7 @@ function LandingPage() {
                         },
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                className: "text-2xl font-mono font-bold mb-6 uppercase tracking-wide",
+                                className: "text-2xl font-mono font-bold mb-4 uppercase tracking-wide",
                                 style: {
                                     color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink,
                                     textShadow: "0 0 20px ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "80")
@@ -2468,11 +2489,11 @@ function LandingPage() {
                                 children: ">> SYSTEM.STATUS"
                             }, void 0, false, {
                                 fileName: "[project]/components/LandingPage.tsx",
-                                lineNumber: 184,
+                                lineNumber: 196,
                                 columnNumber: 9
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-sm mb-6 leading-relaxed font-mono",
+                                className: "text-sm mb-4 leading-loose font-mono",
                                 style: {
                                     color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue
                                 },
@@ -2484,13 +2505,13 @@ function LandingPage() {
                                         children: ">"
                                     }, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 197,
+                                        lineNumber: 209,
                                         columnNumber: 11
                                     }, this),
                                     " Build-in-Public.exe --running",
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 197,
+                                        lineNumber: 209,
                                         columnNumber: 94
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2500,13 +2521,13 @@ function LandingPage() {
                                         children: ">"
                                     }, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 198,
+                                        lineNumber: 210,
                                         columnNumber: 11
                                     }, this),
                                     " Zero-Bloat Architecture --enabled",
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 198,
+                                        lineNumber: 210,
                                         columnNumber: 98
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2516,45 +2537,47 @@ function LandingPage() {
                                         children: ">"
                                     }, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 199,
+                                        lineNumber: 211,
                                         columnNumber: 11
                                     }, this),
                                     " AI Agents --amplifying",
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 199,
+                                        lineNumber: 211,
                                         columnNumber: 87
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/LandingPage.tsx",
-                                lineNumber: 193,
+                                lineNumber: 205,
                                 columnNumber: 9
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-sm mb-6 leading-relaxed",
+                                className: "text-sm leading-relaxed",
                                 style: {
-                                    color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].slateLight
+                                    color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].slateLight,
+                                    marginBottom: '1.5rem'
                                 },
                                 children: "A living grid of interconnected nodes. Every project earns its keep. Every line of code tells a story. Structure meets soul."
                             }, void 0, false, {
                                 fileName: "[project]/components/LandingPage.tsx",
-                                lineNumber: 201,
+                                lineNumber: 213,
                                 columnNumber: 9
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex gap-6",
+                                className: "flex gap-3",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                         href: "/nodes",
-                                        className: "px-10 py-4 font-mono font-bold text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105 group",
+                                        className: "font-mono font-bold text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105 group",
                                         style: {
+                                            padding: '0.5rem 1rem',
                                             backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "20"),
-                                            borderWidth: '3px',
+                                            borderWidth: '2px',
                                             borderColor: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink,
                                             color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].offWhite,
                                             boxShadow: "0 0 30px ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "60, inset 0 0 10px ").concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "20"),
-                                            clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)'
+                                            clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)'
                                         },
                                         onMouseEnter: (e)=>{
                                             e.currentTarget.style.backgroundColor = "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "30");
@@ -2564,38 +2587,39 @@ function LandingPage() {
                                             e.currentTarget.style.backgroundColor = "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "20");
                                             e.currentTarget.style.boxShadow = "0 0 30px ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "60, inset 0 0 10px ").concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].neonPink, "20");
                                         },
-                                        children: ">> Explore Grid"
+                                        children: ">> EXPLORE GRID"
                                     }, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 209,
+                                        lineNumber: 224,
                                         columnNumber: 11
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                         href: "/about",
-                                        className: "px-10 py-4 font-mono font-bold text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105",
+                                        className: "font-mono font-bold text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105",
                                         style: {
+                                            padding: '0.5rem 1rem',
                                             backgroundColor: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue, "15"),
                                             borderWidth: '2px',
                                             borderColor: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue,
                                             color: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue,
                                             boxShadow: "0 0 20px ".concat(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$tokens$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["colors"].electricBlue, "40")
                                         },
-                                        children: "[ Info ]"
+                                        children: "[ INFO ]"
                                     }, void 0, false, {
                                         fileName: "[project]/components/LandingPage.tsx",
-                                        lineNumber: 231,
+                                        lineNumber: 247,
                                         columnNumber: 11
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/LandingPage.tsx",
-                                lineNumber: 208,
+                                lineNumber: 223,
                                 columnNumber: 9
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/LandingPage.tsx",
-                        lineNumber: 174,
+                        lineNumber: 186,
                         columnNumber: 7
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$NodeDrawer$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -2604,19 +2628,19 @@ function LandingPage() {
                         connectedNodes: connectedNodes
                     }, void 0, false, {
                         fileName: "[project]/components/LandingPage.tsx",
-                        lineNumber: 249,
+                        lineNumber: 265,
                         columnNumber: 7
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/LandingPage.tsx",
-                lineNumber: 42,
+                lineNumber: 43,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/LandingPage.tsx",
-        lineNumber: 35,
+        lineNumber: 36,
         columnNumber: 5
     }, this);
 }
