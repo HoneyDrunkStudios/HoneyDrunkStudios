@@ -49,7 +49,7 @@ export default function FilterChips<T extends string>({
             <button
               key={option}
               onClick={() => toggleOption(option)}
-              className="px-5 py-2.5 rounded-full text-xs font-mono
+              className="px-5 py-2.5 rounded-full text-xs font-mono cursor-pointer
                        transition-all duration-200 hover:scale-105"
               style={{
                 backgroundColor: isSelected

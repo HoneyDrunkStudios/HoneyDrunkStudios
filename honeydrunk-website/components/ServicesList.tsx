@@ -29,9 +29,9 @@ export default function ServicesList({ nodesBySector, sectorColors, signalColors
   return (
     <>
       {Object.entries(nodesBySector).map(([sector, nodes]) => (
-        <section key={sector} className="space-y-4 md:space-y-6">
+        <section key={sector} className="space-y-6 md:space-y-8 mb-12 md:mb-16">
           <h2
-            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-4 md:pt-8 pb-3 md:pb-4 border-b"
+            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-6 md:pt-10 pb-4 md:pb-6 border-b-2"
             style={{
               color: sectorColors[sector] || colors.electricBlue,
               borderColor: `${sectorColors[sector] || colors.electricBlue}30`,
@@ -40,7 +40,7 @@ export default function ServicesList({ nodesBySector, sectorColors, signalColors
             {sector}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {nodes.map((node) => (
               <button
                 key={node.id}

@@ -6,6 +6,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { getAllSectors, getAllSignals, filterNodes, getNodeById, getConnectedNodes } from '@/lib/nodes';
 import type { Sector, Signal } from '@/lib/types';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
@@ -110,7 +111,7 @@ function NodesContent() {
         {/* Filter toggle */}
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="px-6 py-4 rounded-lg text-sm font-mono
+          className="px-6 py-4 rounded-lg text-sm font-mono cursor-pointer
                    transition-all duration-200 hover:scale-105 whitespace-nowrap"
           style={{
             backgroundColor: showFilters
@@ -163,7 +164,7 @@ function NodesContent() {
                 setSelectedSignals([]);
                 setSearchQuery('');
               }}
-              className="w-full px-4 py-3 rounded-lg text-xs font-mono
+              className="w-full px-4 py-3 rounded-lg text-xs font-mono cursor-pointer
                        transition-all duration-200 hover:scale-105"
               style={{
                 backgroundColor: `${colors.gunmetal}60`,
@@ -192,7 +193,7 @@ function NodesContent() {
         className="absolute right-6 z-10
                    p-4 rounded-lg backdrop-blur-sm border space-y-3"
         style={{
-          top: '10.5rem',
+          top: '15rem',
           backgroundColor: `${colors.deepSpace}90`,
           borderColor: `${colors.slateLight}30`,
         }}
@@ -241,6 +242,34 @@ function NodesContent() {
         onClose={() => setSelectedNodeId(undefined)}
         connectedNodes={connectedNodes}
       />
+
+      {/* Back to Landing button */}
+      <div
+        className="absolute bottom-8 right-8 z-20 max-w-xs
+                   p-4 backdrop-blur-sm border-2 hidden md:block"
+        style={{
+          backgroundColor: `${colors.deepSpace}95`,
+          borderColor: colors.electricBlue,
+          boxShadow: `0 0 30px ${colors.electricBlue}40, inset 0 0 20px ${colors.electricBlue}10`,
+          clipPath: 'polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)',
+        }}
+      >
+        <Link
+          href="/"
+          className="font-mono font-bold text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105 cursor-pointer flex items-center justify-center"
+          style={{
+            padding: '0.5rem 1rem',
+            backgroundColor: `${colors.electricBlue}20`,
+            borderWidth: '2px',
+            borderColor: colors.electricBlue,
+            color: colors.offWhite,
+            boxShadow: `0 0 20px ${colors.electricBlue}60, inset 0 0 10px ${colors.electricBlue}20`,
+            clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)',
+          }}
+        >
+          &lt;&lt; BACK TO LANDING
+        </Link>
+      </div>
     </div>
   );
 }

@@ -203,7 +203,7 @@ export default function EnterTheHive({ onComplete }: EnterTheHiveProps) {
         <button
           onClick={handleEnter}
           onKeyDown={handleKeyPress}
-          className="group relative px-10 py-4 font-mono font-bold text-base md:text-lg uppercase tracking-wider transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2"
+          className="group relative px-10 py-4 font-mono font-bold text-base md:text-lg uppercase tracking-wider cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2"
           style={{
             backgroundColor: `${colors.neonPink}20`,
             borderWidth: '2px',

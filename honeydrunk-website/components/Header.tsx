@@ -34,7 +34,7 @@ export default function Header() {
       >
         <div className="w-full px-4 md:px-8 py-3 md:py-4 flex items-center justify-between">
           <Link
-            href="/"
+            href={isMobile ? "/services" : "/"}
             className="flex items-center gap-2 md:gap-3 transition-opacity hover:opacity-80"
           >
             <Image
@@ -60,22 +60,20 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-4 lg:gap-6 text-sm font-mono font-bold uppercase tracking-wider">
-            {navLinks
-              .filter((link) => !link.hideOnMobile)
-              .map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="nav-link transition-all duration-200 px-3 lg:px-4 py-2 border hover:shadow-[0_0_15px_rgba(255,42,109,0.6)]"
-                  style={{
-                    color: colors.electricBlue,
-                    borderColor: `${colors.electricBlue}40`,
-                    backgroundColor: `${colors.electricBlue}10`,
-                  }}
-                >
-                  {link.label}
-                </Link>
-              ))}
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="nav-link transition-all duration-200 px-3 lg:px-4 py-2 border hover:shadow-[0_0_15px_rgba(255,42,109,0.6)]"
+                style={{
+                  color: colors.electricBlue,
+                  borderColor: `${colors.electricBlue}40`,
+                  backgroundColor: `${colors.electricBlue}10`,
+                }}
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
 
           {/* Mobile Hamburger Button */}

@@ -13,8 +13,12 @@ interface NodeGlyphProps {
   node: VisualNode;
   isSelected?: boolean;
   isConnected?: boolean;
-  onClick?: () => void;
+  onClick?: (e?: React.MouseEvent) => void;
   onHover?: (hovered: boolean) => void;
+  onDragStart?: () => void;
+  onDrag?: (deltaX: number, deltaY: number) => void;
+  onDragEnd?: () => void;
+  zoom?: number;
 }
 
 export default function NodeGlyph({
@@ -23,10 +27,17 @@ export default function NodeGlyph({
   isConnected = false,
   onClick,
   onHover,
+  onDragStart,
+  onDrag,
+  onDragEnd,
+  zoom = 1,
 }: NodeGlyphProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [pulsePhase, setPulsePhase] = useState(0);
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [dragDistance, setDragDistance] = useState(0);
 
   // Pulse animation
   useEffect(() => {
@@ -63,6 +74,49 @@ export default function NodeGlyph({
     onHover?.(false);
   };
 
+  // Drag handlers
+  const handleDragMouseDown = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent grid panning
+    setIsDragging(true);
+    setDragDistance(0);
+    setDragStart({ x: e.clientX, y: e.clientY });
+    onDragStart?.();
+  };
+
+  useEffect(() => {
+    if (!isDragging) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const deltaX = (e.clientX - dragStart.x) / zoom;
+      const deltaY = (e.clientY - dragStart.y) / zoom;
+
+      // Track total distance moved
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+      setDragDistance((prev) => prev + distance);
+
+      onDrag?.(deltaX, deltaY);
+      setDragStart({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+      onDragEnd?.();
+
+      // Reset dragDistance after a short delay to allow click handler to check it
+      setTimeout(() => {
+        setDragDistance(0);
+      }, 50);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging, dragStart, zoom, onDrag, onDragEnd]);
+
   const baseSize = 80 + (node.energy || 50) * 0.8; // 80-160px based on energy
   const pulseScale = 1 + Math.sin(pulsePhase) * 0.05 * node.signalVisuals.glowIntensity;
   const hoverScale = isHovered ? 1.1 : 1;
@@ -72,17 +126,27 @@ export default function NodeGlyph({
   const glowSize = baseSize * 2 * node.signalVisuals.glowIntensity;
   const glowOpacity = node.signalVisuals.opacity * 0.4;
 
+  const handleClick = (e: React.MouseEvent) => {
+    // Only trigger onClick if we haven't dragged (dragDistance less than 5px)
+    if (dragDistance < 5) {
+      onClick?.(e);
+    }
+  };
+
   return (
     <div
-      className="absolute cursor-pointer transition-all duration-200"
+      className={`absolute ${isDragging ? '' : 'transition-all duration-200'}`}
       style={{
         left: `${node.position.x}px`,
         top: `${node.position.y}px`,
         transform: `translate(-50%, -50%) scale(${finalScale})`,
         opacity: node.signalVisuals.opacity,
-        zIndex: isSelected ? 100 : isHovered ? 50 : 10,
+        zIndex: isSelected ? 100 : isHovered ? 50 : isDragging ? 150 : 10,
+        cursor: isDragging ? 'grabbing' : 'grab',
+        transition: isDragging ? 'none' : undefined,
       }}
-      onClick={onClick}
+      onClick={handleClick}
+      onMouseDown={handleDragMouseDown}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       role="button"

@@ -1,6 +1,7 @@
 import Header from '@/components/Header';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import ServicesList from '@/components/ServicesList';
+import SignalLegend from '@/components/SignalLegend';
 import { colors } from '@/lib/tokens';
 import { getNodes } from '@/lib/nodes';
 import type { VisualNode, Sector } from '@/lib/types';
@@ -51,10 +52,10 @@ export default function ServicesPage() {
       <Header />
 
       {/* Content */}
-      <div className="relative z-10 pt-20 md:pt-32 px-4 md:px-8 lg:px-16 pb-16">
-        <div className="max-w-6xl mx-auto space-y-10 md:space-y-16">
+      <div className="relative z-10 pt-20 md:pt-32 px-4 md:px-8 lg:px-16 pb-20 md:pb-24">
+        <div className="max-w-6xl mx-auto space-y-12 md:space-y-20">
           {/* Page Title */}
-          <header className="space-y-4 md:space-y-6">
+          <header className="space-y-5 md:space-y-8 mb-8 md:mb-12">
             <h1
               className="text-3xl md:text-5xl lg:text-6xl font-display font-bold py-2 md:py-4"
               style={{
@@ -72,12 +73,22 @@ export default function ServicesPage() {
           </header>
 
           {/* Sectors */}
-          <ServicesList 
+          <ServicesList
             nodesBySector={nodesBySector}
             sectorColors={sectorColors}
             signalColors={signalColors}
           />
         </div>
+      </div>
+
+      {/* Signal Legend - Desktop Only (floating right) */}
+      <div className="hidden md:block fixed right-6 z-30" style={{ top: '8rem' }}>
+        <SignalLegend signalColors={signalColors} />
+      </div>
+
+      {/* Signal Legend - Mobile Only (floating bottom) */}
+      <div className="md:hidden fixed bottom-4 left-4 right-4 z-30">
+        <SignalLegend signalColors={signalColors} />
       </div>
     </div>
   );

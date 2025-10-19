@@ -54,14 +54,6 @@ export default function NeonGridCanvas({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Set canvas size
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
     // Initialize particles
     const initParticles = () => {
       const particles: Particle[] = [];
@@ -85,7 +77,22 @@ export default function NeonGridCanvas({
       particlesRef.current = particles;
     };
 
+    // Set canvas size and reinitialize particles
+    let resizeTimeout: NodeJS.Timeout;
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      // Debounce particle reinitialization
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        initParticles();
+      }, 250);
+    };
+
+    resizeCanvas();
     initParticles();
+    window.addEventListener('resize', resizeCanvas);
 
     // Animation loop
     const animate = () => {
@@ -191,6 +198,7 @@ export default function NeonGridCanvas({
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
+      clearTimeout(resizeTimeout);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }

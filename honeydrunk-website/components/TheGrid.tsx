@@ -16,6 +16,8 @@ interface TheGridProps {
   className?: string;
 }
 
+const STORAGE_KEY = 'honeydrunk_node_positions';
+
 export default function TheGrid({
   nodes,
   selectedNodeId,
@@ -28,10 +30,49 @@ export default function TheGrid({
   const [isPanning, setIsPanning] = useState(false);
   const [panStart, setPanStart] = useState({ x: 0, y: 0 });
   const [hoveredNodeId, setHoveredNodeId] = useState<string | undefined>();
+  const [nodePositions, setNodePositions] = useState<Record<string, { x: number; y: number }>>({});
+  const [isDraggingNode, setIsDraggingNode] = useState(false);
+
+  // Load saved positions from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        setNodePositions(JSON.parse(saved));
+      }
+    } catch (error) {
+      console.error('Failed to load node positions:', error);
+    }
+  }, []);
+
+  // Save positions to localStorage whenever they change
+  useEffect(() => {
+    if (Object.keys(nodePositions).length > 0) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(nodePositions));
+      } catch (error) {
+        console.error('Failed to save node positions:', error);
+      }
+    }
+  }, [nodePositions]);
+
+  // Get node with custom position
+  const getNodePosition = (node: VisualNode) => {
+    return nodePositions[node.id] || node.position;
+  };
+
+  // Update node positions with merged custom positions
+  const nodesWithPositions = nodes.map((node) => ({
+    ...node,
+    position: getNodePosition(node),
+  }));
 
   // Center view on mount
+  const hasInitialized = useRef(false);
+
   useEffect(() => {
     if (!containerRef.current || nodes.length === 0) return;
+    if (hasInitialized.current) return; // Only run once on mount
 
     const container = containerRef.current;
 
@@ -46,11 +87,37 @@ export default function TheGrid({
     const centerY = topMargin - minY;
 
     setPan({ x: centerX, y: centerY });
+    hasInitialized.current = true;
   }, [nodes]);
+
+  // Node drag handlers
+  const handleNodeDragStart = () => {
+    setIsDraggingNode(true);
+  };
+
+  const handleNodeDrag = (nodeId: string, deltaX: number, deltaY: number) => {
+    setNodePositions((prev) => {
+      const currentPos = prev[nodeId] || nodes.find((n) => n.id === nodeId)?.position;
+      if (!currentPos) return prev;
+
+      return {
+        ...prev,
+        [nodeId]: {
+          x: currentPos.x + deltaX,
+          y: currentPos.y + deltaY,
+        },
+      };
+    });
+  };
+
+  const handleNodeDragEnd = () => {
+    setIsDraggingNode(false);
+  };
 
   // Mouse/touch pan handlers
   const handleMouseDown = (e: React.MouseEvent) => {
     if (e.button !== 0) return; // Only left click
+    if (isDraggingNode) return; // Don't pan while dragging a node
     setIsPanning(true);
     setPanStart({
       x: e.clientX - pan.x,
@@ -59,7 +126,7 @@ export default function TheGrid({
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isPanning) return;
+    if (!isPanning || isDraggingNode) return;
     setPan({
       x: e.clientX - panStart.x,
       y: e.clientY - panStart.y,
@@ -119,7 +186,7 @@ export default function TheGrid({
   }, []);
 
   // Get connected node IDs
-  const selectedNode = nodes.find((n) => n.id === selectedNodeId);
+  const selectedNode = nodesWithPositions.find((n) => n.id === selectedNodeId);
   const connectedNodeIds = new Set(selectedNode?.connections || []);
 
   // Draw connection lines - now showing ALL connections
@@ -127,11 +194,11 @@ export default function TheGrid({
     const drawnConnections = new Set<string>();
     const allConnections: React.ReactElement[] = [];
 
-    nodes.forEach((node) => {
+    nodesWithPositions.forEach((node) => {
       if (!node.connections) return;
 
       node.connections.forEach((connectedId) => {
-        const connectedNode = nodes.find((n) => n.id === connectedId);
+        const connectedNode = nodesWithPositions.find((n) => n.id === connectedId);
         if (!connectedNode) return;
 
         // Create a unique key for this connection pair (alphabetically sorted to avoid duplicates)
@@ -221,7 +288,7 @@ export default function TheGrid({
         {renderConnections()}
 
         {/* Nodes */}
-        {nodes.map((node) => (
+        {nodesWithPositions.map((node) => (
           <NodeGlyph
             key={node.id}
             node={node}
@@ -229,6 +296,10 @@ export default function TheGrid({
             isConnected={connectedNodeIds.has(node.id)}
             onClick={() => onNodeClick?.(node)}
             onHover={(hovered) => setHoveredNodeId(hovered ? node.id : undefined)}
+            onDragStart={handleNodeDragStart}
+            onDrag={(deltaX, deltaY) => handleNodeDrag(node.id, deltaX, deltaY)}
+            onDragEnd={handleNodeDragEnd}
+            zoom={zoom}
           />
         ))}
       </div>
@@ -239,17 +310,27 @@ export default function TheGrid({
                    bg-gunmetal/80 backdrop-blur-sm border border-slate-light/20
                    text-sm font-mono text-slate-light leading-relaxed"
       >
-        <div className="mb-3">Drag to pan • Scroll to zoom • Arrow keys to navigate</div>
+        <div className="mb-3">Drag nodes to reposition • Drag canvas to pan • Scroll to zoom</div>
         <div className="opacity-60">
-          Press 0 to reset zoom • +/- to zoom in/out
+          Arrow keys to navigate • Press 0 to reset zoom • +/- to zoom in/out
         </div>
+        <button
+          onClick={() => setNodePositions({})}
+          className="mt-3 px-4 py-2 rounded border text-xs cursor-pointer hover:bg-slate-light/10 transition-colors"
+          style={{
+            borderColor: 'rgba(148, 163, 184, 0.3)',
+            color: 'rgb(148, 163, 184)',
+          }}
+        >
+          Reset Node Positions
+        </button>
       </div>
 
       {/* Zoom indicator */}
       <div
-        className="absolute bottom-6 right-6 px-5 py-3 rounded-lg
+        className="absolute top-24 right-6 px-5 py-3 rounded-lg
                    bg-gunmetal/80 backdrop-blur-sm border border-slate-light/20
-                   text-xs font-mono text-slate-light"
+                   text-xs font-mono text-slate-light z-50"
       >
         {Math.round(zoom * 100)}%
       </div>
