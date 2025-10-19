@@ -9,7 +9,7 @@ import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 're
 import { motion, AnimatePresence } from 'framer-motion';
 import { colors } from '@/lib/tokens';
 import type { HexGridOverlayHandle } from './HexGridOverlay';
-import type { EnergyLinesHandle } from './EnergyLines';
+import type { DistributedNetworkHandle } from './DistributedNetwork';
 
 export interface HeroCopyHandle {
   showEmblem: () => void;
@@ -23,11 +23,11 @@ interface HeroCopyProps {
   onExploreGrid?: () => void;
   onFollowSignal?: () => void;
   hexGridRef?: React.RefObject<HexGridOverlayHandle | null>;
-  energyLinesRef?: React.RefObject<EnergyLinesHandle | null>;
+  distributedRef?: React.RefObject<DistributedNetworkHandle | null>;
 }
 
 const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
-  function HeroCopy({ onExploreGrid, onFollowSignal, hexGridRef, energyLinesRef }, ref) {
+  function HeroCopy({ onExploreGrid, onFollowSignal, hexGridRef, distributedRef }, ref) {
     const [emblemVisible, setEmblemVisible] = useState(false);
     const [headlineVisible, setHeadlineVisible] = useState(false);
     const [sublineVisible, setSublineVisible] = useState(false);
@@ -40,8 +40,8 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
 
     const fullHeadline = 'Structure meets soul. Code meets art.';
 
-    // Trigger ripple and energy pulse on button hover
-    const triggerButtonEffects = (buttonRef: React.RefObject<HTMLButtonElement | null>) => {
+    // Trigger ripple on button hover
+    const triggerButtonEffects = (buttonRef: React.RefObject<HTMLElement | null>) => {
       if (!buttonRef.current) return;
 
       const rect = buttonRef.current.getBoundingClientRect();
@@ -50,9 +50,8 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
 
       // Trigger hex grid ripple
       hexGridRef?.current?.triggerRipple(x, y);
-
-      // Trigger energy lines pulse
-      energyLinesRef?.current?.triggerHoverPulse(x, y);
+      // Trigger distributed network hover pulse
+      distributedRef?.current?.triggerHoverPulse(x, y);
     };
 
     useImperativeHandle(ref, () => ({
@@ -121,6 +120,8 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                       onExploreGrid?.();
                     }
                   }}
+                  onMouseEnter={(e) => triggerButtonEffects({ current: e.currentTarget })}
+                  onFocus={(e) => triggerButtonEffects({ current: e.currentTarget })}
                 >
                   {/* Main logo text */}
                   <h1

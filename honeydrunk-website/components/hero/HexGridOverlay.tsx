@@ -10,8 +10,9 @@ import { colors } from '@/lib/tokens';
 
 export interface HexGridOverlayHandle {
   startBoot: (config: { durationMs: number; axis?: 'x' | 'y' }) => void;
-  enterIdle: () => void;
+  enterIdle: (opts?: { heartbeat?: boolean }) => void;
   triggerRipple: (x: number, y: number) => void;
+  setIntensity: (value: number) => void;
   reset: () => void;
 }
 
@@ -31,7 +32,9 @@ const HexGridOverlay = forwardRef<HexGridOverlayHandle, HexGridOverlayProps>(
     const bootAxisRef = useRef<'x' | 'y'>('x');
     const startTimeRef = useRef<number>(0);
     const durationRef = useRef<number>(2000);
-    const ripplesRef = useRef<Array<{ x: number; y: number; startTime: number; duration: number }>>([]);
+    const intensityRef = useRef<number>(0); // Boot intensity for power-up cells
+  const ripplesRef = useRef<Array<{ x: number; y: number; startTime: number; duration: number }>>([]);
+  const idleHeartbeatTimerRef = useRef<number | null>(null);
 
     // Expose control methods via ref
     useImperativeHandle(ref, () => ({
@@ -42,10 +45,31 @@ const HexGridOverlay = forwardRef<HexGridOverlayHandle, HexGridOverlayProps>(
         durationRef.current = durationMs;
         startTimeRef.current = Date.now();
         pulseProgressRef.current = 0;
+        intensityRef.current = 0;
+        // Stop idle heartbeat while booting
+        if (idleHeartbeatTimerRef.current) {
+          window.clearInterval(idleHeartbeatTimerRef.current);
+          idleHeartbeatTimerRef.current = null;
+        }
       },
-      enterIdle: () => {
+      enterIdle: (opts?: { heartbeat?: boolean }) => {
         isIdleRef.current = true;
         isBootingRef.current = false;
+        intensityRef.current = 1; // Full intensity in idle
+        // Start low-frequency heartbeat ripples from center every ~9s
+        const shouldHeartbeat = opts?.heartbeat !== false;
+        if (shouldHeartbeat && !idleHeartbeatTimerRef.current) {
+          idleHeartbeatTimerRef.current = window.setInterval(() => {
+            const canvas = canvasRef.current;
+            if (!canvas) return;
+            ripplesRef.current.push({
+              x: canvas.width / 2,
+              y: canvas.height / 2,
+              startTime: Date.now(),
+              duration: 1400,
+            });
+          }, 9000 + Math.floor(Math.random() * 1000)); // 9–10s slight variance
+        }
       },
       triggerRipple: (x: number, y: number) => {
         ripplesRef.current.push({
@@ -55,12 +79,20 @@ const HexGridOverlay = forwardRef<HexGridOverlayHandle, HexGridOverlayProps>(
           duration: 1000, // 1 second ripple
         });
       },
+      setIntensity: (value: number) => {
+        intensityRef.current = Math.max(0, Math.min(1, value));
+      },
       reset: () => {
         isBootingRef.current = false;
         isIdleRef.current = false;
         pulseProgressRef.current = 0;
         startTimeRef.current = 0;
+        intensityRef.current = 0;
         ripplesRef.current = [];
+        if (idleHeartbeatTimerRef.current) {
+          window.clearInterval(idleHeartbeatTimerRef.current);
+          idleHeartbeatTimerRef.current = null;
+        }
       },
     }));
 
@@ -81,7 +113,7 @@ const HexGridOverlay = forwardRef<HexGridOverlayHandle, HexGridOverlayProps>(
       window.addEventListener('resize', resize);
 
       // Hex grid parameters
-      const hexSize = 30; // Size of each hexagon
+  const hexSize = 30; // Size of each hexagon (keeps density lighter than typical 24)
       const hexHeight = hexSize * 2;
       const hexWidth = Math.sqrt(3) * hexSize;
       const vertDist = hexHeight * 3 / 4;
@@ -89,6 +121,8 @@ const HexGridOverlay = forwardRef<HexGridOverlayHandle, HexGridOverlayProps>(
 
       const drawHexGrid = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Intensity is maintained for future use (e.g., theme ramps), but not needed for grid drawing right now
 
         // Parallax offset
         let offsetY = 0;
@@ -103,11 +137,15 @@ const HexGridOverlay = forwardRef<HexGridOverlayHandle, HexGridOverlayProps>(
         const cols = Math.ceil(canvas.width / horizDist) + 2;
         const rows = Math.ceil(canvas.height / vertDist) + 2;
 
-        // Idle breathing effect
-        let baseOpacity = 0.08;
+        // Center of screen for distance calculations
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+
+        // Idle breathing effect - grid supports, never leads (now slightly brighter)
+        let baseOpacity = 0.05; // increased baseline visibility
         if (isIdleRef.current) {
-          const breathe = Math.sin(Date.now() * 0.001) * 0.5 + 0.5; // 0 to 1
-          baseOpacity = 0.04 + breathe * 0.06; // Darken slightly: breathe between 0.04 and 0.10
+          const breathe = Math.sin(Date.now() * 0.001) * 0.5 + 0.5;
+          baseOpacity = 0.035 + breathe * 0.03; // 0.035–0.065
         }
 
         // Shimmer effect during boot (every third line lights briefly)
@@ -119,17 +157,37 @@ const HexGridOverlay = forwardRef<HexGridOverlayHandle, HexGridOverlayProps>(
             const x = col * horizDist + ((row % 2) * (horizDist / 2));
             const y = row * vertDist;
 
-            // Calculate shimmer for this hex
-            let opacity = baseOpacity;
+            // Calculate distance from center (for fade out + power-up cluster)
+            const dx = x - centerX;
+            const dy = y - centerY;
+            const distFromCenter = Math.sqrt(dx * dx + dy * dy);
+            const maxDist = Math.sqrt(centerX * centerX + centerY * centerY);
+            
+            // Fade out toward edges (0 at edges, 1 at center)
+            const edgeFade = 1 - Math.min(distFromCenter / maxDist, 1);
+            
+            // Calculate shimmer
+            // Visibility scales with boot/idle intensity
+            const vis = 0.9 + intensityRef.current * 0.9; // 0.9–1.8
+            // Ensure edges still visible while focusing center (edgeFade 0..1)
+            let opacity = baseOpacity * vis * (0.3 + 0.7 * edgeFade);
+            // 10% brighter overall
+            opacity *= 1.1;
             if (isBooting && (row + col) % 3 === 0) {
               const shimmer = Math.sin(shimmerTime + (row + col) * 0.2) * 0.5 + 0.5;
-              opacity = baseOpacity + shimmer * 0.12; // Add shimmer flash
+              opacity = opacity + shimmer * 0.1;
             }
 
-            // Background grid with breathing/shimmer opacity
-            ctx.strokeStyle = colors.aurumGold + Math.floor(opacity * 255).toString(16).padStart(2, '0');
-            ctx.lineWidth = 1;
+            // Center-safe zone: reduce line opacity behind headline to avoid busy middle
+            const safeRadius = 220;
+            if (distFromCenter < safeRadius) {
+              const factor = Math.max(0.35, distFromCenter / safeRadius); // slightly less aggressive fade at center
+              opacity *= factor;
+            }
 
+            // Electric blue grid lines (soft glow), no gold fills
+            ctx.strokeStyle = colors.electricBlue + Math.floor(opacity * 255).toString(16).padStart(2, '0');
+            ctx.lineWidth = 2.0; // +1 thicker
             drawHexagon(ctx, x, y, hexSize, { strokeOnly: true });
           }
         }
@@ -145,7 +203,7 @@ const HexGridOverlay = forwardRef<HexGridOverlayHandle, HexGridOverlayProps>(
             ? progress * canvas.width
             : progress * canvas.height;
 
-          // Color transition: blue → gold
+          // Color transition: blue → aurumGold (electric yellow)
           const pulseColorStart = blendColors(
             colors.electricBlue,
             colors.aurumGold,
@@ -200,15 +258,15 @@ const HexGridOverlay = forwardRef<HexGridOverlayHandle, HexGridOverlayProps>(
           }
         }
 
-        // Draw ripples
+  // Draw ripples (hover pulses + idle heartbeat)
         const now = Date.now();
         ripplesRef.current = ripplesRef.current.filter(ripple => {
           const elapsed = now - ripple.startTime;
           if (elapsed > ripple.duration) return false; // Remove expired ripples
 
           const progress = elapsed / ripple.duration;
-          const radius = progress * 300; // Ripple expands to 300px
-          const opacity = (1 - progress) * 0.6; // Fade out
+          const radius = progress * 320; // Ripple expands slightly larger
+          const opacity = (1 - progress) * 0.55; // Fade out
 
           // Draw ripple gradient
           const gradient = ctx.createRadialGradient(
@@ -240,6 +298,22 @@ const HexGridOverlay = forwardRef<HexGridOverlayHandle, HexGridOverlayProps>(
           return true; // Keep ripple
         });
 
+        // Subtle edge vignette to focus attention toward center
+  const vignetteInner = Math.min(canvas.width, canvas.height) * 0.45;
+  const vignetteOuter = Math.max(canvas.width, canvas.height) * 0.85;
+        const vignette = ctx.createRadialGradient(
+          centerX, centerY, vignetteInner,
+          centerX, centerY, vignetteOuter
+        );
+        vignette.addColorStop(0, 'rgba(0,0,0,0)');
+  vignette.addColorStop(1, 'rgba(0,0,0,0.3)');
+
+        ctx.save();
+        ctx.globalCompositeOperation = 'multiply';
+        ctx.fillStyle = vignette;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.restore();
+
         ctx.restore(); // Restore after parallax transform
       };
 
@@ -256,7 +330,7 @@ const HexGridOverlay = forwardRef<HexGridOverlayHandle, HexGridOverlayProps>(
           cancelAnimationFrame(animationFrameRef.current);
         }
       };
-    }, []); // Empty deps - animation loop manages its own state via refs
+    }, [enableParallax, mouseRef]); // Animation loop manages state via refs
 
     return (
       <canvas

@@ -8,11 +8,8 @@
 import { useRef, useEffect, useState } from 'react';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import HexGridOverlay, { type HexGridOverlayHandle } from './HexGridOverlay';
-import SceneLab, { type SceneLabHandle } from './SceneLab';
+import DistributedNetwork, { type DistributedNetworkHandle } from './DistributedNetwork';
 import HeroCopy, { type HeroCopyHandle } from './HeroCopy';
-import EnergyField, { type EnergyFieldHandle } from './EnergyField';
-import EnergyLines, { type EnergyLinesHandle } from './EnergyLines';
-import LabSilhouettes, { type LabSilhouettesHandle } from './LabSilhouettes';
 import { colors } from '@/lib/tokens';
 
 type BootState = 'gate' | 'booting' | 'idle';
@@ -32,11 +29,8 @@ export default function HeroBoot({
   const isMobile = useIsMobile();
 
   const hexGridRef = useRef<HexGridOverlayHandle>(null);
-  const sceneLabRef = useRef<SceneLabHandle>(null);
+  const networkRef = useRef<DistributedNetworkHandle>(null);
   const heroCopyRef = useRef<HeroCopyHandle>(null);
-  const energyFieldRef = useRef<EnergyFieldHandle>(null);
-  const energyLinesRef = useRef<EnergyLinesHandle>(null);
-  const labSilhouettesRef = useRef<LabSilhouettesHandle>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
 
   // Check for reduced motion preference
@@ -64,12 +58,12 @@ export default function HeroBoot({
     const timeline = [
       { time: 0, action: 'startBlack' },
       { time: 300, action: 'startPulse' },
-      { time: 1300, action: 'labLightsStart' },
+      { time: 1000, action: 'labLightsStart' },
       { time: 1800, action: 'goldHandover' },
       { time: 2500, action: 'showEmblem' },
       { time: 3000, action: 'showHeadline' },
       { time: 4000, action: 'showSubline' },
-      { time: 4500, action: 'showCTAs' },
+      { time: 4000, action: 'showCTAs' },
       { time: 5000, action: 'enterIdle' },
     ];
 
@@ -96,18 +90,18 @@ export default function HeroBoot({
                 durationMs: 2000,
                 axis: isMobile ? 'y' : 'x',
               });
+              networkRef.current?.startBoot();
               break;
 
             case 'labLightsStart':
-              // Lab lights + energy field + silhouettes + depth field ramp 0→0.7 over 800ms
-              animateLabIntensity(0, 0.7, 800);
-              animateEnergyIntensity(0, 0.7, 800);
+              // Expansion of distributed nodes (no central core intensity)
+              // Use grid intensity to gently ramp visual presence
+              animateGridIntensity(0.2, 0.5, 800);
               break;
 
             case 'goldHandover':
-              // Everything transitions to full intensity (blue → gold)
-              animateLabIntensity(0.7, 1.0, 700);
-              animateEnergyIntensity(0.7, 1.0, 700);
+              // Formation – settle grid presence
+              animateGridIntensity(0.5, 0.6, 700);
               console.log('[Analytics] hero_pulse_completed');
               break;
 
@@ -130,8 +124,8 @@ export default function HeroBoot({
 
             case 'enterIdle':
               setBootState('idle');
-              hexGridRef.current?.enterIdle();
-              energyFieldRef.current?.enterIdle();
+              hexGridRef.current?.enterIdle({ heartbeat: !prefersReducedMotion });
+              networkRef.current?.enterIdle();
               // User must click CTA button to continue (no auto-redirect)
               break;
           }
@@ -146,50 +140,28 @@ export default function HeroBoot({
     // Start timeline
     if (prefersReducedMotion) {
       // Fast-forward for reduced motion - show static gold-lit scene
-      sceneLabRef.current?.setBootIntensity(1);
-      energyFieldRef.current?.setBootIntensity(1);
-      energyLinesRef.current?.setBootIntensity(1);
-      labSilhouettesRef.current?.setBootIntensity(1);
+      // Reduced motion: settle grid and show static network
       heroCopyRef.current?.showEmblem();
       heroCopyRef.current?.showHeadline();
       heroCopyRef.current?.showSubline();
       heroCopyRef.current?.showCTAs();
       setBootState('idle');
-      hexGridRef.current?.enterIdle();
-      energyFieldRef.current?.enterIdle();
+      hexGridRef.current?.enterIdle({ heartbeat: false });
+      networkRef.current?.enterIdle();
       // User must click button (no auto-redirect)
     } else {
       runTimeline();
     }
   }, [bootState, isMobile, onBootComplete, prefersReducedMotion]);
 
-  // Helper: Animate lab intensity
-  const animateLabIntensity = (from: number, to: number, duration: number) => {
+  // Helper: Animate hive core intensity
+  const animateGridIntensity = (from: number, to: number, duration: number) => {
     const startTime = Date.now();
     const animate = () => {
       const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const intensity = from + (to - from) * progress;
-      sceneLabRef.current?.setBootIntensity(intensity);
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-    animate();
-  };
-
-  // Helper: Animate all energy components together
-  const animateEnergyIntensity = (from: number, to: number, duration: number) => {
-    const startTime = Date.now();
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const intensity = from + (to - from) * progress;
-
-      energyFieldRef.current?.setBootIntensity(intensity);
-      energyLinesRef.current?.setBootIntensity(intensity);
-      labSilhouettesRef.current?.setBootIntensity(intensity);
+      hexGridRef.current?.setIntensity(intensity);
 
       if (progress < 1) {
         requestAnimationFrame(animate);
@@ -216,30 +188,15 @@ export default function HeroBoot({
       <HexGridOverlay
         ref={hexGridRef}
         mouseRef={mouseRef}
-        enableParallax={bootState === 'idle' && !prefersReducedMotion}
+        enableParallax={bootState === 'idle' && !prefersReducedMotion && !isMobile}
       />
 
-      {/* Lab silhouettes (depth layer) */}
-      <LabSilhouettes
-        ref={labSilhouettesRef}
-        enableParallax={bootState === 'idle' && !prefersReducedMotion}
+      {/* Distributed network layer */}
+      <DistributedNetwork
+        ref={networkRef}
         mouseRef={mouseRef}
-      />
-
-      {/* Energy field (radial gradient) */}
-      <EnergyField ref={energyFieldRef} />
-
-      {/* Energy lines (vertical/diagonal beams with slower parallax) */}
-      <EnergyLines
-        ref={energyLinesRef}
-        mouseRef={mouseRef}
-        enableParallax={bootState === 'idle' && !prefersReducedMotion}
-      />
-
-      {/* R3F Lab scene (original 3D elements) */}
-      <SceneLab
-        ref={sceneLabRef}
-        enableParallax={bootState === 'idle' && !prefersReducedMotion}
+        enableParallax={bootState === 'idle' && !prefersReducedMotion && !isMobile}
+        reduceMotion={prefersReducedMotion}
       />
 
       {/* Hero copy (headline/subline/CTAs) */}
@@ -248,7 +205,7 @@ export default function HeroBoot({
         onExploreGrid={handleExploreGrid}
         onFollowSignal={handleFollowSignal}
         hexGridRef={hexGridRef}
-        energyLinesRef={energyLinesRef}
+        distributedRef={networkRef}
       />
     </div>
   );
