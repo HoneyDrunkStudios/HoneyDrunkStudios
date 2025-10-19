@@ -6,6 +6,7 @@
  */
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { getFeaturedNodes, getNodeById, getConnectedNodes } from '@/lib/nodes';
 import NeonGridCanvas from './NeonGridCanvas';
@@ -14,10 +15,13 @@ import TheGrid from './TheGrid';
 import NodeDrawer from './NodeDrawer';
 import Link from 'next/link';
 import { colors } from '@/lib/tokens';
+import { useIsMobile } from '@/lib/hooks/useIsMobile';
 
 const STORAGE_KEY = 'honeydrunk_has_entered';
 
 export default function LandingPage() {
+  const router = useRouter();
+  const isMobile = useIsMobile();
   const [hasEntered, setHasEntered] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
   const [selectedNodeId, setSelectedNodeId] = useState<string | undefined>();
@@ -29,9 +33,16 @@ export default function LandingPage() {
   // Check if user has already entered during this session
   useEffect(() => {
     const hasEnteredBefore = sessionStorage.getItem(STORAGE_KEY) === 'true';
+
+    // If on mobile and already entered, redirect to services
+    if (isMobile && hasEnteredBefore) {
+      router.push('/services');
+      return;
+    }
+
     setHasEntered(hasEnteredBefore);
     setIsChecking(false);
-  }, []);
+  }, [isMobile, router]);
 
   const handleEnterComplete = () => {
     sessionStorage.setItem(STORAGE_KEY, 'true');

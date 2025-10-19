@@ -41,12 +41,12 @@ export default function SignalPage() {
       <Header />
 
       {/* Content */}
-      <div className="relative z-10 pt-32 px-12 md:px-16 pb-16">
-        <div className="max-w-3xl mx-auto space-y-16">
+      <div className="relative z-10 pt-20 md:pt-32 px-4 md:px-8 lg:px-16 pb-16">
+        <div className="max-w-3xl mx-auto space-y-10 md:space-y-16">
           {/* Page Title */}
-          <header className="space-y-6">
+          <header className="space-y-4 md:space-y-6">
             <h1
-              className="text-5xl md:text-6xl font-display font-bold py-4"
+              className="text-3xl md:text-5xl lg:text-6xl font-display font-bold py-2 md:py-4"
               style={{
                 background: `linear-gradient(135deg, ${colors.aurumGold} 0%, ${colors.violetCore} 100%)`,
               WebkitBackgroundClip: 'text',
@@ -56,34 +56,34 @@ export default function SignalPage() {
           >
             Signal Feed
           </h1>
-          <p className="text-lg px-2" style={{ color: colors.slateLight }}>
+          <p className="text-base md:text-lg px-1 md:px-2" style={{ color: colors.slateLight }}>
             Build-in-public devlog. Every commit tells a story.
           </p>
         </header>
 
         {/* Signal Feed */}
-        <div className="space-y-8">
+        <div className="space-y-6 md:space-y-8">
           {signals.map((signal, index) => (
             <article
               key={index}
-              className="p-8 rounded-lg border"
+              className="p-5 md:p-8 rounded-lg border"
               style={{
                 backgroundColor: `${colors.gunmetal}60`,
                 borderColor: `${colors.slateLight}30`,
               }}
             >
               <div
-                className="text-xs font-mono mb-3"
+                className="text-xs font-mono mb-2 md:mb-3"
                 style={{ color: colors.slateLight }}
               >
                 {signal.date}
               </div>
 
-              <h2 className="text-2xl font-display font-bold mb-3">
+              <h2 className="text-xl md:text-2xl font-display font-bold mb-3">
                 {signal.title}
               </h2>
 
-              <p className="mb-4" style={{ color: colors.slateLight }}>
+              <p className="mb-4 text-sm md:text-base leading-relaxed" style={{ color: colors.slateLight }}>
                 {signal.desc}
               </p>
 
@@ -109,13 +109,13 @@ export default function SignalPage() {
 
         {/* Coming Soon */}
         <div
-          className="p-6 rounded-lg border text-center"
+          className="p-5 md:p-6 rounded-lg border text-center"
           style={{
             backgroundColor: `${colors.gunmetal}40`,
             borderColor: `${colors.slateLight}20`,
           }}
         >
-          <p style={{ color: colors.slateLight }}>
+          <p className="text-sm md:text-base" style={{ color: colors.slateLight }}>
             More signals incoming. Subscribe to stay updated.
           </p>
         </div>

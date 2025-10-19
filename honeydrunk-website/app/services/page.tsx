@@ -51,12 +51,12 @@ export default function ServicesPage() {
       <Header />
 
       {/* Content */}
-      <div className="relative z-10 pt-32 px-8 md:px-16 pb-16">
-        <div className="max-w-6xl mx-auto space-y-16">
+      <div className="relative z-10 pt-20 md:pt-32 px-4 md:px-8 lg:px-16 pb-16">
+        <div className="max-w-6xl mx-auto space-y-10 md:space-y-16">
           {/* Page Title */}
-          <header className="space-y-6">
+          <header className="space-y-4 md:space-y-6">
             <h1
-              className="text-5xl md:text-6xl font-display font-bold py-4"
+              className="text-3xl md:text-5xl lg:text-6xl font-display font-bold py-2 md:py-4"
               style={{
                 background: `linear-gradient(135deg, ${colors.aurumGold} 0%, ${colors.violetCore} 100%)`,
                 WebkitBackgroundClip: 'text',
@@ -66,7 +66,7 @@ export default function ServicesPage() {
             >
               Services & Systems
             </h1>
-            <p className="text-lg px-2" style={{ color: colors.slateLight }}>
+            <p className="text-base md:text-lg px-1 md:px-2" style={{ color: colors.slateLight }}>
               All projects, tools, and systems in the HoneyDrunk ecosystem.
             </p>
           </header>

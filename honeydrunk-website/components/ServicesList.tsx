@@ -29,10 +29,10 @@ export default function ServicesList({ nodesBySector, sectorColors, signalColors
   return (
     <>
       {Object.entries(nodesBySector).map(([sector, nodes]) => (
-        <section key={sector} className="space-y-6">
+        <section key={sector} className="space-y-4 md:space-y-6">
           <h2
-            className="text-3xl md:text-4xl font-display font-bold pt-8 pb-4 border-b"
-            style={{ 
+            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-4 md:pt-8 pb-3 md:pb-4 border-b"
+            style={{
               color: sectorColors[sector] || colors.electricBlue,
               borderColor: `${sectorColors[sector] || colors.electricBlue}30`,
             }}
@@ -40,24 +40,24 @@ export default function ServicesList({ nodesBySector, sectorColors, signalColors
             {sector}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {nodes.map((node) => (
               <button
                 key={node.id}
                 onClick={() => handleNodeClick(node, sector)}
-                className={`service-card-${sector.toLowerCase()} group p-6 rounded-lg border-2 transition-all duration-200 hover:scale-[1.02] text-left w-full`}
+                className={`service-card-${sector.toLowerCase()} group p-4 md:p-6 rounded-lg border-2 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] text-left w-full`}
                 style={{
                   backgroundColor: `${colors.gunmetal}60`,
                   borderColor: `${sectorColors[sector]}40`,
                 }}
               >
                 {/* Header with name and signal */}
-                <div className="flex items-start justify-between mb-4">
-                  <h3 className="text-xl font-display font-bold" style={{ color: colors.offWhite }}>
+                <div className="flex items-start justify-between gap-2 mb-3 md:mb-4">
+                  <h3 className="text-lg md:text-xl font-display font-bold" style={{ color: colors.offWhite }}>
                     {node.name}
                   </h3>
                   <span
-                    className="px-3 py-1 rounded-full text-xs font-mono whitespace-nowrap ml-3"
+                    className="px-2 md:px-3 py-1 rounded-full text-xs font-mono whitespace-nowrap flex-shrink-0"
                     style={{
                       backgroundColor: `${signalColors[node.signal]}20`,
                       borderWidth: '1px',
@@ -70,7 +70,7 @@ export default function ServicesList({ nodesBySector, sectorColors, signalColors
                 </div>
 
                 {/* Description */}
-                <p className="text-sm mb-4 leading-relaxed" style={{ color: colors.slateLight }}>
+                <p className="text-sm mb-3 md:mb-4 leading-relaxed" style={{ color: colors.slateLight }}>
                   {node.short}
                 </p>
 

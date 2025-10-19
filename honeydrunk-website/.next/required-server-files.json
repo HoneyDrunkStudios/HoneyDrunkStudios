@@ -98,7 +98,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "C:\\Users\\tatte\\source\\repos\\HoneyDrunkStudios\\HoneyDrunkStudios\\honeydrunk-website",
+    "outputFileTracingRoot": "C:\\Users\\tatte\\source\\repos\\HoneyDrunkStudios\\HoneyDrunk.Studios\\HoneyDrunkStudios\\honeydrunk-website",
     "experimental": {
       "useSkewCookie": false,
       "cacheLife": {
@@ -288,10 +288,10 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts",
     "turbopack": {
-      "root": "C:\\Users\\tatte\\source\\repos\\HoneyDrunkStudios\\HoneyDrunkStudios\\honeydrunk-website"
+      "root": "C:\\Users\\tatte\\source\\repos\\HoneyDrunkStudios\\HoneyDrunk.Studios\\HoneyDrunkStudios\\honeydrunk-website"
     }
   },
-  "appDir": "C:\\Users\\tatte\\source\\repos\\HoneyDrunkStudios\\HoneyDrunkStudios\\honeydrunk-website",
+  "appDir": "C:\\Users\\tatte\\source\\repos\\HoneyDrunkStudios\\HoneyDrunk.Studios\\HoneyDrunkStudios\\honeydrunk-website",
   "relativeAppDir": "",
   "files": [
     ".next\\routes-manifest.json",

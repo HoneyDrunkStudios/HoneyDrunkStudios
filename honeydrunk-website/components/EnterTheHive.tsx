@@ -6,7 +6,9 @@
  */
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { colors } from '@/lib/tokens';
+import { useIsMobile } from '@/lib/hooks/useIsMobile';
 
 interface EnterTheHiveProps {
   onComplete: () => void;
@@ -22,6 +24,8 @@ const BOOT_MESSAGES = [
 ];
 
 export default function EnterTheHive({ onComplete }: EnterTheHiveProps) {
+  const router = useRouter();
+  const isMobile = useIsMobile();
   const [isBooting, setIsBooting] = useState(false);
   const [bootProgress, setBootProgress] = useState(0);
   const [currentMessage, setCurrentMessage] = useState(0);
@@ -63,11 +67,15 @@ export default function EnterTheHive({ onComplete }: EnterTheHiveProps) {
       setTimeout(() => {
         setIsComplete(true);
         setTimeout(() => {
-          onComplete();
+          if (isMobile) {
+            router.push('/services');
+          } else {
+            onComplete();
+          }
         }, 600);
       }, 300);
     }
-  }, [bootProgress, onComplete]);
+  }, [bootProgress, onComplete, isMobile, router]);
 
   const handleEnter = () => {
     setIsBooting(true);

@@ -19,12 +19,12 @@ export default function AboutPage() {
       <Header />
 
       {/* Content */}
-      <div className="relative z-10 pt-32 px-12 md:px-16 pb-16">
-        <div className="max-w-3xl mx-auto space-y-16">
+      <div className="relative z-10 pt-20 md:pt-32 px-4 md:px-8 lg:px-16 pb-16">
+        <div className="max-w-3xl mx-auto space-y-10 md:space-y-16">
           {/* Page Title */}
-          <header className="space-y-6">
+          <header className="space-y-4 md:space-y-6">
             <h1
-            className="text-5xl md:text-6xl font-display font-bold py-4"
+            className="text-3xl md:text-5xl lg:text-6xl font-display font-bold py-2 md:py-4"
             style={{
               background: `linear-gradient(135deg, ${colors.aurumGold} 0%, ${colors.violetCore} 100%)`,
               WebkitBackgroundClip: 'text',
@@ -37,18 +37,17 @@ export default function AboutPage() {
         </header>
 
         {/* Manifesto */}
-        <section className="space-y-8">
+        <section className="space-y-6 md:space-y-8">
           <h2
-            className="text-3xl md:text-4xl font-display font-bold"
-            style={{ 
+            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-4 md:mb-6"
+            style={{
               color: colors.electricBlue,
-              marginBottom: '2rem'
             }}
           >
             Manifesto
           </h2>
 
-          <div className="space-y-6 text-lg leading-relaxed px-2">
+          <div className="space-y-5 md:space-y-6 text-base md:text-lg leading-relaxed px-1 md:px-2">
             <p>
               HoneyDrunk Studios is a living experiment in structured creativity.
               Every line of code, every system, every decision documented and
@@ -81,15 +80,15 @@ export default function AboutPage() {
         </section>
 
         {/* Pillars */}
-        <section className="space-y-8">
+        <section className="space-y-6 md:space-y-8">
           <h2
-            className="text-3xl md:text-4xl font-display font-bold pt-8 pb-4"
+            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-4 md:pt-8 pb-3 md:pb-4"
             style={{ color: colors.electricBlue }}
           >
             Core Pillars
           </h2>
 
-          <div className="grid gap-8 px-2">
+          <div className="grid gap-5 md:gap-8 px-1 md:px-2">
             {[
               {
                 title: 'Build-in-Public',
@@ -106,46 +105,46 @@ export default function AboutPage() {
             ].map((pillar) => (
               <div
                 key={pillar.title}
-                className="p-8 rounded-lg border"
+                className="p-5 md:p-8 rounded-lg border"
                 style={{
                   backgroundColor: `${colors.gunmetal}60`,
                   borderColor: `${colors.slateLight}30`,
                 }}
               >
-                <h3 className="text-xl font-display font-bold mb-4">
+                <h3 className="text-lg md:text-xl font-display font-bold mb-3 md:mb-4">
                   {pillar.title}
                 </h3>
-                <p style={{ color: colors.slateLight }}>{pillar.desc}</p>
+                <p className="text-sm md:text-base" style={{ color: colors.slateLight }}>{pillar.desc}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Philosophy */}
-        <section className="space-y-8">
+        <section className="space-y-6 md:space-y-8">
           <h2
-            className="text-3xl md:text-4xl font-display font-bold pt-8 pb-4"
+            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-4 md:pt-8 pb-3 md:pb-4"
             style={{ color: colors.electricBlue }}
           >
             Philosophy
           </h2>
 
           <div
-            className="p-8 rounded-lg border space-y-6"
+            className="p-5 md:p-8 rounded-lg border space-y-5 md:space-y-6"
             style={{
               backgroundColor: `${colors.gunmetal}60`,
               borderColor: `${colors.slateLight}30`,
             }}
           >
             <blockquote
-              className="text-xl font-display italic border-l-4 pl-6 py-2"
+              className="text-lg md:text-xl font-display italic border-l-4 pl-4 md:pl-6 py-2"
               style={{ borderColor: colors.violetCore }}
             >
               &ldquo;Every line earns its keep. Every system serves the whole. Every
               failure teaches the path forward.&rdquo;
             </blockquote>
 
-            <div className="space-y-4 text-sm px-2" style={{ color: colors.slateLight }}>
+            <div className="space-y-3 md:space-y-4 text-xs md:text-sm px-1 md:px-2" style={{ color: colors.slateLight }}>
               <p>
                 We don&apos;t chase trends. We build foundations. We don&apos;t add features
                 for their own sake. We solve real problems with elegant systems.
@@ -159,19 +158,19 @@ export default function AboutPage() {
         </section>
 
         {/* Signal States */}
-        <section className="space-y-8">
+        <section className="space-y-6 md:space-y-8">
           <h2
-            className="text-3xl md:text-4xl font-display font-bold pt-8 pb-4"
+            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-4 md:pt-8 pb-3 md:pb-4"
             style={{ color: colors.electricBlue }}
           >
             The Signal System
           </h2>
 
-          <p className="px-2" style={{ color: colors.slateLight }}>
+          <p className="px-1 md:px-2 text-sm md:text-base" style={{ color: colors.slateLight }}>
             Every node broadcasts its state. Every pulse tells a story.
           </p>
 
-          <div className="grid gap-6 px-2">
+          <div className="grid gap-4 md:gap-6 px-1 md:px-2">
             {[
               { signal: 'Seed', color: colors.slateLight, desc: 'Concept stage. Idea germinating. Potential energy.' },
               { signal: 'Awake', color: colors.violetCore, desc: 'Prototyping. Testing. Finding its form.' },
@@ -182,22 +181,22 @@ export default function AboutPage() {
             ].map((item) => (
               <div
                 key={item.signal}
-                className="flex items-start gap-6 p-6 rounded-lg border"
+                className="flex items-start gap-4 md:gap-6 p-4 md:p-6 rounded-lg border"
                 style={{
                   backgroundColor: `${colors.gunmetal}40`,
                   borderColor: `${item.color}30`,
                 }}
               >
-                <div 
-                  className="font-mono font-bold text-sm min-w-[80px]" 
-                  style={{ 
+                <div
+                  className="font-mono font-bold text-xs md:text-sm min-w-[60px] md:min-w-[80px]"
+                  style={{
                     color: item.color,
                     textShadow: `0 0 10px ${item.color}60`,
                   }}
                 >
                   {item.signal}
                 </div>
-                <div className="text-sm" style={{ color: colors.slateLight }}>
+                <div className="text-xs md:text-sm" style={{ color: colors.slateLight }}>
                   {item.desc}
                 </div>
               </div>
@@ -207,10 +206,10 @@ export default function AboutPage() {
 
         {/* Footer */}
         <footer
-          className="pt-12 border-t text-center font-mono text-sm"
+          className="pt-8 md:pt-12 border-t text-center font-mono text-xs md:text-sm"
           style={{ borderColor: `${colors.slateLight}30`, color: colors.slateLight }}
         >
-          <p className="py-4">Boot. Build. Refactor. Evolve.</p>
+          <p className="py-3 md:py-4">Boot. Build. Refactor. Evolve.</p>
         </footer>
         </div>
       </div>

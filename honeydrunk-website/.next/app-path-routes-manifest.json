@@ -5,5 +5,6 @@
   "/favicon.ico/route": "/favicon.ico",
   "/nodes/page": "/nodes",
   "/page": "/",
+  "/services/page": "/services",
   "/signal/page": "/signal"
 }
