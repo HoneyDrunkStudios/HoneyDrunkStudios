@@ -42,7 +42,7 @@ export default function Header() {
               alt="HoneyDrunk Logo"
               width={40}
               height={40}
-              className="w-8 h-8 md:w-10 md:h-10"
+              className="w-8 h-8 md:w-10 md:h-10 animate-pulse-glow"
               style={{
                 filter: 'drop-shadow(0 0 10px rgba(255, 42, 109, 0.5))',
               }}

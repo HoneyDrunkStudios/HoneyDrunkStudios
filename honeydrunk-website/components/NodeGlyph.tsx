@@ -5,7 +5,7 @@
  * Displays a single node with energy glow, pulse, and hover effects
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { VisualNode } from '@/lib/types';
 import { colors } from '@/lib/tokens';
 
@@ -38,6 +38,7 @@ export default function NodeGlyph({
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [dragDistance, setDragDistance] = useState(0);
+  const dragZoomRef = useRef(1);
 
   // Pulse animation
   useEffect(() => {
@@ -80,6 +81,7 @@ export default function NodeGlyph({
     setIsDragging(true);
     setDragDistance(0);
     setDragStart({ x: e.clientX, y: e.clientY });
+    dragZoomRef.current = zoom; // Capture zoom at drag start
     onDragStart?.();
   };
 
@@ -87,8 +89,10 @@ export default function NodeGlyph({
     if (!isDragging) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      const deltaX = (e.clientX - dragStart.x) / zoom;
-      const deltaY = (e.clientY - dragStart.y) / zoom;
+      // Use the zoom value captured at drag start for consistency
+      const currentZoom = dragZoomRef.current;
+      const deltaX = (e.clientX - dragStart.x) / currentZoom;
+      const deltaY = (e.clientY - dragStart.y) / currentZoom;
 
       // Track total distance moved
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -115,7 +119,7 @@ export default function NodeGlyph({
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isDragging, dragStart, zoom, onDrag, onDragEnd]);
+  }, [isDragging, dragStart, onDrag, onDragEnd]);
 
   const baseSize = 80 + (node.energy || 50) * 0.8; // 80-160px based on energy
   const pulseScale = 1 + Math.sin(pulsePhase) * 0.05 * node.signalVisuals.glowIntensity;

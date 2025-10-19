@@ -67,7 +67,7 @@ export default function TheGrid({
     position: getNodePosition(node),
   }));
 
-  // Center view on mount
+  // Center view on mount and reset on resize
   const hasInitialized = useRef(false);
 
   useEffect(() => {
@@ -89,6 +89,27 @@ export default function TheGrid({
     setPan({ x: centerX, y: centerY });
     hasInitialized.current = true;
   }, [nodes]);
+
+  // Reset positions and zoom on window resize to prevent coordinate issues
+  useEffect(() => {
+    let resizeTimeout: NodeJS.Timeout;
+
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        // Clear custom positions and reset zoom
+        setNodePositions({});
+        setZoom(1);
+        localStorage.removeItem(STORAGE_KEY);
+      }, 500);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimeout);
+    };
+  }, []);
 
   // Node drag handlers
   const handleNodeDragStart = () => {

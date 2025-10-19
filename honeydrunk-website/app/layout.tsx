@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import CyberpunkEffects from "@/components/CyberpunkEffects";
+import PageTransition from "@/components/PageTransition";
 
 export const metadata: Metadata = {
   title: "HoneyDrunk Studios — The Grid",
@@ -30,6 +31,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <CyberpunkEffects />
+        <PageTransition />
         <Header />
         {children}
       </body>

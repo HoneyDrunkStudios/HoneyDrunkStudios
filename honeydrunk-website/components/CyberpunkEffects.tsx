@@ -36,6 +36,19 @@ export default function CyberpunkEffects() {
 
       {/* Global CSS for animations */}
       <style jsx global>{`
+        @keyframes pulse-glow {
+          0%, 100% {
+            filter: drop-shadow(0 0 10px rgba(255, 42, 109, 0.5));
+          }
+          50% {
+            filter: drop-shadow(0 0 20px rgba(255, 42, 109, 0.9));
+          }
+        }
+
+        .animate-pulse-glow {
+          animation: pulse-glow 2s ease-in-out infinite;
+        }
+
         @keyframes grain {
           0%, 100% { transform: translate(0, 0); }
           10% { transform: translate(-5%, -10%); }
