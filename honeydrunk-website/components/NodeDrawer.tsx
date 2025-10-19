@@ -34,7 +34,7 @@ export default function NodeDrawer({ node, onClose, connectedNodes = [] }: NodeD
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 animate-fadeIn"
+        className="fixed inset-0 bg-black/70 z-40 animate-fadeIn"
         onClick={onClose}
         style={{ animation: 'fadeIn 200ms ease-out' }}
       />

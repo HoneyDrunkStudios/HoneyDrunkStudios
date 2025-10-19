@@ -1295,6 +1295,7 @@ function TheGrid({ nodes, selectedNodeId, onNodeClick, className = '' }) {
         x: 0,
         y: 0
     });
+    const [hoveredNodeId, setHoveredNodeId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])();
     // Center view on mount
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (!containerRef.current || nodes.length === 0) return;
@@ -1411,21 +1412,48 @@ function TheGrid({ nodes, selectedNodeId, onNodeClick, className = '' }) {
                 // Skip if we've already drawn this connection
                 if (drawnConnections.has(connectionKey)) return;
                 drawnConnections.add(connectionKey);
-                // Determine if this connection involves the selected node
-                const isHighlighted = node.id === selectedNodeId || connectedId === selectedNodeId;
-                allConnections.push(/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
-                    x1: node.position.x,
-                    y1: node.position.y,
-                    x2: connectedNode.position.x,
-                    y2: connectedNode.position.y,
-                    stroke: isHighlighted ? node.signalVisuals.color : node.signalVisuals.color,
-                    strokeWidth: isHighlighted ? "3" : "2",
-                    strokeDasharray: "5,5",
-                    opacity: isHighlighted ? "0.8" : "0.4",
-                    className: isHighlighted ? "animate-pulse" : ""
-                }, `connection-${connectionKey}`, false, {
+                // Determine if this connection involves the selected or hovered node
+                const isHighlighted = node.id === selectedNodeId || connectedId === selectedNodeId || node.id === hoveredNodeId || connectedId === hoveredNodeId;
+                const lineColor = isHighlighted ? node.signalVisuals.color : node.sectorVisuals.color;
+                allConnections.push(/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("g", {
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                            x1: node.position.x,
+                            y1: node.position.y,
+                            x2: connectedNode.position.x,
+                            y2: connectedNode.position.y,
+                            stroke: lineColor,
+                            strokeWidth: isHighlighted ? "8" : "4",
+                            opacity: isHighlighted ? "0.3" : "0.1",
+                            strokeLinecap: "round"
+                        }, void 0, false, {
+                            fileName: "[project]/components/TheGrid.tsx",
+                            lineNumber: 152,
+                            columnNumber: 13
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                            x1: node.position.x,
+                            y1: node.position.y,
+                            x2: connectedNode.position.x,
+                            y2: connectedNode.position.y,
+                            stroke: lineColor,
+                            strokeWidth: isHighlighted ? "2" : "1",
+                            strokeDasharray: isHighlighted ? "8,4" : "4,4",
+                            strokeDashoffset: isHighlighted ? "0" : "0",
+                            opacity: isHighlighted ? "0.9" : "0.3",
+                            strokeLinecap: "round",
+                            style: isHighlighted ? {
+                                animation: 'dashFlow 1.5s linear infinite'
+                            } : undefined
+                        }, void 0, false, {
+                            fileName: "[project]/components/TheGrid.tsx",
+                            lineNumber: 163,
+                            columnNumber: 13
+                        }, this)
+                    ]
+                }, `connection-${connectionKey}`, true, {
                     fileName: "[project]/components/TheGrid.tsx",
-                    lineNumber: 147,
+                    lineNumber: 150,
                     columnNumber: 11
                 }, this));
             });
@@ -1441,7 +1469,7 @@ function TheGrid({ nodes, selectedNodeId, onNodeClick, className = '' }) {
             children: allConnections
         }, void 0, false, {
             fileName: "[project]/components/TheGrid.tsx",
-            lineNumber: 166,
+            lineNumber: 186,
             columnNumber: 7
         }, this);
     };
@@ -1469,16 +1497,17 @@ function TheGrid({ nodes, selectedNodeId, onNodeClick, className = '' }) {
                             node: node,
                             isSelected: node.id === selectedNodeId,
                             isConnected: connectedNodeIds.has(node.id),
-                            onClick: ()=>onNodeClick?.(node)
+                            onClick: ()=>onNodeClick?.(node),
+                            onHover: (hovered)=>setHoveredNodeId(hovered ? node.id : undefined)
                         }, node.id, false, {
                             fileName: "[project]/components/TheGrid.tsx",
-                            lineNumber: 205,
+                            lineNumber: 225,
                             columnNumber: 11
                         }, this))
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/TheGrid.tsx",
-                lineNumber: 193,
+                lineNumber: 213,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1489,7 +1518,7 @@ function TheGrid({ nodes, selectedNodeId, onNodeClick, className = '' }) {
                         children: "Drag to pan • Scroll to zoom • Arrow keys to navigate"
                     }, void 0, false, {
                         fileName: "[project]/components/TheGrid.tsx",
-                        lineNumber: 221,
+                        lineNumber: 242,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1497,13 +1526,13 @@ function TheGrid({ nodes, selectedNodeId, onNodeClick, className = '' }) {
                         children: "Press 0 to reset zoom • +/- to zoom in/out"
                     }, void 0, false, {
                         fileName: "[project]/components/TheGrid.tsx",
-                        lineNumber: 222,
+                        lineNumber: 243,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/TheGrid.tsx",
-                lineNumber: 216,
+                lineNumber: 237,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1514,13 +1543,13 @@ function TheGrid({ nodes, selectedNodeId, onNodeClick, className = '' }) {
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/TheGrid.tsx",
-                lineNumber: 228,
+                lineNumber: 249,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/TheGrid.tsx",
-        lineNumber: 180,
+        lineNumber: 200,
         columnNumber: 5
     }, this);
 }
@@ -1566,7 +1595,7 @@ function NodeDrawer({ node, onClose, connectedNodes = [] }) {
                 style: {
                     animation: 'fadeIn 200ms ease-out'
                 },
-                className: "jsx-53b87e07ab6d0cb" + " " + "fixed inset-0 bg-black/60 backdrop-blur-sm z-40 animate-fadeIn"
+                className: "jsx-53b87e07ab6d0cb" + " " + "fixed inset-0 bg-black/70 z-40 animate-fadeIn"
             }, void 0, false, {
                 fileName: "[project]/components/NodeDrawer.tsx",
                 lineNumber: 36,

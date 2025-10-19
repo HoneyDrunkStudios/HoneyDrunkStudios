@@ -223,3 +223,60 @@ code, pre, kbd {
   outline-offset: 2px;
   box-shadow: var(--shadow-neon-violet);
 }
+
+/* Connection line pulse animation */
+@keyframes dashFlow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -12;
+  }
+}
+
+/* Header navigation link hover effects */
+.nav-link:hover {
+  color: var(--neon-pink) !important;
+  border-color: var(--neon-pink) !important;
+  background-color: rgba(255, 42, 109, 0.2) !important;
+}
+
+/* Service card hover effects by sector */
+.service-card-core,
+.service-card-ops,
+.service-card-creator,
+.service-card-life,
+.service-card-play,
+.service-card-meta {
+  cursor: pointer;
+}
+
+.service-card-core:hover {
+  border-color: var(--violet-flux) !important;
+  box-shadow: 0 0 20px rgba(123, 97, 255, 0.4) !important;
+}
+
+.service-card-ops:hover {
+  border-color: var(--electric-blue) !important;
+  box-shadow: 0 0 20px rgba(0, 209, 255, 0.4) !important;
+}
+
+.service-card-creator:hover {
+  border-color: var(--aurum-gold) !important;
+  box-shadow: 0 0 20px rgba(245, 183, 0, 0.4) !important;
+}
+
+.service-card-life:hover {
+  border-color: var(--signal-green) !important;
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.4) !important;
+}
+
+.service-card-play:hover {
+  border-color: var(--neon-pink) !important;
+  box-shadow: 0 0 20px rgba(255, 42, 109, 0.4) !important;
+}
+
+.service-card-meta:hover {
+  border-color: var(--slate-light) !important;
+  box-shadow: 0 0 20px rgba(148, 163, 184, 0.4) !important;
+}

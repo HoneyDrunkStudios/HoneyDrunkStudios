@@ -27,6 +27,7 @@ export default function TheGrid({
   const [zoom, setZoom] = useState(1);
   const [isPanning, setIsPanning] = useState(false);
   const [panStart, setPanStart] = useState({ x: 0, y: 0 });
+  const [hoveredNodeId, setHoveredNodeId] = useState<string | undefined>();
 
   // Center view on mount
   useEffect(() => {
@@ -140,22 +141,41 @@ export default function TheGrid({
         if (drawnConnections.has(connectionKey)) return;
         drawnConnections.add(connectionKey);
 
-        // Determine if this connection involves the selected node
-        const isHighlighted = node.id === selectedNodeId || connectedId === selectedNodeId;
+        // Determine if this connection involves the selected or hovered node
+        const isHighlighted = node.id === selectedNodeId || connectedId === selectedNodeId ||
+                              node.id === hoveredNodeId || connectedId === hoveredNodeId;
+        const lineColor = isHighlighted ? node.signalVisuals.color : node.sectorVisuals.color;
 
         allConnections.push(
-          <line
-            key={`connection-${connectionKey}`}
-            x1={node.position.x}
-            y1={node.position.y}
-            x2={connectedNode.position.x}
-            y2={connectedNode.position.y}
-            stroke={isHighlighted ? node.signalVisuals.color : node.signalVisuals.color}
-            strokeWidth={isHighlighted ? "3" : "2"}
-            strokeDasharray="5,5"
-            opacity={isHighlighted ? "0.8" : "0.4"}
-            className={isHighlighted ? "animate-pulse" : ""}
-          />
+          <g key={`connection-${connectionKey}`}>
+            {/* Glow effect layer */}
+            <line
+              x1={node.position.x}
+              y1={node.position.y}
+              x2={connectedNode.position.x}
+              y2={connectedNode.position.y}
+              stroke={lineColor}
+              strokeWidth={isHighlighted ? "8" : "4"}
+              opacity={isHighlighted ? "0.3" : "0.1"}
+              strokeLinecap="round"
+            />
+            {/* Main line with dash offset animation */}
+            <line
+              x1={node.position.x}
+              y1={node.position.y}
+              x2={connectedNode.position.x}
+              y2={connectedNode.position.y}
+              stroke={lineColor}
+              strokeWidth={isHighlighted ? "2" : "1"}
+              strokeDasharray={isHighlighted ? "8,4" : "4,4"}
+              strokeDashoffset={isHighlighted ? "0" : "0"}
+              opacity={isHighlighted ? "0.9" : "0.3"}
+              strokeLinecap="round"
+              style={isHighlighted ? {
+                animation: 'dashFlow 1.5s linear infinite'
+              } : undefined}
+            />
+          </g>
         );
       });
     });
@@ -208,6 +228,7 @@ export default function TheGrid({
             isSelected={node.id === selectedNodeId}
             isConnected={connectedNodeIds.has(node.id)}
             onClick={() => onNodeClick?.(node)}
+            onHover={(hovered) => setHoveredNodeId(hovered ? node.id : undefined)}
           />
         ))}
       </div>

@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * Header — Shared navigation header across all pages
  */
@@ -45,94 +43,57 @@ export default function Header() {
         </Link>
 
         <nav className="flex gap-6 text-sm font-mono font-bold uppercase tracking-wider">
-          <Link
-            href="/nodes"
-            className="transition-all px-4 py-2 border"
+          <Link 
+            href="/nodes" 
+            className="nav-link transition-all duration-200 px-4 py-2 border hover:shadow-[0_0_15px_rgba(255,42,109,0.6)]"
             style={{
               color: colors.electricBlue,
               borderColor: `${colors.electricBlue}40`,
               backgroundColor: `${colors.electricBlue}10`,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = colors.neonPink;
-              e.currentTarget.style.borderColor = colors.neonPink;
-              e.currentTarget.style.backgroundColor = `${colors.neonPink}20`;
-              e.currentTarget.style.boxShadow = `0 0 15px ${colors.neonPink}60`;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = colors.electricBlue;
-              e.currentTarget.style.borderColor = `${colors.electricBlue}40`;
-              e.currentTarget.style.backgroundColor = `${colors.electricBlue}10`;
-              e.currentTarget.style.boxShadow = 'none';
             }}
           >
             GRID
           </Link>
-          <Link
-            href="/signal"
-            className="transition-all px-4 py-2 border"
+          <Link 
+            href="/services" 
+            className="nav-link transition-all duration-200 px-4 py-2 border hover:shadow-[0_0_15px_rgba(255,42,109,0.6)]"
             style={{
               color: colors.electricBlue,
               borderColor: `${colors.electricBlue}40`,
               backgroundColor: `${colors.electricBlue}10`,
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = colors.neonPink;
-              e.currentTarget.style.borderColor = colors.neonPink;
-              e.currentTarget.style.backgroundColor = `${colors.neonPink}20`;
-              e.currentTarget.style.boxShadow = `0 0 15px ${colors.neonPink}60`;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = colors.electricBlue;
-              e.currentTarget.style.borderColor = `${colors.electricBlue}40`;
-              e.currentTarget.style.backgroundColor = `${colors.electricBlue}10`;
-              e.currentTarget.style.boxShadow = 'none';
+          >
+            SERVICES
+          </Link>
+          <Link 
+            href="/signal" 
+            className="nav-link transition-all duration-200 px-4 py-2 border hover:shadow-[0_0_15px_rgba(255,42,109,0.6)]"
+            style={{
+              color: colors.electricBlue,
+              borderColor: `${colors.electricBlue}40`,
+              backgroundColor: `${colors.electricBlue}10`,
             }}
           >
             SIGNAL
           </Link>
-          <Link
-            href="/brand"
-            className="transition-all px-4 py-2 border"
+          <Link 
+            href="/brand" 
+            className="nav-link transition-all duration-200 px-4 py-2 border hover:shadow-[0_0_15px_rgba(255,42,109,0.6)]"
             style={{
               color: colors.electricBlue,
               borderColor: `${colors.electricBlue}40`,
               backgroundColor: `${colors.electricBlue}10`,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = colors.neonPink;
-              e.currentTarget.style.borderColor = colors.neonPink;
-              e.currentTarget.style.backgroundColor = `${colors.neonPink}20`;
-              e.currentTarget.style.boxShadow = `0 0 15px ${colors.neonPink}60`;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = colors.electricBlue;
-              e.currentTarget.style.borderColor = `${colors.electricBlue}40`;
-              e.currentTarget.style.backgroundColor = `${colors.electricBlue}10`;
-              e.currentTarget.style.boxShadow = 'none';
             }}
           >
             BRAND
           </Link>
-          <Link
-            href="/about"
-            className="transition-all px-4 py-2 border"
+          <Link 
+            href="/about" 
+            className="nav-link transition-all duration-200 px-4 py-2 border hover:shadow-[0_0_15px_rgba(255,42,109,0.6)]"
             style={{
               color: colors.electricBlue,
               borderColor: `${colors.electricBlue}40`,
               backgroundColor: `${colors.electricBlue}10`,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = colors.neonPink;
-              e.currentTarget.style.borderColor = colors.neonPink;
-              e.currentTarget.style.backgroundColor = `${colors.neonPink}20`;
-              e.currentTarget.style.boxShadow = `0 0 15px ${colors.neonPink}60`;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = colors.electricBlue;
-              e.currentTarget.style.borderColor = `${colors.electricBlue}40`;
-              e.currentTarget.style.backgroundColor = `${colors.electricBlue}10`;
-              e.currentTarget.style.boxShadow = 'none';
             }}
           >
             ABOUT

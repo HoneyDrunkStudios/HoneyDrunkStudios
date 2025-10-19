@@ -24,6 +24,7 @@ function NodesContent() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedNodeId, setSelectedNodeId] = useState<string | undefined>();
   const [showFilters, setShowFilters] = useState(true);
+  const [hasAutoOpened, setHasAutoOpened] = useState(false);
 
   // Initialize from URL params
   useEffect(() => {
@@ -68,6 +69,14 @@ function NodesContent() {
     selectedSignals.length > 0 ? selectedSignals : undefined,
     searchQuery || undefined
   );
+
+  // Auto-open drawer when navigating from services with search query (only once)
+  useEffect(() => {
+    if (searchQuery && filteredNodes.length === 1 && !hasAutoOpened) {
+      setSelectedNodeId(filteredNodes[0].id);
+      setHasAutoOpened(true);
+    }
+  }, [searchQuery, filteredNodes, hasAutoOpened]);
 
   const selectedNode = selectedNodeId ? getNodeById(selectedNodeId) : null;
   const connectedNodes = selectedNodeId ? getConnectedNodes(selectedNodeId) : [];
