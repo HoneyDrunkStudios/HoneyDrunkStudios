@@ -46,13 +46,7 @@ export default function SignalPage() {
           {/* Page Title */}
           <header className="space-y-4 md:space-y-6">
             <h1
-              className="text-3xl md:text-5xl lg:text-6xl font-display font-bold py-2 md:py-4"
-              style={{
-                background: `linear-gradient(135deg, ${colors.aurumGold} 0%, ${colors.violetCore} 100%)`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
+              className="text-3xl md:text-5xl lg:text-6xl font-display font-bold py-2 md:py-4 holographic-text"
           >
             Signal Feed
           </h1>

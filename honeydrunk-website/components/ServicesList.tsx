@@ -45,12 +45,32 @@ export default function ServicesList({ nodesBySector, sectorColors, signalColors
               <button
                 key={node.id}
                 onClick={() => handleNodeClick(node, sector)}
-                className={`service-card-${sector.toLowerCase()} group p-4 md:p-6 rounded-lg border-2 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] text-left w-full`}
+                className={`service-card-${sector.toLowerCase()} group p-4 md:p-6 rounded-lg border-2 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] text-left w-full relative overflow-hidden`}
                 style={{
                   backgroundColor: `${colors.gunmetal}60`,
                   borderColor: `${sectorColors[sector]}40`,
                 }}
               >
+                {/* Animated border trace on hover */}
+                <svg
+                  className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ width: '100%', height: '100%' }}
+                >
+                  <rect
+                    x="1"
+                    y="1"
+                    width="calc(100% - 2px)"
+                    height="calc(100% - 2px)"
+                    rx="6"
+                    fill="none"
+                    stroke={sectorColors[sector]}
+                    strokeWidth="2"
+                    strokeDasharray="8 4"
+                    style={{
+                      animation: 'borderFlow 2s linear infinite',
+                    }}
+                  />
+                </svg>
                 {/* Header with name and signal */}
                 <div className="flex items-start justify-between gap-2 mb-3 md:mb-4">
                   <h3 className="text-lg md:text-xl font-display font-bold" style={{ color: colors.offWhite }}>

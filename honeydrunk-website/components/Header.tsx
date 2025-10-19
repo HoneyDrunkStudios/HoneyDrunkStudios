@@ -64,7 +64,8 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="nav-link transition-all duration-200 px-3 lg:px-4 py-2 border hover:shadow-[0_0_15px_rgba(255,42,109,0.6)]"
+                className="nav-link glitch-hover transition-all duration-200 px-3 lg:px-4 py-2 border hover:shadow-[0_0_15px_rgba(255,42,109,0.6)] relative"
+                data-text={link.label}
                 style={{
                   color: colors.electricBlue,
                   borderColor: `${colors.electricBlue}40`,

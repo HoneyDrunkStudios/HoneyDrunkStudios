@@ -179,12 +179,8 @@ export default function EnterTheHive({ onComplete }: EnterTheHiveProps) {
         {/* Tagline */}
         <div className="text-center w-full flex flex-col items-center justify-center flex-1 gap-2">
           <h1
-            className="text-6xl md:text-8xl font-display font-bold tracking-tight uppercase mb-2"
+            className="text-6xl md:text-8xl font-display font-bold tracking-tight uppercase mb-2 holographic-text"
             style={{
-              background: `linear-gradient(135deg, ${colors.neonPink} 0%, ${colors.violetFlux} 50%, ${colors.electricBlue} 100%)`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
               filter: 'drop-shadow(0 0 20px rgba(255, 42, 109, 0.5))',
             }}
           >
@@ -203,7 +199,8 @@ export default function EnterTheHive({ onComplete }: EnterTheHiveProps) {
         <button
           onClick={handleEnter}
           onKeyDown={handleKeyPress}
-          className="group relative px-10 py-4 font-mono font-bold text-base md:text-lg uppercase tracking-wider cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2"
+          className="glitch-hover group relative px-10 py-4 font-mono font-bold text-base md:text-lg uppercase tracking-wider cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2"
+          data-text=">> JACK IN"
           style={{
             backgroundColor: `${colors.neonPink}20`,
             borderWidth: '2px',
