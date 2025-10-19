@@ -3,6 +3,7 @@
   "/about/page": "/about",
   "/brand/page": "/brand",
   "/favicon.ico/route": "/favicon.ico",
+  "/home/page": "/home",
   "/nodes/page": "/nodes",
   "/page": "/",
   "/services/page": "/services",

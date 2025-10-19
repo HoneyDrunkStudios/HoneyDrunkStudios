@@ -5,79 +5,21 @@
  * Boot animation that reveals The Grid
  */
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { colors } from '@/lib/tokens';
-import { useIsMobile } from '@/lib/hooks/useIsMobile';
+import HeroBoot from './hero/HeroBoot';
 
 interface EnterTheHiveProps {
   onComplete: () => void;
 }
 
-const BOOT_MESSAGES = [
-  '> INITIALIZING HIVE_PROTOCOL.SYS',
-  '> MOUNTING NODE_REGISTRY... [OK]',
-  '> ESTABLISHING NEURAL_MESH... [OK]',
-  '> SYNCING SIGNAL_MATRIX... [OK]',
-  '> LOADING GRID_INTERFACE.EXE',
-  '> SYSTEM READY. JACK IN.',
-];
-
-export default function EnterTheHive({ onComplete }: EnterTheHiveProps) {
+export default function EnterTheHive({ onComplete: _onComplete }: EnterTheHiveProps) {
   const router = useRouter();
-  const isMobile = useIsMobile();
   const [isBooting, setIsBooting] = useState(false);
-  const [bootProgress, setBootProgress] = useState(0);
-  const [currentMessage, setCurrentMessage] = useState(0);
-  const [isComplete, setIsComplete] = useState(false);
-
-  useEffect(() => {
-    if (!isBooting) return;
-
-    // Progress animation
-    const progressInterval = setInterval(() => {
-      setBootProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(progressInterval);
-          return 100;
-        }
-        return prev + 2;
-      });
-    }, 24);
-
-    // Message rotation
-    const messageInterval = setInterval(() => {
-      setCurrentMessage((prev) => {
-        if (prev >= BOOT_MESSAGES.length - 1) {
-          clearInterval(messageInterval);
-          return prev;
-        }
-        return prev + 1;
-      });
-    }, 200);
-
-    return () => {
-      clearInterval(progressInterval);
-      clearInterval(messageInterval);
-    };
-  }, [isBooting]);
-
-  useEffect(() => {
-    if (bootProgress >= 100) {
-      setTimeout(() => {
-        setIsComplete(true);
-        setTimeout(() => {
-          if (isMobile) {
-            router.push('/services');
-          } else {
-            onComplete();
-          }
-        }, 600);
-      }, 300);
-    }
-  }, [bootProgress, onComplete, isMobile, router]);
 
   const handleEnter = () => {
+    console.log('[Analytics] jack_in_clicked');
     setIsBooting(true);
   };
 
@@ -87,71 +29,24 @@ export default function EnterTheHive({ onComplete }: EnterTheHiveProps) {
     }
   };
 
-  if (isComplete) {
-    return (
-      <div
-        className="fixed inset-0 z-50 flex items-center justify-center
-                   bg-deep-space transition-opacity duration-600"
-        style={{
-          opacity: 0,
-          animation: 'fadeOut 600ms ease-out forwards',
-        }}
-      />
-    );
-  }
+  const handleBootComplete = () => {
+    // Redirect all users to home page after intro
+    router.push('/home');
+  };
 
+  const handleExploreGrid = () => {
+    console.log('[Analytics] cta_explore_grid');
+    // Clicking "Explore the Grid" should complete the boot and show TheGrid
+    handleBootComplete();
+  };
+
+  // Show the new boot sequence
   if (isBooting) {
     return (
-      <div
-        className="fixed inset-0 z-50 flex items-center justify-center
-                   bg-deep-space"
-      >
-        <div className="max-w-2xl w-full px-8">
-          {/* Boot messages */}
-          <div className="mb-8 space-y-2 font-mono text-sm">
-            {BOOT_MESSAGES.map((message, index) => (
-              <div
-                key={message}
-                className="transition-opacity duration-200"
-                style={{
-                  opacity: index <= currentMessage ? 1 : 0.3,
-                  color: index === currentMessage ? colors.neonPink : (index < currentMessage ? colors.electricBlue : colors.slateLight),
-                  textShadow: index === currentMessage ? `0 0 10px ${colors.neonPink}80` : 'none',
-                }}
-              >
-                {message}
-              </div>
-            ))}
-          </div>
-
-          {/* Progress bar */}
-          <div className="relative h-3 bg-gunmetal overflow-hidden"
-            style={{
-              clipPath: 'polygon(3px 0, 100% 0, 100% calc(100% - 3px), calc(100% - 3px) 100%, 0 100%, 0 3px)',
-            }}
-          >
-            <div
-              className="absolute inset-y-0 left-0 transition-all duration-100"
-              style={{
-                width: `${bootProgress}%`,
-                background: `linear-gradient(90deg, ${colors.neonPink} 0%, ${colors.violetFlux} 50%, ${colors.electricBlue} 100%)`,
-                boxShadow: `0 0 30px ${colors.neonPink}`,
-              }}
-            />
-          </div>
-
-          {/* Progress percentage */}
-          <div
-            className="mt-4 text-center font-mono text-xl font-bold tracking-wider"
-            style={{
-              color: colors.neonPink,
-              textShadow: `0 0 20px ${colors.neonPink}`,
-            }}
-          >
-            {bootProgress}%
-          </div>
-        </div>
-      </div>
+      <HeroBoot
+        onBootComplete={handleBootComplete}
+        onExploreGrid={handleExploreGrid}
+      />
     );
   }
 
@@ -199,8 +94,9 @@ export default function EnterTheHive({ onComplete }: EnterTheHiveProps) {
         <button
           onClick={handleEnter}
           onKeyDown={handleKeyPress}
-          className="glitch-hover group relative px-10 py-4 font-mono font-bold text-base md:text-lg uppercase tracking-wider cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2"
+          className="glitch-hover group relative px-10 py-4 font-mono font-bold text-base md:text-lg uppercase tracking-wider cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none"
           data-text=">> JACK IN"
+          aria-label="Enter the HoneyDrunk Hive"
           style={{
             backgroundColor: `${colors.neonPink}20`,
             borderWidth: '2px',
@@ -208,6 +104,12 @@ export default function EnterTheHive({ onComplete }: EnterTheHiveProps) {
             color: colors.offWhite,
             boxShadow: `0 0 40px ${colors.neonPink}70, inset 0 0 15px ${colors.neonPink}20`,
             clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
+          }}
+          onFocus={(e) => {
+            e.currentTarget.style.boxShadow = `0 0 0 3px ${colors.electricBlue}, 0 0 40px ${colors.neonPink}70, inset 0 0 15px ${colors.neonPink}20`;
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.boxShadow = `0 0 40px ${colors.neonPink}70, inset 0 0 15px ${colors.neonPink}20`;
           }}
         >
         {/* Animated glow */}

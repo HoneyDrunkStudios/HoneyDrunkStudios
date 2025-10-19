@@ -10,14 +10,14 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { getFeaturedNodes, getNodeById, getConnectedNodes } from '@/lib/nodes';
 import NeonGridCanvas from './NeonGridCanvas';
-import EnterTheHive from './EnterTheHive';
+import HeroBoot from './hero/HeroBoot';
 import TheGrid from './TheGrid';
 import NodeDrawer from './NodeDrawer';
 import Link from 'next/link';
 import { colors } from '@/lib/tokens';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 
-const STORAGE_KEY = 'honeydrunk_has_entered';
+const STORAGE_KEY = 'hd.jacked_in';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -30,17 +30,22 @@ export default function LandingPage() {
   const selectedNode = selectedNodeId ? getNodeById(selectedNodeId) : null;
   const connectedNodes = selectedNodeId ? getConnectedNodes(selectedNodeId) : [];
 
-  // Check if user has already entered during this session
+  // Check if user has already jacked in (sessionStorage for per-session)
   useEffect(() => {
-    const hasEnteredBefore = sessionStorage.getItem(STORAGE_KEY) === 'true';
+    // Clean up old localStorage key if it exists
+    if (typeof window !== 'undefined' && localStorage.getItem(STORAGE_KEY)) {
+      localStorage.removeItem(STORAGE_KEY);
+    }
 
-    // If on mobile and already entered, redirect to services
-    if (isMobile && hasEnteredBefore) {
-      router.push('/services');
+    const hasJackedIn = sessionStorage.getItem(STORAGE_KEY) === 'true';
+
+    // If on mobile and already jacked in, redirect to home
+    if (isMobile && hasJackedIn) {
+      router.push('/home');
       return;
     }
 
-    setHasEntered(hasEnteredBefore);
+    setHasEntered(hasJackedIn);
     setIsChecking(false);
   }, [isMobile, router]);
 
@@ -49,6 +54,16 @@ export default function LandingPage() {
     setHasEntered(true);
   };
 
+  // Expose reset function globally for dev/debugging
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      (window as typeof window & { resetHiveIntro?: () => void }).resetHiveIntro = () => {
+        sessionStorage.removeItem(STORAGE_KEY);
+        window.location.reload();
+      };
+    }
+  }, []);
+
   // Show nothing while checking storage to prevent flash
   if (isChecking) {
     return null;
@@ -56,10 +71,16 @@ export default function LandingPage() {
 
   if (!hasEntered) {
     return (
-      <>
-        <NeonGridCanvas particleCount={100} enableMotion={true} />
-        <EnterTheHive onComplete={handleEnterComplete} />
-      </>
+      <HeroBoot
+        onBootComplete={() => {
+          handleEnterComplete();
+          router.push('/home');
+        }}
+        onExploreGrid={() => {
+          handleEnterComplete();
+          router.push('/home');
+        }}
+      />
     );
   }
 
@@ -85,10 +106,10 @@ export default function LandingPage() {
           }}
         >
           <div className="w-full px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Image 
-              src="/honeydrunk.png" 
-              alt="HoneyDrunk Logo" 
+          <Link href="/home" className="flex items-center gap-3 cursor-pointer transition-opacity hover:opacity-80">
+            <Image
+              src="/honeydrunk.png"
+              alt="HoneyDrunk Logo"
               width={40}
               height={40}
               className="w-10 h-10"
@@ -105,7 +126,7 @@ export default function LandingPage() {
             >
               [HONEYDRUNK]
             </h1>
-          </div>
+          </Link>
 
           <nav className="flex gap-6 text-sm font-mono font-bold uppercase tracking-wider">
             <Link

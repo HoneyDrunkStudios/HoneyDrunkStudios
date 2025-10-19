@@ -19,7 +19,18 @@
       "Bash(cp honeydrunk-website/tailwind.config.js .)",
       "Bash(npx shadcn@latest init -y)",
       "Bash(npm run build)",
-      "Bash(npm run dev)"
+      "Bash(npm run dev)",
+      "Bash(npm install @react-three/fiber @react-three/drei three framer-motion)",
+      "Bash(mkdir -p honeydrunk-website/components/hero)",
+      "Bash(tasklist)",
+      "Bash(findstr /I \"node\")",
+      "Bash(cat honeydrunk-website/components/EnterTheHive.tsx)",
+      "Bash(cat honeydrunk-website/components/LandingPage.tsx)",
+      "Bash(cat honeydrunk-website/components/FeaturedNodes.tsx)",
+      "Bash(findstr \"node\")",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(npm install @react-three/postprocessing)"
     ],
     "deny": [],
     "ask": []

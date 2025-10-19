@@ -34,7 +34,7 @@ export default function Header() {
       >
         <div className="w-full px-4 md:px-8 py-3 md:py-4 flex items-center justify-between">
           <Link
-            href={isMobile ? "/services" : "/"}
+            href="/home"
             className="flex items-center gap-2 md:gap-3 transition-opacity hover:opacity-80"
           >
             <Image
