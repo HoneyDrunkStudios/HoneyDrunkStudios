@@ -38,18 +38,19 @@ export default function CtaBand() {
     >
       <div className="max-w-4xl mx-auto text-center">
         <h2
-          className="text-2xl md:text-3xl font-display font-bold mb-2 uppercase tracking-wide"
+          className="text-2xl md:text-3xl font-display font-bold uppercase tracking-wide"
           style={{
             color: colors.aurumGold,
             textShadow: `0 0 20px ${colors.aurumGold}60`,
+            marginBottom: '16px',
           }}
         >
           Boot. Build. Refactor. Evolve.
         </h2>
 
         <p
-          className="text-sm md:text-base font-mono mb-8"
-          style={{ color: colors.slateLight }}
+          className="text-sm md:text-base font-mono"
+          style={{ color: colors.slateLight, marginBottom: '60px' }}
         >
           Get updates as nodes go live.
         </p>
