@@ -1,0 +1,65 @@
+/* Cyberspace Canvas Layering & Pointer Rules */
+
+.cyberspace-canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.cyberspace-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none; /* Allow interaction to pass through to UI elements */
+}
+
+/* When interaction is enabled, allow pointer events in specific zones */
+.cyberspace-canvas--interactive {
+  pointer-events: auto;
+}
+
+/* Ensure overlay UI sits above canvas */
+.cyberspace-overlay {
+  position: relative;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+/* Fallback canvas styling */
+.cyberspace-canvas-2d {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Dev tools pause button (hidden by default) */
+[data-cyberspace-debug] .cyberspace-pause-toggle {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: rgba(10, 10, 15, 0.9);
+  border: 1px solid #00D1FF;
+  color: #00D1FF;
+  font-family: monospace;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.cyberspace-pause-toggle:hover {
+  background: rgba(0, 209, 255, 0.1);
+}

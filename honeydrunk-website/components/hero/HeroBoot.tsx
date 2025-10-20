@@ -8,8 +8,8 @@
 import { useRef, useEffect, useState } from 'react';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import HexGridOverlay, { type HexGridOverlayHandle } from './HexGridOverlay';
-import DistributedNetwork, { type DistributedNetworkHandle } from './DistributedNetwork';
 import HeroCopy, { type HeroCopyHandle } from './HeroCopy';
+import { CyberspaceHero } from '../visuals/CyberspaceHero';
 import { colors } from '@/lib/tokens';
 
 type BootState = 'gate' | 'booting' | 'idle';
@@ -29,7 +29,6 @@ export default function HeroBoot({
   const isMobile = useIsMobile();
 
   const hexGridRef = useRef<HexGridOverlayHandle>(null);
-  const networkRef = useRef<DistributedNetworkHandle>(null);
   const heroCopyRef = useRef<HeroCopyHandle>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
 
@@ -90,7 +89,6 @@ export default function HeroBoot({
                 durationMs: 2000,
                 axis: isMobile ? 'y' : 'x',
               });
-              networkRef.current?.startBoot();
               break;
 
             case 'labLightsStart':
@@ -125,7 +123,6 @@ export default function HeroBoot({
             case 'enterIdle':
               setBootState('idle');
               hexGridRef.current?.enterIdle({ heartbeat: !prefersReducedMotion });
-              networkRef.current?.enterIdle();
               // User must click CTA button to continue (no auto-redirect)
               break;
           }
@@ -140,14 +137,12 @@ export default function HeroBoot({
     // Start timeline
     if (prefersReducedMotion) {
       // Fast-forward for reduced motion - show static gold-lit scene
-      // Reduced motion: settle grid and show static network
       heroCopyRef.current?.showEmblem();
       heroCopyRef.current?.showHeadline();
       heroCopyRef.current?.showSubline();
       heroCopyRef.current?.showCTAs();
       setBootState('idle');
       hexGridRef.current?.enterIdle({ heartbeat: false });
-      networkRef.current?.enterIdle();
       // User must click button (no auto-redirect)
     } else {
       runTimeline();
@@ -184,19 +179,18 @@ export default function HeroBoot({
 
   return (
     <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: colors.deepSpace }}>
+      {/* Background cyberspace hero */}
+      <CyberspaceHero
+        onJackInComplete={() => {
+          console.log('[Analytics] jack_in_complete');
+        }}
+      />
+
       {/* Background hex grid with parallax */}
       <HexGridOverlay
         ref={hexGridRef}
         mouseRef={mouseRef}
         enableParallax={bootState === 'idle' && !prefersReducedMotion && !isMobile}
-      />
-
-      {/* Distributed network layer */}
-      <DistributedNetwork
-        ref={networkRef}
-        mouseRef={mouseRef}
-        enableParallax={bootState === 'idle' && !prefersReducedMotion && !isMobile}
-        reduceMotion={prefersReducedMotion}
       />
 
       {/* Hero copy (headline/subline/CTAs) */}
@@ -205,7 +199,6 @@ export default function HeroBoot({
         onExploreGrid={handleExploreGrid}
         onFollowSignal={handleFollowSignal}
         hexGridRef={hexGridRef}
-        distributedRef={networkRef}
       />
     </div>
   );

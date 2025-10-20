@@ -7,14 +7,19 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { colors } from '@/lib/tokens';
-import { resetIntro } from './hero/EntryGate';
+
+const STORAGE_KEY = 'hd.jacked_in';
 
 export default function LandingFooter() {
   const currentYear = new Date().getFullYear();
 
   const handleResetIntro = () => {
     console.log('[Analytics] reset_intro_clicked');
-    resetIntro();
+    // Clear sessionStorage and reload to show intro again
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem(STORAGE_KEY);
+      window.location.href = '/';
+    }
   };
 
   // Check for reduced motion preference
