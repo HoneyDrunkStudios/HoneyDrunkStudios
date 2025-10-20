@@ -1,4 +1,5 @@
 import Header from '@/components/Header';
+import LandingFooter from '@/components/LandingFooter';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import { colors } from '@/lib/tokens';
 
@@ -214,6 +215,11 @@ export default function BrandPage() {
           </div>
         </section>
         </div>
+      </div>
+
+      {/* Footer */}
+      <div className="relative z-10">
+        <LandingFooter />
       </div>
     </div>
   );

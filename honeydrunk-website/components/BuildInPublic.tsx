@@ -54,8 +54,8 @@ export default function BuildInPublic() {
             </h3>
 
             <p
-              className="text-sm mb-4 font-mono leading-relaxed"
-              style={{ color: colors.slateLight }}
+              className="text-sm font-mono leading-relaxed"
+              style={{ color: colors.slateLight, marginBottom: '32px' }}
             >
               Follow the journey as we architect, refactor, and evolve the Grid. Every node tells a story.
             </p>
@@ -114,8 +114,8 @@ export default function BuildInPublic() {
             </h3>
 
             <p
-              className="text-sm mb-4 font-mono leading-relaxed"
-              style={{ color: colors.slateLight }}
+              className="text-sm font-mono leading-relaxed"
+              style={{ color: colors.slateLight, marginBottom: '32px' }}
             >
               Real-time updates, insights, and behind-the-scenes from the grid. Join the conversation.
             </p>

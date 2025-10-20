@@ -117,8 +117,8 @@ function SpotlightPanel({
 
       {/* Description */}
       <p
-        className="text-sm md:text-base leading-relaxed mb-6"
-        style={{ color: colors.slateLight }}
+        className="text-sm md:text-base leading-relaxed"
+        style={{ color: colors.slateLight, marginBottom: '40px' }}
       >
         {description}
       </p>

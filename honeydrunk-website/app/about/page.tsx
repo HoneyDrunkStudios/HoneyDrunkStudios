@@ -1,4 +1,5 @@
 import Header from '@/components/Header';
+import LandingFooter from '@/components/LandingFooter';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import { colors } from '@/lib/tokens';
 
@@ -33,9 +34,10 @@ export default function AboutPage() {
         {/* Manifesto */}
         <section className="space-y-6 md:space-y-8">
           <h2
-            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-4 md:mb-6"
+            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold"
             style={{
               color: colors.electricBlue,
+              marginBottom: '48px',
             }}
           >
             Manifesto
@@ -76,8 +78,8 @@ export default function AboutPage() {
         {/* Pillars */}
         <section className="space-y-6 md:space-y-8">
           <h2
-            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-4 md:pt-8 pb-3 md:pb-4"
-            style={{ color: colors.electricBlue }}
+            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-4 md:pt-8"
+            style={{ color: colors.electricBlue, marginBottom: '48px' }}
           >
             Core Pillars
           </h2>
@@ -117,8 +119,8 @@ export default function AboutPage() {
         {/* Philosophy */}
         <section className="space-y-6 md:space-y-8">
           <h2
-            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-4 md:pt-8 pb-3 md:pb-4"
-            style={{ color: colors.electricBlue }}
+            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-4 md:pt-8"
+            style={{ color: colors.electricBlue, marginBottom: '48px' }}
           >
             Philosophy
           </h2>
@@ -153,16 +155,17 @@ export default function AboutPage() {
 
         {/* Signal States */}
         <section className="space-y-6 md:space-y-8">
-          <h2
-            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-4 md:pt-8 pb-3 md:pb-4"
-            style={{ color: colors.electricBlue }}
-          >
-            The Signal System
-          </h2>
-
-          <p className="px-1 md:px-2 text-sm md:text-base" style={{ color: colors.slateLight }}>
-            Every node broadcasts its state. Every pulse tells a story.
-          </p>
+          <div style={{ marginBottom: '48px' }}>
+            <h2
+              className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-4 md:pt-8"
+              style={{ color: colors.electricBlue, marginBottom: '16px' }}
+            >
+              The Signal System
+            </h2>
+            <p className="px-1 md:px-2 text-sm md:text-base" style={{ color: colors.slateLight }}>
+              Every node broadcasts its state. Every pulse tells a story.
+            </p>
+          </div>
 
           <div className="grid gap-4 md:gap-6 px-1 md:px-2">
             {[
@@ -198,14 +201,12 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer
-          className="pt-8 md:pt-12 border-t text-center font-mono text-xs md:text-sm"
-          style={{ borderColor: `${colors.slateLight}30`, color: colors.slateLight }}
-        >
-          <p className="py-3 md:py-4">Boot. Build. Refactor. Evolve.</p>
-        </footer>
         </div>
+      </div>
+
+      {/* Footer */}
+      <div className="relative z-10">
+        <LandingFooter />
       </div>
     </div>
   );

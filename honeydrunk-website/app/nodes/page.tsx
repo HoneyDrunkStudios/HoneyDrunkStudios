@@ -14,6 +14,7 @@ import TheGrid from '@/components/TheGrid';
 import NodeDrawer from '@/components/NodeDrawer';
 import FilterChips, { getSectorColor, getSignalColor } from '@/components/FilterChips';
 import Header from '@/components/Header';
+import LandingFooter from '@/components/LandingFooter';
 import { colors } from '@/lib/tokens';
 
 function NodesContent() {
@@ -269,6 +270,11 @@ function NodesContent() {
         >
           &lt;&lt; BACK TO LANDING
         </Link>
+      </div>
+
+      {/* Footer */}
+      <div className="relative z-10">
+        <LandingFooter />
       </div>
     </div>
   );

@@ -29,12 +29,13 @@ export default function ServicesList({ nodesBySector, sectorColors, signalColors
   return (
     <>
       {Object.entries(nodesBySector).map(([sector, nodes]) => (
-        <section key={sector} className="space-y-6 md:space-y-8 mb-12 md:mb-16">
+        <section key={sector} className="mb-12 md:mb-16">
           <h2
-            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-6 md:pt-10 pb-4 md:pb-6 border-b-2"
+            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-6 md:pt-10 border-b-2"
             style={{
               color: sectorColors[sector] || colors.electricBlue,
               borderColor: `${sectorColors[sector] || colors.electricBlue}30`,
+              marginBottom: '48px',
             }}
           >
             {sector}
@@ -96,7 +97,9 @@ export default function ServicesList({ nodesBySector, sectorColors, signalColors
 
                 {/* Tags */}
                 {node.tags && node.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-2"
+                    style={{ marginBottom: '32px' }}
+                  >
                     {node.tags.slice(0, 4).map((tag) => (
                       <span
                         key={tag}
@@ -113,7 +116,7 @@ export default function ServicesList({ nodesBySector, sectorColors, signalColors
                 )}
 
                 {/* Click hint */}
-                <div className="flex items-center gap-2 pt-4 border-t" style={{ borderColor: `${colors.slateLight}20` }}>
+                <div className="flex items-center gap-2 pt-4 border-t" style={{ borderColor: `${colors.slateLight}20`, marginTop: '32px' }}>
                   <span className="text-xs font-mono" style={{ color: colors.electricBlue }}>
                     Click for details →
                   </span>

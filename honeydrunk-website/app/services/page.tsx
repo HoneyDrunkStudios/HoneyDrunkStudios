@@ -1,4 +1,5 @@
 import Header from '@/components/Header';
+import LandingFooter from '@/components/LandingFooter';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import ServicesList from '@/components/ServicesList';
 import SignalLegend from '@/components/SignalLegend';
@@ -83,6 +84,11 @@ export default function ServicesPage() {
       {/* Signal Legend - Mobile Only (floating bottom) */}
       <div className="md:hidden fixed bottom-4 left-4 right-4 z-30">
         <SignalLegend signalColors={signalColors} />
+      </div>
+
+      {/* Footer */}
+      <div className="relative z-10">
+        <LandingFooter />
       </div>
     </div>
   );
