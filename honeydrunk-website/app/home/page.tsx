@@ -13,7 +13,8 @@ export default function HomePage() {
   return (
     <div className="w-full min-h-screen">
       <Header />
-      <div className="space-y-16">
+      {/* Add top padding to account for absolute positioned header */}
+      <div className="pt-24 space-y-16">
         <ValueProps />
         <FeaturedNodes nodes={featuredNodes} />
         <Spotlights />

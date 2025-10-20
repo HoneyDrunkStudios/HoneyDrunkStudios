@@ -13,10 +13,11 @@ export default function BuildInPublic() {
     <section className="w-full py-20 px-8" style={{ backgroundColor: colors.gunmetal }}>
       <div className="max-w-7xl mx-auto">
         <h2
-          className="text-3xl md:text-4xl font-display font-bold text-center mb-12 uppercase tracking-wide"
+          className="text-3xl md:text-4xl font-display font-bold text-center uppercase tracking-wide"
           style={{
             color: colors.violetFlux,
             textShadow: `0 0 20px ${colors.violetFlux}60`,
+            marginBottom: '60px',
           }}
         >
           Build-in-Public

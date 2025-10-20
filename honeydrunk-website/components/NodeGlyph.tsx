@@ -39,6 +39,8 @@ export default function NodeGlyph({
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [dragDistance, setDragDistance] = useState(0);
   const dragZoomRef = useRef(1);
+  const cumulativeDeltaRef = useRef({ x: 0, y: 0 });
+  const lastUpdateTimeRef = useRef(0);
 
   // Pulse animation
   useEffect(() => {
@@ -81,6 +83,7 @@ export default function NodeGlyph({
     setIsDragging(true);
     setDragDistance(0);
     setDragStart({ x: e.clientX, y: e.clientY });
+    cumulativeDeltaRef.current = { x: 0, y: 0 }; // Reset cumulative delta
     dragZoomRef.current = zoom; // Capture zoom at drag start
     onDragStart?.();
   };
@@ -94,16 +97,28 @@ export default function NodeGlyph({
       const deltaX = (e.clientX - dragStart.x) / currentZoom;
       const deltaY = (e.clientY - dragStart.y) / currentZoom;
 
+      // Accumulate the total delta from the start position
+      cumulativeDeltaRef.current.x += deltaX;
+      cumulativeDeltaRef.current.y += deltaY;
+
       // Track total distance moved
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
       setDragDistance((prev) => prev + distance);
 
-      onDrag?.(deltaX, deltaY);
+      // Throttle updates to ~60fps (16ms) for better performance
+      const now = Date.now();
+      if (now - lastUpdateTimeRef.current >= 16) {
+        onDrag?.(cumulativeDeltaRef.current.x, cumulativeDeltaRef.current.y);
+        lastUpdateTimeRef.current = now;
+      }
+      
       setDragStart({ x: e.clientX, y: e.clientY });
     };
 
     const handleMouseUp = () => {
       setIsDragging(false);
+      // Send final position update
+      onDrag?.(cumulativeDeltaRef.current.x, cumulativeDeltaRef.current.y);
       onDragEnd?.();
 
       // Reset dragDistance after a short delay to allow click handler to check it

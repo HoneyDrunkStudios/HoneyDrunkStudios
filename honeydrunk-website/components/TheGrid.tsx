@@ -111,28 +111,35 @@ export default function TheGrid({
     };
   }, []);
 
-  // Node drag handlers
-  const handleNodeDragStart = () => {
+  // Node drag handlers with performance optimization
+  const dragStateRef = useRef<{ nodeId: string; startPos: { x: number; y: number } } | null>(null);
+  
+  const handleNodeDragStart = (nodeId: string) => {
     setIsDraggingNode(true);
+    // Store the initial position when drag starts
+    const currentPos = nodePositions[nodeId] || nodes.find((n) => n.id === nodeId)?.position;
+    if (currentPos) {
+      dragStateRef.current = { nodeId, startPos: { ...currentPos } };
+    }
   };
 
   const handleNodeDrag = (nodeId: string, deltaX: number, deltaY: number) => {
-    setNodePositions((prev) => {
-      const currentPos = prev[nodeId] || nodes.find((n) => n.id === nodeId)?.position;
-      if (!currentPos) return prev;
-
-      return {
-        ...prev,
-        [nodeId]: {
-          x: currentPos.x + deltaX,
-          y: currentPos.y + deltaY,
-        },
-      };
-    });
+    // Use the stored start position and add the cumulative delta
+    if (!dragStateRef.current || dragStateRef.current.nodeId !== nodeId) return;
+    
+    const { startPos } = dragStateRef.current;
+    setNodePositions((prev) => ({
+      ...prev,
+      [nodeId]: {
+        x: startPos.x + deltaX,
+        y: startPos.y + deltaY,
+      },
+    }));
   };
 
   const handleNodeDragEnd = () => {
     setIsDraggingNode(false);
+    dragStateRef.current = null;
   };
 
   // Mouse/touch pan handlers
@@ -317,7 +324,7 @@ export default function TheGrid({
             isConnected={connectedNodeIds.has(node.id)}
             onClick={() => onNodeClick?.(node)}
             onHover={(hovered) => setHoveredNodeId(hovered ? node.id : undefined)}
-            onDragStart={handleNodeDragStart}
+            onDragStart={() => handleNodeDragStart(node.id)}
             onDrag={(deltaX, deltaY) => handleNodeDrag(node.id, deltaX, deltaY)}
             onDragEnd={handleNodeDragEnd}
             zoom={zoom}

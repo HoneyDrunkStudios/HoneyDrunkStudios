@@ -34,10 +34,11 @@ export default function Spotlights() {
     <section className="w-full py-20 px-8" style={{ backgroundColor: colors.deepSpace }}>
       <div className="max-w-7xl mx-auto">
         <h2
-          className="text-3xl md:text-4xl font-display font-bold text-center mb-12 uppercase tracking-wide"
+          className="text-3xl md:text-4xl font-display font-bold text-center uppercase tracking-wide"
           style={{
             color: colors.aurumGold,
             textShadow: `0 0 20px ${colors.aurumGold}60`,
+            marginBottom: '60px',
           }}
         >
           Spotlight Systems

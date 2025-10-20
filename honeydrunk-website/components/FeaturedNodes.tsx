@@ -34,18 +34,19 @@ export default function FeaturedNodes({ nodes }: FeaturedNodesProps) {
     >
       <div className="max-w-7xl mx-auto">
         <h2
-          className="text-3xl md:text-4xl font-display font-bold text-center mb-4 uppercase tracking-wide"
+          className="text-3xl md:text-4xl font-display font-bold text-center uppercase tracking-wide"
           style={{
             color: colors.electricBlue,
             textShadow: `0 0 20px ${colors.electricBlue}60`,
+            marginBottom: '16px',
           }}
         >
           Featured Nodes
         </h2>
 
         <p
-          className="text-center text-base font-mono mb-12 w-full"
-          style={{ color: colors.slateLight }}
+          className="text-center text-base font-mono w-full"
+          style={{ color: colors.slateLight, marginBottom: '60px' }}
         >
           Live systems. Active experiments. The Grid in motion.
         </p>

@@ -36,19 +36,20 @@ const props = [
 
 export default function ValueProps() {
   return (
-    <section className="w-full py-20 px-8" style={{ backgroundColor: colors.deepSpace }}>
-      <div className="max-w-7xl mx-auto">
+    <section className="w-full py-20 px-12" style={{ backgroundColor: colors.deepSpace }}>
+      <div className="max-w-[1600px] mx-auto">
         <h2
-          className="text-3xl md:text-4xl font-display font-bold text-center mb-12 uppercase tracking-wide"
+          className="text-3xl md:text-4xl font-display font-bold text-center uppercase tracking-wide"
           style={{
             color: colors.aurumGold,
             textShadow: `0 0 20px ${colors.aurumGold}60`,
+            marginBottom: '60px',
           }}
         >
           Why the Grid
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-8">
           {props.map((prop, index) => (
             <ValuePropCard key={index} {...prop} />
           ))}
