@@ -77,6 +77,7 @@ export function getSectorColor(sector: Sector): string {
     Creator: colors.aurumGold,
     Life: colors.signalGreen,
     Play: colors.neonPink,
+    Mech: colors.electricBlue,
     Meta: colors.slateLight,
   };
   return map[sector];
