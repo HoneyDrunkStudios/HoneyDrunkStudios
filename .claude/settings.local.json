@@ -31,7 +31,10 @@
       "Bash(taskkill /F /IM node.exe)",
       "Bash(taskkill //F //IM node.exe)",
       "Bash(npm install @react-three/postprocessing)",
-      "Bash(npm install three @types/three)"
+      "Bash(npm install three @types/three)",
+      "Bash(npm outdated:*)",
+      "Bash(npm install:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

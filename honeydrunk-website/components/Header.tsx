@@ -15,7 +15,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { href: '/nodes', label: 'GRID', hideOnMobile: true },
+    { href: '/grid', label: 'GRID', hideOnMobile: true },
     { href: '/services', label: 'SERVICES' },
     { href: '/signal', label: 'SIGNAL' },
     { href: '/brand', label: 'BRAND' },
@@ -34,7 +34,7 @@ export default function Header() {
       >
         <div className="w-full px-4 md:px-8 py-3 md:py-4 flex items-center justify-between">
           <Link
-            href="/home"
+            href="/"
             className="flex items-center gap-2 md:gap-3 transition-opacity hover:opacity-80"
           >
             <Image

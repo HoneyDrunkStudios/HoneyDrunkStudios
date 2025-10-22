@@ -47,7 +47,7 @@ export default function LandingFooter() {
             </h3>
             <ul className="space-y-2">
               {[
-                { label: 'Nodes', href: '/nodes' },
+                { label: 'Grid', href: '/grid' },
                 { label: 'About', href: '/about' },
                 { label: 'Brand', href: '/brand' },
                 { label: 'Signal', href: '/signal' },
@@ -83,9 +83,8 @@ export default function LandingFooter() {
             </h3>
             <ul className="space-y-2">
               {[
-                { label: 'X / Twitter', href: 'https://x.com/tatteddev' },
+                { label: 'X / Twitter', href: 'https://x.com/HoneyDrunkLab' },
                 { label: 'GitHub', href: 'https://github.com/honeydrunkstudios' },
-                { label: 'TattedDev Blog', href: 'https://tatteddev.com' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link

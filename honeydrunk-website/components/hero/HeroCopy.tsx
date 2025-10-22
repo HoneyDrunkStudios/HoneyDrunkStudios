@@ -99,11 +99,11 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
           {/* Main content card wrapper - only show when content is visible */}
           {(emblemVisible || headlineVisible || sublineVisible || ctasVisible) && (
           <div
-            className="pointer-events-auto space-y-8 w-full text-center"
+            className="pointer-events-auto space-y-4 md:space-y-8 w-full text-center"
             style={{
               background: 'rgba(0, 0, 0, 0.4)',
               backdropFilter: 'blur(12px)',
-              padding: '3rem 2.5rem',
+              padding: '1.5rem 1rem',
               borderRadius: '16px',
               border: '1px solid rgba(123, 97, 255, 0.25)',
               boxShadow: '0 8px 32px rgba(0, 0, 0, 0.6), inset 0 0 60px rgba(123, 97, 255, 0.08)',
@@ -116,8 +116,8 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                 initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.8 }}
                 animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4 }}
-                className="flex flex-col items-center justify-center mb-6"
-                style={{ gap: '4rem' }}
+                className="flex flex-col items-center justify-center mb-2 md:mb-6"
+                style={{ gap: '1.5rem' }}
               >
                 <div
                   className="relative cursor-pointer group"
@@ -135,7 +135,7 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                 >
                   {/* Main logo text - HONEYDRUNK (AURUM GOLD - YELLOW) */}
                   <h1
-                    className="text-5xl md:text-7xl font-display font-bold uppercase tracking-tight relative"
+                    className="text-3xl sm:text-5xl md:text-7xl font-display font-bold uppercase tracking-tight relative"
                     style={{
                       color: colors.aurumGold,
                       textShadow: `
@@ -172,9 +172,9 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
 
                   {/* Studios subtitle - NEON PINK/VIOLET */}
                   <div
-                    className="text-xl md:text-3xl font-mono font-bold uppercase tracking-widest text-center relative"
+                    className="text-sm sm:text-xl md:text-3xl font-mono font-bold uppercase tracking-widest text-center relative"
                     style={{
-                      marginTop: '2.5rem',
+                      marginTop: '0.5rem',
                       color: colors.violetCore,
                       textShadow: `
                         0 0 60px ${colors.violetCore}FF,
@@ -186,8 +186,8 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                         0 5px 25px rgba(0,0,0,0.8),
                         0 8px 35px rgba(0,0,0,0.7)
                       `,
-                      letterSpacing: '0.8em',
-                      marginLeft: '0.8em', // Compensate for letter-spacing
+                      letterSpacing: '0.3em',
+                      marginLeft: '0.3em', // Compensate for letter-spacing
                       filter: 'brightness(1.3) contrast(1.2)',
                     }}
                   >
@@ -234,7 +234,7 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                 initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
                 animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="text-5xl md:text-7xl font-display font-bold tracking-tight"
+                className="text-2xl sm:text-4xl md:text-6xl font-display font-bold tracking-tight px-2"
                 style={{
                   color: colors.offWhite,
                   textShadow: `0 0 40px ${colors.aurumGold}40`,
@@ -253,10 +253,10 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                 initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
                 animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="w-full flex justify-center mb-4"
+                className="w-full flex justify-center mb-2 md:mb-4"
               >
                 <p
-                  className="text-lg md:text-xl font-mono max-w-3xl"
+                  className="text-sm sm:text-base md:text-lg font-mono max-w-3xl px-2"
                   style={{
                     color: colors.slateLight,
                     textAlign: 'center',
@@ -275,15 +275,15 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                 initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
                 animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="flex flex-col sm:flex-row gap-6 justify-center items-center pointer-events-auto mt-8"
+                className="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center items-center pointer-events-auto mt-4 md:mt-8"
               >
                 <button
                   ref={exploreButtonRef}
                   onClick={onExploreGrid}
                   aria-label="Jack into the HoneyDrunk Hive"
-                  className="font-mono font-bold text-sm md:text-base uppercase tracking-wider transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none group relative overflow-hidden cursor-pointer"
+                  className="font-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-wider transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none group relative overflow-hidden cursor-pointer w-full sm:w-auto"
                   style={{
-                    padding: '0.75rem 2rem',
+                    padding: '0.65rem 1.5rem',
                     backgroundColor: `${colors.aurumGold}50`,
                     borderWidth: '2px',
                     borderColor: colors.aurumGold,
@@ -317,9 +317,9 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                   ref={signalButtonRef}
                   onClick={onFollowSignal}
                   aria-label="Follow the Signal on X (Twitter)"
-                  className="font-mono font-bold text-sm md:text-base uppercase tracking-wider transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none cursor-pointer"
+                  className="font-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-wider transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none cursor-pointer w-full sm:w-auto"
                   style={{
-                    padding: '0.75rem 2rem',
+                    padding: '0.65rem 1.5rem',
                     backgroundColor: `${colors.electricBlue}45`,
                     borderWidth: '2px',
                     borderColor: colors.electricBlue,

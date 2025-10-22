@@ -330,6 +330,48 @@
     }
   },
   {
+    "id": "honeymech-courier",
+    "name": "HoneyMech.Courier",
+    "short": "Autonomous delivery agent",
+    "description": "Simulated autonomous delivery agent. Pathfinding, obstacle avoidance, and mission execution in virtual and physical spaces.",
+    "sector": "Mech",
+    "signal": "Seed",
+    "cluster": "robotics",
+    "energy": 65,
+    "priority": 55,
+    "tags": ["robotics", "ai", "simulation", "autonomous"],
+    "connections": [],
+    "links": {}
+  },
+  {
+    "id": "honeymech-sim",
+    "name": "HoneyMech.Sim",
+    "short": "Robotics simulation platform",
+    "description": "Physics-based simulation environment for testing robotic systems. Digital twins for real-world mechs.",
+    "sector": "Mech",
+    "signal": "Awake",
+    "cluster": "robotics",
+    "energy": 70,
+    "priority": 58,
+    "tags": ["simulation", "physics", "robotics", "testing"],
+    "connections": ["honeymech-courier"],
+    "links": {}
+  },
+  {
+    "id": "honeymech-servo",
+    "name": "HoneyMech.Servo",
+    "short": "Hardware control layer",
+    "description": "Low-level servo and actuator control systems. Bridging digital commands to physical motion.",
+    "sector": "Mech",
+    "signal": "Seed",
+    "cluster": "robotics",
+    "energy": 58,
+    "priority": 50,
+    "tags": ["hardware", "control", "robotics", "servos"],
+    "connections": ["honeymech-sim"],
+    "links": {}
+  },
+  {
     "id": "archive-legacy",
     "name": "Archive.Legacy",
     "short": "Lessons learned. Code that taught us.",

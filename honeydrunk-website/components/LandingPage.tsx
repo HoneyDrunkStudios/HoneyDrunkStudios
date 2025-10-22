@@ -27,7 +27,7 @@ export default function LandingPage() {
 
     // If already jacked in, redirect to home
     if (hasJackedIn) {
-      router.push('/home');
+      router.push('/');
       return;
     }
 
@@ -53,11 +53,11 @@ export default function LandingPage() {
     <HeroBoot
       onBootComplete={() => {
         sessionStorage.setItem(STORAGE_KEY, 'true');
-        router.push('/home');
+        router.push('/');
       }}
       onExploreGrid={() => {
         sessionStorage.setItem(STORAGE_KEY, 'true');
-        router.push('/home');
+        router.push('/');
       }}
     />
   );

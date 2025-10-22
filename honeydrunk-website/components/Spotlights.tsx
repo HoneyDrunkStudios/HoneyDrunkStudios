@@ -15,7 +15,7 @@ const spotlights = [
     description:
       'We build tools that build worlds — and the worlds themselves.',
     cta: 'See the vision',
-    href: '/nodes?sector=Play',
+    href: '/grid?sectors=Play',
     accent: colors.neonPink,
   },
   {
@@ -24,14 +24,14 @@ const spotlights = [
     description:
       'Embodied agents and simulation. From neon couriers to real servos.',
     cta: 'Peek into the lab',
-    href: '/nodes?sector=Mech',
+    href: '/grid?sectors=Mech',
     accent: colors.electricBlue,
   },
 ];
 
 export default function Spotlights() {
   return (
-    <section className="w-full py-20 px-8" style={{ backgroundColor: colors.deepSpace }}>
+    <section className="w-full py-12 px-8" style={{ backgroundColor: colors.deepSpace }}>
       <div className="max-w-7xl mx-auto">
         <h2
           className="text-3xl md:text-4xl font-display font-bold text-center uppercase tracking-wide"

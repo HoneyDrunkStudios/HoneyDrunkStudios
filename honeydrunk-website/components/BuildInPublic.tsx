@@ -61,9 +61,7 @@ export default function BuildInPublic() {
             </p>
 
             <Link
-              href="https://tatteddev.com"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/signal"
               className="inline-block font-mono font-bold text-sm uppercase tracking-wider px-6 py-3 border-2 transition-all duration-200 hover:scale-105"
               style={{
                 color: colors.aurumGold,
@@ -121,7 +119,7 @@ export default function BuildInPublic() {
             </p>
 
             <Link
-              href="https://x.com/tatteddev"
+              href="https://x.com/HoneyDrunkLab"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block font-mono font-bold text-sm uppercase tracking-wider px-6 py-3 border-2 transition-all duration-200 hover:scale-105"

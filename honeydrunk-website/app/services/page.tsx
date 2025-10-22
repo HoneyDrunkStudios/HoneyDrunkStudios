@@ -30,6 +30,7 @@ export default function ServicesPage() {
     Creator: colors.aurumGold,
     Life: colors.signalGreen,
     Play: colors.neonPink,
+    Mech: colors.electricBlue,
     Meta: colors.slateLight,
   };
 

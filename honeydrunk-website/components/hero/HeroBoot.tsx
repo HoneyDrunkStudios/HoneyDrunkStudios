@@ -173,7 +173,7 @@ export default function HeroBoot({
   const handleFollowSignal = () => {
     console.log('[Analytics] cta_follow_signal');
     // Open X profile in new tab
-    window.open('https://x.com/tatteddev', '_blank', 'noopener,noreferrer');
+    window.open('https://x.com/HoneyDrunkLab', '_blank', 'noopener,noreferrer');
     onFollowSignal?.();
   };
 

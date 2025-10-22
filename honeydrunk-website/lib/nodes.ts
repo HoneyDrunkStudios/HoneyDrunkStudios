@@ -68,6 +68,7 @@ const sectorVisualsMap: Record<Sector, SectorVisuals> = {
   Creator: { color: colors.aurumGold },
   Life: { color: colors.signalGreen },
   Play: { color: colors.neonPink },
+  Mech: { color: colors.electricBlue },
   Meta: { color: colors.slateLight },
 };
 
@@ -170,7 +171,7 @@ export function getFeaturedNodes(count?: number): VisualNode[] {
  * Get all unique sectors
  */
 export function getAllSectors(): Sector[] {
-  return ['Core', 'Ops', 'Creator', 'Life', 'Play', 'Meta'];
+  return ['Core', 'Ops', 'Creator', 'Life', 'Play', 'Mech', 'Meta'];
 }
 
 /**
@@ -260,6 +261,7 @@ export function getNodeStats() {
       creator: allNodes.filter(n => n.sector === 'Creator').length,
       life: allNodes.filter(n => n.sector === 'Life').length,
       play: allNodes.filter(n => n.sector === 'Play').length,
+      mech: allNodes.filter(n => n.sector === 'Mech').length,
       meta: allNodes.filter(n => n.sector === 'Meta').length,
     },
   };

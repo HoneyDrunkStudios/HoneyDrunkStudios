@@ -446,6 +446,7 @@ __snapshots__/
 
 # Next.js build output
 .next/
+honeydrunk-website/.next/
 out/
 build/
 dist/

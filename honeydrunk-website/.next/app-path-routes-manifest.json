@@ -1,8 +1,13 @@
 {
+  "/_global-error/page": "/_global-error",
   "/_not-found/page": "/_not-found",
   "/about/page": "/about",
+  "/api/nodes/[id]/route": "/api/nodes/[id]",
+  "/api/nodes/route": "/api/nodes",
+  "/api/nodes/stats/route": "/api/nodes/stats",
   "/brand/page": "/brand",
   "/favicon.ico/route": "/favicon.ico",
+  "/grid/page": "/grid",
   "/home/page": "/home",
   "/nodes/page": "/nodes",
   "/page": "/",

@@ -14,7 +14,7 @@ export default function SignalPage() {
     {
       date: '2025-10-18',
       title: 'The Grid v1.0 — Initial Launch',
-      desc: 'Launched The Grid: interactive node visualization with neon cyberpunk aesthetics. Featured 10 initial nodes across Core, Ops, Creator, Life, Play, and Meta sectors.',
+      desc: 'Launched The Grid: interactive node visualization with neon cyberpunk aesthetics. Featured nodes across Core, Ops, Creator, Life, Play, Mech, and Meta sectors.',
       tags: ['launch', 'grid', 'core'],
     },
     {

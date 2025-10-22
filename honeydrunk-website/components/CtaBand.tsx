@@ -4,28 +4,29 @@
  * CtaBand — "Join the Hive" email subscription band
  */
 
-import { useState } from 'react';
+// import { useState } from 'react'; // Commented out until newsletter form is enabled
 import Link from 'next/link';
 import { colors } from '@/lib/tokens';
 
 export default function CtaBand() {
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  // Commented out until newsletter form is enabled
+  // const [email, setEmail] = useState('');
+  // const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // TODO: Hook up to email provider
-    console.log('[Analytics] email_subscribe_attempt', email);
-
-    setStatus('submitting');
-
-    // Simulate submission
-    setTimeout(() => {
-      setStatus('success');
-      setEmail('');
-    }, 1000);
-  };
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //
+  //   // TODO: Hook up to email provider
+  //   console.log('[Analytics] email_subscribe_attempt', email);
+  //
+  //   setStatus('submitting');
+  //
+  //   // Simulate submission
+  //   setTimeout(() => {
+  //     setStatus('success');
+  //     setEmail('');
+  //   }, 1000);
+  // };
 
   return (
     <section
@@ -50,12 +51,27 @@ export default function CtaBand() {
 
         <p
           className="text-sm md:text-base font-mono"
-          style={{ color: colors.slateLight, marginBottom: '60px' }}
+          style={{ color: colors.slateLight, marginBottom: '24px' }}
         >
           Get updates as nodes go live.
         </p>
 
-        {/* Email form */}
+        {/* Email form - Coming Soon */}
+        <div
+          className="mb-6 p-6 font-mono text-sm rounded-lg"
+          style={{
+            color: colors.aurumGold,
+            backgroundColor: `${colors.aurumGold}10`,
+            border: `2px solid ${colors.aurumGold}40`,
+            boxShadow: `0 0 20px ${colors.aurumGold}20`,
+          }}
+        >
+          <div className="text-base mb-2">Coming Soon</div>
+          <div style={{ color: colors.slateLight }}>
+            Newsletter subscription launching soon. Follow us on X for updates.
+          </div>
+        </div>
+        {/* Email form - Commented out for future use
         {status !== 'success' ? (
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
             <input
@@ -107,10 +123,11 @@ export default function CtaBand() {
             ✓ Subscribed! Welcome to the Hive.
           </div>
         )}
+        */}
 
         {/* Secondary CTA */}
         <Link
-          href="/nodes"
+          href="/grid"
           className="inline-block font-mono text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105"
           style={{
             color: colors.electricBlue,
@@ -122,7 +139,7 @@ export default function CtaBand() {
             e.currentTarget.style.textShadow = 'none';
           }}
         >
-          Explore all Nodes →
+          Explore the Grid →
         </Link>
       </div>
     </section>

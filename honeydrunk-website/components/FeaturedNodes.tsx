@@ -29,7 +29,7 @@ export default function FeaturedNodes({ nodes }: FeaturedNodesProps) {
   return (
     <section
       id="featured-nodes"
-      className="w-full py-20 px-8"
+      className="w-full py-16 px-8"
       style={{ backgroundColor: colors.gunmetal }}
     >
       <div className="max-w-7xl mx-auto">
@@ -59,7 +59,7 @@ export default function FeaturedNodes({ nodes }: FeaturedNodesProps) {
 
         <div className="mt-12 text-center">
           <Link
-            href="/nodes"
+            href="/grid"
             className="inline-block font-mono font-bold text-sm uppercase tracking-wider px-8 py-3 border-2 transition-all duration-200 hover:scale-105"
             style={{
               color: colors.electricBlue,
@@ -90,7 +90,7 @@ function NodeCard({ node }: { node: VisualNode }) {
 
   return (
     <Link
-      href="/nodes"
+      href="/grid"
       className="block p-6 backdrop-blur-sm border-2 transition-all duration-300 hover:scale-105 group"
       style={{
         backgroundColor: `${colors.deepSpace}95`,
