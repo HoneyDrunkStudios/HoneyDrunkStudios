@@ -4,21 +4,54 @@ import Header from "@/components/Header";
 import CyberpunkEffects from "@/components/CyberpunkEffects";
 import PageTransition from "@/components/PageTransition";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://honeydrunk.com";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "HoneyDrunk Studios — The Grid",
   description: "Structure meets soul. Code meets art. Build-in-public philosophy powering a network of interconnected systems and creative experiments.",
-  keywords: ["honeydrunk", "build-in-public", "agents", "creative-tech", "zero-bloat"],
+  keywords: ["honeydrunk", "build-in-public", "agents", "creative-tech", "zero-bloat", "cyberpunk", "web3", "creative coding"],
   authors: [{ name: "HoneyDrunk Studios" }],
+  creator: "HoneyDrunk Studios",
+  publisher: "HoneyDrunk Studios",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     title: "HoneyDrunk Studios — The Grid",
-    description: "Structure meets soul. Code meets art.",
-    type: "website",
+    description: "Structure meets soul. Code meets art. Build-in-public philosophy powering a network of interconnected systems and creative experiments.",
+    url: siteUrl,
+    siteName: "HoneyDrunk Studios",
+    images: [
+      {
+        url: "/neoncity.png",
+        width: 1200,
+        height: 630,
+        alt: "HoneyDrunk Studios - Neon cyberpunk cityscape",
+      },
+    ],
     locale: "en_US",
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "HoneyDrunk Studios — The Grid",
-    description: "Structure meets soul. Code meets art.",
+    description: "Structure meets soul. Code meets art. Build-in-public philosophy powering a network of interconnected systems and creative experiments.",
+    images: ["/neoncity.png"],
+    creator: "@honeydrunk",
+  },
+  verification: {
+    // Add your verification tokens here when ready
+    // google: 'your-google-verification-code',
+    // yandex: 'your-yandex-verification-code',
   },
 };
 

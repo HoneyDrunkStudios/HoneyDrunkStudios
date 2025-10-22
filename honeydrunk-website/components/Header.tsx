@@ -36,6 +36,10 @@ export default function Header() {
           <Link
             href="/"
             className="flex items-center gap-2 md:gap-3 transition-opacity hover:opacity-80"
+            onClick={() => {
+              // Ensure user skips boot sequence when clicking home
+              sessionStorage.setItem('hd.jacked_in', 'true');
+            }}
           >
             <Image
               src="/honeydrunk.png"
