@@ -15,16 +15,16 @@ const spotlights = [
     description:
       'We build tools that build worlds — and the worlds themselves.',
     cta: 'See the vision',
-    href: '/grid?sectors=Play',
+    href: '/spotlight/honeyplay',
     accent: colors.neonPink,
   },
   {
-    title: 'HoneyMech',
+    title: 'Cyberware',
     tagline: 'Form meets function.',
     description:
       'Embodied agents and simulation. From neon couriers to real servos.',
     cta: 'Peek into the lab',
-    href: '/grid?sectors=Mech',
+    href: '/spotlight/cyberware',
     accent: colors.electricBlue,
   },
 ];

@@ -17,6 +17,7 @@ export default function Header() {
   const navLinks: Array<{ href: string; label: string; hideOnMobile?: boolean; highlight?: boolean }> = [
     { href: '/grid', label: 'GRID', hideOnMobile: true },
     { href: '/flow', label: 'FLOW' }, // Living roadmap (no highlight)
+    { href: '/spotlight', label: 'SPOTLIGHT' },
     { href: '/services', label: 'SERVICES' },
     { href: '/signal', label: 'SIGNAL' },
     { href: '/brand', label: 'BRAND' },

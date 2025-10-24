@@ -49,6 +49,8 @@ export default function LandingFooter() {
               {[
                 { label: 'Flow', href: '/flow' },
                 { label: 'Grid', href: '/grid' },
+                { label: 'Spotlight', href: '/spotlight' },
+                { label: 'Services', href: '/services' },
                 { label: 'About', href: '/about' },
                 { label: 'Brand', href: '/brand' },
                 { label: 'Signal', href: '/signal' },

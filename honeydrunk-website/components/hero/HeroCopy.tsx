@@ -527,7 +527,7 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                   onTouchEnd={() => cancelHold('explore')}
                   onTouchCancel={() => cancelHold('explore')}
                   aria-label="Jack In"
-                  className="font-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-wider transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none group relative overflow-hidden cursor-pointer w-full sm:w-auto"
+                  className="font-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-wider transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none group relative overflow-hidden cursor-pointer w-full sm:w-auto select-none"
                   style={{
                     padding: '0.65rem 1.5rem',
                     backgroundColor: `${colors.aurumGold}20`,
@@ -536,6 +536,9 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                     color: colors.offWhite,
                     boxShadow: `0 0 30px ${colors.aurumGold}60, inset 0 0 10px ${colors.aurumGold}20`,
                     clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    WebkitTouchCallout: 'none',
                   }}
                   onFocus={(e) => {
                     e.currentTarget.style.boxShadow = `0 0 0 3px ${colors.electricBlue}, 0 0 30px ${colors.aurumGold}60, inset 0 0 10px ${colors.aurumGold}20`;
@@ -576,7 +579,7 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                   onTouchEnd={() => cancelHold('signal')}
                   onTouchCancel={() => cancelHold('signal')}
                   aria-label="View The Grid"
-                  className="font-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-wider transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none cursor-pointer w-full sm:w-auto relative overflow-hidden"
+                  className="font-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-wider transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none cursor-pointer w-full sm:w-auto relative overflow-hidden select-none"
                   style={{
                     padding: '0.65rem 1.5rem',
                     backgroundColor: `${colors.electricBlue}15`,
@@ -584,6 +587,9 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                     borderColor: colors.electricBlue,
                     color: colors.offWhite,
                     boxShadow: `0 0 20px ${colors.electricBlue}40`,
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    WebkitTouchCallout: 'none',
                   }}
                   onFocus={(e) => {
                     e.currentTarget.style.boxShadow = `0 0 0 3px ${colors.electricBlue}, 0 0 20px ${colors.electricBlue}40`;
