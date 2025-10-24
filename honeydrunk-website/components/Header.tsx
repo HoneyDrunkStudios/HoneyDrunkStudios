@@ -14,8 +14,9 @@ export default function Header() {
   const isMobile = useIsMobile();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navLinks = [
+  const navLinks: Array<{ href: string; label: string; hideOnMobile?: boolean; highlight?: boolean }> = [
     { href: '/grid', label: 'GRID', hideOnMobile: true },
+    { href: '/flow', label: 'FLOW' }, // Living roadmap (no highlight)
     { href: '/services', label: 'SERVICES' },
     { href: '/signal', label: 'SIGNAL' },
     { href: '/brand', label: 'BRAND' },
@@ -71,9 +72,10 @@ export default function Header() {
                 className="nav-link glitch-hover transition-all duration-200 px-3 lg:px-4 py-2 border hover:shadow-[0_0_15px_rgba(255,42,109,0.6)] relative"
                 data-text={link.label}
                 style={{
-                  color: colors.electricBlue,
-                  borderColor: `${colors.electricBlue}40`,
-                  backgroundColor: `${colors.electricBlue}10`,
+                  color: link.highlight ? colors.aurumGold : colors.electricBlue,
+                  borderColor: link.highlight ? `${colors.aurumGold}60` : `${colors.electricBlue}40`,
+                  backgroundColor: link.highlight ? `${colors.aurumGold}15` : `${colors.electricBlue}10`,
+                  boxShadow: link.highlight ? `0 0 10px ${colors.aurumGold}30` : undefined,
                 }}
               >
                 {link.label}
@@ -137,10 +139,12 @@ export default function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="nav-link transition-all duration-200 px-6 py-4 border text-center font-mono font-bold uppercase tracking-wider text-base"
                   style={{
-                    color: colors.electricBlue,
-                    borderColor: `${colors.electricBlue}60`,
-                    backgroundColor: `${colors.electricBlue}15`,
-                    boxShadow: `0 0 20px ${colors.electricBlue}40`,
+                    color: link.highlight ? colors.aurumGold : colors.electricBlue,
+                    borderColor: link.highlight ? `${colors.aurumGold}60` : `${colors.electricBlue}60`,
+                    backgroundColor: link.highlight ? `${colors.aurumGold}20` : `${colors.electricBlue}15`,
+                    boxShadow: link.highlight 
+                      ? `0 0 20px ${colors.aurumGold}50` 
+                      : `0 0 20px ${colors.electricBlue}40`,
                   }}
                 >
                   {link.label}

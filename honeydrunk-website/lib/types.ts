@@ -3,7 +3,7 @@
  * Type definitions for The Grid nodes and visual system
  */
 
-export type Sector = 'Core' | 'Ops' | 'Creator' | 'Life' | 'Play' | 'Mech' | 'Meta';
+export type Sector = 'Core' | 'Ops' | 'Creator' | 'Life' | 'Play' | 'Cyberware' | 'Meta' | 'AI';
 export type Signal = 'Seed' | 'Awake' | 'Wiring' | 'Live' | 'Echo' | 'Archive';
 
 export interface NodeLinks {
@@ -27,8 +27,8 @@ export interface Node {
   signal: Signal;
   cluster?: string;          // optional grouping
   connections?: string[];    // connected node ids
-  energy?: number;           // 0–100 (glow/size)
-  priority?: number;         // featured ordering (higher = more featured)
+  energy?: number;           // 0–100 (pulse: how active/observed recently)
+  priority?: number;         // 0–100 (compass: strategic importance to the Hive)
   tags?: string[];
   links?: NodeLinks;
   media?: NodeMedia;
@@ -57,11 +57,19 @@ export interface NodePosition {
   z?: number; // for depth/parallax
 }
 
+// Flow Index calculation result
+export interface FlowMetrics {
+  flowIndex: number;        // 0–100 weighted: (energy × 0.4) + (priority × 0.6)
+  flowTier: 'critical' | 'active' | 'stable' | 'dormant' | 'archived';
+  flowColor: string;        // visual cue based on flow tier
+}
+
 // Enhanced node with computed visual props
 export interface VisualNode extends Node {
   position: NodePosition;
   signalVisuals: SignalVisuals;
   sectorVisuals: SectorVisuals;
+  flowMetrics: FlowMetrics;
 }
 
 // Filter state

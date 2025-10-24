@@ -4,7 +4,7 @@ Public API endpoints for accessing node data and project status.
 
 ## Base URL
 ```
-https://honeydrunk.studio/api
+https://honeydrunkstudios.com/api
 ```
 
 ## Endpoints
@@ -23,19 +23,19 @@ Get a list of all nodes with optional filtering.
 **Examples:**
 ```bash
 # Get all nodes
-curl https://honeydrunk.studio/api/nodes
+curl https://honeydrunkstudios.com/api/nodes
 
 # Get nodes in Core sector
-curl https://honeydrunk.studio/api/nodes?sector=Core
+curl https://honeydrunkstudios.com/api/nodes?sector=Core
 
 # Get nodes with Live status
-curl https://honeydrunk.studio/api/nodes?signal=Live
+curl https://honeydrunkstudios.com/api/nodes?signal=Live
 
 # Search for specific nodes
-curl https://honeydrunk.studio/api/nodes?search=infrastructure
+curl https://honeydrunkstudios.com/api/nodes?search=infrastructure
 
 # Combine filters
-curl https://honeydrunk.studio/api/nodes?sector=Core&signal=Wiring
+curl https://honeydrunkstudios.com/api/nodes?sector=Core&signal=Wiring
 ```
 
 **Response:**
@@ -58,7 +58,7 @@ curl https://honeydrunk.studio/api/nodes?sector=Core&signal=Wiring
       "tags": ["infrastructure", "primitives", "core"],
       "connections": ["honeydrunk-transport"],
       "links": {
-        "repo": "https://github.com/honeydrunk/kernel"
+        "repo": "https://github.com/HoneyDrunkStudios/kernel"
       }
     }
   ]
@@ -74,7 +74,7 @@ Get detailed information about a specific node and its connections.
 
 **Example:**
 ```bash
-curl https://honeydrunk.studio/api/nodes/honeydrunk-kernel
+curl https://honeydrunkstudios.com/api/nodes/honeydrunk-kernel
 ```
 
 **Response:**
@@ -94,7 +94,7 @@ curl https://honeydrunk.studio/api/nodes/honeydrunk-kernel
     "tags": ["infrastructure", "primitives", "core"],
     "connections": ["honeydrunk-transport"],
     "links": {
-      "repo": "https://github.com/honeydrunk/kernel"
+      "repo": "https://github.com/HoneyDrunkStudios/kernel"
     }
   },
   "connected": [
@@ -117,7 +117,7 @@ Get overview statistics and high-level metrics about all nodes.
 
 **Example:**
 ```bash
-curl https://honeydrunk.studio/api/nodes/stats
+curl https://honeydrunkstudios.com/api/nodes/stats
 ```
 
 **Response:**
@@ -197,7 +197,7 @@ curl https://honeydrunk.studio/api/nodes/stats
 You can ask ChatGPT to analyze your project status:
 
 ```
-Check https://honeydrunk.studio/api/nodes/stats and tell me:
+Check https://honeydrunkstudios.com/api/nodes/stats and tell me:
 1. What's my current project status?
 2. Which nodes should I prioritize?
 3. How many projects are actively being developed?
@@ -208,17 +208,17 @@ Check https://honeydrunk.studio/api/nodes/stats and tell me:
 ```bash
 #!/bin/bash
 # Get all active projects
-curl -s "https://honeydrunk.studio/api/nodes?signal=Wiring" | jq '.nodes[].name'
+curl -s "https://honeydrunkstudios.com/api/nodes?signal=Wiring" | jq '.nodes[].name'
 
 # Get project count by status
-curl -s "https://honeydrunk.studio/api/nodes/stats" | jq '.bySignal'
+curl -s "https://honeydrunkstudios.com/api/nodes/stats" | jq '.bySignal'
 ```
 
 ### For Monitoring Dashboards
 
 ```javascript
 // Fetch stats for dashboard
-const stats = await fetch('https://honeydrunk.studio/api/nodes/stats')
+const stats = await fetch('https://honeydrunkstudios.com/api/nodes/stats')
   .then(res => res.json());
 
 console.log(`Total Projects: ${stats.total}`);
@@ -239,3 +239,5 @@ CORS is enabled for all origins. You can make requests from any domain.
 ## Support
 
 For issues or questions, open an issue at: https://github.com/honeydrunkstudios/honeydrunk-website
+
+

@@ -30,8 +30,9 @@ export async function GET() {
       Creator: 0,
       Life: 0,
       Play: 0,
-      Mech: 0,
+      Cyberware: 0,
       Meta: 0,
+      AI: 0,
     };
 
     // Count by cluster

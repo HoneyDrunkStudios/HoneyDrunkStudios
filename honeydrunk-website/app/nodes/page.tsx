@@ -8,7 +8,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getAllSectors, getAllSignals, filterNodes, getNodeById, getConnectedNodes } from '@/lib/nodes';
-import type { Sector, Signal } from '@/lib/types';
+import type { Sector, Signal, FlowMetrics } from '@/lib/types';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import TheGrid from '@/components/TheGrid';
 import NodeDrawer from '@/components/NodeDrawer';
@@ -17,12 +17,25 @@ import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
 import { colors } from '@/lib/tokens';
 
+// Helper to get Flow Tier color
+function getFlowTierColor(tier: FlowMetrics['flowTier']): string {
+  switch (tier) {
+    case 'critical': return colors.aurumGold;
+    case 'active': return colors.electricBlue;
+    case 'stable': return colors.violetFlux;
+    case 'dormant': return colors.slateLight;
+    case 'archived': return colors.archiveRed;
+    default: return colors.slateLight;
+  }
+}
+
 function NodesContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const [selectedSectors, setSelectedSectors] = useState<Sector[]>([]);
   const [selectedSignals, setSelectedSignals] = useState<Signal[]>([]);
+  const [selectedFlowTiers, setSelectedFlowTiers] = useState<FlowMetrics['flowTier'][]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedNodeId, setSelectedNodeId] = useState<string | undefined>();
   const [showFilters, setShowFilters] = useState(true);
@@ -32,6 +45,7 @@ function NodesContent() {
   useEffect(() => {
     const sectorsParam = searchParams.get('sectors');
     const signalsParam = searchParams.get('signals');
+    const flowTiersParam = searchParams.get('flowTiers');
     const searchParam = searchParams.get('search');
 
     if (sectorsParam) {
@@ -39,6 +53,9 @@ function NodesContent() {
     }
     if (signalsParam) {
       setSelectedSignals(signalsParam.split(',') as Signal[]);
+    }
+    if (flowTiersParam) {
+      setSelectedFlowTiers(flowTiersParam.split(',') as FlowMetrics['flowTier'][]);
     }
     if (searchParam) {
       setSearchQuery(searchParam);
@@ -55,22 +72,32 @@ function NodesContent() {
     if (selectedSignals.length > 0) {
       params.set('signals', selectedSignals.join(','));
     }
+    if (selectedFlowTiers.length > 0) {
+      params.set('flowTiers', selectedFlowTiers.join(','));
+    }
     if (searchQuery) {
       params.set('search', searchQuery);
     }
 
     const newUrl = params.toString() ? `/nodes?${params.toString()}` : '/nodes';
     router.replace(newUrl, { scroll: false });
-  }, [selectedSectors, selectedSignals, searchQuery, router]);
+  }, [selectedSectors, selectedSignals, selectedFlowTiers, searchQuery, router]);
 
   const allSectors = getAllSectors();
   const allSignals = getAllSignals();
 
-  const filteredNodes = filterNodes(
+  let filteredNodes = filterNodes(
     selectedSectors.length > 0 ? selectedSectors : undefined,
     selectedSignals.length > 0 ? selectedSignals : undefined,
     searchQuery || undefined
   );
+
+  // Additional filtering by Flow Tier
+  if (selectedFlowTiers.length > 0) {
+    filteredNodes = filteredNodes.filter(node => 
+      selectedFlowTiers.includes(node.flowMetrics.flowTier)
+    );
+  }
 
   // Auto-open drawer when navigating from services with search query (only once)
   useEffect(() => {
@@ -156,13 +183,23 @@ function NodesContent() {
             getColor={getSignalColor}
           />
 
+          <FilterChips
+            label="Flow Tier"
+            options={['critical', 'active', 'stable', 'dormant', 'archived'] as const}
+            selected={selectedFlowTiers}
+            onChange={setSelectedFlowTiers}
+            getColor={getFlowTierColor}
+          />
+
           {(selectedSectors.length > 0 ||
             selectedSignals.length > 0 ||
+            selectedFlowTiers.length > 0 ||
             searchQuery) && (
             <button
               onClick={() => {
                 setSelectedSectors([]);
                 setSelectedSignals([]);
+                setSelectedFlowTiers([]);
                 setSearchQuery('');
               }}
               className="w-full px-4 py-3 rounded-lg text-xs font-mono cursor-pointer

@@ -3,34 +3,62 @@
     "id": "honeydrunk-build",
     "name": "HoneyDrunk.Build",
     "short": "Central MSBuild & analyzers package",
-    "description": "Foundational build infrastructure for all HoneyDrunk projects. MSBuild conventions, code analyzers, and quality gates.",
+    "description": "Foundational build infrastructure for all HoneyDrunk projects. MSBuild conventions, analyzers, versioning and quality gates.",
     "sector": "Core",
     "signal": "Wiring",
     "cluster": "foundation",
     "energy": 92,
     "priority": 100,
-    "tags": ["infrastructure", "build", "msbuild"],
-    "connections": ["honeydrunk-kernel", "honeydrunk-pipelines"],
-    "links": {
-      "repo": "https://github.com/honeydrunk/build"
-    }
+    "tags": ["infrastructure", "build", "msbuild", "analyzers"],
+    "connections": ["honeydrunk-kernel", "honeydrunk-pipelines", "honeydrunk-actions"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/build" }
   },
+
   {
     "id": "honeydrunk-pipelines",
     "name": "HoneyDrunk.Pipelines",
-    "short": "Azure DevOps YAML templates library",
-    "description": "Reusable CI/CD pipeline templates for Azure DevOps. Zero-bloat deployment automation.",
+    "short": "Azure DevOps YAML templates",
+    "description": "Reusable CI/CD templates for Azure DevOps. Internal path with private feed auth, gated releases, package promotion.",
     "sector": "Ops",
     "signal": "Wiring",
     "cluster": "foundation",
     "energy": 88,
     "priority": 95,
     "tags": ["devops", "ci-cd", "azure"],
-    "connections": ["honeydrunk-build"],
-    "links": {
-      "repo": "https://github.com/honeydrunk/pipelines"
-    }
+    "connections": ["honeydrunk-build", "honeydrunk-deploy", "honeydrunk-tools"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/pipelines" }
   },
+
+  {
+    "id": "honeydrunk-actions",
+    "name": "HoneyDrunk.Actions",
+    "short": "GitHub Actions reusable workflows",
+    "description": "Public CI toolkit for OSS repos. Mirrors contracts with Pipelines while staying feed-agnostic.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "foundation",
+    "energy": 70,
+    "priority": 80,
+    "tags": ["github", "actions", "ci-cd"],
+    "connections": ["honeydrunk-build", "honeydrunk-tools", "grid-visualizer"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/actions" }
+  },
+
+  {
+    "id": "honeydrunk-deploy",
+    "name": "HoneyDrunk.Deploy",
+    "short": "Release & environment orchestration",
+    "description": "Standardized deployments, environment tagging, artifact promotion, and approvals. Works with Pipelines and Actions.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "infrastructure",
+    "energy": 64,
+    "priority": 78,
+    "tags": ["deploy", "releases", "environments"],
+    "connections": ["honeydrunk-pipelines", "honeydrunk-actions", "honeydrunk-tools"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/deploy" }
+  },
+
   {
     "id": "honeydrunk-kernel",
     "name": "HoneyDrunk.Kernel",
@@ -42,122 +70,163 @@
     "energy": 95,
     "priority": 98,
     "tags": ["infrastructure", "primitives", "core"],
-    "connections": ["honeydrunk-transport", "honeycore-web-rest"],
+    "connections": ["honeydrunk-data", "honeydrunk-transport", "honeycore-web-rest", "honeydrunk-auth", "honeydrunk-vault"],
     "links": {
-      "repo": "https://github.com/honeydrunk/kernel",
-      "docs": "https://docs.honeydrunk.studio/kernel"
+      "repo": "https://github.com/HoneyDrunkStudios/kernel",
+      "docs": "https://docs.honeydrunkstudios.com/kernel"
     }
   },
+
+  {
+    "id": "honeydrunk-data",
+    "name": "HoneyDrunk.Data",
+    "short": "Persistence conventions & migrations",
+    "description": "Database conventions, migrations/versioning, tenant isolation, outbox integration, and telemetry hooks.",
+    "sector": "Core",
+    "signal": "Seed",
+    "cluster": "foundation",
+    "energy": 72,
+    "priority": 90,
+    "tags": ["database", "migrations", "multi-tenant"],
+    "connections": ["honeydrunk-kernel", "honeydrunk-transport", "pulse", "honeydrunk-tools"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/data" }
+  },
+
   {
     "id": "honeydrunk-transport",
     "name": "HoneyDrunk.Transport",
     "short": "Outbox, messaging abstractions",
-    "description": "Reliable messaging and transport layer. Outbox pattern, event sourcing primitives, and communication infrastructure.",
+    "description": "Reliable messaging and transport layer. Outbox pattern, event primitives, and communication infrastructure.",
     "sector": "Core",
     "signal": "Awake",
     "cluster": "foundation",
     "energy": 75,
     "priority": 85,
     "tags": ["messaging", "outbox", "events"],
-    "connections": ["honeydrunk-kernel"],
-    "links": {
-      "repo": "https://github.com/honeydrunk/transport"
-    }
+    "connections": ["honeydrunk-kernel", "honeydrunk-data", "pulse"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/transport" }
   },
+
   {
     "id": "honeycore-web-rest",
     "name": "HoneyCore.Web.Rest",
     "short": "REST scaffolding & conventions",
-    "description": "Opinionated REST API conventions and scaffolding. Clean, consistent HTTP interfaces across all HoneyDrunk services.",
+    "description": "Opinionated REST API conventions and scaffolding. Clean, consistent HTTP interfaces across services.",
     "sector": "Core",
     "signal": "Awake",
     "cluster": "foundation",
     "energy": 70,
     "priority": 80,
     "tags": ["rest", "api", "web"],
-    "connections": ["honeydrunk-transport"],
-    "links": {
-      "repo": "https://github.com/honeydrunk/web-rest"
-    }
+    "connections": ["honeydrunk-kernel", "honeydrunk-auth", "honeydrunk-transport"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/web-rest" }
   },
+
   {
     "id": "honeydrunk-testing",
     "name": "HoneyDrunk.Testing",
     "short": "Shared test helpers, fixtures",
-    "description": "Common testing utilities, fixtures, and patterns. Making quality assurance as elegant as the code itself.",
+    "description": "Testing utilities, fixtures, deterministic environments. Dev-only private feed.",
     "sector": "Core",
     "signal": "Awake",
     "cluster": "foundation",
     "energy": 68,
     "priority": 75,
     "tags": ["testing", "qa", "fixtures"],
-    "connections": [],
-    "links": {
-      "repo": "https://github.com/honeydrunk/testing"
-    }
+    "connections": ["honeydrunk-kernel", "honeydrunk-data"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/testing" }
   },
+
   {
     "id": "honeydrunk-tools",
     "name": "HoneyDrunk.Tools",
-    "short": "Dev CLIs (DACPAC runner, etc)",
-    "description": "Developer command-line tools. From database migrations to code generation, automating the tedious.",
+    "short": "Dev CLIs (DACPAC, versioning, etc.)",
+    "description": "Cross-CI scripts and CLIs for build/test/pack/publish, DB deploys, and repo hygiene.",
     "sector": "Ops",
     "signal": "Awake",
     "cluster": "tooling",
     "energy": 65,
     "priority": 70,
     "tags": ["cli", "tools", "automation"],
-    "connections": [],
-    "links": {
-      "repo": "https://github.com/honeydrunk/tools"
-    }
+    "connections": ["honeydrunk-pipelines", "honeydrunk-actions", "honeydrunk-deploy"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/tools" }
   },
+
   {
-    "id": "vault",
-    "name": "Vault",
+    "id": "honeydrunk-vault",
+    "name": "HoneyDrunk.Vault",
     "short": "Secrets & config manager",
-    "description": "Secure secrets and configuration management. Zero-trust vault for sensitive data across all environments.",
+    "description": "Secure secrets and configuration management. Zero-trust vault for sensitive data across environments.",
     "sector": "Core",
     "signal": "Wiring",
     "cluster": "infrastructure",
     "energy": 85,
     "priority": 90,
     "tags": ["security", "secrets", "config"],
-    "connections": ["honeydrunk-kernel"],
-    "links": {
-      "repo": "https://github.com/honeydrunk/vault"
-    }
+    "connections": ["honeydrunk-kernel", "pulse", "honeydrunk-auth"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/vault" }
   },
+
   {
     "id": "pulse",
     "name": "Pulse",
     "short": "Observability suite (logs/traces/metrics)",
-    "description": "Unified observability platform. Logs, traces, and metrics in one clean interface. See the heartbeat of The Hive.",
+    "description": "Unified observability. Logs, traces, and metrics in one interface. See the heartbeat of The Hive.",
     "sector": "Ops",
     "signal": "Awake",
     "cluster": "infrastructure",
     "energy": 72,
     "priority": 82,
     "tags": ["observability", "monitoring", "telemetry"],
-    "connections": ["vault"],
-    "links": {
-      "repo": "https://github.com/honeydrunk/pulse"
-    }
+    "connections": ["honeydrunk-vault", "honeydrunk-transport", "honeydrunk-data", "honeydrunk-agentkit"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/pulse" }
   },
+
   {
-    "id": "honey-auth",
-    "name": "HoneyAuth",
-    "short": "JWT + Passkeys/MFA",
-    "description": "Modern authentication system. JWT tokens, passkeys, MFA, and zero-password flows.",
+    "id": "honeydrunk-auth",
+    "name": "HoneyDrunk.Auth",
+    "short": "Passkeys/JWT + policy",
+    "description": "Unified authentication & authorization with passkeys, JWT, MFA, and policy-based access.",
     "sector": "Core",
     "signal": "Seed",
     "cluster": "infrastructure",
     "energy": 60,
     "priority": 78,
-    "tags": ["auth", "security", "jwt"],
-    "connections": ["vault"],
-    "links": {}
+    "tags": ["auth", "security", "jwt", "passkeys"],
+    "connections": ["honeydrunk-vault", "honeycore-web-rest"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/auth" }
   },
+
+  {
+    "id": "honeydrunk-agentkit",
+    "name": "HoneyDrunk.AgentKit",
+    "short": "Agent contracts & lifecycle",
+    "description": "Contracts and runtime primitives for autonomous agents. Scheduling, events, memory, and orchestration hooks.",
+    "sector": "AI",
+    "signal": "Seed",
+    "cluster": "ai",
+    "energy": 58,
+    "priority": 76,
+    "tags": ["agents", "runtime", "orchestration"],
+    "connections": ["honeydrunk-kernel", "honeydrunk-transport", "pulse", "honeydrunk-vault"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/agentkit" }
+  },
+
+  {
+    "id": "honeydrunk-signal",
+    "name": "HoneyDrunk.Signal",
+    "short": "Creator content intelligence",
+    "description": "AI that helps indie devs and studios craft, adapt, and schedule authentic social content across platforms.",
+    "sector": "Creator",
+    "signal": "Seed",
+    "cluster": "ecosystem",
+    "energy": 66,
+    "priority": 74,
+    "tags": ["creator", "marketing", "ai"],
+    "connections": ["honeyhub", "pulse", "honeydrunk-agentkit", "honeydrunk-vault"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/signal" }
+  },
+
   {
     "id": "ledger",
     "name": "Ledger",
@@ -172,6 +241,7 @@
     "connections": ["invoice", "pay"],
     "links": {}
   },
+
   {
     "id": "invoice",
     "name": "Invoice",
@@ -186,6 +256,7 @@
     "connections": ["ledger", "pay"],
     "links": {}
   },
+
   {
     "id": "crm",
     "name": "CRM",
@@ -200,6 +271,7 @@
     "connections": ["invoice"],
     "links": {}
   },
+
   {
     "id": "pay",
     "name": "Pay",
@@ -214,6 +286,7 @@
     "connections": ["invoice", "subs"],
     "links": {}
   },
+
   {
     "id": "subs",
     "name": "Subs",
@@ -228,6 +301,7 @@
     "connections": ["ledger"],
     "links": {}
   },
+
   {
     "id": "forge",
     "name": "Forge",
@@ -239,9 +313,10 @@
     "energy": 55,
     "priority": 65,
     "tags": ["marketplace", "assets", "themes"],
-    "connections": [],
+    "connections": ["honeyhub"],
     "links": {}
   },
+
   {
     "id": "tether",
     "name": "Tether",
@@ -256,11 +331,12 @@
     "connections": [],
     "links": {}
   },
+
   {
     "id": "draft",
     "name": "Draft",
     "short": "Fantasy media league",
-    "description": "Fantasy leagues for movies, shows, books, and music. Compete with friends on cultural consumption.",
+    "description": "Fantasy leagues for games, anime, and media. Compete with friends on culture.",
     "sector": "Play",
     "signal": "Seed",
     "cluster": "gaming",
@@ -270,6 +346,7 @@
     "connections": [],
     "links": {}
   },
+
   {
     "id": "game-prototype",
     "name": "Game #1 (TBD)",
@@ -284,20 +361,22 @@
     "connections": [],
     "links": {}
   },
+
   {
     "id": "honeyhub",
     "name": "HoneyHub",
     "short": "AI-assisted PM/creator platform",
-    "description": "AI-powered project management and creator coordination platform. Agents amplifying human creativity at scale.",
+    "description": "AI-powered project management and learning workflow for creators. Sprint cadence, tasks, and guidance.",
     "sector": "Meta",
     "signal": "Seed",
     "cluster": "ecosystem",
     "energy": 58,
     "priority": 68,
     "tags": ["ai", "pm", "platform"],
-    "connections": ["honeyconnect"],
+    "connections": ["honeydrunk-signal", "forge", "grid"],
     "links": {}
   },
+
   {
     "id": "honeyconnect",
     "name": "HoneyConnect",
@@ -312,43 +391,61 @@
     "connections": ["honeyhub"],
     "links": {}
   },
+
+  {
+    "id": "grid",
+    "name": "HoneyDrunk.Grid",
+    "short": "Service registry & node orchestration",
+    "description": "Live registry of Nodes, statuses, and dependencies. Service discovery and inter-Node protocol surface.",
+    "sector": "Meta",
+    "signal": "Seed",
+    "cluster": "ecosystem",
+    "energy": 63,
+    "priority": 86,
+    "tags": ["registry", "orchestration", "discovery"],
+    "connections": ["grid-visualizer", "honeydrunk-kernel", "pulse"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/grid" }
+  },
+
   {
     "id": "grid-visualizer",
     "name": "Grid.Visualizer",
     "short": "The neon lattice. Visual representation of The Hive.",
-    "description": "This website! Interactive visualization of The Grid with cyberpunk aesthetics. Real-time node relationships and signal states.",
+    "description": "This website. Interactive visualization of The Grid with cyberpunk aesthetics. Real-time node relationships and signal states.",
     "sector": "Creator",
     "signal": "Live",
     "cluster": "visualization",
     "energy": 90,
     "priority": 92,
     "tags": ["visualization", "ui", "nextjs"],
-    "connections": ["honeydrunk-kernel"],
+    "connections": ["honeydrunk-kernel", "grid"],
     "links": {
-      "repo": "https://github.com/honeydrunk/grid-visualizer",
-      "live": "https://honeydrunk.studio"
+      "repo": "https://github.com/HoneyDrunkStudios/grid-visualizer",
+      "live": "https://honeydrunkstudios.com"
     }
   },
+
   {
     "id": "honeymech-courier",
     "name": "HoneyMech.Courier",
     "short": "Autonomous delivery agent",
-    "description": "Simulated autonomous delivery agent. Pathfinding, obstacle avoidance, and mission execution in virtual and physical spaces.",
-    "sector": "Mech",
+    "description": "Simulated autonomous delivery agent. Pathfinding, obstacle avoidance, and mission execution.",
+    "sector": "Cyberware",
     "signal": "Seed",
     "cluster": "robotics",
     "energy": 65,
     "priority": 55,
     "tags": ["robotics", "ai", "simulation", "autonomous"],
-    "connections": [],
+    "connections": ["honeymech-sim"],
     "links": {}
   },
+
   {
     "id": "honeymech-sim",
     "name": "HoneyMech.Sim",
     "short": "Robotics simulation platform",
     "description": "Physics-based simulation environment for testing robotic systems. Digital twins for real-world mechs.",
-    "sector": "Mech",
+    "sector": "Cyberware",
     "signal": "Awake",
     "cluster": "robotics",
     "energy": 70,
@@ -357,12 +454,13 @@
     "connections": ["honeymech-courier"],
     "links": {}
   },
+
   {
     "id": "honeymech-servo",
     "name": "HoneyMech.Servo",
     "short": "Hardware control layer",
     "description": "Low-level servo and actuator control systems. Bridging digital commands to physical motion.",
-    "sector": "Mech",
+    "sector": "Cyberware",
     "signal": "Seed",
     "cluster": "robotics",
     "energy": 58,
@@ -371,6 +469,7 @@
     "connections": ["honeymech-sim"],
     "links": {}
   },
+
   {
     "id": "archive-legacy",
     "name": "Archive.Legacy",
@@ -383,8 +482,9 @@
     "priority": 10,
     "tags": ["archive", "legacy", "lessons"],
     "connections": [],
-    "links": {
-      "docs": "https://docs.honeydrunk.studio/archive"
-    }
+    "links": { "docs": "https://docs.honeydrunkstudios.com/archive" }
   }
 ]
+
+
+

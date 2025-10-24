@@ -14,6 +14,7 @@ interface TheGridProps {
   selectedNodeId?: string;
   onNodeClick?: (node: VisualNode) => void;
   className?: string;
+  useFlowVisuals?: boolean; // Toggle Flow-based visual mode
 }
 
 const STORAGE_KEY = 'honeydrunk_node_positions';
@@ -23,6 +24,7 @@ export default function TheGrid({
   selectedNodeId,
   onNodeClick,
   className = '',
+  useFlowVisuals = false,
 }: TheGridProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [pan, setPan] = useState({ x: 0, y: 0 });
@@ -328,6 +330,7 @@ export default function TheGrid({
             onDrag={(deltaX, deltaY) => handleNodeDrag(node.id, deltaX, deltaY)}
             onDragEnd={handleNodeDragEnd}
             zoom={zoom}
+            useFlowVisuals={useFlowVisuals}
           />
         ))}
       </div>

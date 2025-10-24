@@ -4,11 +4,27 @@
  */
 
 import nodesData from '@/data/nodes.json';
-import type { Node, VisualNode, SignalVisuals, SectorVisuals, NodePosition, Signal, Sector } from './types';
+import type { Node, VisualNode, SignalVisuals, SectorVisuals, NodePosition, Signal, Sector, FlowMetrics } from './types';
 import { colors } from './tokens';
 
 // Type assertion for imported JSON
 const nodes = nodesData as Node[];
+
+/**
+ * Legacy ID aliases for backward compatibility
+ * Maps old node IDs to new standardized IDs
+ */
+const nodeIdAliases: Record<string, string> = {
+  'vault': 'honeydrunk-vault',
+  'honey-auth': 'honeydrunk-auth',
+};
+
+/**
+ * Resolve a node ID, handling legacy aliases
+ */
+function resolveNodeId(id: string): string {
+  return nodeIdAliases[id] || id;
+}
 
 /**
  * Signal → Visual mapping
@@ -68,9 +84,51 @@ const sectorVisualsMap: Record<Sector, SectorVisuals> = {
   Creator: { color: colors.aurumGold },
   Life: { color: colors.signalGreen },
   Play: { color: colors.neonPink },
-  Mech: { color: colors.electricBlue },
+  Cyberware: { color: colors.chromeTeal },
   Meta: { color: colors.slateLight },
+  AI: { color: colors.synthMagenta },
 };
+
+/**
+ * Calculate Flow Index and metrics for a node
+ * Flow = (Energy × 0.4) + (Priority × 0.6)
+ *
+ * Flow determines the "living roadmap" — what needs attention next
+ */
+function calculateFlowMetrics(node: Node): FlowMetrics {
+  const energy = node.energy ?? 50;    // Default to mid-range if not set
+  const priority = node.priority ?? 50;
+
+  // Flow Index: weighted combination
+  const flowIndex = (energy * 0.4) + (priority * 0.6);
+
+  // Determine flow tier based on ranges
+  let flowTier: FlowMetrics['flowTier'];
+  let flowColor: string;
+
+  if (flowIndex >= 80) {
+    flowTier = 'critical';
+    flowColor = colors.aurumGold;      // Gold glow — critical path
+  } else if (flowIndex >= 60) {
+    flowTier = 'active';
+    flowColor = colors.electricBlue;   // Electric blue pulse — active
+  } else if (flowIndex >= 40) {
+    flowTier = 'stable';
+    flowColor = colors.violetFlux;     // Violet fade — stable
+  } else if (flowIndex >= 20) {
+    flowTier = 'dormant';
+    flowColor = colors.slateLight;     // Dim slate — dormant
+  } else {
+    flowTier = 'archived';
+    flowColor = colors.archiveRed;     // Deep red embers — archived/cold
+  }
+
+  return {
+    flowIndex: Math.round(flowIndex),
+    flowTier,
+    flowColor,
+  };
+}
 
 /**
  * Seeded pseudo-random number generator
@@ -136,24 +194,39 @@ function hashString(str: string): number {
 
 /**
  * Get all nodes with visual properties
+ * Sorted by priority by default (backward compatibility)
  */
 export function getNodes(): VisualNode[] {
   return nodes
     .sort((a, b) => (b.priority || 0) - (a.priority || 0))
     .map((node, index) => ({
       ...node,
+      // Resolve connection IDs to handle legacy aliases
+      connections: node.connections?.map(connId => resolveNodeId(connId)),
       position: generateNodePosition(node, index),
       signalVisuals: signalVisualsMap[node.signal],
       sectorVisuals: sectorVisualsMap[node.sector],
+      flowMetrics: calculateFlowMetrics(node),
     }));
 }
 
 /**
+ * Get nodes sorted by Flow Index (living roadmap view)
+ * High Flow = high priority AND/OR high recent activity
+ */
+export function getNodesByFlow(): VisualNode[] {
+  const allNodes = getNodes();
+  return allNodes.sort((a, b) => b.flowMetrics.flowIndex - a.flowMetrics.flowIndex);
+}
+
+/**
  * Get a single node by ID
+ * Supports legacy ID aliases for backward compatibility
  */
 export function getNodeById(id: string): VisualNode | undefined {
+  const resolvedId = resolveNodeId(id);
   const allNodes = getNodes();
-  return allNodes.find(node => node.id === id);
+  return allNodes.find(node => node.id === resolvedId);
 }
 
 /**
@@ -171,7 +244,7 @@ export function getFeaturedNodes(count?: number): VisualNode[] {
  * Get all unique sectors
  */
 export function getAllSectors(): Sector[] {
-  return ['Core', 'Ops', 'Creator', 'Life', 'Play', 'Mech', 'Meta'];
+  return ['Core', 'Ops', 'Creator', 'Life', 'Play', 'Cyberware', 'Meta', 'AI'];
 }
 
 /**
@@ -261,8 +334,9 @@ export function getNodeStats() {
       creator: allNodes.filter(n => n.sector === 'Creator').length,
       life: allNodes.filter(n => n.sector === 'Life').length,
       play: allNodes.filter(n => n.sector === 'Play').length,
-      mech: allNodes.filter(n => n.sector === 'Mech').length,
+      cyberware: allNodes.filter(n => n.sector === 'Cyberware').length,
       meta: allNodes.filter(n => n.sector === 'Meta').length,
+      ai: allNodes.filter(n => n.sector === 'AI').length,
     },
   };
 }

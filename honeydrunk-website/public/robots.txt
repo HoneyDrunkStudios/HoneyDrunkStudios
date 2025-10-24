@@ -7,4 +7,4 @@ Allow: /
 # Disallow: /api/
 
 # Sitemap location
-Sitemap: https://honeydrunk.com/sitemap.xml
+Sitemap: https://honeydrunkstudios.com/sitemap.xml

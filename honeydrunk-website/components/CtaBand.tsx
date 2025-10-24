@@ -53,7 +53,7 @@ export default function CtaBand() {
           className="text-sm md:text-base font-mono"
           style={{ color: colors.slateLight, marginBottom: '24px' }}
         >
-          Get updates as nodes go live.
+          Get updates as Nodes go live.
         </p>
 
         {/* Email form - Coming Soon */}

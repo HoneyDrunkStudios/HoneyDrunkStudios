@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
@@ -21,9 +22,9 @@ export default function AboutPage() {
 
       {/* Content */}
       <div className="relative z-10 pt-20 md:pt-32 px-4 md:px-8 lg:px-16 pb-16">
-        <div className="max-w-3xl mx-auto space-y-10 md:space-y-16">
+        <div className="max-w-3xl mx-auto space-y-8 md:space-y-12">
           {/* Page Title */}
-          <header className="space-y-4 md:space-y-6">
+          <header className="space-y-3 md:space-y-4">
             <h1
             className="text-3xl md:text-5xl lg:text-6xl font-display font-bold py-2 md:py-4 holographic-text"
           >
@@ -32,71 +33,102 @@ export default function AboutPage() {
         </header>
 
         {/* Manifesto */}
-        <section className="space-y-6 md:space-y-8">
+        <section className="space-y-4 md:space-y-6">
           <h2
             className="text-2xl md:text-3xl lg:text-4xl font-display font-bold"
             style={{
               color: colors.electricBlue,
-              marginBottom: '48px',
+              marginBottom: '24px',
             }}
           >
             Manifesto
           </h2>
 
-          <div className="space-y-5 md:space-y-6 text-base md:text-lg leading-relaxed px-1 md:px-2">
+          <div className="space-y-4 md:space-y-5 text-base md:text-lg leading-relaxed px-1 md:px-2">
             <p>
-              HoneyDrunk Studios is a living experiment in structured creativity.
-              Every line of code, every system, every decision documented and
-              shared. This is build-in-public at its core.
+              HoneyDrunk Studios is a living experiment in structured creativity — a studio, a network, and a movement.
+              We build open systems, creative tools, and original worlds that prove you can be disciplined and imaginative.
             </p>
 
             <p>
-              The Grid represents our interconnected systems: nodes pulsing with
-              energy, linked by purpose, evolving in real-time. Each node is a
-              project, a tool, an idea brought to life. Some blaze bright. Some
-              rest dormant. All serve the whole.
+              The Grid is our infrastructure and our metaphor — interlinked Nodes pulsing with energy, linked by purpose, evolving in real time.
+              Some Nodes are frameworks. Some are apps. Some are games. All feed the Hive.
             </p>
 
             <p>
-              We believe in <strong>zero-bloat architecture</strong>. Every
-              dependency must earn its keep. Every feature must justify its
-              existence. Ruthless minimalism meets radical clarity.
+              <strong>Our mission is simple:</strong>
+              <br />
+              Build tools that empower creators. Build experiences that inspire players. Share everything.
+            </p>
+          </div>
+        </section>
+
+        {/* Vision */}
+        <section className="space-y-4 md:space-y-6">
+          <h2
+            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-2 md:pt-4"
+            style={{ color: colors.electricBlue, marginBottom: '24px' }}
+          >
+            Vision
+          </h2>
+
+          <div className="space-y-4 md:space-y-5 text-base md:text-lg leading-relaxed px-1 md:px-2">
+            <p>
+              HoneyDrunk Studios exists at the intersection of software, art, and autonomy.
             </p>
 
             <p>
-              We believe <strong>agents amplify human creativity</strong>, not
-              replace it. AI as collaborator. Code as conversation. Systems that
-              augment soul, not automate it away.
+              We develop <strong>open-source technologies</strong> that help indie developers, studios, and creators build smarter, faster, and with purpose.
             </p>
 
             <p>
-              Structure meets soul. Code meets art. This is the way.
+              We design <strong>apps and platforms</strong> that turn fragmented workflows into creative ecosystems.
+            </p>
+
+            <p>
+              We craft <strong>games and simulations</strong> where story, system, and soul converge.
+            </p>
+
+            <p>
+              We explore <strong>AI as a collaborator</strong>, not a replacement — agents that amplify imagination, not automate it away.
+            </p>
+
+            <p>
+              Each release, each experiment, each line of code is part of one evolving organism: <strong>The Grid</strong>.
             </p>
           </div>
         </section>
 
         {/* Pillars */}
-        <section className="space-y-6 md:space-y-8">
+        <section className="space-y-4 md:space-y-6">
           <h2
-            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-4 md:pt-8"
-            style={{ color: colors.electricBlue, marginBottom: '48px' }}
+            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-2 md:pt-4"
+            style={{ color: colors.electricBlue, marginBottom: '24px' }}
           >
             Core Pillars
           </h2>
 
-          <div className="grid gap-5 md:gap-8 px-1 md:px-2">
+          <div className="grid gap-4 md:gap-6 px-1 md:px-2">
             {[
               {
-                title: 'Build-in-Public',
-                desc: 'Transparent development. Every commit, every decision, every lesson shared openly. Progress over perfection.',
+                title: 'Build in Public',
+                desc: 'Transparent development. Every Node, every decision, every failure shared openly. Visibility breeds accountability; accountability breeds craft.',
               },
               {
                 title: 'Zero-Bloat',
-                desc: 'Ruthless minimalism. No frameworks for the sake of frameworks. No dependencies without justification. Structure over decoration.',
+                desc: 'Ruthless minimalism. Systems must serve a purpose or be deleted. Architecture over aesthetics. Efficiency as art form.',
               },
               {
                 title: 'Agents Amplify',
-                desc: 'AI as creative collaborator, not replacement. Systems that augment human capability while preserving soul and intention.',
+                desc: 'AI as co-creator. From observability to robotics, agents strengthen human intention, not override it.',
+              },
+              {
+                title: 'Cross-Domain Creativity',
+                desc: 'Code, design, music, narrative, and infrastructure coexist here. Our games use the same DNA as our apps — modular, reusable, alive.',
+              },
+              {
+                title: 'Sustainable Independence',
+                desc: 'Open-source foundations. Cost-disciplined architecture. Freedom through simplicity — not through venture capital.',
               },
             ].map((pillar) => (
               <div
@@ -117,64 +149,65 @@ export default function AboutPage() {
         </section>
 
         {/* Philosophy */}
-        <section className="space-y-6 md:space-y-8">
+        <section>
           <h2
-            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-4 md:pt-8"
-            style={{ color: colors.electricBlue, marginBottom: '48px' }}
+            className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-2 md:pt-4"
+            style={{ color: colors.electricBlue, marginBottom: '24px' }}
           >
             Philosophy
           </h2>
 
           <div
-            className="p-5 md:p-8 rounded-lg border space-y-5 md:space-y-6"
+            className="px-5 md:px-8 pt-3 md:pt-4 pb-5 md:pb-8 rounded-lg border"
             style={{
               backgroundColor: `${colors.gunmetal}60`,
               borderColor: `${colors.slateLight}30`,
             }}
           >
             <blockquote
-              className="text-lg md:text-xl font-display italic border-l-4 pl-4 md:pl-6 py-2"
-              style={{ borderColor: colors.violetCore }}
+              className="text-lg md:text-xl font-display italic border-l-4 pl-4 md:pl-6 mb-4 md:mb-6"
+              style={{ borderColor: colors.violetCore, paddingLeft: '12px' }}
             >
               &ldquo;Every line earns its keep. Every system serves the whole. Every
               failure teaches the path forward.&rdquo;
             </blockquote>
 
-            <div className="space-y-3 md:space-y-4 text-xs md:text-sm px-1 md:px-2" style={{ color: colors.slateLight }}>
+            <div className="space-y-1 md:space-y-1.5 text-sm md:text-base px-1 md:px-2" style={{ color: colors.slateLight }}>
               <p>
-                We don&apos;t chase trends. We build foundations. We don&apos;t add features
-                for their own sake. We solve real problems with elegant systems.
+                We don&apos;t chase trends. We build foundations.
               </p>
               <p>
-                Code is craft. Systems are art. Infrastructure is poetry when done
-                right.
+                We don&apos;t add noise. We refine the signal.
+              </p>
+              <p>
+                Code is craft. Systems are art. Infrastructure is story.
               </p>
             </div>
           </div>
         </section>
 
         {/* Signal States */}
-        <section className="space-y-6 md:space-y-8">
-          <div style={{ marginBottom: '48px' }}>
+        <section className="space-y-4 md:space-y-6">
+          <div style={{ marginBottom: '24px' }}>
             <h2
-              className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-4 md:pt-8"
-              style={{ color: colors.electricBlue, marginBottom: '16px' }}
+              className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-2 md:pt-4"
+              style={{ color: colors.electricBlue, marginBottom: '12px' }}
             >
               The Signal System
             </h2>
             <p className="px-1 md:px-2 text-sm md:text-base" style={{ color: colors.slateLight }}>
-              Every node broadcasts its state. Every pulse tells a story.
+              Every Node broadcasts its state. Every pulse tells a story.
             </p>
           </div>
 
           <div className="grid gap-4 md:gap-6 px-1 md:px-2">
             {[
-              { signal: 'Seed', color: colors.slateLight, desc: 'Concept stage. Idea germinating. Potential energy.' },
-              { signal: 'Awake', color: colors.violetCore, desc: 'Prototyping. Testing. Finding its form.' },
-              { signal: 'Wiring', color: colors.aurumGold, desc: 'Active development. Systems connecting. Energy building.' },
-              { signal: 'Live', color: colors.signalGreen, desc: 'Production. Full power. Serving its purpose.' },
-              { signal: 'Echo', color: colors.electricBlue, desc: 'Maintenance mode. Stable. Occasional updates.' },
-              { signal: 'Archive', color: colors.neonPink, desc: 'Retired. Lessons preserved. Memory honored.' },
+              { signal: 'Seed', color: colors.slateLight, desc: 'Concept stage — idea germinating, potential energy.' },
+              { signal: 'Awake', color: colors.violetCore, desc: 'Prototyping and testing — form emerging.' },
+              { signal: 'Wiring', color: colors.aurumGold, desc: 'Active development — systems connecting, energy building.' },
+              { signal: 'Live', color: colors.signalGreen, desc: 'In production — serving its purpose.' },
+              { signal: 'Echo', color: colors.electricBlue, desc: 'Maintenance — stable, occasional updates.' },
+              { signal: 'Archive', color: colors.neonPink, desc: 'Retired — lessons preserved, memory honored.' },
             ].map((item) => (
               <div
                 key={item.signal}
@@ -198,6 +231,131 @@ export default function AboutPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* In Short */}
+        <section className="space-y-4 md:space-y-6">
+          <div
+            className="p-6 md:p-8 rounded-lg border-2 text-center space-y-3"
+            style={{
+              backgroundColor: `${colors.gunmetal}80`,
+              borderColor: `${colors.electricBlue}60`,
+              boxShadow: `0 0 30px ${colors.electricBlue}20`,
+            }}
+          >
+            <h2
+              className="text-2xl md:text-3xl font-display font-bold"
+              style={{ color: colors.electricBlue }}
+            >
+              In Short
+            </h2>
+            <div className="max-w-2xl mx-auto space-y-3 text-base md:text-lg leading-relaxed">
+              <p>
+                HoneyDrunk Studios is a <strong>build-in-public cyberpunk collective</strong>.
+              </p>
+              <p>
+                We make systems, tools, and worlds that connect creators, code, and consciousness.
+              </p>
+              <p>
+                Every Node we ship — from SDK to game — strengthens the same Hive.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Flow Index System */}
+        <section className="space-y-4 md:space-y-6">
+          <div style={{ marginBottom: '24px' }}>
+            <h2
+              className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-2 md:pt-4"
+              style={{ color: colors.aurumGold, marginBottom: '12px' }}
+            >
+              The Flow Index
+            </h2>
+            <p className="px-1 md:px-2 text-sm md:text-base" style={{ color: colors.slateLight }}>
+              The living roadmap. Flow = (Energy × 0.4) + (Priority × 0.6)
+            </p>
+          </div>
+
+          <div
+            className="p-6 md:p-8 rounded-lg border-2 space-y-4"
+            style={{
+              backgroundColor: `${colors.gunmetal}80`,
+              borderColor: colors.aurumGold,
+              boxShadow: `0 0 30px ${colors.aurumGold}20`,
+            }}
+          >
+            <p className="text-sm md:text-base leading-relaxed" style={{ color: colors.slateLight }}>
+              Flow Index tells us <span className="font-bold" style={{ color: colors.offWhite }}>what needs attention next</span>. 
+              Not a static backlog—a breathing calculation based on current energy and strategic priority.
+            </p>
+
+            <div className="grid gap-3 md:gap-4">
+              {[
+                { tier: 'Critical', range: '80-100', color: colors.aurumGold, desc: 'Critical path — unlocks others' },
+                { tier: 'Active', range: '60-79', color: colors.electricBlue, desc: 'Actively advancing — next to queue' },
+                { tier: 'Stable', range: '40-59', color: colors.violetFlux, desc: 'Stable, iterative, or dependent' },
+                { tier: 'Dormant', range: '20-39', color: colors.slateLight, desc: 'Background maintenance or resting' },
+                { tier: 'Archived', range: '<20', color: colors.archiveRed, desc: 'Cold storage — revisit or archive' },
+              ].map((item) => (
+                <div
+                  key={item.tier}
+                  className="flex items-center gap-4 p-3 md:p-4 rounded-lg border"
+                  style={{
+                    backgroundColor: `${item.color}10`,
+                    borderColor: `${item.color}40`,
+                  }}
+                >
+                  <div className="flex-shrink-0 w-16 text-center">
+                    <div
+                      className="font-mono font-bold text-xs"
+                      style={{
+                        color: item.color,
+                        textShadow: `0 0 8px ${item.color}60`,
+                      }}
+                    >
+                      {item.range}
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-display font-bold text-sm mb-1" style={{ color: item.color }}>
+                      {item.tier}
+                    </div>
+                    <div className="text-xs" style={{ color: colors.slateLight }}>
+                      {item.desc}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex gap-3 pt-4">
+              <Link
+                href="/about/flow"
+                className="flex-1 px-6 py-3 rounded-lg text-center text-sm font-mono font-bold uppercase tracking-wider
+                           transition-all duration-200 hover:scale-105"
+                style={{
+                  backgroundColor: colors.aurumGold,
+                  color: colors.deepSpace,
+                  boxShadow: `0 0 20px ${colors.aurumGold}40`,
+                }}
+              >
+                Learn More
+              </Link>
+              <Link
+                href="/flow"
+                className="flex-1 px-6 py-3 rounded-lg text-center text-sm font-mono font-bold uppercase tracking-wider
+                           transition-all duration-200 hover:scale-105 border-2"
+                style={{
+                  backgroundColor: `${colors.aurumGold}20`,
+                  borderColor: colors.aurumGold,
+                  color: colors.aurumGold,
+                }}
+              >
+                View Flow Index
+              </Link>
+            </div>
           </div>
         </section>
 

@@ -5,12 +5,24 @@ import { colors } from '@/lib/tokens';
 
 export const metadata = {
   title: 'Signal — HoneyDrunk Studios',
-  description: 'Devlog and changelog for HoneyDrunk Studios projects.',
+  description: 'Build-in-public devlog. Real-time updates from the Grid.',
 };
 
 export default function SignalPage() {
   // In production, this would pull from commits/releases
   const signals = [
+    {
+      date: '2025-10-24',
+      title: 'Flow Index System — Living Roadmap',
+      desc: 'Implemented complete Flow Index system: Flow = (Energy × 0.4) + (Priority × 0.6). Five-tier classification (Critical/Active/Stable/Dormant/Archived). Flow-based visual mode in Grid with dynamic glow intensity. New /flow page with sortable rankings, /about/flow documentation, Flow Tier filtering in /nodes, and global header navigation. The Hive now breathes—showing what needs attention next.',
+      tags: ['feature', 'grid', 'core', 'ux'],
+    },
+    {
+      date: '2025-10-24',
+      title: 'Grid Enhancements — Color, Copy, and Scale',
+      desc: 'Sector color expansion (Chrome Teal for Mech, Synth Magenta for AI). Copy refinement across landing pages—cyberpunk minimalism, em-dash rhythm. Expanded to 43 Nodes across 8 sectors (AgentKit, Signal, Data, Grid orchestration).',
+      tags: ['brand', 'design', 'grid', 'content'],
+    },
     {
       date: '2025-10-18',
       title: 'The Grid v1.0 — Initial Launch',
@@ -26,7 +38,7 @@ export default function SignalPage() {
     {
       date: '2025-10-16',
       title: 'Brand System Finalized',
-      desc: 'Locked in the cyberpunk realism color palette: Aurum Gold, Electric Blue, Violet Core against Deep Space. Zero-bloat typography with Space Grotesk, Inter, and JetBrains Mono.',
+      desc: 'Locked in the cyberpunk realism color palette: Aurum Gold, Electric Blue, Violet Flux against Deep Space. Zero-bloat typography with Space Grotesk, Inter, and JetBrains Mono.',
       tags: ['brand', 'design'],
     },
   ];
@@ -52,7 +64,7 @@ export default function SignalPage() {
             Signal Feed
           </h1>
           <p className="text-base md:text-lg px-1 md:px-2" style={{ color: colors.slateLight }}>
-            Build-in-public devlog. Every commit tells a story.
+            Real-time updates from the Grid. Every Node tells a story.
           </p>
         </header>
 
@@ -78,11 +90,11 @@ export default function SignalPage() {
                 {signal.title}
               </h2>
 
-              <p className="mb-4 text-sm md:text-base leading-relaxed" style={{ color: colors.slateLight }}>
+              <p className="text-sm md:text-base leading-relaxed" style={{ color: colors.slateLight, marginBottom: '24px' }}>
                 {signal.desc}
               </p>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 md:gap-3">
                 {signal.tags.map((tag) => (
                   <span
                     key={tag}
@@ -110,8 +122,8 @@ export default function SignalPage() {
             borderColor: `${colors.slateLight}20`,
           }}
         >
-          <p className="text-sm md:text-base" style={{ color: colors.slateLight }}>
-            More signals incoming. Subscribe to stay updated.
+          <p className="text-sm md:text-base font-mono" style={{ color: colors.slateLight }}>
+            More signals incoming. Follow <a href="https://x.com/HoneyDrunkLab" target="_blank" rel="noopener noreferrer" className="underline hover:no-underline" style={{ color: colors.electricBlue }}>@HoneyDrunkLab</a> for real-time updates.
           </p>
         </div>
         </div>

@@ -10,6 +10,8 @@ export const colors = {
   violetFlux: '#7B61FF',       // Violet Flux - matches TattedDev link glow
   electricBlue: '#00D1FF',     // Electric Edge - data strokes, active grid beams
   neonPink: '#FF2A6D',         // Neon Pink - cyberpunk accent, hot highlights
+  chromeTeal: '#14B8A6',       // Chrome Teal - industrial mech, metallic systems
+  synthMagenta: '#D946EF',     // Synth Magenta - AI/digital intelligence, computational
 
   // Backgrounds
   deepSpace: '#0A0E12',        // Deep Space - base 950
@@ -23,7 +25,7 @@ export const colors = {
   // Signals
   signalGreen: '#22C55E',      // Signal Green - online/connected states
   pulseRed: '#F43F5E',         // Pulse Red - critical/error states
-  archiveRed: '#8B2635',       // Archive Red - deep crimson for archived/terminated states
+  archiveRed: '#FF3B3B',       // Archive Red - bright error red for archived/terminated states
 
   // Legacy aliases for backward compatibility
   violetCore: '#7B61FF',       // Alias for violetFlux
@@ -86,6 +88,8 @@ export const shadows = {
   neonBlue: '0 0 20px rgba(0, 209, 255, 0.35)',
   neonViolet: '0 0 20px rgba(123, 97, 255, 0.35)',
   neonPink: '0 0 20px rgba(255, 42, 109, 0.5)',       // Hot pink glow
+  neonTeal: '0 0 20px rgba(20, 184, 166, 0.4)',       // Chrome teal glow
+  neonMagenta: '0 0 20px rgba(217, 70, 239, 0.4)',    // Synth magenta glow
   soft: '0 2px 8px rgba(0, 0, 0, 0.15)',
   medium: '0 4px 16px rgba(0, 0, 0, 0.25)',
   hard: '0 8px 32px rgba(0, 0, 0, 0.35)',

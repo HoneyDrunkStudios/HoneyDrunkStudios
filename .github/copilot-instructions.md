@@ -51,6 +51,15 @@ Centralized in `lib/tokens.ts`:
 - Semantic color mapping through `tokens.ts`, never hardcoded values
 - TypeScript strict mode—comprehensive type coverage in `lib/types.ts`
 
+### Spacing & Layout Rules
+**Critical**: `globals.css` resets margins/padding on all typography elements (`h1-h6`, `p`, `blockquote`, etc.) to `0`.
+
+- **Tailwind margin utilities (`mb-4`, `mt-6`, etc.) are overridden** by this reset
+- **Solution**: Use inline styles for element-level spacing: `style={{ marginBottom: '24px' }}`
+- **Container spacing**: Use Tailwind utilities (`space-y-4`, `gap-6`) for parent containers
+- **Why**: Intentional design for zero-bloat—no browser defaults, explicit spacing only
+- **Pattern**: Inline styles for `<p>`, `<h2>`, `<blockquote>` margins; Tailwind for divs/sections
+
 ## Tech Stack Specifics
 
 ### Next.js 15 + React 19

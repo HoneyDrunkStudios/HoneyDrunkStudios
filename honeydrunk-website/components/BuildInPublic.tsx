@@ -57,7 +57,7 @@ export default function BuildInPublic() {
               className="text-sm font-mono leading-relaxed"
               style={{ color: colors.slateLight, marginBottom: '32px' }}
             >
-              Follow the journey as we architect, refactor, and evolve the Grid. Every node tells a story.
+              Follow the journey as we architect, refactor, and evolve the Grid. Every Node tells a story.
             </p>
 
             <Link
@@ -115,7 +115,7 @@ export default function BuildInPublic() {
               className="text-sm font-mono leading-relaxed"
               style={{ color: colors.slateLight, marginBottom: '32px' }}
             >
-              Real-time updates, insights, and behind-the-scenes from the grid. Join the conversation.
+              Real-time updates, insights, and behind-the-scenes from the Grid. Join the conversation.
             </p>
 
             <Link

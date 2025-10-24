@@ -19,6 +19,7 @@ interface NodeGlyphProps {
   onDrag?: (deltaX: number, deltaY: number) => void;
   onDragEnd?: () => void;
   zoom?: number;
+  useFlowVisuals?: boolean; // Toggle Flow-based coloring instead of Signal
 }
 
 export default function NodeGlyph({
@@ -31,6 +32,7 @@ export default function NodeGlyph({
   onDrag,
   onDragEnd,
   zoom = 1,
+  useFlowVisuals = false,
 }: NodeGlyphProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [pulsePhase, setPulsePhase] = useState(0);
@@ -94,31 +96,35 @@ export default function NodeGlyph({
     const handleMouseMove = (e: MouseEvent) => {
       // Use the zoom value captured at drag start for consistency
       const currentZoom = dragZoomRef.current;
+      // Calculate delta from the ORIGINAL drag start position (not the updated one)
       const deltaX = (e.clientX - dragStart.x) / currentZoom;
       const deltaY = (e.clientY - dragStart.y) / currentZoom;
 
-      // Accumulate the total delta from the start position
-      cumulativeDeltaRef.current.x += deltaX;
-      cumulativeDeltaRef.current.y += deltaY;
+      // Store the total delta from the original start position
+      cumulativeDeltaRef.current = { x: deltaX, y: deltaY };
 
-      // Track total distance moved
+      // Track total distance moved for click detection
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-      setDragDistance((prev) => prev + distance);
+      setDragDistance(distance);
 
       // Throttle updates to ~60fps (16ms) for better performance
       const now = Date.now();
       if (now - lastUpdateTimeRef.current >= 16) {
-        onDrag?.(cumulativeDeltaRef.current.x, cumulativeDeltaRef.current.y);
+        onDrag?.(deltaX, deltaY);
         lastUpdateTimeRef.current = now;
       }
-      
-      setDragStart({ x: e.clientX, y: e.clientY });
     };
 
-    const handleMouseUp = () => {
+    const handleMouseUp = (e: MouseEvent) => {
       setIsDragging(false);
+
+      // Calculate final delta from original start position
+      const currentZoom = dragZoomRef.current;
+      const finalDeltaX = (e.clientX - dragStart.x) / currentZoom;
+      const finalDeltaY = (e.clientY - dragStart.y) / currentZoom;
+
       // Send final position update
-      onDrag?.(cumulativeDeltaRef.current.x, cumulativeDeltaRef.current.y);
+      onDrag?.(finalDeltaX, finalDeltaY);
       onDragEnd?.();
 
       // Reset dragDistance after a short delay to allow click handler to check it
@@ -137,12 +143,22 @@ export default function NodeGlyph({
   }, [isDragging, dragStart, onDrag, onDragEnd]);
 
   const baseSize = 80 + (node.energy || 50) * 0.8; // 80-160px based on energy
-  const pulseScale = 1 + Math.sin(pulsePhase) * 0.05 * node.signalVisuals.glowIntensity;
+  const effectivePulsePhase = node.signalVisuals.pulseSpeed === 0 ? 0 : pulsePhase;
+  const pulseScale = 1 + Math.sin(effectivePulsePhase) * 0.05 * node.signalVisuals.glowIntensity;
   const hoverScale = isHovered ? 1.1 : 1;
   const selectedScale = isSelected ? 1.05 : 1;
   const finalScale = pulseScale * hoverScale * selectedScale;
 
-  const glowSize = baseSize * 2 * node.signalVisuals.glowIntensity;
+  // Determine color based on mode (Flow or Signal)
+  const visualColor = useFlowVisuals && node.flowMetrics 
+    ? node.flowMetrics.flowColor 
+    : node.signalVisuals.color;
+  
+  const glowIntensity = useFlowVisuals && node.flowMetrics
+    ? node.flowMetrics.flowIndex / 100 // Flow-based glow scales 0-1 with index
+    : node.signalVisuals.glowIntensity;
+
+  const glowSize = baseSize * 2 * glowIntensity;
   const glowOpacity = node.signalVisuals.opacity * 0.4;
 
   const handleClick = (e: React.MouseEvent) => {
@@ -181,7 +197,7 @@ export default function NodeGlyph({
           left: '50%',
           top: '50%',
           transform: 'translate(-50%, -50%)',
-          backgroundColor: node.signalVisuals.color,
+          backgroundColor: visualColor,
           opacity: glowOpacity * (isHovered ? 1.5 : 1),
           transition: 'opacity 200ms ease-out',
         }}
@@ -193,16 +209,16 @@ export default function NodeGlyph({
         style={{
           width: `${baseSize}px`,
           height: `${baseSize}px`,
-          backgroundColor: `${node.signalVisuals.color}20`,
-          borderColor: node.signalVisuals.color,
-          boxShadow: `0 0 ${glowSize / 2}px ${node.signalVisuals.color}`,
+          backgroundColor: `${visualColor}20`,
+          borderColor: visualColor,
+          boxShadow: `0 0 ${glowSize / 2}px ${visualColor}`,
         }}
       >
         {/* Energy indicator */}
         <div
           className="absolute inset-1 rounded-full"
           style={{
-            backgroundColor: node.signalVisuals.color,
+            backgroundColor: visualColor,
             opacity: (node.energy || 50) / 200,
           }}
         />
@@ -260,6 +276,18 @@ export default function NodeGlyph({
             <span style={{ color: colors.electricBlue }}>Signal:</span>
             <span style={{ color: node.signalVisuals.color }}>{node.signal}</span>
           </div>
+          {useFlowVisuals && node.flowMetrics && (
+            <>
+              <div className="flex items-center gap-2 text-xs">
+                <span style={{ color: colors.electricBlue }}>Flow Index:</span>
+                <span style={{ color: node.flowMetrics.flowColor }}>{node.flowMetrics.flowIndex}</span>
+              </div>
+              <div className="flex items-center gap-2 text-xs">
+                <span style={{ color: colors.electricBlue }}>Flow Tier:</span>
+                <span style={{ color: node.flowMetrics.flowColor }} className="capitalize">{node.flowMetrics.flowTier}</span>
+              </div>
+            </>
+          )}
           {node.tags && node.tags.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-2 pt-2 border-t" style={{ borderColor: `${colors.electricBlue}30` }}>
               {node.tags.slice(0, 3).map((tag) => (

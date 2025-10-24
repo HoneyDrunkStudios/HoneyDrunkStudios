@@ -11,15 +11,28 @@ import type { Node } from '@/lib/types';
 
 const nodes = nodesData as Node[];
 
+/**
+ * Legacy ID aliases for backward compatibility
+ */
+const nodeIdAliases: Record<string, string> = {
+  'vault': 'honeydrunk-vault',
+  'honey-auth': 'honeydrunk-auth',
+};
+
+function resolveNodeId(id: string): string {
+  return nodeIdAliases[id] || id;
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
+    const resolvedId = resolveNodeId(id);
 
     // Find the requested node
-    const node = nodes.find(n => n.id === id);
+    const node = nodes.find(n => n.id === resolvedId);
 
     if (!node) {
       return NextResponse.json(

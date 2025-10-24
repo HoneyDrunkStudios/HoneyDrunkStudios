@@ -27,12 +27,14 @@ function GridContent() {
   const [selectedNodeId, setSelectedNodeId] = useState<string | undefined>();
   const [showFilters, setShowFilters] = useState(true);
   const [hasAutoOpened, setHasAutoOpened] = useState(false);
+  const [useFlowVisuals, setUseFlowVisuals] = useState(false); // Toggle for Flow-based visuals
 
   // Initialize from URL params
   useEffect(() => {
     const sectorsParam = searchParams.get('sectors');
     const signalsParam = searchParams.get('signals');
     const searchParam = searchParams.get('search');
+    const flowModeParam = searchParams.get('flowMode');
 
     if (sectorsParam) {
       setSelectedSectors(sectorsParam.split(',') as Sector[]);
@@ -42,6 +44,9 @@ function GridContent() {
     }
     if (searchParam) {
       setSearchQuery(searchParam);
+    }
+    if (flowModeParam === 'true') {
+      setUseFlowVisuals(true);
     }
   }, [searchParams]);
 
@@ -108,6 +113,25 @@ function GridContent() {
             color: colors.offWhite,
           }}
         />
+
+        {/* Flow Visual toggle */}
+        <button
+          onClick={() => setUseFlowVisuals(!useFlowVisuals)}
+          className="px-6 py-4 rounded-lg text-sm font-mono cursor-pointer
+                   transition-all duration-200 hover:scale-105 whitespace-nowrap"
+          style={{
+            backgroundColor: useFlowVisuals
+              ? `${colors.aurumGold}30`
+              : `${colors.gunmetal}80`,
+            borderWidth: '1px',
+            borderColor: useFlowVisuals
+              ? colors.aurumGold
+              : `${colors.slateLight}40`,
+            color: useFlowVisuals ? colors.aurumGold : colors.slateLight,
+          }}
+        >
+          {useFlowVisuals ? '⚡ ' : ''}Flow Mode
+        </button>
 
         {/* Filter toggle */}
         <button
@@ -186,6 +210,7 @@ function GridContent() {
           nodes={filteredNodes}
           selectedNodeId={selectedNodeId}
           onNodeClick={(node) => setSelectedNodeId(node.id)}
+          useFlowVisuals={useFlowVisuals}
         />
       </div>
 

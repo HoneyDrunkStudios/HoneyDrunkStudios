@@ -9,27 +9,27 @@ import { colors } from '@/lib/tokens';
 
 const props = [
   {
-    title: 'Enterprise Spine, Indie Heart',
+    title: 'Enterprise spine. Indie heart.',
     description:
-      'Disciplined architecture, handcrafted feel. Build once, reuse everywhere.',
+      'Disciplined architecture, handcrafted feel. Build once. Reuse everywhere.',
     accent: colors.violetFlux,
   },
   {
     title: 'Build in Public',
     description:
-      'Every Node ships with devlogs, visuals, and lessons. Transparency is our marketing.',
+      'Every Node ships with devlogs, visuals, and lessons.\nTransparency isn\'t marketing — it\'s the message.',
     accent: colors.aurumGold,
   },
   {
     title: 'Agentic by Design',
     description:
-      'From observability to robotics, agents amplify the creator.',
+      'From observability to robotics, agents amplify the creator.\nAutomation with intention. Intelligence with soul.',
     accent: colors.electricBlue,
   },
   {
     title: 'Cost-Disciplined',
     description:
-      'Serverless first, free tiers, zero-bloat directive.',
+      'Serverless first. Free tiers when possible.\nZero-bloat is a directive, not a preference.',
     accent: colors.signalGreen,
   },
 ];
@@ -106,7 +106,7 @@ function ValuePropCard({
       </h3>
 
       <p
-        className="text-sm leading-relaxed font-mono"
+        className="text-sm leading-relaxed font-mono whitespace-pre-line"
         style={{
           color: colors.slateLight,
         }}

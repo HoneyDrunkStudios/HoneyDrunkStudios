@@ -11,14 +11,27 @@ export const metadata = {
 export default function BrandPage() {
   const brandColors = [
     { name: 'Aurum Gold', hex: colors.aurumGold, desc: 'Signature HoneyDrunk hue - accents, highlights' },
+    { name: 'Violet Flux', hex: colors.violetFlux, desc: 'Core systems - gradients, glows' },
+    { name: 'Electric Blue', hex: colors.electricBlue, desc: 'Operations - data strokes, active grid beams' },
     { name: 'Signal Green', hex: colors.signalGreen, desc: 'Terminal green - Live/operational states' },
-    { name: 'Electric Blue', hex: colors.electricBlue, desc: 'Data strokes, active grid beams, links' },
-    { name: 'Violet Flux', hex: colors.violetFlux, desc: 'Secondary accent - gradients, glows' },
-    { name: 'Neon Pink', hex: colors.neonPink, desc: 'Archive state - retired nodes, hot accents' },
+    { name: 'Neon Pink', hex: colors.neonPink, desc: 'Play sector - gaming, hot accents' },
+    { name: 'Chrome Teal', hex: colors.chromeTeal, desc: 'Mech sector - industrial, metallic, robotics' },
+    { name: 'Synth Magenta', hex: colors.synthMagenta, desc: 'AI sector - digital intelligence, computational' },
     { name: 'Deep Space', hex: colors.deepSpace, desc: 'Base background (#0A0E12)' },
     { name: 'Gunmetal', hex: colors.gunmetal, desc: 'Section contrast, card backgrounds' },
     { name: 'Slate Light', hex: colors.slateLight, desc: 'Muted secondary text' },
     { name: 'Off-White', hex: colors.offWhite, desc: 'Default readable text' },
+  ];
+
+  const sectorColors = [
+    { name: 'Core', hex: colors.violetFlux, desc: 'Foundation systems - kernel, data, transport' },
+    { name: 'Ops', hex: colors.electricBlue, desc: 'Operations - pipelines, deploy, monitoring' },
+    { name: 'Creator', hex: colors.aurumGold, desc: 'Creative tools - content, marketing, signals' },
+    { name: 'Life', hex: colors.signalGreen, desc: 'Personal wellness - relationships, health' },
+    { name: 'Play', hex: colors.neonPink, desc: 'Gaming & entertainment - games, media' },
+    { name: 'Mech', hex: colors.chromeTeal, desc: 'Robotics & hardware - servos, simulation' },
+    { name: 'Meta', hex: colors.slateLight, desc: 'Ecosystem tools - hub, grid, connect' },
+    { name: 'AI', hex: colors.synthMagenta, desc: 'Intelligence & agents - AgentKit, automation' },
   ];
 
   return (
@@ -33,9 +46,9 @@ export default function BrandPage() {
 
       {/* Content */}
       <div className="relative z-10 pt-20 md:pt-32 px-4 md:px-8 lg:px-16 pb-16">
-        <div className="max-w-4xl mx-auto space-y-10 md:space-y-16">
+        <div className="max-w-4xl mx-auto space-y-10 md:space-y-12">
           {/* Page Title */}
-          <header className="space-y-4 md:space-y-6">
+          <header className="space-y-3 md:space-y-4">
             <h1
             className="text-3xl md:text-5xl lg:text-6xl font-display font-bold py-2 md:py-4 holographic-text"
           >
@@ -47,10 +60,10 @@ export default function BrandPage() {
         </header>
 
         {/* Colors */}
-        <section className="space-y-6 md:space-y-8">
+        <section className="space-y-5 md:space-y-6">
           <div>
             <h2
-              className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-3 md:mb-4"
+              className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-2 md:mb-3"
               style={{
                 color: colors.electricBlue,
               }}
@@ -62,7 +75,7 @@ export default function BrandPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-6 md:mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mt-4 md:mt-5">
             {brandColors.map((color) => (
               <div
                 key={color.name}
@@ -78,6 +91,7 @@ export default function BrandPage() {
                     style={{
                       backgroundColor: color.hex,
                       borderColor: colors.slateLight,
+                      boxShadow: `0 0 20px ${color.hex}40`,
                     }}
                   />
                   <div>
@@ -97,18 +111,72 @@ export default function BrandPage() {
           </div>
         </section>
 
-        {/* Typography */}
-        <section className="space-y-4 md:space-y-6">
-          <h2
-            className="text-2xl md:text-3xl font-display font-bold mb-4 md:mb-6"
-            style={{
-              color: colors.electricBlue,
-            }}
-          >
-            Typography
-          </h2>
+        {/* Sector Colors */}
+        <section className="space-y-5 md:space-y-6">
+          <div>
+            <h2
+              className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-2 md:mb-3"
+              style={{
+                color: colors.aurumGold,
+              }}
+            >
+              Sector Colors
+            </h2>
+            <p className="px-1 md:px-2 text-sm md:text-base" style={{ color: colors.slateLight }}>
+              Each sector in The Grid has its own signature color for visual categorization.
+            </p>
+          </div>
 
-          <div className="space-y-3 md:space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mt-4 md:mt-5">
+            {sectorColors.map((sector) => (
+              <div
+                key={sector.name}
+                className="p-5 md:p-6 rounded-lg border transition-all duration-200 hover:scale-105"
+                style={{
+                  backgroundColor: `${colors.gunmetal}60`,
+                  borderColor: sector.hex,
+                  borderWidth: '2px',
+                  boxShadow: `0 0 15px ${sector.hex}20`,
+                }}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div
+                    className="w-12 h-12 rounded-full border-2 flex-shrink-0"
+                    style={{
+                      backgroundColor: sector.hex,
+                      borderColor: sector.hex,
+                      boxShadow: `0 0 20px ${sector.hex}60, inset 0 0 10px ${sector.hex}40`,
+                    }}
+                  />
+                  <div className="font-display font-bold text-lg" style={{ color: sector.hex }}>
+                    {sector.name}
+                  </div>
+                </div>
+                <div className="text-xs" style={{ color: colors.slateLight }}>
+                  {sector.desc}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Typography */}
+        <section className="space-y-5 md:space-y-6">
+          <div>
+            <h2
+              className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-2 md:mb-3"
+              style={{
+                color: colors.violetFlux,
+              }}
+            >
+              Typography
+            </h2>
+            <p className="px-1 md:px-2 text-sm md:text-base" style={{ color: colors.slateLight }}>
+              Display, body, and monospace fonts for terminal aesthetic.
+            </p>
+          </div>
+
+          <div className="space-y-3 md:space-y-4 mt-4 md:mt-5">
             <div
               className="p-5 md:p-6 rounded-lg border"
               style={{
@@ -157,18 +225,23 @@ export default function BrandPage() {
         </section>
 
         {/* Voice & Tone */}
-        <section className="space-y-4 md:space-y-6">
-          <h2
-            className="text-2xl md:text-3xl font-display font-bold mb-4 md:mb-6"
-            style={{
-              color: colors.electricBlue,
-            }}
-          >
-            Voice & Tone
-          </h2>
+        <section className="space-y-5 md:space-y-6">
+          <div>
+            <h2
+              className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-2 md:mb-3"
+              style={{
+                color: colors.neonPink,
+              }}
+            >
+              Voice & Tone
+            </h2>
+            <p className="px-1 md:px-2 text-sm md:text-base" style={{ color: colors.slateLight }}>
+              Declarative. Terminal-like. Every word earns its keep.
+            </p>
+          </div>
 
           <div
-            className="p-5 md:p-6 rounded-lg border space-y-4"
+            className="p-5 md:p-6 rounded-lg border space-y-4 mt-4 md:mt-5"
             style={{
               backgroundColor: `${colors.gunmetal}60`,
               borderColor: `${colors.slateLight}30`,
@@ -198,20 +271,40 @@ export default function BrandPage() {
         </section>
 
         {/* Taglines */}
-        <section className="space-y-4 md:space-y-6">
-          <h2
-            className="text-2xl md:text-3xl font-display font-bold mb-4 md:mb-6"
-            style={{
-              color: colors.electricBlue,
-            }}
-          >
-            Taglines
-          </h2>
+        <section className="space-y-5 md:space-y-6">
+          <div>
+            <h2
+              className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-2 md:mb-3"
+              style={{
+                color: colors.signalGreen,
+              }}
+            >
+              Taglines
+            </h2>
+            <p className="px-1 md:px-2 text-sm md:text-base" style={{ color: colors.slateLight }}>
+              Core brand statements and messaging pillars.
+            </p>
+          </div>
 
-          <div className="space-y-2 font-display text-base md:text-xl">
-            <div>Boot. Build. Refactor. Evolve.</div>
-            <div>Structure meets soul. Code meets art.</div>
-            <div>Build-in-Public • Zero-Bloat • Agents Amplify</div>
+          <div className="space-y-4 font-display text-base md:text-xl mt-4 md:mt-5">
+            <div className="p-4 md:p-5 rounded-lg border" style={{
+              backgroundColor: `${colors.gunmetal}60`,
+              borderColor: `${colors.slateLight}30`,
+            }}>
+              Boot. Build. Refactor. Evolve.
+            </div>
+            <div className="p-4 md:p-5 rounded-lg border" style={{
+              backgroundColor: `${colors.gunmetal}60`,
+              borderColor: `${colors.slateLight}30`,
+            }}>
+              Structure meets soul. Code meets art.
+            </div>
+            <div className="p-4 md:p-5 rounded-lg border" style={{
+              backgroundColor: `${colors.gunmetal}60`,
+              borderColor: `${colors.slateLight}30`,
+            }}>
+              Build-in-Public • Zero-Bloat • Agents Amplify
+            </div>
           </div>
         </section>
         </div>

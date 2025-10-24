@@ -32,11 +32,59 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
     const [ctasVisible, setCtasVisible] = useState(false);
     const [displayedHeadline, setDisplayedHeadline] = useState('');
     const [isTyping, setIsTyping] = useState(false);
+    
+    // Hold-to-press state
+    const [exploreProgress, setExploreProgress] = useState(0);
+    const [signalProgress, setSignalProgress] = useState(0);
+    const [isHoldingExplore, setIsHoldingExplore] = useState(false);
+    const [isHoldingSignal, setIsHoldingSignal] = useState(false);
+    const holdAnimationRef = useRef<number | null>(null);
+    const holdStartRef = useRef<number>(0);
+    const holdDuration = 1000; // ms to hold for activation
 
     const exploreButtonRef = useRef<HTMLButtonElement>(null);
     const signalButtonRef = useRef<HTMLButtonElement>(null);
 
     const fullHeadline = 'Structure meets soul. Code meets art.';
+
+    // Helper to render headline with colored words during typewriter
+    const renderColoredHeadline = (text: string) => {
+      // Split on line break point
+      const parts = text.split('.');
+      const firstLine = parts[0] ? parts[0] + '.' : '';
+      const secondLine = parts[1] || '';
+      
+      // Highlight logic with glow
+      const highlightWord = (line: string, word: string, color: string) => {
+        if (!line.includes(word)) return line;
+        const index = line.indexOf(word);
+        const glowStyle = {
+          color,
+          textShadow: `
+            0 0 50px ${color}FF,
+            0 0 30px ${color}CC,
+            0 0 15px ${color}80,
+            0 0 5px ${color}60,
+            0 2px 8px rgba(0,0,0,0.8)
+          `
+        };
+        return (
+          <>
+            {line.slice(0, index)}
+            <span style={glowStyle}>{word}</span>
+            {line.slice(index + word.length)}
+          </>
+        );
+      };
+
+      return (
+        <>
+          {highlightWord(firstLine, 'soul', colors.signalGreen)}
+          {text.includes('Code') && <br />}
+          {secondLine && highlightWord(secondLine, 'art', colors.neonPink)}
+        </>
+      );
+    };
 
     // Trigger ripple on button hover
     const triggerButtonEffects = (buttonRef: React.RefObject<HTMLElement | null>) => {
@@ -49,6 +97,73 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
       // Trigger hex grid ripple
       hexGridRef?.current?.triggerRipple(x, y);
     };
+
+    // Hold-to-press handlers
+    const startHold = (buttonType: 'explore' | 'signal') => {
+      if (buttonType === 'explore') {
+        setIsHoldingExplore(true);
+      } else {
+        setIsHoldingSignal(true);
+      }
+      holdStartRef.current = performance.now();
+      
+      const animate = (currentTime: number) => {
+        const elapsed = currentTime - holdStartRef.current;
+        const progress = Math.min((elapsed / holdDuration) * 100, 100);
+        
+        if (buttonType === 'explore') {
+          setExploreProgress(progress);
+          
+          if (progress >= 100) {
+            setIsHoldingExplore(false);
+            onExploreGrid?.();
+            setExploreProgress(0);
+            return;
+          }
+        } else {
+          setSignalProgress(progress);
+          
+          if (progress >= 100) {
+            setIsHoldingSignal(false);
+            onFollowSignal?.();
+            setSignalProgress(0);
+            return;
+          }
+        }
+
+        // Continue animation if still holding
+        const isStillHolding = buttonType === 'explore' ? isHoldingExplore : isHoldingSignal;
+        if (progress < 100) {
+          holdAnimationRef.current = requestAnimationFrame(animate);
+        }
+      };
+
+      holdAnimationRef.current = requestAnimationFrame(animate);
+    };
+
+    const cancelHold = (buttonType: 'explore' | 'signal') => {
+      if (holdAnimationRef.current) {
+        cancelAnimationFrame(holdAnimationRef.current);
+        holdAnimationRef.current = null;
+      }
+      
+      if (buttonType === 'explore') {
+        setIsHoldingExplore(false);
+        setExploreProgress(0);
+      } else {
+        setIsHoldingSignal(false);
+        setSignalProgress(0);
+      }
+    };
+
+    // Cleanup on unmount
+    useEffect(() => {
+      return () => {
+        if (holdAnimationRef.current) {
+          cancelAnimationFrame(holdAnimationRef.current);
+        }
+      };
+    }, []);
 
     useImperativeHandle(ref, () => ({
       showEmblem: () => setEmblemVisible(true),
@@ -73,7 +188,7 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
       if (!isTyping) return;
 
       let currentIndex = 0;
-      const typingSpeed = 40; // ms per character
+      const typingSpeed = 80; // ms per character (slowed down by half from 40)
 
       const interval = setInterval(() => {
         if (currentIndex <= fullHeadline.length) {
@@ -174,7 +289,7 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                   <div
                     className="text-sm sm:text-xl md:text-3xl font-mono font-bold uppercase tracking-widest text-center relative"
                     style={{
-                      marginTop: '0.5rem',
+                      marginTop: '2rem',
                       color: colors.violetCore,
                       textShadow: `
                         0 0 60px ${colors.violetCore}FF,
@@ -234,17 +349,139 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                 initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
                 animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="text-2xl sm:text-4xl md:text-6xl font-display font-bold tracking-tight px-2"
+                className="text-2xl sm:text-4xl md:text-6xl font-display font-bold tracking-tight px-2 text-center"
                 style={{
                   color: colors.offWhite,
                   textShadow: `0 0 40px ${colors.aurumGold}40`,
                 }}
               >
-                {prefersReducedMotion ? fullHeadline : (displayedHeadline || ' ')}
-                {isTyping && <span className="animate-pulse">|</span>}
+                {prefersReducedMotion ? (
+                  <>
+                    Structure meets <span style={{ 
+                      color: colors.signalGreen,
+                      textShadow: `
+                        0 0 50px ${colors.signalGreen}FF,
+                        0 0 30px ${colors.signalGreen}CC,
+                        0 0 15px ${colors.signalGreen}80,
+                        0 0 5px ${colors.signalGreen}60,
+                        0 2px 8px rgba(0,0,0,0.8)
+                      `
+                    }}>soul</span>.<br />
+                    Code meets <span style={{ 
+                      color: colors.neonPink,
+                      textShadow: `
+                        0 0 50px ${colors.neonPink}FF,
+                        0 0 30px ${colors.neonPink}CC,
+                        0 0 15px ${colors.neonPink}80,
+                        0 0 5px ${colors.neonPink}60,
+                        0 2px 8px rgba(0,0,0,0.8)
+                      `
+                    }}>art</span>.
+                  </>
+                ) : (
+                  isTyping ? (
+                    <>
+                      {renderColoredHeadline(displayedHeadline || ' ')}
+                      <span className="animate-pulse">|</span>
+                    </>
+                  ) : (
+                    <>
+                      Structure meets{' '}
+                      <motion.span
+                        initial={{ opacity: 0, scale: 1 }}
+                        animate={{
+                          opacity: [0, 1, 1],
+                          scale: [1, 1.01, 1],
+                        }}
+                        transition={{
+                          duration: 0.4,
+                          delay: 0.1,
+                          times: [0, 0.3, 1],
+                        }}
+                        style={{
+                          display: 'inline-block',
+                          color: colors.signalGreen,
+                          textShadow: `
+                            0 0 50px ${colors.signalGreen}FF,
+                            0 0 30px ${colors.signalGreen}CC,
+                            0 0 15px ${colors.signalGreen}80,
+                            0 0 5px ${colors.signalGreen}60,
+                            0 2px 8px rgba(0,0,0,0.8)
+                          `,
+                          animation: prefersReducedMotion ? 'none' : 'breatheSoul 2.8s ease-in-out infinite',
+                        }}
+                      >
+                        soul
+                      </motion.span>
+                      .<br />
+                      Code meets{' '}
+                      <motion.span
+                        initial={{ opacity: 0, scale: 1 }}
+                        animate={{
+                          opacity: [0, 1, 1],
+                          scale: [1, 1.01, 1],
+                        }}
+                        transition={{
+                          duration: 0.4,
+                          delay: 0.28,
+                          times: [0, 0.3, 1],
+                        }}
+                        style={{
+                          display: 'inline-block',
+                          color: colors.neonPink,
+                          textShadow: `
+                            0 0 50px ${colors.neonPink}FF,
+                            0 0 30px ${colors.neonPink}CC,
+                            0 0 15px ${colors.neonPink}80,
+                            0 0 5px ${colors.neonPink}60,
+                            0 2px 8px rgba(0,0,0,0.8)
+                          `,
+                          animation: prefersReducedMotion ? 'none' : 'breatheArt 2.8s ease-in-out infinite 0.3s',
+                        }}
+                      >
+                        art
+                      </motion.span>
+                      .
+                    </>
+                  )
+                )}
               </motion.h1>
             )}
           </AnimatePresence>
+
+          <style jsx>{`
+            @keyframes breatheSoul {
+              0%, 100% {
+                filter: drop-shadow(0 0 4px ${colors.signalGreen}40);
+                opacity: 1;
+              }
+              50% {
+                filter: drop-shadow(0 0 12px ${colors.signalGreen}88);
+                opacity: 1;
+              }
+            }
+            
+            @keyframes breatheArt {
+              0%, 100% {
+                filter: drop-shadow(0 0 4px ${colors.neonPink}40);
+                opacity: 1;
+              }
+              50% {
+                filter: drop-shadow(0 0 12px ${colors.neonPink}88);
+                opacity: 1;
+              }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+              @keyframes breatheSoul,
+              @keyframes breatheArt {
+                0%, 100% {
+                  filter: none;
+                  opacity: 1;
+                }
+              }
+            }
+          `}</style>
 
           {/* Subline */}
           <AnimatePresence>
@@ -262,7 +499,7 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                     textAlign: 'center',
                   }}
                 >
-                  We&apos;re building the HoneyDrunk Grid — interlinked systems, SDKs, games, and embodied agents.
+                  Building the HoneyDrunk Grid — open systems, tools, games, and cyberware that empower creators.
                 </p>
               </motion.div>
             )}
@@ -277,20 +514,28 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center items-center pointer-events-auto mt-4 md:mt-8"
               >
+                {/* Primary CTA - Jack In */}
                 <button
                   ref={exploreButtonRef}
-                  onClick={onExploreGrid}
-                  aria-label="Jack into the HoneyDrunk Hive"
-                  className="font-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-wider transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none group relative overflow-hidden cursor-pointer w-full sm:w-auto"
+                  onMouseDown={() => startHold('explore')}
+                  onMouseUp={() => cancelHold('explore')}
+                  onMouseLeave={() => cancelHold('explore')}
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    startHold('explore');
+                  }}
+                  onTouchEnd={() => cancelHold('explore')}
+                  onTouchCancel={() => cancelHold('explore')}
+                  aria-label="Jack In"
+                  className="font-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-wider transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none group relative overflow-hidden cursor-pointer w-full sm:w-auto"
                   style={{
                     padding: '0.65rem 1.5rem',
-                    backgroundColor: `${colors.aurumGold}50`,
+                    backgroundColor: `${colors.aurumGold}20`,
                     borderWidth: '2px',
                     borderColor: colors.aurumGold,
                     color: colors.offWhite,
-                    boxShadow: `0 0 50px ${colors.aurumGold}90, 0 0 25px ${colors.aurumGold}70, inset 0 0 25px ${colors.aurumGold}40`,
+                    boxShadow: `0 0 30px ${colors.aurumGold}60, inset 0 0 10px ${colors.aurumGold}20`,
                     clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
-                    filter: 'brightness(1.1)',
                   }}
                   onFocus={(e) => {
                     e.currentTarget.style.boxShadow = `0 0 0 3px ${colors.electricBlue}, 0 0 30px ${colors.aurumGold}60, inset 0 0 10px ${colors.aurumGold}20`;
@@ -300,32 +545,45 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                   }}
                   onMouseEnter={(e) => {
                     if (!prefersReducedMotion) {
-                      e.currentTarget.style.backgroundColor = `${colors.aurumGold}30`;
-                      e.currentTarget.style.boxShadow = `0 0 40px ${colors.aurumGold}80, inset 0 0 15px ${colors.aurumGold}30`;
                       triggerButtonEffects(exploreButtonRef);
                     }
                   }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = `${colors.aurumGold}20`;
-                    e.currentTarget.style.boxShadow = `0 0 30px ${colors.aurumGold}60, inset 0 0 10px ${colors.aurumGold}20`;
-                  }}
                 >
-                  &gt;&gt; Jack In
+                  {/* Progress fill bar */}
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background: `linear-gradient(90deg, ${colors.aurumGold}FF 0%, ${colors.aurumGold}CC 100%)`,
+                      width: `${exploreProgress}%`,
+                      clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
+                      boxShadow: exploreProgress > 0 ? `0 0 30px ${colors.aurumGold}FF, inset 0 0 20px ${colors.aurumGold}AA` : 'none',
+                      transition: exploreProgress === 0 ? 'width 0.2s ease-out, box-shadow 0.2s ease-out' : 'none',
+                    }}
+                  />
+                  <span className="relative z-10">&gt;&gt; JACK IN</span>
                 </button>
 
+                {/* Secondary CTA - View The Grid */}
                 <button
                   ref={signalButtonRef}
-                  onClick={onFollowSignal}
-                  aria-label="Follow the Signal on X (Twitter)"
-                  className="font-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-wider transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none cursor-pointer w-full sm:w-auto"
+                  onMouseDown={() => startHold('signal')}
+                  onMouseUp={() => cancelHold('signal')}
+                  onMouseLeave={() => cancelHold('signal')}
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    startHold('signal');
+                  }}
+                  onTouchEnd={() => cancelHold('signal')}
+                  onTouchCancel={() => cancelHold('signal')}
+                  aria-label="View The Grid"
+                  className="font-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-wider transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none cursor-pointer w-full sm:w-auto relative overflow-hidden"
                   style={{
                     padding: '0.65rem 1.5rem',
-                    backgroundColor: `${colors.electricBlue}45`,
+                    backgroundColor: `${colors.electricBlue}15`,
                     borderWidth: '2px',
                     borderColor: colors.electricBlue,
                     color: colors.offWhite,
-                    boxShadow: `0 0 50px ${colors.electricBlue}85, 0 0 25px ${colors.electricBlue}65, inset 0 0 20px ${colors.electricBlue}35`,
-                    filter: 'brightness(1.1)',
+                    boxShadow: `0 0 20px ${colors.electricBlue}40`,
                   }}
                   onFocus={(e) => {
                     e.currentTarget.style.boxShadow = `0 0 0 3px ${colors.electricBlue}, 0 0 20px ${colors.electricBlue}40`;
@@ -335,17 +593,21 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                   }}
                   onMouseEnter={(e) => {
                     if (!prefersReducedMotion) {
-                      e.currentTarget.style.backgroundColor = `${colors.electricBlue}25`;
-                      e.currentTarget.style.boxShadow = `0 0 30px ${colors.electricBlue}60`;
                       triggerButtonEffects(signalButtonRef);
                     }
                   }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = `${colors.electricBlue}15`;
-                    e.currentTarget.style.boxShadow = `0 0 20px ${colors.electricBlue}40`;
-                  }}
                 >
-                  Follow the Signal
+                  {/* Progress fill bar */}
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background: `linear-gradient(90deg, ${colors.electricBlue}FF 0%, ${colors.electricBlue}CC 100%)`,
+                      width: `${signalProgress}%`,
+                      boxShadow: signalProgress > 0 ? `0 0 30px ${colors.electricBlue}FF, inset 0 0 20px ${colors.electricBlue}AA` : 'none',
+                      transition: signalProgress === 0 ? 'width 0.2s ease-out, box-shadow 0.2s ease-out' : 'none',
+                    }}
+                  />
+                  <span className="relative z-10">VIEW THE GRID</span>
                 </button>
               </motion.div>
             )}

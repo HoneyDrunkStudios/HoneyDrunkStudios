@@ -1,10 +1,23 @@
-# Drag-and-Drop After Resize Bug
+# Drag-and-Drop Bug - FIXED ✅
 
-## Issue
-When the browser window is resized on the `/nodes` page, dragging nodes becomes broken:
-- Nodes move much faster than the mouse
-- Nodes don't follow the cursor properly
-- The drag delta calculations seem incorrect
+## Issue (RESOLVED)
+~~When the browser window is resized on the `/nodes` page, dragging nodes becomes broken:~~
+- ~~Nodes move much faster than the mouse~~
+- ~~Nodes don't follow the cursor properly~~
+- ~~The drag delta calculations seem incorrect~~
+
+## Root Cause
+The bug was in the cumulative delta calculation in `NodeGlyph.tsx` (lines 94-115):
+- The code was both **accumulating deltas** AND **updating the drag start position**
+- This caused double-counting: `cumulativeDelta += (currentPos - updatedStartPos)`
+- Each mouse move would add more displacement than intended
+
+## Fix Applied
+Changed the drag calculation to:
+1. Keep the original `dragStart` position throughout the entire drag
+2. Calculate delta from original start to current mouse position (not incremental)
+3. Don't update `dragStart` during the drag
+4. This gives accurate total displacement from the start point
 
 ## What We've Tried
 1. ✗ Debouncing particle reinitialization (not related)
@@ -34,5 +47,25 @@ When the browser window is resized on the `/nodes` page, dragging nodes becomes 
    - Use getBoundingClientRect() for coordinate conversion
    - Rebuild drag logic from scratch
 
-## Workaround
-Users can refresh the page after resizing to restore normal drag behavior.
+## Changes Made
+**File: `honeydrunk-website/components/NodeGlyph.tsx`**
+
+Before (buggy):
+```javascript
+const deltaX = (e.clientX - dragStart.x) / currentZoom;
+const deltaY = (e.clientY - dragStart.y) / currentZoom;
+cumulativeDeltaRef.current.x += deltaX;  // Accumulating
+cumulativeDeltaRef.current.y += deltaY;
+setDragStart({ x: e.clientX, y: e.clientY });  // Updating start
+```
+
+After (fixed):
+```javascript
+const deltaX = (e.clientX - dragStart.x) / currentZoom;
+const deltaY = (e.clientY - dragStart.y) / currentZoom;
+cumulativeDeltaRef.current = { x: deltaX, y: deltaY };  // Direct assignment
+// dragStart is NOT updated - keeps original position
+```
+
+## Status: ✅ RESOLVED
+Drag and drop now works correctly even after window resize.

@@ -166,14 +166,14 @@ export default function HeroBoot({
   };
 
   const handleExploreGrid = () => {
-    console.log('[Analytics] cta_explore_grid');
+    console.log('[Analytics] cta_jack_in');
     onExploreGrid?.();
   };
 
   const handleFollowSignal = () => {
-    console.log('[Analytics] cta_follow_signal');
-    // Open X profile in new tab
-    window.open('https://x.com/HoneyDrunkLab', '_blank', 'noopener,noreferrer');
+    console.log('[Analytics] cta_view_grid');
+    // Navigate to /grid page
+    window.location.href = '/grid';
     onFollowSignal?.();
   };
 
