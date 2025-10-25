@@ -17,7 +17,7 @@ const STORAGE_KEY = 'hd.jacked_in';
 interface Command {
   verb: string;
   tooltip: string;
-  action: 'console' | 'snake' | 'gallery' | 'pulse' | 'hive';
+  action: 'console' | 'snake' | 'gallery' | 'pulse' | 'hive' | 'playground';
   command?: string;
 }
 
@@ -65,6 +65,11 @@ const COMMANDS: Command[] = [
     verb: 'access.hive',
     tooltip: 'Standby: connection port',
     action: 'hive',
+  },
+  {
+    verb: 'run.playground',
+    tooltip: 'Enter simulation bay',
+    action: 'playground',
   },
 ];
 
@@ -115,6 +120,10 @@ export default function LandingFooter() {
         // Placeholder: future access.hive feature
         alert('access.hive — connection port under construction.');
         break;
+
+      case 'playground':
+        window.location.href = '/playground';
+        break;
     }
   };
 
@@ -132,24 +141,30 @@ export default function LandingFooter() {
           borderColor: `${colors.electricBlue}30`,
         }}
       >
-        {/* Command Bay - Full Width */}
-        <div className="w-full py-8 px-8 border-b" style={{ borderColor: `${colors.graphite}60` }}>
+        {/* Command Bay - Full Width, Sticky on Mobile */}
+        <div
+          className="w-full py-4 px-4 md:py-8 md:px-8 border-b sticky md:static bottom-0 z-50"
+          style={{
+            borderColor: `${colors.graphite}60`,
+            backgroundColor: colors.gunmetal,
+          }}
+        >
           <div className="max-w-7xl mx-auto">
             <h3
-              className="text-sm font-mono font-bold uppercase tracking-wider"
-              style={{ 
+              className="text-xs md:text-sm font-mono font-bold uppercase tracking-wider"
+              style={{
                 color: colors.aurumGold,
-                marginBottom: '20px',
+                marginBottom: '12px',
               }}
             >
               {'>'} Command Bay
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5 md:gap-2">
               {COMMANDS.map((cmd) => (
                 <button
                   key={cmd.verb}
                   onClick={() => handleCommandClick(cmd)}
-                  className="px-3 py-2 text-xs font-mono border rounded transition-all"
+                  className="px-2 py-1.5 md:px-3 md:py-2 text-[10px] md:text-xs font-mono border rounded transition-all touch-manipulation"
                   style={{
                     color: colors.electricBlue,
                     borderColor: `${colors.electricBlue}40`,
@@ -193,6 +208,7 @@ export default function LandingFooter() {
                 { label: 'Flow', href: '/flow' },
                 { label: 'Grid', href: '/grid' },
                 { label: 'Spotlight', href: '/spotlight' },
+                { label: 'Playground', href: '/playground' },
                 { label: 'Services', href: '/services' },
                 { label: 'About', href: '/about' },
                 { label: 'Brand', href: '/brand' },

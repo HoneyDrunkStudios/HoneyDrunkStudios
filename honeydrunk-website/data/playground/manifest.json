@@ -1,0 +1,16 @@
+[
+  {
+    "id": "operator",
+    "name": "Operator Playground",
+    "status": "Seed",
+    "tagline": "Client-side white-hat puzzles & badges.",
+    "route": "/playground/operator"
+  },
+  {
+    "id": "future",
+    "name": "Next Experiment",
+    "status": "Locked",
+    "tagline": "Simulation bay reserved.",
+    "route": null
+  }
+]

@@ -26,6 +26,8 @@ export const commands: Record<string, CommandHandler> = {
       '  list.nodes        — Enumerate active projects',
       '  decrypt.archive   — Reveal vault fragment',
       '  trace.signal      — Ping the grid',
+      '  enter.playground  — Access simulation bay',
+      '  run.playground    — Enter sandbox environment',
       '  clear             — Clear console output',
       '',
       'Navigate with ↑/↓. Press Esc to close.',
@@ -110,6 +112,38 @@ export const commands: Record<string, CommandHandler> = {
   clear: () => ({
     output: [],
   }),
+
+  'enter.playground': () => {
+    // Navigate to playground
+    if (typeof window !== 'undefined') {
+      window.location.href = '/playground';
+    }
+    return {
+      output: [
+        '> routing signal to simulation bay...',
+        '> access granted.',
+        '',
+        '> redirecting to /playground',
+      ],
+      animated: true,
+    };
+  },
+
+  'run.playground': () => {
+    // Navigate to playground (alias)
+    if (typeof window !== 'undefined') {
+      window.location.href = '/playground';
+    }
+    return {
+      output: [
+        '> routing signal to simulation bay...',
+        '> access granted.',
+        '',
+        '> redirecting to /playground',
+      ],
+      animated: true,
+    };
+  },
 };
 
 /**

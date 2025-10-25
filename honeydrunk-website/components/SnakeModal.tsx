@@ -28,6 +28,7 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   const snakeRef = useRef<Position[]>([{ x: 10, y: 10 }]);
   const directionRef = useRef<Direction>('RIGHT');
@@ -67,15 +68,41 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
       }
 
       const key = e.key;
-      const current = directionRef.current;
+      changeDirection(key);
+    };
 
-      if (key === 'ArrowUp' && current !== 'DOWN') directionRef.current = 'UP';
-      if (key === 'ArrowDown' && current !== 'UP') directionRef.current = 'DOWN';
-      if (key === 'ArrowLeft' && current !== 'RIGHT') directionRef.current = 'LEFT';
-      if (key === 'ArrowRight' && current !== 'LEFT') directionRef.current = 'RIGHT';
+    const handleTouchStart = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (!touchStartRef.current) return;
+
+      const touch = e.changedTouches[0];
+      const deltaX = touch.clientX - touchStartRef.current.x;
+      const deltaY = touch.clientY - touchStartRef.current.y;
+      const minSwipeDistance = 30;
+
+      // Determine swipe direction
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        // Horizontal swipe
+        if (Math.abs(deltaX) > minSwipeDistance) {
+          changeDirection(deltaX > 0 ? 'ArrowRight' : 'ArrowLeft');
+        }
+      } else {
+        // Vertical swipe
+        if (Math.abs(deltaY) > minSwipeDistance) {
+          changeDirection(deltaY > 0 ? 'ArrowDown' : 'ArrowUp');
+        }
+      }
+
+      touchStartRef.current = null;
     };
 
     window.addEventListener('keydown', handleKeyDown);
+    canvas.addEventListener('touchstart', handleTouchStart);
+    canvas.addEventListener('touchend', handleTouchEnd);
 
     const gameLoop = setInterval(() => {
       if (gameOver) return;
@@ -173,8 +200,30 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
     return () => {
       clearInterval(gameLoop);
       window.removeEventListener('keydown', handleKeyDown);
+      if (canvas) {
+        canvas.removeEventListener('touchstart', handleTouchStart);
+        canvas.removeEventListener('touchend', handleTouchEnd);
+      }
     };
   }, [isOpen, gameOver, onClose]);
+
+  const changeDirection = (key: string) => {
+    const current = directionRef.current;
+
+    if (key === 'ArrowUp' && current !== 'DOWN') directionRef.current = 'UP';
+    if (key === 'ArrowDown' && current !== 'UP') directionRef.current = 'DOWN';
+    if (key === 'ArrowLeft' && current !== 'RIGHT') directionRef.current = 'LEFT';
+    if (key === 'ArrowRight' && current !== 'LEFT') directionRef.current = 'RIGHT';
+  };
+
+  const handleDirectionButton = (direction: Direction) => {
+    const current = directionRef.current;
+
+    if (direction === 'UP' && current !== 'DOWN') directionRef.current = 'UP';
+    if (direction === 'DOWN' && current !== 'UP') directionRef.current = 'DOWN';
+    if (direction === 'LEFT' && current !== 'RIGHT') directionRef.current = 'LEFT';
+    if (direction === 'RIGHT' && current !== 'LEFT') directionRef.current = 'RIGHT';
+  };
 
   return (
     <AnimatePresence>
@@ -248,8 +297,86 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
               )}
             </div>
 
+            {/* Mobile Controls */}
+            <div className="grid grid-cols-3 gap-2 w-full max-w-[200px] md:hidden">
+              <div />
+              <button
+                onClick={() => handleDirectionButton('UP')}
+                className="px-4 py-3 rounded border font-mono text-xs transition-all touch-manipulation"
+                style={{
+                  color: colors.electricBlue,
+                  borderColor: colors.electricBlue,
+                  backgroundColor: `${colors.electricBlue}10`,
+                }}
+                onTouchStart={(e) => {
+                  e.currentTarget.style.backgroundColor = `${colors.electricBlue}30`;
+                }}
+                onTouchEnd={(e) => {
+                  e.currentTarget.style.backgroundColor = `${colors.electricBlue}10`;
+                }}
+              >
+                ▲
+              </button>
+              <div />
+              <button
+                onClick={() => handleDirectionButton('LEFT')}
+                className="px-4 py-3 rounded border font-mono text-xs transition-all touch-manipulation"
+                style={{
+                  color: colors.electricBlue,
+                  borderColor: colors.electricBlue,
+                  backgroundColor: `${colors.electricBlue}10`,
+                }}
+                onTouchStart={(e) => {
+                  e.currentTarget.style.backgroundColor = `${colors.electricBlue}30`;
+                }}
+                onTouchEnd={(e) => {
+                  e.currentTarget.style.backgroundColor = `${colors.electricBlue}10`;
+                }}
+              >
+                ◀
+              </button>
+              <div />
+              <button
+                onClick={() => handleDirectionButton('RIGHT')}
+                className="px-4 py-3 rounded border font-mono text-xs transition-all touch-manipulation"
+                style={{
+                  color: colors.electricBlue,
+                  borderColor: colors.electricBlue,
+                  backgroundColor: `${colors.electricBlue}10`,
+                }}
+                onTouchStart={(e) => {
+                  e.currentTarget.style.backgroundColor = `${colors.electricBlue}30`;
+                }}
+                onTouchEnd={(e) => {
+                  e.currentTarget.style.backgroundColor = `${colors.electricBlue}10`;
+                }}
+              >
+                ▶
+              </button>
+              <div />
+              <button
+                onClick={() => handleDirectionButton('DOWN')}
+                className="px-4 py-3 rounded border font-mono text-xs transition-all touch-manipulation"
+                style={{
+                  color: colors.electricBlue,
+                  borderColor: colors.electricBlue,
+                  backgroundColor: `${colors.electricBlue}10`,
+                }}
+                onTouchStart={(e) => {
+                  e.currentTarget.style.backgroundColor = `${colors.electricBlue}30`;
+                }}
+                onTouchEnd={(e) => {
+                  e.currentTarget.style.backgroundColor = `${colors.electricBlue}10`;
+                }}
+              >
+                ▼
+              </button>
+              <div />
+            </div>
+
             <div className="text-xs font-mono text-center" style={{ color: colors.slateLight }}>
-              Use arrow keys to move. Press ESC to exit.
+              <span className="md:hidden">Swipe or use buttons to move.</span>
+              <span className="hidden md:inline">Use arrow keys to move. Press ESC to exit.</span>
             </div>
           </motion.div>
         </motion.div>
