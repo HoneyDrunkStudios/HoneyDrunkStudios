@@ -5,10 +5,17 @@
 
 import { getNodes, getNodeStats } from '@/lib/nodes';
 import { triggerGridPulse } from '@/components/GridPulse';
+import {
+  HIVE_BOOT_TIMESTAMP,
+  formatUptime,
+  getRandomFlavorLines,
+  generateUptimeBar,
+} from './config';
 
 export interface CommandResult {
   output: string[];
   animated?: boolean; // If true, type out the result
+  breath?: boolean; // If true, trigger visual breath effect
 }
 
 export type CommandHandler = (args: string[]) => CommandResult | Promise<CommandResult>;
@@ -26,11 +33,13 @@ export const commands: Record<string, CommandHandler> = {
       '  list.nodes        — Enumerate active projects',
       '  decrypt.archive   — Reveal vault fragment',
       '  trace.signal      — Ping the grid',
-      '  enter.playground  — Access simulation bay',
-      '  run.playground    — Enter sandbox environment',
+      '  uptime            — Check hive vital signs',
+      '  status            — View grid status dashboard',
+      '  run.snake         — Load recreational process',
+      '  open.gallery      — Cycle visual feed',
       '  clear             — Clear console output',
       '',
-      'Navigate with ↑/↓. Press Esc to close.',
+      'Press Esc to close.',
     ],
   }),
 
@@ -113,35 +122,125 @@ export const commands: Record<string, CommandHandler> = {
     output: [],
   }),
 
-  'enter.playground': () => {
-    // Navigate to playground
+  'run.snake': () => {
+    // Close console and open snake modal after a short delay
     if (typeof window !== 'undefined') {
-      window.location.href = '/playground';
+      // Close console first
+      const closeEvent = new CustomEvent('close-console');
+      window.dispatchEvent(closeEvent);
+
+      // Open snake modal after console closes
+      setTimeout(() => {
+        const openEvent = new CustomEvent('open-snake');
+        window.dispatchEvent(openEvent);
+      }, 300);
     }
     return {
       output: [
-        '> routing signal to simulation bay...',
-        '> access granted.',
-        '',
-        '> redirecting to /playground',
+        '> loading recreational process...',
+        '> snake.exe initialized.',
       ],
       animated: true,
     };
   },
 
-  'run.playground': () => {
-    // Navigate to playground (alias)
+  'open.gallery': () => {
+    // Close console and open gallery modal after a short delay
     if (typeof window !== 'undefined') {
-      window.location.href = '/playground';
+      // Close console first
+      const closeEvent = new CustomEvent('close-console');
+      window.dispatchEvent(closeEvent);
+
+      // Open gallery modal after console closes
+      setTimeout(() => {
+        const openEvent = new CustomEvent('open-gallery');
+        window.dispatchEvent(openEvent);
+      }, 300);
     }
     return {
       output: [
-        '> routing signal to simulation bay...',
-        '> access granted.',
-        '',
-        '> redirecting to /playground',
+        '> cycling visual feed...',
+        '> gallery access granted.',
       ],
       animated: true,
+    };
+  },
+
+  status: () => {
+    // Navigate to status page
+    if (typeof window !== 'undefined') {
+      window.location.href = '/status';
+    }
+    return {
+      output: [
+        '> accessing grid status dashboard...',
+        '> telemetry stream active.',
+        '',
+        '> redirecting to /status',
+      ],
+      animated: true,
+    };
+  },
+
+  uptime: () => {
+    const now = Date.now();
+    const bootTime = HIVE_BOOT_TIMESTAMP;
+
+    // Handle clock skew
+    if (now < bootTime) {
+      return {
+        output: [
+          '> uptime',
+          'Telemetry desynced. Recalibrating…',
+        ],
+        breath: true,
+      };
+    }
+
+    const duration = now - bootTime;
+    const formattedDuration = formatUptime(duration);
+
+    // Choose output style (80% A, 10% B, 10% C)
+    const rand = Math.random();
+    let output: string[];
+
+    if (rand < 0.8) {
+      // Style A — Cinematic Core Status
+      const flavorLines = getRandomFlavorLines(2);
+      output = [
+        '> uptime',
+        '[ HIVE TELEMETRY RESPONSE ]',
+        `Grid continuity: ${formattedDuration}.`,
+        flavorLines[0],
+        flavorLines[1],
+      ];
+    } else if (rand < 0.9) {
+      // Style B — Narrative Pulse
+      output = [
+        '> uptime',
+        `The Hive has been awake for ${formattedDuration}.`,
+        'No reboot. No silence. Only signal.',
+      ];
+    } else {
+      // Style C — Retro Diagnostic
+      const days = Math.floor(duration / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+      const uptimePercent = Math.min(99, Math.floor((duration / (1000 * 60 * 60 * 24 * 365)) * 100));
+      const bar = generateUptimeBar(uptimePercent);
+      const flavorLines = getRandomFlavorLines(1);
+
+      output = [
+        '> uptime',
+        `[ ONLINE ${days}D:${hours.toString().padStart(2, '0')}H:${minutes.toString().padStart(2, '0')}M ]`,
+        `heartbeat: ${bar} ${uptimePercent}%`,
+        flavorLines[0].toLowerCase(),
+      ];
+    }
+
+    return {
+      output,
+      breath: true,
     };
   },
 };

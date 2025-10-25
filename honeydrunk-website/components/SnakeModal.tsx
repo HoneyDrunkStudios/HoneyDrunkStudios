@@ -15,7 +15,8 @@ interface SnakeModalProps {
 }
 
 const GRID_SIZE = 20;
-const CELL_SIZE = 20;
+const CELL_SIZE_DESKTOP = 20;
+const CELL_SIZE_MOBILE = 14;
 
 type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 
@@ -28,7 +29,13 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+
+  // Detect mobile on mount
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   const snakeRef = useRef<Position[]>([{ x: 10, y: 10 }]);
   const directionRef = useRef<Direction>('RIGHT');
@@ -60,6 +67,8 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    const CELL_SIZE = isMobile ? CELL_SIZE_MOBILE : CELL_SIZE_DESKTOP;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -205,7 +214,7 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
         canvas.removeEventListener('touchend', handleTouchEnd);
       }
     };
-  }, [isOpen, gameOver, onClose]);
+  }, [isOpen, gameOver, onClose, isMobile]);
 
   const changeDirection = (key: string) => {
     const current = directionRef.current;
@@ -232,7 +241,7 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 flex items-center justify-center p-4"
+          className="fixed inset-0 flex items-center justify-center p-2 md:p-4 overflow-y-auto"
           style={{
             zIndex: zIndex.modal,
             backgroundColor: `${colors.deepSpace}e6`,
@@ -244,7 +253,7 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0.9 }}
-            className="border-2 rounded-lg p-6 flex flex-col items-center gap-4"
+            className="border-2 rounded-lg p-3 md:p-6 flex flex-col items-center gap-3 md:gap-4 my-auto max-w-full"
             style={{
               backgroundColor: colors.gunmetal,
               borderColor: colors.electricBlue,
@@ -252,57 +261,68 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between w-full">
-              <div className="font-mono text-sm" style={{ color: colors.aurumGold }}>
-                RECREATIONAL PROCESS
+            <div className="flex items-center justify-between w-full gap-2">
+              <div className="font-mono text-xs md:text-sm" style={{ color: colors.aurumGold }}>
+                SNAKE
               </div>
               <button
                 onClick={onClose}
-                className="text-xs font-mono px-2 py-1"
-                style={{ color: colors.slateLight }}
+                className="text-xs font-mono px-2 py-1 rounded border transition-all"
+                style={{
+                  color: colors.neonPink,
+                  borderColor: colors.neonPink,
+                  backgroundColor: `${colors.neonPink}10`
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = `${colors.neonPink}30`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = `${colors.neonPink}10`;
+                }}
               >
-                [ESC]
+                ✕ CLOSE
               </button>
             </div>
 
             <canvas
               ref={canvasRef}
-              width={GRID_SIZE * CELL_SIZE}
-              height={GRID_SIZE * CELL_SIZE}
+              width={GRID_SIZE * (isMobile ? CELL_SIZE_MOBILE : CELL_SIZE_DESKTOP)}
+              height={GRID_SIZE * (isMobile ? CELL_SIZE_MOBILE : CELL_SIZE_DESKTOP)}
               className="border"
-              style={{ borderColor: colors.graphite }}
+              style={{ borderColor: colors.graphite, maxWidth: '100%' }}
             />
 
-            <div className="flex items-center justify-between w-full">
-              <div className="font-mono text-sm" style={{ color: colors.offWhite }}>
-                Score: {score}
+            <div className="flex items-center justify-between w-full gap-2">
+              <div className="font-mono text-sm md:text-base font-bold" style={{ color: colors.aurumGold }}>
+                SCORE: {score}
               </div>
               {gameOver && (
                 <button
                   onClick={resetGame}
-                  className="font-mono text-xs px-3 py-1 rounded border transition-all"
+                  className="font-mono text-xs md:text-sm px-3 py-1.5 rounded border transition-all font-bold"
                   style={{
                     color: colors.electricBlue,
                     borderColor: colors.electricBlue,
+                    backgroundColor: `${colors.electricBlue}10`,
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = `${colors.electricBlue}20`;
+                    e.currentTarget.style.backgroundColor = `${colors.electricBlue}30`;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.backgroundColor = `${colors.electricBlue}10`;
                   }}
                 >
-                  Restart
+                  RESTART
                 </button>
               )}
             </div>
 
             {/* Mobile Controls */}
-            <div className="grid grid-cols-3 gap-2 w-full max-w-[200px] md:hidden">
+            <div className="grid grid-cols-3 gap-1.5 w-full max-w-[180px] md:hidden">
               <div />
               <button
                 onClick={() => handleDirectionButton('UP')}
-                className="px-4 py-3 rounded border font-mono text-xs transition-all touch-manipulation"
+                className="px-3 py-2 rounded border font-mono text-sm transition-all touch-manipulation"
                 style={{
                   color: colors.electricBlue,
                   borderColor: colors.electricBlue,
@@ -320,7 +340,7 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
               <div />
               <button
                 onClick={() => handleDirectionButton('LEFT')}
-                className="px-4 py-3 rounded border font-mono text-xs transition-all touch-manipulation"
+                className="px-3 py-2 rounded border font-mono text-sm transition-all touch-manipulation"
                 style={{
                   color: colors.electricBlue,
                   borderColor: colors.electricBlue,
@@ -338,7 +358,7 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
               <div />
               <button
                 onClick={() => handleDirectionButton('RIGHT')}
-                className="px-4 py-3 rounded border font-mono text-xs transition-all touch-manipulation"
+                className="px-3 py-2 rounded border font-mono text-sm transition-all touch-manipulation"
                 style={{
                   color: colors.electricBlue,
                   borderColor: colors.electricBlue,
@@ -356,7 +376,7 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
               <div />
               <button
                 onClick={() => handleDirectionButton('DOWN')}
-                className="px-4 py-3 rounded border font-mono text-xs transition-all touch-manipulation"
+                className="px-3 py-2 rounded border font-mono text-sm transition-all touch-manipulation"
                 style={{
                   color: colors.electricBlue,
                   borderColor: colors.electricBlue,
@@ -374,9 +394,9 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
               <div />
             </div>
 
-            <div className="text-xs font-mono text-center" style={{ color: colors.slateLight }}>
-              <span className="md:hidden">Swipe or use buttons to move.</span>
-              <span className="hidden md:inline">Use arrow keys to move. Press ESC to exit.</span>
+            <div className="text-[10px] md:text-xs font-mono text-center" style={{ color: colors.slateLight }}>
+              <span className="md:hidden">Swipe or tap buttons to move</span>
+              <span className="hidden md:inline">Arrow keys to move • ESC to exit</span>
             </div>
           </motion.div>
         </motion.div>

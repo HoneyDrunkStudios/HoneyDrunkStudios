@@ -14,6 +14,13 @@ function SignalContent() {
   // In production, this would pull from commits/releases
   const signals = [
     {
+      date: '2025-10-25',
+      title: 'HoneyNet — Security Division Launch',
+      desc: 'Launched HoneyNet sector—the Hive\'s security division. Four active nodes: BreachLab.exe (white-hat CTF lab with Safety Manifests), HoneySentinel (secure-by-default SDK), Vault (secrets management, moved from Core), and Pulse (observability suite, moved from Ops). Added Matrix Green (#00FF41) to the color system. Built complete /spotlight/honeynet page with hero, gallery, build log, philosophy. Integrated HoneyNet into spotlight hub, grid filtering, and cross-sector navigation. "Break it. Learn it. Build it stronger."',
+      tags: ['launch', 'security', 'spotlight', 'honeynet'],
+      sector: 'HoneyNet',
+    },
+    {
       date: '2025-10-24',
       title: 'Flow Index System — Living Roadmap',
       desc: 'Implemented complete Flow Index system: Flow = (Energy × 0.4) + (Priority × 0.6). Five-tier classification (Critical/Active/Stable/Dormant/Archived). Flow-based visual mode in Grid with dynamic glow intensity. New /flow page with sortable rankings, /about/flow documentation, Flow Tier filtering in /nodes, and global header navigation. The Hive now breathes—showing what needs attention next.',

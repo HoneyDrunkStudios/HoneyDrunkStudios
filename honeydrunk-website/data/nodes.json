@@ -157,13 +157,13 @@
     "name": "HoneyDrunk.Vault",
     "short": "Secrets & config manager",
     "description": "Secure secrets and configuration management. Zero-trust vault for sensitive data across environments.",
-    "sector": "Core",
+    "sector": "HoneyNet",
     "signal": "Wiring",
-    "cluster": "infrastructure",
+    "cluster": "security",
     "energy": 85,
     "priority": 90,
     "tags": ["security", "secrets", "config"],
-    "connections": ["honeydrunk-kernel", "pulse", "honeydrunk-auth"],
+    "connections": ["honeydrunk-kernel", "pulse", "honeydrunk-auth", "honeysentinel", "breachlab-exe"],
     "links": { "repo": "https://github.com/HoneyDrunkStudios/vault" }
   },
 
@@ -172,13 +172,13 @@
     "name": "Pulse",
     "short": "Observability suite (logs/traces/metrics)",
     "description": "Unified observability. Logs, traces, and metrics in one interface. See the heartbeat of The Hive.",
-    "sector": "Ops",
+    "sector": "HoneyNet",
     "signal": "Awake",
-    "cluster": "infrastructure",
+    "cluster": "security",
     "energy": 72,
     "priority": 82,
-    "tags": ["observability", "monitoring", "telemetry"],
-    "connections": ["honeydrunk-vault", "honeydrunk-transport", "honeydrunk-data", "honeydrunk-agentkit"],
+    "tags": ["observability", "monitoring", "telemetry", "security"],
+    "connections": ["honeydrunk-vault", "honeydrunk-transport", "honeydrunk-data", "honeydrunk-agentkit", "honeysentinel", "breachlab-exe"],
     "links": { "repo": "https://github.com/HoneyDrunkStudios/pulse" }
   },
 
@@ -483,6 +483,36 @@
     "tags": ["archive", "legacy", "lessons"],
     "connections": [],
     "links": { "docs": "https://docs.honeydrunkstudios.com/archive" }
+  },
+
+  {
+    "id": "breachlab-exe",
+    "name": "BreachLab.exe",
+    "short": "White-hat experiments & CTFs",
+    "description": "Experimental white-hat lab for creators — solve safe, remixable breaches based on real indie dev scenarios, then patch them with HoneySentinel. Every lab includes a Safety Manifest and defensive walkthrough.",
+    "sector": "HoneyNet",
+    "signal": "Seed",
+    "cluster": "security",
+    "energy": 65,
+    "priority": 85,
+    "tags": ["ctf", "learning", "offense", "experiments"],
+    "connections": ["honeysentinel", "pulse", "honeydrunk-vault"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/breachlab-exe" }
+  },
+
+  {
+    "id": "honeysentinel",
+    "name": "HoneySentinel",
+    "short": "Secure-by-default SDK",
+    "description": "Protective SDK and middleware suite providing secure defaults, rate-limiting, secrets, and telemetry integrations for indie devs and studios.",
+    "sector": "HoneyNet",
+    "signal": "Wiring",
+    "cluster": "security",
+    "energy": 75,
+    "priority": 90,
+    "tags": ["sdk", "security", "defense", "middleware"],
+    "connections": ["breachlab-exe", "pulse", "honeydrunk-vault"],
+    "links": { "repo": "https://github.com/HoneyDrunkStudios/honeysentinel" }
   }
 ]
 

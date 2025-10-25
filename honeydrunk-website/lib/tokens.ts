@@ -12,6 +12,7 @@ export const colors = {
   neonPink: '#FF2A6D',         // Neon Pink - cyberpunk accent, hot highlights
   chromeTeal: '#14B8A6',       // Chrome Teal - industrial mech, metallic systems
   synthMagenta: '#D946EF',     // Synth Magenta - AI/digital intelligence, computational
+  matrixGreen: '#00FF41',      // Matrix Green - HoneyNet security sector, terminal aesthetic
 
   // Backgrounds
   deepSpace: '#0A0E12',        // Deep Space - base 950
@@ -90,6 +91,7 @@ export const shadows = {
   neonPink: '0 0 20px rgba(255, 42, 109, 0.5)',       // Hot pink glow
   neonTeal: '0 0 20px rgba(20, 184, 166, 0.4)',       // Chrome teal glow
   neonMagenta: '0 0 20px rgba(217, 70, 239, 0.4)',    // Synth magenta glow
+  neonMatrixGreen: '0 0 20px rgba(0, 255, 65, 0.45)', // Matrix green glow - security
   soft: '0 2px 8px rgba(0, 0, 0, 0.15)',
   medium: '0 4px 16px rgba(0, 0, 0, 0.25)',
   hard: '0 8px 32px rgba(0, 0, 0, 0.35)',

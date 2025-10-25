@@ -27,6 +27,15 @@ const spotlights = [
     href: '/spotlight/cyberware',
     accent: colors.electricBlue,
   },
+  {
+    title: 'HoneyNet',
+    tagline: 'Run the sim. Guard the Hive.',
+    description:
+      'Where breaches are forged and defenses are born. BreachLab, Sentinel, Vault, and Pulse - the Hive\'s security division.',
+    cta: 'Enter the sector',
+    href: '/spotlight/honeynet',
+    accent: colors.matrixGreen,
+  },
 ];
 
 export default function Spotlights() {
@@ -44,7 +53,7 @@ export default function Spotlights() {
           Spotlight Systems
         </h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {spotlights.map((spotlight, index) => (
             <SpotlightPanel key={index} {...spotlight} />
           ))}

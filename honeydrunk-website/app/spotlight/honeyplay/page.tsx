@@ -372,28 +372,41 @@ export default function HoneyPlaySpotlight() {
               </Link>
             </div>
             
-            {/* Cross-link to Cyberware */}
+            {/* Cross-link to other spotlights */}
             <div className="text-center pt-8 border-t" style={{ borderColor: `${colors.graphite}60` }}>
-              <p 
-                className="text-sm font-mono" 
-                style={{ 
+              <p
+                className="text-sm font-mono"
+                style={{
                   color: colors.slateLight,
                   marginBottom: '16px',
                 }}
               >
                 Explore more systems
               </p>
-              <Link
-                href="/spotlight/cyberware"
-                className="inline-block font-mono font-bold text-sm uppercase tracking-wider px-6 py-3 border-2 transition-all hover:scale-105"
-                style={{
-                  color: colors.electricBlue,
-                  borderColor: colors.electricBlue,
-                  backgroundColor: `${colors.electricBlue}15`,
-                }}
-              >
-                CYBERWARE →
-              </Link>
+              <div className="flex flex-wrap gap-3 justify-center">
+                <Link
+                  href="/spotlight/cyberware"
+                  className="inline-block font-mono font-bold text-sm uppercase tracking-wider px-6 py-3 border-2 transition-all hover:scale-105"
+                  style={{
+                    color: colors.electricBlue,
+                    borderColor: colors.electricBlue,
+                    backgroundColor: `${colors.electricBlue}15`,
+                  }}
+                >
+                  CYBERWARE →
+                </Link>
+                <Link
+                  href="/spotlight/honeynet"
+                  className="inline-block font-mono font-bold text-sm uppercase tracking-wider px-6 py-3 border-2 transition-all hover:scale-105"
+                  style={{
+                    color: colors.matrixGreen,
+                    borderColor: colors.matrixGreen,
+                    backgroundColor: `${colors.matrixGreen}15`,
+                  }}
+                >
+                  HONEYNET →
+                </Link>
+              </div>
             </div>
           </div>
         </section>

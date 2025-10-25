@@ -3,7 +3,7 @@
  * Type definitions for The Grid nodes and visual system
  */
 
-export type Sector = 'Core' | 'Ops' | 'Creator' | 'Life' | 'Play' | 'Cyberware' | 'Meta' | 'AI';
+export type Sector = 'Core' | 'Ops' | 'Creator' | 'Life' | 'Play' | 'Cyberware' | 'Meta' | 'AI' | 'HoneyNet';
 export type Signal = 'Seed' | 'Awake' | 'Wiring' | 'Live' | 'Echo' | 'Archive';
 
 export interface NodeLinks {

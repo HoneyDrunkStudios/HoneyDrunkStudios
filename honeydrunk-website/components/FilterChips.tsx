@@ -80,6 +80,7 @@ export function getSectorColor(sector: Sector): string {
     Cyberware: colors.chromeTeal,
     Meta: colors.slateLight,
     AI: colors.synthMagenta,
+    HoneyNet: colors.matrixGreen,
   };
   return map[sector];
 }

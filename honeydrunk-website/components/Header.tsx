@@ -20,7 +20,7 @@ export default function Header() {
     { href: '/spotlight', label: 'SPOTLIGHT' },
     { href: '/services', label: 'SERVICES' },
     { href: '/signal', label: 'SIGNAL' },
-    { href: '/brand', label: 'BRAND' },
+    { href: '/status', label: 'STATUS' },
     { href: '/about', label: 'ABOUT' },
   ];
 
@@ -64,8 +64,8 @@ export default function Header() {
             </h1>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex gap-4 lg:gap-6 text-sm font-mono font-bold uppercase tracking-wider">
+          {/* Desktop Navigation - Only on large screens */}
+          <nav className="hidden lg:flex gap-4 lg:gap-6 text-sm font-mono font-bold uppercase tracking-wider">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -84,10 +84,10 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Mobile Hamburger Button */}
+          {/* Mobile & Tablet Hamburger Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 border-2 rounded"
+            className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 border-2 rounded"
             style={{
               borderColor: colors.neonPink,
               backgroundColor: `${colors.neonPink}10`,
@@ -119,10 +119,10 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile & Tablet Menu Overlay */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-20 md:hidden"
+          className="fixed inset-0 z-20 lg:hidden"
           style={{
             backgroundColor: `${colors.deepSpace}f5`,
             backdropFilter: 'blur(10px)',

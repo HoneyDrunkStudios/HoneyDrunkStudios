@@ -100,7 +100,7 @@ export default function NotFound() {
             >
               <span style={{ color: colors.alertRed, fontWeight: 'bold' }}>[SYSTEM WARNING]</span>
               <br />
-              Unauthorized access detected. NetWatch has been notified.
+              Unauthorized access detected. GridWatch has been notified.
               <br />
               Connection trace initiated...
             </p>

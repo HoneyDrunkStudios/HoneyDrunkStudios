@@ -5,7 +5,7 @@
  * Open with backtick (~), close with Esc
  */
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { colors, zIndex } from '@/lib/tokens';
 import { commands, executeCommand } from '@/lib/console/commands';
@@ -20,12 +20,25 @@ export default function HiveConsole() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<HistoryEntry[]>([]);
-  const [historyIndex, setHistoryIndex] = useState(-1);
   const [isTyping, setIsTyping] = useState(false);
+  const [isBreathing, setIsBreathing] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  const consoleContainerRef = useRef<HTMLDivElement>(null);
+
+  // Define handleClose early so it can be used in useEffect hooks
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+    setInput('');
+
+    // Restore focus
+    if (previousFocusRef.current) {
+      previousFocusRef.current.focus();
+      previousFocusRef.current = null;
+    }
+  }, []);
 
   // Register callback for external console opening
   useEffect(() => {
@@ -78,9 +91,17 @@ export default function HiveConsole() {
       }
     };
 
+    const handleCloseConsole = () => {
+      handleClose();
+    };
+
     window.addEventListener('open-console', handleOpenConsole as EventListener);
-    return () => window.removeEventListener('open-console', handleOpenConsole as EventListener);
-  }, []);
+    window.addEventListener('close-console', handleCloseConsole as EventListener);
+    return () => {
+      window.removeEventListener('open-console', handleOpenConsole as EventListener);
+      window.removeEventListener('close-console', handleCloseConsole as EventListener);
+    };
+  }, [handleClose]);
 
   // Focus trap
   useEffect(() => {
@@ -96,18 +117,6 @@ export default function HiveConsole() {
     }
   }, [history]);
 
-  const handleClose = () => {
-    setIsOpen(false);
-    setInput('');
-    setHistoryIndex(-1);
-
-    // Restore focus
-    if (previousFocusRef.current) {
-      previousFocusRef.current.focus();
-      previousFocusRef.current = null;
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isTyping) return;
@@ -115,10 +124,21 @@ export default function HiveConsole() {
     const cmd = input.trim();
     setHistory((prev) => [...prev, { input: cmd, output: [] }]);
     setInput('');
-    setHistoryIndex(-1);
 
     // Execute command
     const result = await executeCommand(cmd);
+
+    // Trigger breath effect if requested
+    if (result.breath) {
+      const prefersReducedMotion =
+        typeof window !== 'undefined' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!prefersReducedMotion) {
+        setIsBreathing(true);
+        setTimeout(() => setIsBreathing(false), 350);
+      }
+    }
 
     if (result.animated) {
       // Type out animated results
@@ -153,36 +173,6 @@ export default function HiveConsole() {
       handleClose();
       return;
     }
-
-    // Command history navigation
-    const pastCommands = history.map((h) => h.input);
-
-    if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      if (pastCommands.length === 0) return;
-
-      const newIndex =
-        historyIndex === -1
-          ? pastCommands.length - 1
-          : Math.max(0, historyIndex - 1);
-
-      setHistoryIndex(newIndex);
-      setInput(pastCommands[newIndex]);
-    }
-
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      if (historyIndex === -1) return;
-
-      const newIndex = historyIndex + 1;
-      if (newIndex >= pastCommands.length) {
-        setHistoryIndex(-1);
-        setInput('');
-      } else {
-        setHistoryIndex(newIndex);
-        setInput(pastCommands[newIndex]);
-      }
-    }
   };
 
   return (
@@ -202,6 +192,7 @@ export default function HiveConsole() {
           onClick={handleClose}
         >
           <motion.div
+            ref={consoleContainerRef}
             initial={{ scale: 0.95, y: 20 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.95, y: 20 }}
@@ -210,7 +201,10 @@ export default function HiveConsole() {
             style={{
               backgroundColor: colors.gunmetal,
               borderColor: colors.electricBlue,
-              boxShadow: `0 0 40px ${colors.electricBlue}40`,
+              boxShadow: isBreathing
+                ? `0 0 60px ${colors.electricBlue}60, inset 0 0 30px ${colors.electricBlue}10`
+                : `0 0 40px ${colors.electricBlue}40`,
+              transition: 'box-shadow 0.35s ease-out',
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -251,6 +245,19 @@ export default function HiveConsole() {
               className="flex-1 overflow-y-auto p-4 space-y-3"
               style={{ color: colors.offWhite }}
             >
+              {history.length === 0 && (
+                <div className="space-y-2">
+                  <div style={{ color: colors.electricBlue }}>
+                    {'>'} Welcome to the HIVE CONSOLE
+                  </div>
+                  <div style={{ color: colors.slateLight }}>
+                    Type <span style={{ color: colors.aurumGold }}>help</span> for a list of available commands.
+                  </div>
+                  <div style={{ color: colors.slateLight }}>
+                    Press Esc to close.
+                  </div>
+                </div>
+              )}
               {history.map((entry, i) => (
                 <div key={i}>
                   <div style={{ color: colors.aurumGold }}>
@@ -290,6 +297,11 @@ export default function HiveConsole() {
                 style={{ color: colors.offWhite }}
                 placeholder="type 'help' for commands..."
                 autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck={false}
+                name="hive-console-command"
+                id="hive-console-input"
               />
             </form>
           </motion.div>

@@ -87,6 +87,7 @@ const sectorVisualsMap: Record<Sector, SectorVisuals> = {
   Cyberware: { color: colors.chromeTeal },
   Meta: { color: colors.slateLight },
   AI: { color: colors.synthMagenta },
+  HoneyNet: { color: colors.matrixGreen },
 };
 
 /**
@@ -244,7 +245,7 @@ export function getFeaturedNodes(count?: number): VisualNode[] {
  * Get all unique sectors
  */
 export function getAllSectors(): Sector[] {
-  return ['Core', 'Ops', 'Creator', 'Life', 'Play', 'Cyberware', 'Meta', 'AI'];
+  return ['Core', 'Ops', 'Creator', 'Life', 'Play', 'Cyberware', 'Meta', 'AI', 'HoneyNet'];
 }
 
 /**
@@ -337,6 +338,7 @@ export function getNodeStats() {
       cyberware: allNodes.filter(n => n.sector === 'Cyberware').length,
       meta: allNodes.filter(n => n.sector === 'Meta').length,
       ai: allNodes.filter(n => n.sector === 'AI').length,
+      honeynet: allNodes.filter(n => n.sector === 'HoneyNet').length,
     },
   };
 }

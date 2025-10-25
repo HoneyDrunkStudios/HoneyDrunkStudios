@@ -33,6 +33,17 @@ const spotlightSystems = [
     cta: 'Peek Into the Lab',
     href: '/spotlight/cyberware',
   },
+  {
+    id: 'honeynet',
+    title: 'HoneyNet',
+    tagline: 'Run the sim. Guard the Hive.',
+    subtext: 'Where breaches are forged and defenses are born. Security division.',
+    signal: 'Wiring',
+    signalColor: colors.slateLight,
+    accentColor: colors.matrixGreen,
+    cta: 'Enter the Sector',
+    href: '/spotlight/honeynet',
+  },
 ];
 
 export default function SpotlightHub() {
@@ -75,7 +86,7 @@ export default function SpotlightHub() {
                 Each Spotlight is a living system — a Node evolving in public.
               </p>
               <p className="text-base md:text-lg">
-                Games, tools, and cyberware built from the same DNA.
+                Games, cyberware, and security — built from the same DNA.
               </p>
             </div>
           </div>
@@ -84,7 +95,7 @@ export default function SpotlightHub() {
         {/* Spotlight Grid */}
         <section className="w-full py-16 px-8" style={{ backgroundColor: colors.gunmetal }}>
           <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {spotlightSystems.map((system) => (
                 <SpotlightCard key={system.id} {...system} />
               ))}

@@ -86,7 +86,7 @@ export default function FeaturedNodes({ nodes }: FeaturedNodesProps) {
 
 function NodeCard({ node }: { node: VisualNode }) {
   const statusEmoji = signalEmojis[node.signal];
-  const accentColor = node.signalVisuals.color;
+  const accentColor = node.sectorVisuals.color;
 
   return (
     <Link

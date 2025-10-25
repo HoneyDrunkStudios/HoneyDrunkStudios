@@ -4,74 +4,15 @@
  * LandingFooter — Site footer with links, social, heartbeat, and reset intro
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { colors } from '@/lib/tokens';
-import { triggerGridPulse } from './GridPulse';
 import SnakeModal from './SnakeModal';
 import GalleryModal from './GalleryModal';
 
 const STORAGE_KEY = 'hd.jacked_in';
 
-interface Command {
-  verb: string;
-  tooltip: string;
-  action: 'console' | 'snake' | 'gallery' | 'pulse' | 'hive' | 'playground';
-  command?: string;
-}
-
-const COMMANDS: Command[] = [
-  {
-    verb: 'help',
-    tooltip: 'Show available commands',
-    action: 'console',
-    command: 'help',
-  },
-  {
-    verb: 'boot.honeycore',
-    tooltip: 'Initialize kernel link',
-    action: 'console',
-    command: 'boot.honeycore',
-  },
-  {
-    verb: 'list.nodes',
-    tooltip: 'Enumerate active projects',
-    action: 'console',
-    command: 'list.nodes',
-  },
-  {
-    verb: 'decrypt.archive',
-    tooltip: 'Reveal vault fragment',
-    action: 'console',
-    command: 'decrypt.archive',
-  },
-  {
-    verb: 'trace.signal',
-    tooltip: 'Ping the grid',
-    action: 'pulse',
-  },
-  {
-    verb: 'run.snake',
-    tooltip: 'Load recreational process',
-    action: 'snake',
-  },
-  {
-    verb: 'open.gallery',
-    tooltip: 'Cycle visual feed',
-    action: 'gallery',
-  },
-  {
-    verb: 'access.hive',
-    tooltip: 'Standby: connection port',
-    action: 'hive',
-  },
-  {
-    verb: 'run.playground',
-    tooltip: 'Enter simulation bay',
-    action: 'playground',
-  },
-];
 
 // Global callback for console open
 let openConsoleCallback: ((command?: string) => void) | null = null;
@@ -85,6 +26,20 @@ export default function LandingFooter() {
   const [snakeOpen, setSnakeOpen] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
 
+  // Listen for snake and gallery open events from console commands
+  useEffect(() => {
+    const handleOpenSnake = () => setSnakeOpen(true);
+    const handleOpenGallery = () => setGalleryOpen(true);
+
+    window.addEventListener('open-snake', handleOpenSnake as EventListener);
+    window.addEventListener('open-gallery', handleOpenGallery as EventListener);
+
+    return () => {
+      window.removeEventListener('open-snake', handleOpenSnake as EventListener);
+      window.removeEventListener('open-gallery', handleOpenGallery as EventListener);
+    };
+  }, []);
+
   const handleResetIntro = () => {
     console.log('[Analytics] reset_intro_clicked');
     // Clear sessionStorage and reload to show intro again
@@ -94,37 +49,10 @@ export default function LandingFooter() {
     }
   };
 
-  const handleCommandClick = (cmd: Command) => {
-    switch (cmd.action) {
-      case 'console':
-        if (cmd.command) {
-          // Open console via the registered callback (from HiveConsole)
-          const event = new CustomEvent('open-console', { detail: { command: cmd.command } });
-          window.dispatchEvent(event);
-        }
-        break;
-
-      case 'pulse':
-        triggerGridPulse();
-        break;
-
-      case 'snake':
-        setSnakeOpen(true);
-        break;
-
-      case 'gallery':
-        setGalleryOpen(true);
-        break;
-
-      case 'hive':
-        // Placeholder: future access.hive feature
-        alert('access.hive — connection port under construction.');
-        break;
-
-      case 'playground':
-        window.location.href = '/playground';
-        break;
-    }
+  const handleOpenConsole = () => {
+    // Open console via custom event
+    const event = new CustomEvent('open-console', { detail: {} });
+    window.dispatchEvent(event);
   };
 
   // Check for reduced motion preference
@@ -141,56 +69,54 @@ export default function LandingFooter() {
           borderColor: `${colors.electricBlue}30`,
         }}
       >
-        {/* Command Bay - Full Width, Sticky on Mobile */}
+        {/* Console Access */}
         <div
-          className="w-full py-4 px-4 md:py-8 md:px-8 border-b sticky md:static bottom-0 z-50"
+          className="w-full py-6 px-4 md:py-8 md:px-8 lg:border-b"
           style={{
             borderColor: `${colors.graphite}60`,
             backgroundColor: colors.gunmetal,
           }}
         >
-          <div className="max-w-7xl mx-auto">
-            <h3
-              className="text-xs md:text-sm font-mono font-bold uppercase tracking-wider"
+          <div className="max-w-7xl mx-auto flex flex-col items-center gap-4">
+            <button
+              onClick={handleOpenConsole}
+              className="px-8 py-4 text-base md:text-lg font-mono font-bold border-2 rounded-lg transition-all"
               style={{
-                color: colors.aurumGold,
-                marginBottom: '12px',
+                color: colors.electricBlue,
+                borderColor: colors.electricBlue,
+                backgroundColor: 'transparent',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = `${colors.electricBlue}20`;
+                e.currentTarget.style.boxShadow = `0 0 20px ${colors.electricBlue}40`;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.boxShadow = 'none';
               }}
             >
-              {'>'} Command Bay
-            </h3>
-            <div className="flex flex-wrap gap-1.5 md:gap-2">
-              {COMMANDS.map((cmd) => (
-                <button
-                  key={cmd.verb}
-                  onClick={() => handleCommandClick(cmd)}
-                  className="px-2 py-1.5 md:px-3 md:py-2 text-[10px] md:text-xs font-mono border rounded transition-all touch-manipulation"
-                  style={{
-                    color: colors.electricBlue,
-                    borderColor: `${colors.electricBlue}40`,
-                    backgroundColor: 'transparent',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = `${colors.electricBlue}20`;
-                    e.currentTarget.style.borderColor = colors.electricBlue;
-                    e.currentTarget.style.boxShadow = `0 0 10px ${colors.electricBlue}40`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.borderColor = `${colors.electricBlue}40`;
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}
-                  title={cmd.tooltip}
-                >
-                  {cmd.verb}
-                </button>
-              ))}
-            </div>
+              {'>'} OPEN CONSOLE
+            </button>
+            <span
+              className="text-xs md:text-sm font-mono"
+              style={{
+                color: colors.slateLight,
+              }}
+            >
+              Press <kbd
+                className="px-1.5 py-0.5 rounded border mx-1"
+                style={{
+                  color: colors.electricBlue,
+                  borderColor: `${colors.electricBlue}40`,
+                  backgroundColor: `${colors.electricBlue}10`,
+                }}
+              >`</kbd> or click above to access the console
+            </span>
           </div>
         </div>
 
-        {/* Footer Content */}
-        <div className="max-w-7xl mx-auto py-12 px-8">
+        {/* Footer Content - Hidden on mobile/tablet, shown on desktop */}
+        <div className="hidden lg:block max-w-7xl mx-auto py-12 px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Links */}
           <div>
@@ -208,11 +134,11 @@ export default function LandingFooter() {
                 { label: 'Flow', href: '/flow' },
                 { label: 'Grid', href: '/grid' },
                 { label: 'Spotlight', href: '/spotlight' },
-                { label: 'Playground', href: '/playground' },
                 { label: 'Services', href: '/services' },
                 { label: 'About', href: '/about' },
                 { label: 'Brand', href: '/brand' },
                 { label: 'Signal', href: '/signal' },
+                { label: 'Status', href: '/status' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
@@ -335,15 +261,22 @@ export default function LandingFooter() {
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div
-          className="pt-8 border-t text-center"
-          style={{ borderColor: `${colors.graphite}60` }}
-        >
-          <p className="text-xs font-mono" style={{ color: colors.slateLight }}>
-            © {currentYear} HoneyDrunk Studios. Boot. Build. Refactor. Evolve.
-          </p>
+          {/* Bottom bar */}
+          <div
+            className="pt-8 border-t text-center"
+            style={{ borderColor: `${colors.graphite}60` }}
+          >
+            <p className="text-xs font-mono" style={{ color: colors.slateLight }}>
+              © {currentYear} HoneyDrunk Studios. Boot. Build. Refactor. Evolve.
+            </p>
+          </div>
         </div>
+
+        {/* Minimal copyright for mobile/tablet */}
+        <div className="lg:hidden py-6 text-center">
+          <p className="text-xs font-mono" style={{ color: colors.slateLight }}>
+            © {currentYear} HoneyDrunk Studios
+          </p>
         </div>
       </footer>
 
