@@ -375,7 +375,7 @@ export default function CyberwareSpotlight() {
               </Link>
               
               <Link
-                href="/signal"
+                href="/signal?sector=Cyberware"
                 className="font-mono font-bold text-sm uppercase tracking-wider px-6 py-3 border-2 transition-all hover:scale-105"
                 style={{
                   color: cyberwareColor,

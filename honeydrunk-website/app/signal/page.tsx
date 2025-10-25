@@ -1,14 +1,16 @@
+'use client';
+
+import { useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import { colors } from '@/lib/tokens';
 
-export const metadata = {
-  title: 'Signal — HoneyDrunk Studios',
-  description: 'Build-in-public devlog. Real-time updates from the Grid.',
-};
-
 export default function SignalPage() {
+  const searchParams = useSearchParams();
+  const sectorFilter = searchParams.get('sector');
+
   // In production, this would pull from commits/releases
   const signals = [
     {
@@ -16,32 +18,43 @@ export default function SignalPage() {
       title: 'Flow Index System — Living Roadmap',
       desc: 'Implemented complete Flow Index system: Flow = (Energy × 0.4) + (Priority × 0.6). Five-tier classification (Critical/Active/Stable/Dormant/Archived). Flow-based visual mode in Grid with dynamic glow intensity. New /flow page with sortable rankings, /about/flow documentation, Flow Tier filtering in /nodes, and global header navigation. The Hive now breathes—showing what needs attention next.',
       tags: ['feature', 'grid', 'core', 'ux'],
+      sector: 'Core',
     },
     {
       date: '2025-10-24',
       title: 'Grid Enhancements — Color, Copy, and Scale',
       desc: 'Sector color expansion (Chrome Teal for Mech, Synth Magenta for AI). Copy refinement across landing pages—cyberpunk minimalism, em-dash rhythm. Expanded to 43 Nodes across 8 sectors (AgentKit, Signal, Data, Grid orchestration).',
       tags: ['brand', 'design', 'grid', 'content'],
+      sector: 'Core',
     },
     {
       date: '2025-10-18',
       title: 'The Grid v1.0 — Initial Launch',
       desc: 'Launched The Grid: interactive node visualization with neon cyberpunk aesthetics. Featured nodes across Core, Ops, Creator, Life, Play, Mech, and Meta sectors.',
       tags: ['launch', 'grid', 'core'],
+      sector: 'Core',
     },
     {
       date: '2025-10-17',
       title: 'Signal System Implementation',
       desc: 'Implemented the Signal state system for tracking node lifecycle: Seed → Awake → Wiring → Live → Echo → Archive. Each state has distinct visual characteristics.',
       tags: ['feature', 'visualization'],
+      sector: 'Core',
     },
     {
       date: '2025-10-16',
       title: 'Brand System Finalized',
       desc: 'Locked in the cyberpunk realism color palette: Aurum Gold, Electric Blue, Violet Flux against Deep Space. Zero-bloat typography with Space Grotesk, Inter, and JetBrains Mono.',
       tags: ['brand', 'design'],
+      sector: 'Core',
     },
   ];
+
+  // Filter signals by sector if parameter is provided
+  const filteredSignals = useMemo(() => {
+    if (!sectorFilter) return signals;
+    return signals.filter(signal => signal.sector === sectorFilter);
+  }, [sectorFilter]);
 
   return (
     <div className="relative min-h-screen" style={{ backgroundColor: colors.deepSpace, color: colors.offWhite }}>
@@ -61,7 +74,7 @@ export default function SignalPage() {
             <h1
               className="text-3xl md:text-5xl lg:text-6xl font-display font-bold py-2 md:py-4 holographic-text"
           >
-            Signal Feed
+            Signal Feed {sectorFilter && `— ${sectorFilter}`}
           </h1>
           <p className="text-base md:text-lg px-1 md:px-2" style={{ color: colors.slateLight }}>
             Real-time updates from the Grid. Every Node tells a story.
@@ -70,7 +83,8 @@ export default function SignalPage() {
 
         {/* Signal Feed */}
         <div className="space-y-6 md:space-y-8">
-          {signals.map((signal, index) => (
+          {filteredSignals.length > 0 ? (
+            filteredSignals.map((signal, index) => (
             <article
               key={index}
               className="p-5 md:p-8 rounded-lg border"
@@ -81,7 +95,7 @@ export default function SignalPage() {
             >
               <div
                 className="text-xs font-mono mb-2 md:mb-3"
-                style={{ color: colors.slateLight }}
+                style={{ color: colors.aurumGold }}
               >
                 {signal.date}
               </div>
@@ -111,7 +125,20 @@ export default function SignalPage() {
                 ))}
               </div>
             </article>
-          ))}
+          ))
+          ) : (
+            <div
+              className="p-5 md:p-8 rounded-lg border text-center"
+              style={{
+                backgroundColor: `${colors.gunmetal}60`,
+                borderColor: `${colors.slateLight}30`,
+              }}
+            >
+              <p className="text-base md:text-lg" style={{ color: colors.slateLight }}>
+                No signals found for {sectorFilter}. Check back soon.
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Coming Soon */}

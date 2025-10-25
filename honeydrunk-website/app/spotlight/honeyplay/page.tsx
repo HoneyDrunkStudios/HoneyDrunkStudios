@@ -348,7 +348,7 @@ export default function HoneyPlaySpotlight() {
               </Link>
               
               <Link
-                href="/signal"
+                href="/signal?sector=Play"
                 className="font-mono font-bold text-sm uppercase tracking-wider px-6 py-3 border-2 transition-all hover:scale-105"
                 style={{
                   color: colors.neonPink,
