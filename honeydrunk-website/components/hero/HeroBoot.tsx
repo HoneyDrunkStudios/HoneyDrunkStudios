@@ -9,7 +9,7 @@ import { useRef, useEffect, useState } from 'react';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import HexGridOverlay, { type HexGridOverlayHandle } from './HexGridOverlay';
 import HeroCopy, { type HeroCopyHandle } from './HeroCopy';
-import { CyberspaceHero } from '../visuals/CyberspaceHero';
+import DataRain from './DataRain';
 import { colors } from '@/lib/tokens';
 
 type BootState = 'gate' | 'booting' | 'idle';
@@ -178,13 +178,18 @@ export default function HeroBoot({
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: colors.deepSpace }}>
-      {/* Background cyberspace hero */}
-      <CyberspaceHero
-        onJackInComplete={() => {
-          console.log('[Analytics] jack_in_complete');
-        }}
-      />
+    <div 
+      className="relative w-full h-screen overflow-hidden" 
+      style={{ 
+        backgroundColor: colors.deepSpace,
+        backgroundImage: 'url(/neoncity.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      {/* Data rain effect */}
+      <DataRain density={60} />
 
       {/* Background hex grid with parallax */}
       <HexGridOverlay

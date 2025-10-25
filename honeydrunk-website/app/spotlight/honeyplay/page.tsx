@@ -215,13 +215,20 @@ export default function HoneyPlaySpotlight() {
               
               {playNodes.length > 0 ? (
                 playNodes.map((node) => (
-                  <div
+                  <Link
                     key={node.id}
-                    className="border-l-2 pl-4"
+                    href={`/grid?node=${node.id}`}
+                    className="block border-l-2 pl-4 transition-all hover:border-l-4"
                     style={{ borderColor: `${colors.neonPink}60` }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = colors.neonPink;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = `${colors.neonPink}60`;
+                    }}
                   >
                     <h4 className="text-lg font-mono font-bold" style={{ color: colors.neonPink, marginBottom: '8px' }}>
-                      {node.name}
+                      {node.name} →
                     </h4>
                     <p className="text-sm" style={{ color: colors.slateLight, marginBottom: '4px' }}>
                       {node.description}
@@ -241,7 +248,7 @@ export default function HoneyPlaySpotlight() {
                         Energy: {node.energy}%
                       </span>
                     </div>
-                  </div>
+                  </Link>
                 ))
               ) : (
                 <p className="text-base" style={{ color: colors.slateLight }}>
@@ -272,15 +279,15 @@ export default function HoneyPlaySpotlight() {
             
             <div className="flex flex-wrap gap-3">
               {[
-                'HoneyDrunk.Kernel',
-                'HoneyDrunk.Transport',
-                'HoneyCore.Web.Rest',
-                'Pulse',
-                'AgentKit',
+                { name: 'HoneyDrunk.Kernel', id: 'honeydrunk-kernel' },
+                { name: 'HoneyDrunk.Transport', id: 'honeydrunk-transport' },
+                { name: 'HoneyCore.Web.Rest', id: 'honeycore-web-rest' },
+                { name: 'Pulse', id: 'pulse' },
+                { name: 'AgentKit', id: 'honeydrunk-agentkit' },
               ].map((node) => (
                 <Link
-                  key={node}
-                  href="/grid"
+                  key={node.id}
+                  href={`/grid?node=${node.id}`}
                   className="font-mono text-sm px-4 py-2 border transition-all hover:scale-105"
                   style={{
                     color: colors.neonPink,
@@ -296,7 +303,7 @@ export default function HoneyPlaySpotlight() {
                     e.currentTarget.style.borderColor = `${colors.neonPink}60`;
                   }}
                 >
-                  {node}
+                  {node.name}
                 </Link>
               ))}
             </div>

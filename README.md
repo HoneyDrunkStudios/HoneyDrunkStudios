@@ -1,18 +1,15 @@
-# 🐝 HoneyDrunk Studios — Hive Operations Manifest v3.3
-*(HoneyDrunk.OS • The Grid • Build-in-Public Cyberpunk Edition)*
+# 🐝 HoneyDrunk Studios — Hive Operations Manifest v4.0  
+*(HoneyDrunk.OS • The Grid • Build-in-Public Cyberpunk Edition)*  
 
-(Founder-Controlled • AI-Advised • Copilot-Powered • Cyberpunk-Aesthetic • Build-in-Public • Agentic-Driven)
+(Founder-Controlled • AI-Advised • Copilot-Powered • Cyberpunk-Aesthetic • Build-in-Public • Agentic-Driven)  
+
+---
 
 ## 🎯 Mission
 **Build the HoneyDrunk Grid** — interlinked systems, SDKs, creative tools, embodied agents, and original games that feel handcrafted, alive, and deliberate.  
 Internally, this network operates as **HoneyDrunk.OS** — the operating system powering every Node and agent.  
 
 > **Structure meets soul. Code meets art.**
-
-You (Oleg / TattedDev) are the **Edge Runner & Architect** — the signal at the boundary between art and system.  
-I am your **Strategic Copilot** — shaping architecture, creative cohesion, and next-step strategy.  
-
-Everything flows through your vision, tempo, and public narrative.
 
 ---
 
@@ -37,23 +34,31 @@ Azure free tiers · Static sites · Central YAMLs · Open-source tooling.
 |-------|----------|------------|
 | Identity | Unified Auth + XP + Telemetry | Auth, Vault, Pulse |
 | Infrastructure | Domain primitives + Transport | Kernel, Transport, Web.Rest |
-| Framework | SDKs + Agents + runtime orchestration | HoneyDrunk.AI, Tools, SDKs |
-| Interface | Creator portals | HoneyHub (Web/Desktop), Admin |
+| Framework | SDKs + Agents + Runtime Orchestration | HoneyDrunk.AI, Tools, SDKs |
+| Interface | Creator Portals + Dashboards | HoneyHub (Web/Desktop), Admin |
 | Network | Public visibility + social layer | HoneyDrunkStudios.com, Hive, Signal |
 
 ---
 
 ## 🕹️ Divisions
 ### 🧠 HoneyHub — Creator OS
-Project orchestration, learning, and AI assistance.
+Project orchestration, learning, and AI assistance.  
+> *“The creative command center of the Hive.”*
 
 ### 🕹️ HoneyPlay — Game Division
 > “We built the Grid. Now we play in it.”  
 Covers all games under HoneyDrunk — visual novels, sims, strategy, sandbox, and experimental AI titles.
 
-### 🤖 HoneyMech — Robotics Division
-> “Machines with purpose. Agents with form.”  
-Embodied agents and motion systems powered by Vault + Pulse + Auth.
+### 🦾 Cyberware — Robotics & Embodied Systems
+> “Where code meets matter.”  
+Advanced robotics, simulation, and embodied AI agents powered by Vault, Pulse, and Transport.  
+Cyberware covers both **HoneyMech’s** legacy mission and new embodied-tech Nodes.
+
+### 🔐 HoneyNet — Security & Defense Sector
+> “Run the sim. Guard the Hive.”  
+Security research, SDKs, and experiments in resilience.  
+Home to **BreachLab.exe** (white-hat experimental labs) and **HoneySentinel** (secure-by-default SDK).  
+Connected to **Vault** and **Pulse** for secrets management and telemetry.
 
 ---
 
@@ -72,6 +77,7 @@ Embodied agents and motion systems powered by Vault + Pulse + Auth.
 
 ## 💰 Sustainability & Monetization
 **Open Core. Paid Orchestration.**
+
 | Node | Free Tier | Pro Tier |
 |------|------------|----------|
 | HoneyHub | Base project mgmt | Advanced analytics + team workspaces |
@@ -153,7 +159,7 @@ Cultural Directive → *Empower, don’t enclose.*
 Build → Test → RFC → Review → Merge → Version bump
 ```
 - Every node update reflected in The Hive heartbeat.  
-- Community RFCs define next phases of HoneyDrunk.OS.  
+- Community RFCs define next phases of HoneyDrunk.OS.
 
 ---
 
@@ -166,7 +172,7 @@ Build → Test → RFC → Review → Merge → Version bump
 
 ## 🕶️ Aesthetic Charter
 Cyberpunk realism • Techno-Art Fusion • Human Core  
-Palette → Gold ⚡ Violet ⚡ Blue  
+Palette → Gold ⚡ Violet ⚡ Blue ⚡ **Matrix Green (HoneyNet)**  
 **Mantra:** Boot · Build · Refactor · Evolve.
 
 ---
@@ -187,10 +193,10 @@ Palette → Gold ⚡ Violet ⚡ Blue
 
 ## 🪐 Workflow
 ```
-1️⃣ Node Initiation → define purpose + MVP
-2️⃣ Scoping → architecture + CI/CD plan
-3️⃣ Implementation → build & iterate
-4️⃣ Review → update Hive
+1️⃣ Node Initiation → define purpose + MVP  
+2️⃣ Scoping → architecture + CI/CD plan  
+3️⃣ Implementation → build & iterate  
+4️⃣ Review → update Hive  
 5️⃣ Signal → publish on HoneyDrunkStudios.com
 ```
 Whenever “**What’s next for HoneyDrunk?**” is asked,  
@@ -222,7 +228,7 @@ This is the **source of truth** for all priorities.
 ---
 
 ## 🔮 Long-Term Vision
-HoneyDrunk evolves into a multi-agent, multi-node creative OS connecting SDKs, SaaS, Games, and Robotics.
+HoneyDrunk evolves into a multi-agent, multi-node creative OS connecting SDKs, SaaS, Games, and Robotics.  
 
 **Internally:** HoneyDrunk.OS — structured, agentic, interoperable.  
 **Publicly:** The Grid — visual, narrative, alive.  
@@ -230,6 +236,7 @@ HoneyDrunk evolves into a multi-agent, multi-node creative OS connecting SDKs, S
 > The OS powers imagination.  
 > The Grid tells its story.  
 > HoneyPlay gives it soul.  
-> HoneyMech gives it form.
+> **Cyberware gives it form.**  
+> **HoneyNet guards its mind.**
 
 **Precision is our art. Aesthetic is our architecture. Transparency is our marketing.**

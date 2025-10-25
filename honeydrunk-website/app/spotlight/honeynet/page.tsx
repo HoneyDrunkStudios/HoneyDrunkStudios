@@ -243,13 +243,20 @@ export default function HoneyNetSpotlight() {
 
               {honeyNetNodes.length > 0 ? (
                 honeyNetNodes.map((node: VisualNode) => (
-                  <div
+                  <Link
                     key={node.id}
-                    className="border-l-2 pl-4"
+                    href={`/grid?node=${node.id}`}
+                    className="block border-l-2 pl-4 transition-all hover:border-l-4"
                     style={{ borderColor: `${colors.matrixGreen}60` }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = colors.matrixGreen;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = `${colors.matrixGreen}60`;
+                    }}
                   >
                     <h4 className="text-lg font-mono font-bold" style={{ color: colors.matrixGreen, marginBottom: '8px' }}>
-                      {node.name}
+                      {node.name} →
                     </h4>
                     <p className="text-sm" style={{ color: colors.slateLight, marginBottom: '4px' }}>
                       {node.description}
@@ -269,7 +276,7 @@ export default function HoneyNetSpotlight() {
                         Energy: {node.energy}%
                       </span>
                     </div>
-                  </div>
+                  </Link>
                 ))
               ) : (
                 <p className="text-base" style={{ color: colors.slateLight }}>
@@ -300,16 +307,16 @@ export default function HoneyNetSpotlight() {
 
             <div className="flex flex-wrap gap-3">
               {[
-                'HoneyDrunk.Kernel',
-                'HoneyDrunk.Auth',
-                'HoneyDrunk.Transport',
-                'Pulse',
-                'Vault',
-                'AgentKit',
+                { name: 'HoneyDrunk.Kernel', id: 'honeydrunk-kernel' },
+                { name: 'HoneyDrunk.Auth', id: 'honeydrunk-auth' },
+                { name: 'HoneyDrunk.Transport', id: 'honeydrunk-transport' },
+                { name: 'Pulse', id: 'pulse' },
+                { name: 'Vault', id: 'honeydrunk-vault' },
+                { name: 'AgentKit', id: 'honeydrunk-agentkit' },
               ].map((node) => (
                 <Link
-                  key={node}
-                  href="/grid"
+                  key={node.id}
+                  href={`/grid?node=${node.id}`}
                   className="font-mono text-sm px-4 py-2 border transition-all hover:scale-105"
                   style={{
                     color: colors.matrixGreen,
@@ -325,7 +332,7 @@ export default function HoneyNetSpotlight() {
                     e.currentTarget.style.borderColor = `${colors.matrixGreen}60`;
                   }}
                 >
-                  {node}
+                  {node.name}
                 </Link>
               ))}
             </div>

@@ -35,6 +35,7 @@ function GridContent() {
     const signalsParam = searchParams.get('signals');
     const searchParam = searchParams.get('search');
     const flowModeParam = searchParams.get('flowMode');
+    const nodeParam = searchParams.get('node');
 
     if (sectorsParam) {
       setSelectedSectors(sectorsParam.split(',') as Sector[]);
@@ -47,6 +48,9 @@ function GridContent() {
     }
     if (flowModeParam === 'true') {
       setUseFlowVisuals(true);
+    }
+    if (nodeParam) {
+      setSelectedNodeId(nodeParam);
     }
   }, [searchParams]);
 

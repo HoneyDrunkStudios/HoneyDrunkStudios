@@ -33,6 +33,7 @@ export async function GET() {
       Cyberware: 0,
       Meta: 0,
       AI: 0,
+      HoneyNet: 0,
     };
 
     // Count by cluster
