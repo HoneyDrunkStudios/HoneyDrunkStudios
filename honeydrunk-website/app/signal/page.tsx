@@ -1,13 +1,13 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import { colors } from '@/lib/tokens';
 
-export default function SignalPage() {
+function SignalContent() {
   const searchParams = useSearchParams();
   const sectorFilter = searchParams.get('sector');
 
@@ -161,5 +161,25 @@ export default function SignalPage() {
         <LandingFooter />
       </div>
     </div>
+  );
+}
+
+export default function SignalPage() {
+  return (
+    <Suspense fallback={
+      <div className="relative min-h-screen" style={{ backgroundColor: colors.deepSpace, color: colors.offWhite }}>
+        <div className="fixed inset-0">
+          <NeonGridCanvas particleCount={100} enableMotion={true} />
+        </div>
+        <Header />
+        <div className="relative z-10 pt-20 md:pt-32 px-4 md:px-8 lg:px-16 pb-16">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-lg font-mono" style={{ color: colors.slateLight }}>Loading signal feed...</p>
+          </div>
+        </div>
+      </div>
+    }>
+      <SignalContent />
+    </Suspense>
   );
 }
