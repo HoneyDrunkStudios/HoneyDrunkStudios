@@ -3,6 +3,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import CyberpunkEffects from "@/components/CyberpunkEffects";
 import PageTransition from "@/components/PageTransition";
+import HiveConsole from "@/components/HiveConsole";
+import GridPulse from "@/components/GridPulse";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://honeydrunkstudios.com";
 
@@ -65,8 +67,10 @@ export default function RootLayout({
       <body className="antialiased">
         <CyberpunkEffects />
         <PageTransition />
+        <GridPulse />
         <Header />
         {children}
+        <HiveConsole />
       </body>
     </html>
   );

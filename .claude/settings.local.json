@@ -35,7 +35,8 @@
       "Bash(npm outdated:*)",
       "Bash(npm install:*)",
       "Bash(curl:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []
