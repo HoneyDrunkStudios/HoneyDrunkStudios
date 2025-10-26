@@ -54,6 +54,7 @@ function GridContent() {
     const searchParam = searchParams.get('search');
     const nodeParam = searchParams.get('node');
     const serviceParam = searchParams.get('service');
+    const flowModeParam = searchParams.get('flowMode');
 
     if (sectorsParam) {
       setSelectedSectors(sectorsParam.split(','));
@@ -69,6 +70,9 @@ function GridContent() {
     }
     if (serviceParam) {
       setSelectedEntityId(serviceParam);
+    }
+    if (flowModeParam === 'true') {
+      setFlowMode(true);
     }
   }, [searchParams]);
 

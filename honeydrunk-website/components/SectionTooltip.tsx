@@ -32,7 +32,7 @@ export default function SectionTooltip({ text, color = colors.electricBlue }: Se
 
       {isVisible && (
         <div
-          className="absolute left-0 top-full mt-2 w-64 p-3 rounded-lg border z-50 shadow-lg"
+          className="absolute right-0 md:left-0 top-full mt-2 w-64 p-3 rounded-lg border z-50 shadow-lg"
           style={{
             backgroundColor: colors.gunmetal,
             borderColor: `${color}60`,
@@ -41,7 +41,7 @@ export default function SectionTooltip({ text, color = colors.electricBlue }: Se
         >
           <p className="text-xs leading-relaxed">{text}</p>
           <div
-            className="absolute bottom-full left-4 w-0 h-0"
+            className="absolute bottom-full right-4 md:left-4 w-0 h-0"
             style={{
               borderLeft: '6px solid transparent',
               borderRight: '6px solid transparent',

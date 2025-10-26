@@ -128,7 +128,7 @@ export default function CtaBand() {
         {/* Secondary CTA */}
         <Link
           href="/grid"
-          className="inline-block font-mono text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105"
+          className="hidden md:inline-block font-mono text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105"
           style={{
             color: colors.electricBlue,
           }}

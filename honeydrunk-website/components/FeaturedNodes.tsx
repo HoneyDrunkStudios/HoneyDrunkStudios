@@ -90,7 +90,7 @@ function NodeCard({ node }: { node: VisualNode }) {
 
   return (
     <Link
-      href={`/grid?node=${node.id}`}
+      href={`/nodes/${node.id}`}
       className="block p-6 backdrop-blur-sm border-2 transition-all duration-300 hover:scale-105 group"
       style={{
         backgroundColor: `${colors.deepSpace}95`,

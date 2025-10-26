@@ -570,7 +570,7 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                   onTouchEnd={() => cancelHold('explore')}
                   onTouchCancel={() => cancelHold('explore')}
                   aria-label="Jack In"
-                  className="font-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-wider transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none group relative overflow-hidden cursor-pointer w-full sm:w-auto select-none"
+                  className="hidden md:flex font-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-wider transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none group relative overflow-hidden cursor-pointer w-full sm:w-auto select-none"
                   style={{
                     padding: '0.65rem 1.5rem',
                     backgroundColor: `${colors.aurumGold}20`,

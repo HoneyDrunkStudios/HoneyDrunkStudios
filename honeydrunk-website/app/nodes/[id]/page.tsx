@@ -70,7 +70,7 @@ export default async function NodeDetailPage({ params }: { params: Promise<{ id:
       <Header />
 
       {/* Content */}
-      <div className="relative z-10 pt-20 md:pt-32 px-4 md:px-8 lg:px-16 pb-20 md:pb-24">
+      <div className="relative z-10 pt-20 md:pt-32 px-6 md:px-8 lg:px-16 pb-20 md:pb-24">
         <div className="max-w-5xl mx-auto space-y-12">
           {/* Node Header */}
           <header className="space-y-6">
@@ -84,23 +84,26 @@ export default async function NodeDetailPage({ params }: { params: Promise<{ id:
               </Link>
             </div>
 
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
+            <div className="flex flex-col md:flex-row items-start md:justify-between gap-6">
+              <div className="flex-1 w-full min-w-0">
                 <h1
-                  className="text-3xl md:text-5xl lg:text-6xl font-display font-bold mb-4"
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold break-words"
                   style={{
                     color: sectorColor,
                     textShadow: `0 0 20px ${sectorColor}60`,
+                    marginBottom: '16px',
+                    wordBreak: 'break-word',
+                    overflowWrap: 'break-word',
                   }}
                 >
                   {node.name}
                 </h1>
-                <p className="text-lg md:text-xl" style={{ color: colors.offWhite }}>
+                <p className="text-base md:text-lg" style={{ color: colors.offWhite }}>
                   {node.short}
                 </p>
               </div>
 
-              <div className="flex flex-col gap-3 items-end">
+              <div className="flex flex-row md:flex-col gap-3 items-start md:items-end flex-shrink-0">
                 <span
                   className="px-4 py-2 rounded-full text-sm font-mono whitespace-nowrap"
                   style={{
@@ -337,7 +340,7 @@ export default async function NodeDetailPage({ params }: { params: Promise<{ id:
 
           {/* Links */}
           {node.links && (Object.keys(node.links).length > 0 || node.id) && (
-            <section className="flex flex-wrap gap-4 pt-6 border-t" style={{ borderColor: `${colors.slateLight}30` }}>
+            <section className="flex flex-wrap justify-center md:justify-start gap-4 pt-6 border-t" style={{ borderColor: `${colors.slateLight}30` }}>
               {node.links.repo && (
                 <a
                   href={node.links.repo}

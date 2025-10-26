@@ -173,7 +173,7 @@ function FlowNodeCard({ node }: { node: VisualNode }) {
 
   return (
     <Link
-      href={`/grid?search=${node.id}`}
+      href={`/nodes/${node.id}`}
       className="block rounded-lg border-2 transition-all duration-300 hover:scale-[1.02]"
       style={{
         padding: '12px 16px',
