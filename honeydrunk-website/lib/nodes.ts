@@ -3,9 +3,11 @@
  * Functions for loading, filtering, and transforming node data
  */
 
-import nodesData from '@/data/nodes.json';
+import nodesData from '@/data/schema/nodes.json';
 import type { Node, VisualNode, SignalVisuals, SectorVisuals, NodePosition, Signal, Sector, FlowMetrics } from './types';
 import { colors } from './tokens';
+import { getSectorColor, getAllSectors as getSectorsFromConfig, getSectorColorsMap } from './sectors';
+import { getFlowTierFromScore, getAllFlowTiers, formatFlowTierRange } from './flow';
 
 // Type assertion for imported JSON
 const nodes = nodesData as Node[];
@@ -76,19 +78,20 @@ const signalVisualsMap: Record<Signal, SignalVisuals> = {
 };
 
 /**
- * Sector → Visual mapping
+ * Sector → Visual mapping (now generated from sectors.json)
  */
-const sectorVisualsMap: Record<Sector, SectorVisuals> = {
-  Core: { color: colors.violetFlux },
-  Ops: { color: colors.electricBlue },
-  Creator: { color: colors.aurumGold },
-  Life: { color: colors.signalGreen },
-  Play: { color: colors.neonPink },
-  Cyberware: { color: colors.chromeTeal },
-  Meta: { color: colors.slateLight },
-  AI: { color: colors.synthMagenta },
-  HoneyNet: { color: colors.matrixGreen },
-};
+const sectorVisualsMap: Record<Sector, SectorVisuals> = Object.fromEntries(
+  getSectorsFromConfig().map(sector => [sector, { color: getSectorColor(sector) }])
+) as Record<Sector, SectorVisuals>;
+
+/**
+ * Get signal colors as a simple map (for UI use)
+ */
+export function getSignalColorsMap(): Record<Signal, string> {
+  return Object.fromEntries(
+    Object.entries(signalVisualsMap).map(([signal, visuals]) => [signal, visuals.color])
+  ) as Record<Signal, string>;
+}
 
 /**
  * Calculate Flow Index and metrics for a node
@@ -103,31 +106,13 @@ function calculateFlowMetrics(node: Node): FlowMetrics {
   // Flow Index: weighted combination
   const flowIndex = (energy * 0.4) + (priority * 0.6);
 
-  // Determine flow tier based on ranges
-  let flowTier: FlowMetrics['flowTier'];
-  let flowColor: string;
-
-  if (flowIndex >= 80) {
-    flowTier = 'critical';
-    flowColor = colors.aurumGold;      // Gold glow — critical path
-  } else if (flowIndex >= 60) {
-    flowTier = 'active';
-    flowColor = colors.electricBlue;   // Electric blue pulse — active
-  } else if (flowIndex >= 40) {
-    flowTier = 'stable';
-    flowColor = colors.violetFlux;     // Violet fade — stable
-  } else if (flowIndex >= 20) {
-    flowTier = 'dormant';
-    flowColor = colors.slateLight;     // Dim slate — dormant
-  } else {
-    flowTier = 'archived';
-    flowColor = colors.archiveRed;     // Deep red embers — archived/cold
-  }
+  // Determine flow tier from score using centralized config
+  const tierConfig = getFlowTierFromScore(flowIndex);
 
   return {
     flowIndex: Math.round(flowIndex),
-    flowTier,
-    flowColor,
+    flowTier: tierConfig.id,
+    flowColor: tierConfig.color,
   };
 }
 
@@ -202,8 +187,8 @@ export function getNodes(): VisualNode[] {
     .sort((a, b) => (b.priority || 0) - (a.priority || 0))
     .map((node, index) => ({
       ...node,
-      // Resolve connection IDs to handle legacy aliases
-      connections: node.connections?.map(connId => resolveNodeId(connId)),
+      // Map depends_on to connections for backward compatibility
+      connections: node.depends_on?.map(connId => resolveNodeId(connId)),
       position: generateNodePosition(node, index),
       signalVisuals: signalVisualsMap[node.signal],
       sectorVisuals: sectorVisualsMap[node.sector],
@@ -245,7 +230,7 @@ export function getFeaturedNodes(count?: number): VisualNode[] {
  * Get all unique sectors
  */
 export function getAllSectors(): Sector[] {
-  return ['Core', 'Ops', 'Creator', 'Life', 'Play', 'Cyberware', 'Meta', 'AI', 'HoneyNet'];
+  return getSectorsFromConfig();
 }
 
 /**
@@ -333,8 +318,8 @@ export function getNodeStats() {
       core: allNodes.filter(n => n.sector === 'Core').length,
       ops: allNodes.filter(n => n.sector === 'Ops').length,
       creator: allNodes.filter(n => n.sector === 'Creator').length,
-      life: allNodes.filter(n => n.sector === 'Life').length,
-      play: allNodes.filter(n => n.sector === 'Play').length,
+      market: allNodes.filter(n => n.sector === 'Market').length,
+      honeyplay: allNodes.filter(n => n.sector === 'HoneyPlay').length,
       cyberware: allNodes.filter(n => n.sector === 'Cyberware').length,
       meta: allNodes.filter(n => n.sector === 'Meta').length,
       ai: allNodes.filter(n => n.sector === 'AI').length,
@@ -342,3 +327,15 @@ export function getNodeStats() {
     },
   };
 }
+
+/**
+ * Flow tier definitions for documentation and UI
+ * Now sourced from flow_tiers.json
+ */
+export const flowTierDefinitions = getAllFlowTiers().map(tier => ({
+  tier: tier.id,
+  label: tier.name,
+  range: formatFlowTierRange(tier),
+  color: tier.color,
+  description: tier.description,
+}));

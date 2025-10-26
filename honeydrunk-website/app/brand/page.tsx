@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import { colors } from '@/lib/tokens';
+import { getAllSectorConfigs } from '@/lib/sectors';
 
 export const metadata = {
   title: 'Brand Kit — HoneyDrunk Studios',
@@ -9,29 +10,23 @@ export const metadata = {
 };
 
 export default function BrandPage() {
+  const sectors = getAllSectorConfigs();
+  
   const brandColors = [
     { name: 'Aurum Gold', hex: colors.aurumGold, desc: 'Signature HoneyDrunk hue - accents, highlights' },
     { name: 'Violet Flux', hex: colors.violetFlux, desc: 'Core systems - gradients, glows' },
-    { name: 'Electric Blue', hex: colors.electricBlue, desc: 'Operations - data strokes, active grid beams' },
-    { name: 'Signal Green', hex: colors.signalGreen, desc: 'Terminal green - Live/operational states' },
+    { name: 'Electric Blue', hex: colors.electricBlue, desc: 'Consumer sector - data strokes, active grid beams' },
+    { name: 'Cyber Orange', hex: colors.cyberOrange, desc: 'Operations sector - pipelines, workflows, automation' },
+    { name: 'Matrix Green', hex: colors.matrixGreen, desc: 'HoneyNet security - terminal aesthetic, breach sim' },
+    { name: 'Signal Green', hex: colors.signalGreen, desc: 'Live/operational states - terminal green' },
     { name: 'Neon Pink', hex: colors.neonPink, desc: 'Play sector - gaming, hot accents' },
-    { name: 'Chrome Teal', hex: colors.chromeTeal, desc: 'Mech sector - industrial, metallic, robotics' },
+    { name: 'Neon Yellow', hex: colors.neonYellow, desc: 'Meta sector - bright cyberpunk yellow' },
+    { name: 'Chrome Teal', hex: colors.chromeTeal, desc: 'Cyberware sector - industrial, metallic, robotics' },
     { name: 'Synth Magenta', hex: colors.synthMagenta, desc: 'AI sector - digital intelligence, computational' },
     { name: 'Deep Space', hex: colors.deepSpace, desc: 'Base background (#0A0E12)' },
     { name: 'Gunmetal', hex: colors.gunmetal, desc: 'Section contrast, card backgrounds' },
     { name: 'Slate Light', hex: colors.slateLight, desc: 'Muted secondary text' },
     { name: 'Off-White', hex: colors.offWhite, desc: 'Default readable text' },
-  ];
-
-  const sectorColors = [
-    { name: 'Core', hex: colors.violetFlux, desc: 'Foundation systems - kernel, data, transport' },
-    { name: 'Ops', hex: colors.electricBlue, desc: 'Operations - pipelines, deploy, monitoring' },
-    { name: 'Creator', hex: colors.aurumGold, desc: 'Creative tools - content, marketing, signals' },
-    { name: 'Life', hex: colors.signalGreen, desc: 'Personal wellness - relationships, health' },
-    { name: 'Play', hex: colors.neonPink, desc: 'Gaming & entertainment - games, media' },
-    { name: 'Mech', hex: colors.chromeTeal, desc: 'Robotics & hardware - servos, simulation' },
-    { name: 'Meta', hex: colors.slateLight, desc: 'Ecosystem tools - hub, grid, connect' },
-    { name: 'AI', hex: colors.synthMagenta, desc: 'Intelligence & agents - AgentKit, automation' },
   ];
 
   return (
@@ -128,32 +123,32 @@ export default function BrandPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mt-4 md:mt-5">
-            {sectorColors.map((sector) => (
+            {sectors.map((sector) => (
               <div
                 key={sector.name}
                 className="p-5 md:p-6 rounded-lg border transition-all duration-200 hover:scale-105"
                 style={{
                   backgroundColor: `${colors.gunmetal}60`,
-                  borderColor: sector.hex,
+                  borderColor: sector.color,
                   borderWidth: '2px',
-                  boxShadow: `0 0 15px ${sector.hex}20`,
+                  boxShadow: `0 0 15px ${sector.color}20`,
                 }}
               >
                 <div className="flex items-center gap-3 mb-3">
                   <div
                     className="w-12 h-12 rounded-full border-2 flex-shrink-0"
                     style={{
-                      backgroundColor: sector.hex,
-                      borderColor: sector.hex,
-                      boxShadow: `0 0 20px ${sector.hex}60, inset 0 0 10px ${sector.hex}40`,
+                      backgroundColor: sector.color,
+                      borderColor: sector.color,
+                      boxShadow: `0 0 20px ${sector.color}60, inset 0 0 10px ${sector.color}40`,
                     }}
                   />
-                  <div className="font-display font-bold text-lg" style={{ color: sector.hex }}>
+                  <div className="font-display font-bold text-lg" style={{ color: sector.color }}>
                     {sector.name}
                   </div>
                 </div>
                 <div className="text-xs" style={{ color: colors.slateLight }}>
-                  {sector.desc}
+                  {sector.description}
                 </div>
               </div>
             ))}
@@ -298,6 +293,12 @@ export default function BrandPage() {
               borderColor: `${colors.slateLight}30`,
             }}>
               Structure meets soul. Code meets art.
+            </div>
+            <div className="p-4 md:p-5 rounded-lg border" style={{
+              backgroundColor: `${colors.gunmetal}60`,
+              borderColor: `${colors.matrixGreen}30`,
+            }}>
+              Run the sim. Guard the Hive. (HoneyNet)
             </div>
             <div className="p-4 md:p-5 rounded-lg border" style={{
               backgroundColor: `${colors.gunmetal}60`,

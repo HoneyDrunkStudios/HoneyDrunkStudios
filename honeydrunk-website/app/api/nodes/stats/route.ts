@@ -6,7 +6,7 @@
  */
 
 import { NextResponse } from 'next/server';
-import nodesData from '@/data/nodes.json';
+import nodesData from '@/data/schema/nodes.json';
 import type { Node, Signal, Sector } from '@/lib/types';
 
 const nodes = nodesData as Node[];
@@ -28,12 +28,12 @@ export async function GET() {
       Core: 0,
       Ops: 0,
       Creator: 0,
-      Life: 0,
-      Play: 0,
+      HoneyPlay: 0,
       Cyberware: 0,
       Meta: 0,
       AI: 0,
       HoneyNet: 0,
+      Market: 0,
     };
 
     // Count by cluster

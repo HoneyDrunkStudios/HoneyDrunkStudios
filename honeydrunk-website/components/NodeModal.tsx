@@ -38,7 +38,7 @@ export default function NodeModal({ node, onClose, sectorColor, signalColor }: N
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 pt-16 md:pt-24"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-hidden"
       style={{
         backgroundColor: `${colors.deepSpace}e6`,
         backdropFilter: 'blur(8px)',
@@ -47,7 +47,7 @@ export default function NodeModal({ node, onClose, sectorColor, signalColor }: N
     >
       {/* Modal Content */}
       <div
-        className="relative w-full max-w-4xl max-h-[95vh] md:max-h-[90vh] overflow-y-auto rounded-lg border-2"
+        className="relative w-full max-w-4xl max-h-[85vh] md:max-h-[90vh] flex flex-col rounded-lg border-2 overflow-hidden"
         style={{
           backgroundColor: colors.gunmetal,
           borderColor: sectorColor,
@@ -56,9 +56,9 @@ export default function NodeModal({ node, onClose, sectorColor, signalColor }: N
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Row with Title and Close Button */}
-        <div className="flex items-center justify-between gap-4 p-4 md:p-6 lg:p-8 border-b-2" style={{ borderColor: `${sectorColor}30` }}>
+        <div className="flex-shrink-0 flex items-center justify-between gap-4 p-4 md:p-6 lg:p-8 border-b-2" style={{ borderColor: `${sectorColor}30` }}>
           <h2
-            className="text-2xl md:text-4xl lg:text-5xl font-display font-bold"
+            className="text-xl md:text-4xl lg:text-5xl font-display font-bold"
             style={{
               color: sectorColor,
               textShadow: `0 0 20px ${sectorColor}60`,
@@ -68,7 +68,7 @@ export default function NodeModal({ node, onClose, sectorColor, signalColor }: N
           </h2>
           <button
             onClick={onClose}
-            className="w-12 h-12 md:w-10 md:h-10 flex items-center justify-center rounded-full border-2 transition-all duration-200 hover:rotate-90 cursor-pointer flex-shrink-0"
+            className="w-10 h-10 flex items-center justify-center rounded-full border-2 transition-all duration-200 hover:rotate-90 cursor-pointer flex-shrink-0"
             style={{
               color: colors.neonPink,
               borderColor: `${colors.neonPink}40`,
@@ -76,19 +76,19 @@ export default function NodeModal({ node, onClose, sectorColor, signalColor }: N
             }}
             aria-label="Close modal"
           >
-            <span className="text-3xl md:text-2xl font-bold">×</span>
+            <span className="text-2xl font-bold">×</span>
           </button>
         </div>
 
         {/* Modal Body */}
-        <div className="p-4 md:p-8 lg:p-12">
+        <div className="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12">
           {/* Header Info */}
-          <div className="space-y-4 mb-8">
+          <div className="space-y-3 mb-6">
           {/* Badges */}
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <div className="flex items-center gap-2">
               <span
-                className="px-3 py-1 rounded text-xs font-mono font-bold uppercase"
+                className="px-2 md:px-3 py-1 rounded text-xs font-mono font-bold uppercase"
                 style={{
                   backgroundColor: `${sectorColor}20`,
                   color: sectorColor,
@@ -100,7 +100,7 @@ export default function NodeModal({ node, onClose, sectorColor, signalColor }: N
               </span>
               {node.energy !== undefined && (
                 <span
-                  className="px-3 py-1 rounded text-xs font-mono"
+                  className="px-2 md:px-3 py-1 rounded text-xs font-mono"
                   style={{
                     color: colors.aurumGold,
                     backgroundColor: `${colors.aurumGold}10`,
@@ -111,7 +111,7 @@ export default function NodeModal({ node, onClose, sectorColor, signalColor }: N
               )}
             </div>
             <span
-              className="px-4 py-2 rounded-full text-sm font-mono whitespace-nowrap"
+              className="px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-mono whitespace-nowrap"
               style={{
                 backgroundColor: `${signalColor}20`,
                 borderWidth: '2px',
@@ -127,7 +127,7 @@ export default function NodeModal({ node, onClose, sectorColor, signalColor }: N
 
         {/* Short Description */}
         <p
-          className="text-base md:text-lg lg:text-xl mb-8 leading-relaxed"
+          className="text-sm md:text-lg lg:text-xl mb-6 leading-relaxed"
           style={{ color: colors.offWhite }}
         >
           {node.short}
@@ -135,9 +135,9 @@ export default function NodeModal({ node, onClose, sectorColor, signalColor }: N
 
         {/* Full Description */}
         {node.description && (
-          <div className="mb-8 md:mb-10 pt-4 md:pt-6">
+          <div className="mb-6 pt-3 md:pt-6">
             <h3
-              className="text-xl md:text-2xl font-display font-bold mb-3 md:mb-4"
+              className="text-lg md:text-2xl font-display font-bold mb-2 md:mb-4"
               style={{ color: colors.electricBlue }}
             >
               About
@@ -153,18 +153,18 @@ export default function NodeModal({ node, onClose, sectorColor, signalColor }: N
 
         {/* Tags */}
         {node.tags && node.tags.length > 0 && (
-          <div className="mb-8 md:mb-10">
+          <div className="mb-6">
             <h3
-              className="text-xl md:text-2xl font-display font-bold mb-3 md:mb-4"
+              className="text-lg md:text-2xl font-display font-bold mb-2 md:mb-4"
               style={{ color: colors.electricBlue }}
             >
               Technologies
             </h3>
-            <div className="flex flex-wrap gap-3 pt-6">
+            <div className="flex flex-wrap gap-2 pt-3">
               {node.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-2 rounded-lg text-sm font-mono border"
+                  className="px-2 md:px-3 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-mono border"
                   style={{
                     backgroundColor: `${colors.electricBlue}15`,
                     borderColor: `${colors.electricBlue}40`,
@@ -180,18 +180,18 @@ export default function NodeModal({ node, onClose, sectorColor, signalColor }: N
 
         {/* Connections */}
         {node.connections && node.connections.length > 0 && (
-          <div className="mb-8 md:mb-10">
+          <div className="mb-6">
             <h3
-              className="text-xl md:text-2xl font-display font-bold mb-3 md:mb-4"
+              className="text-lg md:text-2xl font-display font-bold mb-2 md:mb-4"
               style={{ color: colors.electricBlue }}
             >
               Connected Systems
             </h3>
-            <div className="flex flex-wrap gap-2 pt-6">
+            <div className="flex flex-wrap gap-2 pt-3">
               {node.connections.map((connId) => (
                 <span
                   key={connId}
-                  className="px-3 py-1 rounded text-xs font-mono"
+                  className="px-2 md:px-3 py-1 rounded text-xs font-mono"
                   style={{
                     backgroundColor: `${colors.violetFlux}20`,
                     color: colors.violetFlux,
@@ -207,15 +207,15 @@ export default function NodeModal({ node, onClose, sectorColor, signalColor }: N
         )}
 
         {/* Links */}
-        <div className="flex flex-col md:flex-row flex-wrap items-stretch md:items-center justify-between gap-3 md:gap-4 pt-4 md:pt-6 border-t-2" style={{ borderColor: `${sectorColor}30` }}>
+        <div className="flex flex-col md:flex-row flex-wrap items-stretch md:items-center justify-between gap-2 md:gap-4 pt-3 md:pt-6 pb-4 border-t-2" style={{ borderColor: `${sectorColor}30` }}>
           {/* External Links */}
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-2 md:gap-4">
           {node.links?.repo && (
             <a
               href={node.links.repo}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 md:px-6 py-3 md:py-3 rounded-lg border-2 font-mono text-xs md:text-sm transition-all duration-200 hover:scale-105 cursor-pointer text-center"
+              className="px-3 md:px-6 py-2 md:py-3 rounded-lg border-2 font-mono text-xs md:text-sm transition-all duration-200 hover:scale-105 cursor-pointer text-center"
               style={{
                 color: colors.electricBlue,
                 borderColor: `${colors.electricBlue}60`,
@@ -230,7 +230,7 @@ export default function NodeModal({ node, onClose, sectorColor, signalColor }: N
               href={node.links.live}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 md:px-6 py-3 md:py-3 rounded-lg border-2 font-mono text-xs md:text-sm transition-all duration-200 hover:scale-105 cursor-pointer text-center"
+              className="px-3 md:px-6 py-2 md:py-3 rounded-lg border-2 font-mono text-xs md:text-sm transition-all duration-200 hover:scale-105 cursor-pointer text-center"
               style={{
                 color: colors.signalGreen,
                 borderColor: `${colors.signalGreen}60`,
@@ -245,7 +245,7 @@ export default function NodeModal({ node, onClose, sectorColor, signalColor }: N
               href={node.links.docs}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 md:px-6 py-3 md:py-3 rounded-lg border-2 font-mono text-xs md:text-sm transition-all duration-200 hover:scale-105 cursor-pointer text-center"
+              className="px-3 md:px-6 py-2 md:py-3 rounded-lg border-2 font-mono text-xs md:text-sm transition-all duration-200 hover:scale-105 cursor-pointer text-center"
               style={{
                 color: colors.aurumGold,
                 borderColor: `${colors.aurumGold}60`,

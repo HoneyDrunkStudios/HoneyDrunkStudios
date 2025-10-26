@@ -177,7 +177,7 @@ export default function CyberpunkEffects() {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          animation: shimmer 3s linear infinite;
+          animation: shimmer 6s linear infinite;
         }
       `}</style>
     </>

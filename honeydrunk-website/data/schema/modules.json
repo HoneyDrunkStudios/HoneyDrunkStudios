@@ -1,0 +1,434 @@
+[
+  {
+    "id": "honeydrunk-transport-messaging-inmemory",
+    "type": "module",
+    "name": "HoneyDrunk.Transport.Messaging.InMemory",
+    "parent": "honeydrunk-transport",
+    "slot": "adapter",
+    "signal": "Live",
+    "status_dot": "beta",
+    "integration_depth": "shallow",
+    "tags": [
+      "messaging",
+      "dev",
+      "test"
+    ],
+    "long_description": {
+      "overview": "An in-process transport adapter for rapid local development and tests. It simulates broker behavior without external infrastructure so handlers and outbox flows can be exercised fast.",
+      "why_it_exists": "Developers need instant feedback loops without provisioning real brokers.",
+      "primary_audience": "Service developers writing handlers and tests.",
+      "value_props": [
+        "Zero-setup event publishing and consumption",
+        "Deterministic, fast test runs for handlers",
+        "Parity with production envelopes without network costs"
+      ],
+      "monetization_signal": "Open source utility for dev/test only.",
+      "roadmap_focus": "Fault injection toggles (delay, drop, duplicate) to harden handlers.",
+      "grid_relationship": "Implements the Transport adapter slot; used by Testing harnesses.",
+      "demo_path": "Publish an event in-memory and assert handler outcomes within a single process.",
+      "signal_quote": "Speed without servers.",
+      "stability_tier": "stable",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-transport-messaging-storagequeues",
+    "type": "module",
+    "name": "HoneyDrunk.Transport.Messaging.StorageQueues",
+    "parent": "honeydrunk-transport",
+    "slot": "adapter",
+    "signal": "Wiring",
+    "status_dot": "beta",
+    "integration_depth": "medium",
+    "tags": [
+      "azure",
+      "queues",
+      "messaging"
+    ],
+    "long_description": {
+      "overview": "Azure Storage Queues adapter for HoneyDrunk.Transport. A lightweight, cost-friendly broker for simple queue semantics and background processing.",
+      "why_it_exists": "Some workloads need durable queues without the complexity of full-fledged brokers.",
+      "primary_audience": "Teams deploying on Azure with simple FIFO/background jobs.",
+      "value_props": [
+        "Low-cost, serverless-friendly queues",
+        "Outbox → queue publishing with retries",
+        "Poison handling and DLQ conventions"
+      ],
+      "monetization_signal": "Open source adapter.",
+      "roadmap_focus": "Batch receive and visibility timeout tuning templates.",
+      "grid_relationship": "Implements the Transport adapter slot; emits telemetry into Pulse.",
+      "demo_path": "Emit outbox events → observe dequeue/handle lifecycle via Pulse traces.",
+      "signal_quote": "Simple queues, serious work.",
+      "stability_tier": "beta",
+      "impact_vector": "operational simplicity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-transport-messaging-servicebus",
+    "type": "module",
+    "name": "HoneyDrunk.Transport.Messaging.ServiceBus",
+    "parent": "honeydrunk-transport",
+    "slot": "adapter",
+    "signal": "Awake",
+    "status_dot": "beta",
+    "integration_depth": "deep",
+    "tags": [
+      "azure",
+      "servicebus",
+      "topics",
+      "queues"
+    ],
+    "long_description": {
+      "overview": "Azure Service Bus adapter with topics/subscriptions support, sessions, and exactly-once-ish handling aligned to the Transport envelopes.",
+      "why_it_exists": "Event-driven services on Azure need high-throughput pub/sub with robust delivery semantics.",
+      "primary_audience": "Production services that require topics, sessions, and partitioning.",
+      "value_props": [
+        "Pub/sub via topics and subscriptions",
+        "Idempotent handler patterns with sessions",
+        "Tracing and correlation baked in"
+      ],
+      "monetization_signal": "Open core adapter; enterprise tuning guides later.",
+      "roadmap_focus": "Advanced dead-letter strategies and per-subscription filters.",
+      "grid_relationship": "Implements the Transport adapter slot; integrates with Vault for secrets and Pulse for telemetry.",
+      "demo_path": "Publish to a topic, handle via subscription, trace causality across services.",
+      "signal_quote": "Highways for high signal.",
+      "stability_tier": "beta",
+      "impact_vector": "system resiliency"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-telemetry-abstractions",
+    "type": "module",
+    "name": "HoneyDrunk.Telemetry.Abstractions",
+    "parent": "pulse",
+    "slot": "telemetry",
+    "signal": "Awake",
+    "status_dot": "beta",
+    "integration_depth": "shallow",
+    "tags": [
+      "telemetry",
+      "contracts"
+    ],
+    "long_description": {
+      "overview": "Common telemetry contracts and helpers shared by adapters and services: span/metric naming, correlation, and severity conventions.",
+      "why_it_exists": "Without shared contracts, telemetry becomes noisy and incomparable.",
+      "primary_audience": "Developers instrumenting services and building sinks.",
+      "value_props": [
+        "Consistent span/metric/event shapes",
+        "Low-friction correlation utilities",
+        "Source-agnostic helpers for sinks"
+      ],
+      "monetization_signal": "Open standards; no monetization.",
+      "roadmap_focus": "Expand semantic conventions for background jobs and brokers.",
+      "grid_relationship": "Backs all Pulse telemetry modules and service instrumentation.",
+      "demo_path": "Wrap a handler with shared helpers and see consistent spans in Pulse.",
+      "signal_quote": "One language for all signals.",
+      "stability_tier": "beta",
+      "impact_vector": "operational insight"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-telemetry-opentelemetry",
+    "type": "module",
+    "name": "HoneyDrunk.Telemetry.OpenTelemetry",
+    "parent": "pulse",
+    "slot": "telemetry",
+    "signal": "Wiring",
+    "status_dot": "beta",
+    "integration_depth": "medium",
+    "tags": [
+      "otlp",
+      "otel",
+      "traces",
+      "metrics",
+      "logs"
+    ],
+    "long_description": {
+      "overview": "OpenTelemetry wiring for the HoneyDrunk stack. OTLP exporters, resource detection, and auto-instrumentation presets.",
+      "why_it_exists": "Standards-based telemetry reduces lock-in and unlocks rich tooling.",
+      "primary_audience": "Service owners who want end-to-end traces and metrics quickly.",
+      "value_props": [
+        "Turnkey OTLP export to collectors",
+        "Auto-instrumentation for common stacks",
+        "Resource and propagator defaults"
+      ],
+      "monetization_signal": "Open source integration.",
+      "roadmap_focus": "Sampling strategies and baggage propagation guides.",
+      "grid_relationship": "Feeds Pulse. Works alongside vendor sinks like Sentry/PostHog.",
+      "demo_path": "Enable preset → see service map and latency histograms in minutes.",
+      "signal_quote": "Open pipes, bright Pulse.",
+      "stability_tier": "beta",
+      "impact_vector": "observability adoption"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-telemetry-sink-sentry",
+    "type": "module",
+    "name": "HoneyDrunk.Telemetry.Sink.Sentry",
+    "parent": "pulse",
+    "slot": "telemetry",
+    "signal": "Awake",
+    "status_dot": "experimental",
+    "integration_depth": "shallow",
+    "tags": [
+      "sentry",
+      "errors"
+    ],
+    "long_description": {
+      "overview": "Sentry sink for error events and enriched traces with release and environment tagging.",
+      "why_it_exists": "Tight error feedback loops demand actionable, enriched events.",
+      "primary_audience": "Teams who prefer Sentry for error tracking.",
+      "value_props": [
+        "Opinionated error/event formatting",
+        "Release + env tags out of the box",
+        "Breadcrumbs and trace linkbacks"
+      ],
+      "monetization_signal": "Open source sink.",
+      "roadmap_focus": "Performance spans alignment and sampling controls.",
+      "grid_relationship": "One of Pulse’s optional sinks; coexists with OTLP export.",
+      "demo_path": "Throw an exception and inspect the correlated event in Sentry.",
+      "signal_quote": "Errors, explained.",
+      "stability_tier": "experimental",
+      "impact_vector": "incident response"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-telemetry-sink-posthog",
+    "type": "module",
+    "name": "HoneyDrunk.Telemetry.Sink.PostHog",
+    "parent": "pulse",
+    "slot": "telemetry",
+    "signal": "Awake",
+    "status_dot": "beta",
+    "integration_depth": "shallow",
+    "tags": [
+      "posthog",
+      "analytics",
+      "events"
+    ],
+    "long_description": {
+      "overview": "PostHog sink for product analytics and event capture aligned to the shared telemetry schema.",
+      "why_it_exists": "Creators need behavior analytics without distorting engineering telemetry.",
+      "primary_audience": "Product-facing services and web apps.",
+      "value_props": [
+        "Clean event mapping from shared contracts",
+        "Identity and cohort-friendly fields",
+        "Works alongside OTLP without interference"
+      ],
+      "monetization_signal": "Open source sink.",
+      "roadmap_focus": "Sessionization helpers and privacy-friendly defaults.",
+      "grid_relationship": "Optional Pulse sink for creator/product analytics.",
+      "demo_path": "Emit a PageViewed event and analyze funnels in PostHog.",
+      "signal_quote": "Know what clicks.",
+      "stability_tier": "beta",
+      "impact_vector": "creator insight"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-vault-provider-file",
+    "type": "module",
+    "name": "HoneyDrunk.Vault.Provider.File",
+    "parent": "honeydrunk-vault",
+    "slot": "provider",
+    "signal": "Live",
+    "status_dot": "beta",
+    "integration_depth": "shallow",
+    "tags": [
+      "filesystem",
+      "dev"
+    ],
+    "long_description": {
+      "overview": "File-based secret provider for local/dev scenarios. Reads secrets from encrypted files with audit-friendly structure.",
+      "why_it_exists": "Local parity with production vaults prevents secret sprawl and ‘works on my machine’.",
+      "primary_audience": "Developers and CI running in ephemeral environments.",
+      "value_props": [
+        "Zero external dependencies for local/dev",
+        "Encrypted at rest with simple rotation",
+        "Consistent key shapes for easy swap to cloud providers"
+      ],
+      "monetization_signal": "Open source provider.",
+      "roadmap_focus": "Editor tooling and rotate-in-place utilities.",
+      "grid_relationship": "Implements Vault’s provider slot; used by most services locally.",
+      "demo_path": "Switch from File to AzureKeyVault without code changes.",
+      "signal_quote": "Secrets without servers.",
+      "stability_tier": "stable",
+      "impact_vector": "developer experience"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-vault-provider-azurekeyvault",
+    "type": "module",
+    "name": "HoneyDrunk.Vault.Provider.AzureKeyVault",
+    "parent": "honeydrunk-vault",
+    "slot": "provider",
+    "signal": "Wiring",
+    "status_dot": "beta",
+    "integration_depth": "medium",
+    "tags": [
+      "azure",
+      "keyvault",
+      "secrets"
+    ],
+    "long_description": {
+      "overview": "Azure Key Vault provider with MSI support, versioned secrets, and policy-based access for services on Azure.",
+      "why_it_exists": "Production services require managed identities and audited retrieval at scale.",
+      "primary_audience": "Ops and service owners running in Azure.",
+      "value_props": [
+        "MSI-first authentication and RBAC alignment",
+        "Versioned secrets with easy rotation",
+        "Backoff and caching for reliability"
+      ],
+      "monetization_signal": "Open core provider.",
+      "roadmap_focus": "Bulk rotation helpers and secret scanning integration.",
+      "grid_relationship": "Implements Vault’s provider slot; integrates with Pulse for secret errors.",
+      "demo_path": "Migrate secrets from File provider to Key Vault in minutes.",
+      "signal_quote": "Cloud keys, clean hands.",
+      "stability_tier": "beta",
+      "impact_vector": "security posture"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-vault-provider-awssecretsmanager",
+    "type": "module",
+    "name": "HoneyDrunk.Vault.Provider.AWSSecretsManager",
+    "parent": "honeydrunk-vault",
+    "slot": "provider",
+    "signal": "Seed",
+    "status_dot": "experimental",
+    "integration_depth": "shallow",
+    "tags": [
+      "aws",
+      "secretsmanager",
+      "secrets"
+    ],
+    "long_description": {
+      "overview": "AWS Secrets Manager provider offering basic retrieval and caching aligned to Vault contracts.",
+      "why_it_exists": "Cross-cloud teams need first-class AWS support without forking patterns.",
+      "primary_audience": "Services deployed on AWS or hybrid footprints.",
+      "value_props": [
+        "Simple swap-in for AWS environments",
+        "Aligned key shapes with other providers",
+        "Initial cache and backoff strategies"
+      ],
+      "monetization_signal": "Open core provider; community-driven.",
+      "roadmap_focus": "Rotation hooks and IAM policy templates.",
+      "grid_relationship": "Implements Vault’s provider slot; forwards failures to Pulse.",
+      "demo_path": "Switch from AzureKeyVault to AWSSecretsManager via config only.",
+      "signal_quote": "Keys across the clouds.",
+      "stability_tier": "experimental",
+      "impact_vector": "portability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-testing-harness",
+    "type": "module",
+    "name": "HoneyDrunk.Testing.Harness",
+    "parent": "honeydrunk-testing",
+    "slot": "harness",
+    "signal": "Live",
+    "status_dot": "beta",
+    "integration_depth": "shallow",
+    "tags": [
+      "testing",
+      "fixtures",
+      "harness"
+    ],
+    "long_description": {
+      "overview": "Test harness library for spinning up deterministic environments, faking time/randomness, and wiring Transport/Vault locally.",
+      "why_it_exists": "Flaky tests and slow setup kill momentum; batteries-included harnesses fix that.",
+      "primary_audience": "Developers writing unit and integration tests.",
+      "value_props": [
+        "Deterministic test clocks and RNG",
+        "One-liners to start Transport/Vault locally",
+        "Trace snapshots for regressions"
+      ],
+      "monetization_signal": "Internal-first; examples open-sourced.",
+      "roadmap_focus": "Golden-path templates for common service types.",
+      "grid_relationship": "Docks to Testing node; integrates with Pulse for trace snapshots.",
+      "demo_path": "Run a sample test suite that emits stable traces across runs.",
+      "signal_quote": "Tests that stay true.",
+      "stability_tier": "stable",
+      "impact_vector": "quality"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-testing-tracesnapshots",
+    "type": "module",
+    "name": "HoneyDrunk.Testing.TraceSnapshots",
+    "parent": "honeydrunk-testing",
+    "slot": "harness",
+    "signal": "Wiring",
+    "status_dot": "beta",
+    "integration_depth": "shallow",
+    "tags": [
+      "testing",
+      "traces",
+      "snapshots"
+    ],
+    "long_description": {
+      "overview": "Snapshotting utilities that record canonical traces for flows and compare them across runs to catch regressions.",
+      "why_it_exists": "Behavior drift is hard to spot; trace diffs make it obvious.",
+      "primary_audience": "Teams hardening critical event paths.",
+      "value_props": [
+        "Golden trace fixtures stored alongside tests",
+        "Human-diffable outputs",
+        "Tight hooks into Transport and Pulse"
+      ],
+      "monetization_signal": "Internal-first module.",
+      "roadmap_focus": "Better diff visualizations and flaky-span detection.",
+      "grid_relationship": "Docks to Testing; reads from Pulse for reference spans.",
+      "demo_path": "Record a baseline trace, change code, and watch the diff highlight risky changes.",
+      "signal_quote": "If it changed, you’ll see it.",
+      "stability_tier": "beta",
+      "impact_vector": "regression visibility"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  }
+]

@@ -3,7 +3,10 @@
  * Type definitions for The Grid nodes and visual system
  */
 
-export type Sector = 'Core' | 'Ops' | 'Creator' | 'Life' | 'Play' | 'Cyberware' | 'Meta' | 'AI' | 'HoneyNet';
+import sectorsData from '@/data/schema/sectors.json';
+
+// Derive Sector type from sectors.json
+export type Sector = typeof sectorsData.sectors[number]['id'];
 export type Signal = 'Seed' | 'Awake' | 'Wiring' | 'Live' | 'Echo' | 'Archive';
 
 export interface NodeLinks {
@@ -26,7 +29,8 @@ export interface Node {
   sector: Sector;
   signal: Signal;
   cluster?: string;          // optional grouping
-  connections?: string[];    // connected node ids
+  connections?: string[];    // connected node ids (legacy - mapped from depends_on)
+  depends_on?: string[];     // node dependencies (new field)
   energy?: number;           // 0–100 (pulse: how active/observed recently)
   priority?: number;         // 0–100 (compass: strategic importance to the Hive)
   tags?: string[];
@@ -60,7 +64,7 @@ export interface NodePosition {
 // Flow Index calculation result
 export interface FlowMetrics {
   flowIndex: number;        // 0–100 weighted: (energy × 0.4) + (priority × 0.6)
-  flowTier: 'critical' | 'active' | 'stable' | 'dormant' | 'archived';
+  flowTier: 'critical' | 'active' | 'supporting' | 'dormant' | 'archived';
   flowColor: string;        // visual cue based on flow tier
 }
 

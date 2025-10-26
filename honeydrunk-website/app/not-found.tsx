@@ -4,6 +4,11 @@ import LandingFooter from '@/components/LandingFooter';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import { colors } from '@/lib/tokens';
 
+export const metadata = {
+  title: '404 — Page Not Found',
+  description: 'Signal lost. This node does not exist in The Grid.',
+};
+
 export default function NotFound() {
   return (
     <div className="relative min-h-screen" style={{ backgroundColor: colors.deepSpace, color: colors.offWhite }}>

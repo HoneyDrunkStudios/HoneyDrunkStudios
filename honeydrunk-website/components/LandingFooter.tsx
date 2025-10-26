@@ -80,7 +80,7 @@ export default function LandingFooter() {
           <div className="max-w-7xl mx-auto flex flex-col items-center gap-4">
             <button
               onClick={handleOpenConsole}
-              className="px-8 py-4 text-base md:text-lg font-mono font-bold border-2 rounded-lg transition-all"
+              className="px-8 py-4 text-base md:text-lg font-mono font-bold border-2 rounded-lg transition-all duration-300 hover:scale-105 cursor-pointer"
               style={{
                 color: colors.electricBlue,
                 borderColor: colors.electricBlue,
@@ -88,17 +88,19 @@ export default function LandingFooter() {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = `${colors.electricBlue}20`;
-                e.currentTarget.style.boxShadow = `0 0 20px ${colors.electricBlue}40`;
+                e.currentTarget.style.boxShadow = `0 0 30px ${colors.electricBlue}60, inset 0 0 15px ${colors.electricBlue}10`;
+                e.currentTarget.style.borderColor = colors.electricBlue;
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = 'transparent';
                 e.currentTarget.style.boxShadow = 'none';
+                e.currentTarget.style.borderColor = colors.electricBlue;
               }}
             >
               {'>'} OPEN CONSOLE
             </button>
             <span
-              className="text-xs md:text-sm font-mono"
+              className="hidden md:inline text-xs md:text-sm font-mono"
               style={{
                 color: colors.slateLight,
               }}
@@ -117,8 +119,8 @@ export default function LandingFooter() {
 
         {/* Footer Content - Hidden on mobile/tablet, shown on desktop */}
         <div className="hidden lg:block max-w-7xl mx-auto py-12 px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          {/* Links */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          {/* Links Column 1 */}
           <div>
             <h3
               className="text-sm font-mono font-bold uppercase tracking-wider"
@@ -131,9 +133,46 @@ export default function LandingFooter() {
             </h3>
             <ul className="space-y-2">
               {[
-                { label: 'Flow', href: '/flow' },
                 { label: 'Grid', href: '/grid' },
-                { label: 'Spotlight', href: '/spotlight' },
+                { label: 'Flow', href: '/flow' },
+                { label: 'Sectors', href: '/sectors' },
+                { label: 'Nodes', href: '/nodes' },
+                { label: 'Modules', href: '/modules' },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm font-mono transition-all"
+                    style={{ color: colors.slateLight }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = colors.electricBlue;
+                      e.currentTarget.style.textShadow = `0 0 10px ${colors.electricBlue}80`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = colors.slateLight;
+                      e.currentTarget.style.textShadow = 'none';
+                    }}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Links Column 2 */}
+          <div>
+            <h3
+              className="text-sm font-mono font-bold uppercase tracking-wider"
+              style={{ 
+                color: colors.aurumGold,
+                marginBottom: '20px',
+              }}
+            >
+              &nbsp;
+            </h3>
+            <ul className="space-y-2">
+              {[
                 { label: 'Services', href: '/services' },
                 { label: 'About', href: '/about' },
                 { label: 'Brand', href: '/brand' },
@@ -245,7 +284,7 @@ export default function LandingFooter() {
             {/* Reset intro link */}
             <button
               onClick={handleResetIntro}
-              className="text-sm font-mono transition-all underline-offset-2 hover:underline"
+              className="text-sm font-mono transition-all underline-offset-2 hover:underline cursor-pointer"
               style={{ color: colors.slateLight }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.color = colors.neonPink;
@@ -273,9 +312,12 @@ export default function LandingFooter() {
         </div>
 
         {/* Minimal copyright for mobile/tablet */}
-        <div className="lg:hidden py-6 text-center">
+        <div className="lg:hidden py-6 text-center space-y-1">
           <p className="text-xs font-mono" style={{ color: colors.slateLight }}>
             © {currentYear} HoneyDrunk Studios
+          </p>
+          <p className="text-xs font-mono" style={{ color: colors.slateLight }}>
+            Boot. Build. Refactor. Evolve.
           </p>
         </div>
       </footer>

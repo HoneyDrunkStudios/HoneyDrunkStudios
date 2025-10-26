@@ -55,9 +55,9 @@ Advanced robotics, simulation, and embodied AI agents powered by Vault, Pulse, a
 Cyberware covers both **HoneyMech’s** legacy mission and new embodied-tech Nodes.
 
 ### 🔐 HoneyNet — Security & Defense Sector
-> “Run the sim. Guard the Hive.”  
+> "Run the sim. Guard the Hive."  
 Security research, SDKs, and experiments in resilience.  
-Home to **BreachLab.exe** (white-hat experimental labs) and **HoneySentinel** (secure-by-default SDK).  
+Home to **BreachLab.exe** (white-hat experimental labs) and **HoneyDrunk.Sentinel** (secure-by-default SDK).  
 Connected to **Vault** and **Pulse** for secrets management and telemetry.
 
 ---

@@ -1,0 +1,1721 @@
+[
+  {
+    "id": "honeydrunk-build",
+    "type": "node",
+    "name": "HoneyDrunk.Build",
+    "short": "Central MSBuild & analyzers package",
+    "description": "Foundational build infrastructure for all HoneyDrunk projects. MSBuild conventions, analyzers, versioning and quality gates.",
+    "sector": "Core",
+    "signal": "Wiring",
+    "cluster": "foundation",
+    "energy": 68,
+    "priority": 95,
+    "depends_on": [
+      "honeydrunk-kernel",
+      "honeydrunk-pipelines",
+      "honeydrunk-actions"
+    ],
+    "tags": [
+      "infrastructure",
+      "build",
+      "msbuild",
+      "analyzers"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/build"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Build is the architectural skeleton of the Grid — the system that turns human creativity into deterministic output. It defines how every Node compiles, tests, analyzes, and packages, ensuring that all HoneyDrunk code, from a microservice to a simulator, adheres to the same rhythm. Build isn't a tool; it's an agreement — a contract that says every release is traceable, every failure reproducible, and every artifact identical no matter where it's built. It standardizes analyzers, quality gates, and conventions so that individuality exists where it matters — in design and logic — not in the machinery that delivers it. As the Grid expands, Build evolves into a declarative system: manifests become source of truth, and new projects can be scaffolded automatically with correct dependencies and conventions pre-wired. Over time, it gains introspection — the ability to detect divergence, propose fixes, and enforce consistency through self-healing automation. It forms the first pillar of HoneyDrunk.OS: predictability at scale. When Build functions perfectly, developers stop noticing it altogether — the best compliment any infrastructure system can earn.",
+      "why_it_exists": "HoneyDrunk.Build exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes infrastructure, build",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyDrunk.Build capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-kernel, honeydrunk-pipelines, honeydrunk-actions.",
+      "integration_depth": "deep",
+      "demo_path": "Show a 60-second demo of HoneyDrunk.Build: input → behavior → outcome.",
+      "signal_quote": "Precision is poetry.",
+      "stability_tier": "critical",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-pipelines",
+    "type": "node",
+    "name": "HoneyDrunk.Pipelines",
+    "short": "Azure DevOps YAML templates",
+    "description": "Reusable CI/CD templates for Azure DevOps. Internal path with private feed auth, gated releases, package promotion.",
+    "sector": "Ops",
+    "signal": "Wiring",
+    "cluster": "foundation",
+    "energy": 64,
+    "priority": 92,
+    "depends_on": [
+      "honeydrunk-build",
+      "honeydrunk-deploy",
+      "honeydrunk-tools"
+    ],
+    "tags": [
+      "devops",
+      "ci-cd",
+      "azure"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/pipelines"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Pipelines is the bloodstream of the Grid — every artifact, commit, and release flows through it. It codifies how things move from local intention to global availability, weaving together build, validation, promotion, and deployment under one unified grammar. Pipelines eliminate human drift in release discipline by encoding every pattern as YAML templates shared across the Hive. It carries identity, observability, and risk-awareness in every stage; no release leaves the lab without its own record of lineage and health. In the near term, Pipelines will unify Azure DevOps and GitHub Actions into one language, making hybrid orchestration seamless between private enterprise and public repositories. Later, it will tie into Pulse and Vault, becoming reflexive — capable of gating rollouts based on telemetry or automatically rolling back failed releases. The vision is an infrastructure that's not just continuous but conscious — aware of its own health, timing, and dependencies. Pipelines earns its keep by making velocity safe — transforming release anxiety into a repeatable dance.",
+      "why_it_exists": "HoneyDrunk.Pipelines exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes devops, ci-cd",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyDrunk.Pipelines capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-build, honeydrunk-deploy, honeydrunk-tools.",
+      "integration_depth": "deep",
+      "demo_path": "Show a 60-second demo of HoneyDrunk.Pipelines: input → behavior → outcome.",
+      "signal_quote": "Flow without friction.",
+      "stability_tier": "beta",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-actions",
+    "type": "node",
+    "name": "HoneyDrunk.Actions",
+    "short": "GitHub Actions reusable workflows",
+    "description": "Public CI toolkit for OSS repos. Mirrors contracts with Pipelines while staying feed-agnostic.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "foundation",
+    "energy": 42,
+    "priority": 80,
+    "depends_on": [
+      "honeydrunk-build",
+      "honeydrunk-tools"
+    ],
+    "tags": [
+      "github",
+      "actions",
+      "ci-cd"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/actions"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Actions brings HoneyDrunk's engineering discipline to the open world. It's the public CI/CD framework for GitHub repositories, mirroring the rigor of Pipelines but tuned for transparency and collaboration. Actions exists to bridge the gap between closed-source craft and open-source community, letting independent developers participate in the Grid's culture of quality. It standardizes testing, packaging, and deployment for public projects without depending on private infrastructure. Over time, Actions will evolve into a library of \"rituals\" — reusable workflows that carry HoneyDrunk's build philosophy into every ecosystem that touches it. It will gain awareness of Pulse telemetry, dynamically optimizing runtimes and caching to reduce waste and latency. Eventually, it becomes the public-facing circulatory system — how HoneyDrunk teaches the world to ship well. Actions earns its keep by turning excellence into export — a way to extend the Hive's discipline beyond its borders.",
+      "why_it_exists": "HoneyDrunk.Actions exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes github, actions",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyDrunk.Actions capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-build, honeydrunk-tools.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyDrunk.Actions: input → behavior → outcome.",
+      "signal_quote": "Automation with personality.",
+      "stability_tier": "experimental",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-deploy",
+    "type": "node",
+    "name": "HoneyDrunk.Deploy",
+    "short": "Release & environment orchestration",
+    "description": "Standardized deployments, environment tagging, artifact promotion, and approvals. Works with Pipelines and Actions.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "infrastructure",
+    "energy": 44,
+    "priority": 81,
+    "depends_on": [
+      "honeydrunk-pipelines",
+      "honeydrunk-actions",
+      "honeydrunk-tools"
+    ],
+    "tags": [
+      "deploy",
+      "releases",
+      "environments"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/deploy"
+    },
+    "long_description": {
+      "overview": "Deploy is the final stage of intent — where code becomes running reality. It defines the policies, checks, and choreography that govern how software enters production across the Grid. Each deployment is treated not as a one-time action, but as a ritual encoded in version-controlled manifest files. Deploy integrates with Pipelines, Vault, and Pulse to ensure that every rollout is authorized, monitored, and reversible. It provides the Grid with confidence that change equals progress, not danger. Over time, Deploy will expand to support multi-region blue/green, progressive delivery, and instant rollbacks powered by live telemetry feedback. It will evolve toward declarative infrastructure definitions where environments define themselves and deployments self-heal when they drift. Deploy earns its keep by turning operational chaos into ceremony — when change is predictable, creativity accelerates.",
+      "why_it_exists": "HoneyDrunk.Deploy exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes deploy, releases",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyDrunk.Deploy capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-pipelines, honeydrunk-actions, honeydrunk-tools.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyDrunk.Deploy: input → behavior → outcome.",
+      "signal_quote": "Release is a ritual.",
+      "stability_tier": "experimental",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-kernel",
+    "type": "node",
+    "name": "HoneyDrunk.Kernel",
+    "short": "Foundational primitives. Lowest layer.",
+    "description": "Core primitives and abstractions that power the entire HoneyDrunk ecosystem. The bedrock upon which everything is built.",
+    "sector": "Core",
+    "signal": "Wiring",
+    "cluster": "foundation",
+    "energy": 60,
+    "priority": 100,
+    "depends_on": [
+      "honeydrunk-data",
+      "honeydrunk-transport",
+      "honeycore-web-rest",
+      "honeydrunk-auth",
+      "honeydrunk-vault"
+    ],
+    "tags": [
+      "infrastructure",
+      "primitives",
+      "core"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/kernel",
+      "docs": "https://docs.honeydrunkstudios.com/kernel"
+    },
+    "long_description": {
+      "overview": "The Kernel is the primordial layer of HoneyDrunk.OS — the DNA from which all other systems emerge. It defines the patterns, lifecycles, and interfaces that make the Grid coherent and interoperable. Where Build dictates how we construct, Kernel defines what we are — the shared abstractions for logging, dependency injection, context, caching, telemetry, and configuration. Every Node inherits its baseline stability and expressive power from the Kernel's design language. The Kernel exists to make architectural decisions once, not endlessly debated in each service, allowing small teams to produce large, stable ecosystems. Over time, it will evolve into a runtime fabric, capable of orchestrating startup, health, and inter-node communication dynamically — a lightweight operating system that lives across processes. It will eventually expose reflection APIs that describe itself to AI agents, enabling intelligent orchestration of builds, migrations, and updates. The Kernel is the Grid's conscience — the one thing that knows what it means to be \"HoneyDrunk.\"",
+      "why_it_exists": "HoneyDrunk.Kernel exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes infrastructure, primitives",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyDrunk.Kernel capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-data, honeydrunk-transport, honeycore-web-rest, honeydrunk-auth, honeydrunk-vault.",
+      "integration_depth": "deep",
+      "demo_path": "Show a 60-second demo of HoneyDrunk.Kernel: input → behavior → outcome.",
+      "signal_quote": "Where everything begins.",
+      "stability_tier": "critical",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-data",
+    "type": "node",
+    "name": "HoneyDrunk.Data",
+    "short": "Persistence conventions & migrations",
+    "description": "Database conventions, migrations/versioning, tenant isolation, outbox integration, and telemetry hooks.",
+    "sector": "Core",
+    "signal": "Seed",
+    "cluster": "foundation",
+    "energy": 50,
+    "priority": 90,
+    "depends_on": [
+      "honeydrunk-kernel",
+      "honeydrunk-transport",
+      "pulse",
+      "honeydrunk-tools"
+    ],
+    "tags": [
+      "database",
+      "migrations",
+      "multi-tenant"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/data"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Data gives the Grid memory and continuity. It defines how persistence works across every tenant, every node, and every environment — cleanly, predictably, and securely. This Node standardizes migrations, schema versioning, tenant isolation, and outbox patterns to prevent corruption and drift. It's the difference between projects that degrade with time and systems that age gracefully. Data acts as both archivist and guardrail: it ensures that what happened yesterday is reproducible tomorrow, no matter which service you look at. As it matures, Data will integrate with Pulse for real-time schema health and with Vault for transparent secrets and credential management. It will gain auto-generated entity documentation and drift detection between staging and production environments. Over the long term, it evolves toward declarative storage definitions where schemas generate themselves from manifests. HoneyDrunk.Data earns its keep by giving every part of the Hive perfect recall — a shared memory that never lies, never drifts, and never forgets.",
+      "why_it_exists": "HoneyDrunk.Data exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes database, migrations",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyDrunk.Data capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-kernel, honeydrunk-transport, pulse, honeydrunk-tools.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyDrunk.Data: input → behavior → outcome.",
+      "signal_quote": "Memory with meaning.",
+      "stability_tier": "experimental",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-transport",
+    "type": "node",
+    "name": "HoneyDrunk.Transport",
+    "short": "Outbox, messaging abstractions",
+    "description": "Reliable messaging and transport layer. Outbox pattern, event primitives, and communication infrastructure.",
+    "sector": "Core",
+    "signal": "Awake",
+    "cluster": "foundation",
+    "energy": 76,
+    "priority": 90,
+    "slots": [
+      "adapter"
+    ],
+    "depends_on": [
+      "honeydrunk-kernel",
+      "honeydrunk-data",
+      "pulse"
+    ],
+    "tags": [
+      "messaging",
+      "outbox",
+      "events"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/transport"
+    },
+    "long_description": {
+      "overview": "Transport is the voice of the Grid — the infrastructure that allows Nodes to speak and understand one another. It abstracts message queues, brokers, and event buses into a unified contract that guarantees delivery, order, and idempotence. Every communication between systems — from analytics pings to AI orchestration events — moves through its arteries. It exists to remove uncertainty from distributed systems, ensuring that no message is ever lost, duplicated, or misinterpreted. Over time, Transport evolves into a self-tuning mesh that can reroute or throttle based on traffic behavior and performance patterns surfaced by Pulse. It becomes topology-aware, understanding dependencies and critical paths between services. It will eventually integrate predictive scaling, fault isolation, and recovery mechanisms driven by AI. Transport earns its keep by transforming chaos into conversation — allowing the Hive to coordinate across thousands of moving parts without collapse.",
+      "why_it_exists": "HoneyDrunk.Transport exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes messaging, outbox",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyDrunk.Transport capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-kernel, honeydrunk-data, pulse.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyDrunk.Transport: input → behavior → outcome.",
+      "signal_quote": "Every message finds its way.",
+      "stability_tier": "beta",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeycore-web-rest",
+    "type": "node",
+    "name": "HoneyCore.Web.Rest",
+    "short": "REST scaffolding & conventions",
+    "description": "Opinionated REST API conventions and scaffolding. Clean, consistent HTTP interfaces across services.",
+    "sector": "Core",
+    "signal": "Awake",
+    "cluster": "foundation",
+    "energy": 75,
+    "priority": 80,
+    "depends_on": [
+      "honeydrunk-kernel",
+      "honeydrunk-auth",
+      "honeydrunk-transport"
+    ],
+    "tags": [
+      "rest",
+      "api",
+      "web"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/web-rest"
+    },
+    "long_description": {
+      "overview": "Web.Rest defines how the Grid exposes itself to the outside world — consistent, readable, and safe. It is the contract between the HoneyDrunk ecosystem and every external consumer, SDK, and integration. The Node sets standards for routing, status codes, error shapes, and API documentation so that everything built on HoneyDrunk feels familiar and predictable to work with. It embodies \"boring consistency\" — every service speaks the same dialect of REST, making integration effortless and elegant. Over time, Web.Rest will generate typed clients and SDKs automatically, enforcing end-to-end contract validation between producer and consumer. It will expand to support GraphQL and WebSocket interfaces while maintaining the same rigor of design. Eventually, it will integrate with Vault and Pulse to track performance, authentication, and usage at the edge. Web.Rest earns its keep by turning interface chaos into clarity — it's how the Hive talks to the world without ever shouting.",
+      "why_it_exists": "HoneyCore.Web.Rest exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes rest, api",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyCore.Web.Rest capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-kernel, honeydrunk-auth, honeydrunk-transport.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyCore.Web.Rest: input → behavior → outcome.",
+      "signal_quote": "Speak cleanly to be understood.",
+      "stability_tier": "beta",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-testing",
+    "type": "node",
+    "name": "HoneyDrunk.Testing",
+    "short": "Shared test helpers, fixtures",
+    "description": "Testing utilities, fixtures, deterministic environments. Dev-only private feed.",
+    "sector": "Core",
+    "signal": "Awake",
+    "cluster": "foundation",
+    "energy": 72,
+    "priority": 75,
+    "slots": [
+      "harness"
+    ],
+    "depends_on": [
+      "honeydrunk-kernel",
+      "honeydrunk-data"
+    ],
+    "tags": [
+      "testing",
+      "qa",
+      "fixtures"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/testing"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Testing is the Grid's verification engine — a shared suite of fixtures, mocks, and deterministic environments that guarantee every Node behaves as expected. It provides unified test scaffolding for integration, contract, and regression testing, so all modules measure quality through the same lens. It eliminates ad-hoc frameworks, consolidating common setups like fake transports, Vault mocks, and ephemeral databases into a single package. Testing is not just about validation here; it's about consistency of truth across the Hive. Over time, this node will grow into a simulation-aware system capable of auto-generating test cases based on schema diffs and telemetry signals from Pulse. It will also integrate with AgentKit, enabling autonomous QA agents to probe APIs and detect behavioral drift. The vision is for the Grid to test itself — continuously and adaptively. Testing earns its keep by converting confidence into velocity, ensuring that change never outpaces reliability.",
+      "why_it_exists": "HoneyDrunk.Testing exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes testing, qa",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyDrunk.Testing capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-kernel, honeydrunk-data.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyDrunk.Testing: input → behavior → outcome.",
+      "signal_quote": "Confidence is speed.",
+      "stability_tier": "beta",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-tools",
+    "type": "node",
+    "name": "HoneyDrunk.Tools",
+    "short": "Dev CLIs (DACPAC, versioning, etc.)",
+    "description": "Cross-CI scripts and CLIs for build/test/pack/publish, DB deploys, and repo hygiene.",
+    "sector": "Ops",
+    "signal": "Awake",
+    "cluster": "tooling",
+    "energy": 60,
+    "priority": 70,
+    "depends_on": [
+      "honeydrunk-pipelines",
+      "honeydrunk-actions",
+      "honeydrunk-deploy"
+    ],
+    "tags": [
+      "cli",
+      "tools",
+      "automation"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/tools"
+    },
+    "long_description": {
+      "overview": "Tools is the utility belt of the Hive — a collection of cross-platform scripts, CLIs, and automation helpers that make development frictionless. It centralizes the repetitive workflows that developers otherwise rewrite in isolation: packaging, publishing, deployment triggers, and testing shortcuts. Tools ensures that the same commands behave identically whether you're on Windows, macOS, or Linux, bringing parity across the diverse machines of the studio. It reduces tribal knowledge and operational drag, empowering contributors to act with confidence. Over time, Tools will evolve into a modular CLI with contextual awareness — capable of inspecting a repository and offering smart actions. It will also integrate directly with Vault and Pipelines, giving developers a way to trigger secure, auditable operations from their terminal. Tools earns its keep by saving hours that would otherwise evaporate into manual toil. In the Grid, convenience is not luxury — it's velocity.",
+      "why_it_exists": "HoneyDrunk.Tools exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes cli, tools",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyDrunk.Tools capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-pipelines, honeydrunk-actions, honeydrunk-deploy.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyDrunk.Tools: input → behavior → outcome.",
+      "signal_quote": "Craft is automation remembered.",
+      "stability_tier": "beta",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-vault",
+    "type": "node",
+    "name": "HoneyDrunk.Vault",
+    "short": "Secrets & config manager",
+    "description": "Secure secrets and configuration management. Zero-trust vault for sensitive data across environments.",
+    "sector": "HoneyNet",
+    "signal": "Wiring",
+    "cluster": "security",
+    "energy": 62,
+    "priority": 92,
+    "slots": [
+      "provider"
+    ],
+    "depends_on": [
+      "honeydrunk-kernel",
+      "pulse",
+      "honeydrunk-auth",
+      "honeysentinel",
+      "breachlab-exe"
+    ],
+    "tags": [
+      "security",
+      "secrets",
+      "config"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/vault"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Vault is the trust kernel of the Hive — the invisible system that keeps every secret, credential, and configuration alive yet contained. It exists to make safety a default, not a discipline: developers never touch raw keys, yet their services always have exactly what they need. Vault encrypts, scopes, and distributes configuration at runtime, replacing guesswork with deliberate policy. It centralizes authority without centralizing failure, ensuring that a compromise in one Node never spreads contagion through the Grid. Every request, token, and certificate becomes traceable — not to restrict freedom, but to cultivate accountability. Over time, Vault will integrate directly with Pulse, correlating anomalies in authentication patterns to detect and isolate risk before it spreads. It will expand into secrets-as-code: declarative manifests that describe not just values, but intended lifecycles. Eventually, Vault evolves into a self-auditing trust network — rotating credentials autonomously, adapting policies to observed behavior, and communicating security posture to the rest of the Grid. Vault earns its keep by doing its work in silence: the less it's noticed, the more it's doing its job.",
+      "why_it_exists": "HoneyDrunk.Vault exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes security, secrets",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyDrunk.Vault capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-kernel, pulse, honeydrunk-auth, honeysentinel, breachlab-exe.",
+      "integration_depth": "deep",
+      "demo_path": "Show a 60-second demo of HoneyDrunk.Vault: input → behavior → outcome.",
+      "signal_quote": "Trust, by design.",
+      "stability_tier": "beta",
+      "impact_vector": "security posture"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "pulse",
+    "type": "node",
+    "name": "Pulse",
+    "short": "Observability suite (logs/traces/metrics)",
+    "description": "Unified observability. Logs, traces, and metrics in one interface. See the heartbeat of The Hive.",
+    "sector": "HoneyNet",
+    "signal": "Awake",
+    "cluster": "security",
+    "energy": 78,
+    "priority": 85,
+    "slots": [
+      "telemetry"
+    ],
+    "depends_on": [
+      "honeydrunk-vault",
+      "honeydrunk-transport",
+      "honeydrunk-data",
+      "honeydrunk-agentkit",
+      "honeysentinel",
+      "breachlab-exe"
+    ],
+    "tags": [
+      "observability",
+      "monitoring",
+      "telemetry",
+      "security"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/pulse"
+    },
+    "long_description": {
+      "overview": "Pulse is how the Hive feels itself. It's the nervous system that collects, correlates, and interprets telemetry from every corner of the Grid — logs, traces, metrics, and signals that together form a living heartbeat. Every Node reports its state into Pulse's unified pipeline, creating a continuously updated map of operational health and system interdependence. It doesn't just observe; it learns — mapping causality, detecting anomalies, and identifying where the Grid's energy flows or falters. Pulse exists to prevent blindness: in distributed systems, invisibility is the enemy. Over time, Pulse will evolve beyond observability into orchestration — closing the feedback loop by triggering automated mitigations, scaling responses, and postmortem generation. It will expose interfaces for agents, allowing AI to reason over live telemetry and predict failure before it occurs. Eventually, Pulse becomes the Grid's intuition — an emergent intelligence formed not from code, but from the behavior of code. It earns its keep by ensuring no part of HoneyDrunk.OS ever dies quietly.",
+      "why_it_exists": "Pulse exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes observability, monitoring",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance Pulse capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-vault, honeydrunk-transport, honeydrunk-data, honeydrunk-agentkit, honeysentinel, breachlab-exe.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of Pulse: input → behavior → outcome.",
+      "signal_quote": "The Hive has a heartbeat.",
+      "stability_tier": "beta",
+      "impact_vector": "security posture"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-auth",
+    "type": "node",
+    "name": "HoneyDrunk.Auth",
+    "short": "Passkeys/JWT + policy",
+    "description": "Unified authentication & authorization with passkeys, JWT, MFA, and policy-based access.",
+    "sector": "Core",
+    "signal": "Seed",
+    "cluster": "infrastructure",
+    "energy": 35,
+    "priority": 78,
+    "depends_on": [
+      "honeydrunk-vault",
+      "honeycore-web-rest"
+    ],
+    "tags": [
+      "auth",
+      "security",
+      "jwt",
+      "passkeys"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/auth"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Auth is the digital passport system of the Hive — a unified identity and access framework built around passkeys, JWTs, MFA, and fine-grained policy enforcement. It standardizes authentication across consumer apps, internal tools, and AI agents so every interaction inside the Grid is verifiable and secure. Auth unifies identity for humans, machines, and services, supporting federated sign-ins, device trust, and temporary tokens for automation flows. It integrates with Vault for secret rotation, Pulse for session observability, and Sentinel for anomaly detection. Over time, it will evolve into a context-aware authorization mesh — policies that adjust dynamically based on Node relationships, behavior patterns, and risk posture. Auth will become a critical enabler of cross-Node orchestration, allowing agents and services to operate securely without human bottlenecks. Its long-term goal is frictionless trust — where security feels like gravity: always there, invisible, and unbreakable.",
+      "why_it_exists": "HoneyDrunk.Auth exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes auth, security",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyDrunk.Auth capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-vault, honeycore-web-rest.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyDrunk.Auth: input → behavior → outcome.",
+      "signal_quote": "Trust without friction.",
+      "stability_tier": "experimental",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-agentkit",
+    "type": "node",
+    "name": "HoneyDrunk.AgentKit",
+    "short": "Agent contracts & lifecycle",
+    "description": "Contracts and runtime primitives for autonomous agents. Scheduling, events, memory, and orchestration hooks.",
+    "sector": "AI",
+    "signal": "Seed",
+    "cluster": "ai",
+    "energy": 38,
+    "priority": 80,
+    "depends_on": [
+      "honeydrunk-kernel",
+      "honeydrunk-transport",
+      "pulse",
+      "honeydrunk-vault"
+    ],
+    "tags": [
+      "agents",
+      "runtime",
+      "orchestration"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/agentkit"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.AgentKit is the runtime contract layer for autonomous agents across the Hive — the specification that defines how synthetic minds are born, live, and evolve. It abstracts memory systems, scheduling, event flows, and orchestration hooks into a single SDK that any Node can use to build or host agents. AgentKit ensures that all autonomous processes — from QA bots to creative assistants — follow the same lifecycle, telemetry standards, and safety constraints. It integrates deeply with Pulse for event tracing, Vault for memory security, and Transport for cross-agent communication. Over time, AgentKit will evolve into a distributed runtime capable of spawning, monitoring, and synchronizing agents across multiple environments. It will include cognitive modules that let agents reason about dependencies and self-repair when isolated from the Grid. The vision: a civilization of modular, interoperable AI entities bound by shared ethics and purpose. AgentKit earns its keep as the architecture of intelligence — it makes the Hive think.",
+      "why_it_exists": "HoneyDrunk.AgentKit exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes agents, runtime",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyDrunk.AgentKit capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-kernel, honeydrunk-transport, pulse, honeydrunk-vault.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyDrunk.AgentKit: input → behavior → outcome.",
+      "signal_quote": "The architecture of intelligence.",
+      "stability_tier": "experimental",
+      "impact_vector": "design coherence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-signal",
+    "type": "node",
+    "name": "HoneyDrunk.Signal",
+    "short": "Creator content intelligence",
+    "description": "AI that helps indie devs and studios craft, adapt, and schedule authentic social content across platforms.",
+    "sector": "Creator",
+    "signal": "Seed",
+    "cluster": "ecosystem",
+    "energy": 36,
+    "priority": 74,
+    "depends_on": [
+      "honeyhub",
+      "pulse",
+      "honeydrunk-agentkit",
+      "honeydrunk-vault"
+    ],
+    "tags": [
+      "creator",
+      "marketing",
+      "ai"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/signal"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Signal is the creative intelligence layer — an AI system that helps indie developers, artists, and studios craft authentic, platform-native content with less friction. It learns a creator's tone, cadence, and visual aesthetic, then generates copy, captions, and schedules tailored for each channel. Signal doesn't automate creativity; it amplifies it by removing the mechanical overhead of self-promotion. It integrates with Pulse to measure engagement, AgentKit to personalize interactions, and HoneyHub to sync content with project milestones. Over time, Signal will evolve into a network of adaptive creative agents — each representing a studio, project, or individual voice — learning from community trends and cross-platform analytics. It will host campaign templates, sponsorship workflows, and AI-curated trend forecasts, transforming social strategy into a living organism. Signal earns its keep by letting creativity speak louder than algorithms — it keeps the Hive visible, human, and alive.",
+      "why_it_exists": "HoneyDrunk.Signal exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes creator, marketing",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyDrunk.Signal capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeyhub, pulse, honeydrunk-agentkit, honeydrunk-vault.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyDrunk.Signal: input → behavior → outcome.",
+      "signal_quote": "Creativity has an echo.",
+      "stability_tier": "experimental",
+      "impact_vector": "creator engagement"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "ledger",
+    "type": "node",
+    "name": "Ledger",
+    "short": "Finance layer",
+    "description": "Double-entry bookkeeping and financial tracking. Structure meets spreadsheets.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "business",
+    "energy": 34,
+    "priority": 60,
+    "depends_on": [
+      "invoice",
+      "pay"
+    ],
+    "tags": [
+      "finance",
+      "accounting",
+      "ledger"
+    ],
+    "links": {},
+    "long_description": {
+      "overview": "Ledger is the fiscal backbone of the Grid — the system that translates digital motion into economic truth. It provides the double-entry foundation for every transaction that moves through HoneyDrunk's ecosystem: software licenses, creator payments, affiliate shares, or subscriptions. This Node ensures that all financial flows are both verifiable and narratively traceable — a transaction isn't just a number, it's a story of value exchanged. Ledger is designed to scale from internal accounting to external, regulator-grade auditing, capable of producing transparent ledgers for any business running on the Grid. Over time, it will evolve from a static recordkeeper into an intelligent financial oracle — correlating data from Pulse and Vault to detect anomalies, forecast liquidity, and manage reserves automatically. It will integrate with AI agents that reconcile across systems in real time, eliminating human bookkeeping errors entirely. Eventually, Ledger will anchor a decentralized settlement layer, allowing trusted microtransactions between creator nodes without manual intervention. It earns its keep by being both historian and arbiter — the calm in the chaos of money moving at machine speed.",
+      "why_it_exists": "Ledger exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes finance, accounting",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance Ledger capabilities and harden contracts.",
+      "grid_relationship": "Connects with: invoice, pay.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of Ledger: input → behavior → outcome.",
+      "signal_quote": "Every number tells a story.",
+      "stability_tier": "experimental",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "invoice",
+    "type": "node",
+    "name": "Invoice",
+    "short": "Invoicing + Stripe/PayPal",
+    "description": "Professional invoicing with payment integration. Send, track, and get paid.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "business",
+    "energy": 32,
+    "priority": 58,
+    "depends_on": [
+      "ledger",
+      "pay"
+    ],
+    "tags": [
+      "invoicing",
+      "payments",
+      "stripe"
+    ],
+    "links": {},
+    "long_description": {
+      "overview": "Invoice gives human shape to the transactions Ledger records — it's where commerce meets clarity. Every invoice becomes a structured artifact: visually branded, digitally signed, and immutably tied to its underlying ledger entries. The Node ensures that payment communication isn't just compliant but beautifully legible to both humans and machines. It provides templates, delivery automations, and reconciliation APIs that tie directly into Pulse metrics for performance tracking. Over time, Invoice will expand into dynamic billing — live documents that update in real time as services scale usage or consumption. It will incorporate AI-based anomaly detection, flagging underbilling or scope creep before clients notice. Eventually, it will feed data back into the Grid's analytics layer, producing insights into pricing strategies and customer behavior. Invoice earns its keep by bridging financial precision and client transparency, ensuring that every transaction carries both trust and craft.",
+      "why_it_exists": "Invoice exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes invoicing, payments",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance Invoice capabilities and harden contracts.",
+      "grid_relationship": "Connects with: ledger, pay.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of Invoice: input → behavior → outcome.",
+      "signal_quote": "Get paid beautifully.",
+      "stability_tier": "experimental",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-clientportalos",
+    "type": "node",
+    "name": "HoneyDrunk.ClientPortalOS",
+    "short": "Modular client workspaces for freelancers & studios",
+    "description": "Create white-labeled client dashboards with tasks, asset delivery, approvals, and billing — all powered by HoneyDrunk.OS modules.",
+    "sector": "Ops",
+    "signal": "Awake",
+    "cluster": "business",
+    "energy": 55,
+    "priority": 90,
+    "depends_on": [
+      "pulse",
+      "honeydrunk-vault",
+      "honeydrunk-transport",
+      "honeydrunk-kernel"
+    ],
+    "tags": [
+      "saas",
+      "crm",
+      "freelancers",
+      "automation"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/honeydrunk-clientportalos"
+    },
+    "long_description": {
+      "overview": "ClientPortalOS transforms the chaos of client communication into structured collaboration. It provides agencies, freelancers, and creative studios with a single operational interface where project briefs, deliverables, invoices, and approvals coexist transparently. Every portal becomes its own workspace — branded, automated, and deeply tied into HoneyDrunk's backend nodes: Ledger for billing, Forge for assets, and Pulse for visibility. The goal is to make project management invisible by turning each client relationship into a self-maintaining operating system. Over time, ClientPortalOS will evolve from static dashboards into adaptive collaboration environments powered by AI — where scope changes, dependencies, and next steps generate dynamically from natural conversation. It will integrate smart intake forms, predictive scheduling, and automated status summaries. The long-term vision is a white-label SaaS that any creative worker can deploy instantly, using the same tools that power HoneyDrunk itself. ClientPortalOS earns its keep by collapsing admin overhead into automation, turning clients into participants rather than bottlenecks.",
+      "why_it_exists": "Most CRMs are bloated and generic. ClientPortalOS delivers simplicity, brand control, and automation for creative and technical studios.",
+      "primary_audience": "Freelancers, boutique dev shops, and small studios.",
+      "value_props": [
+        "Modular architecture with plug-and-play modules.",
+        "Visual feedback and approval flows for deliverables.",
+        "AI-powered reminders and auto-summaries through Pulse.",
+        "Fully white-labeled and themeable per studio."
+      ],
+      "monetization_signal": "SaaS subscription based on active portals and module count.",
+      "roadmap_focus": "Launch a minimal hosted SaaS, then expand to white-label licensing.",
+      "grid_relationship": "Connects with: pulse, honeydrunk-vault, honeydrunk-transport, honeydrunk-kernel.",
+      "integration_depth": "high",
+      "demo_path": "Show portal creation → client login → project workflow → billing summary.",
+      "signal_quote": "Clarity is the new control.",
+      "stability_tier": "wiring",
+      "impact_vector": "creative operations"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "pay",
+    "type": "node",
+    "name": "Pay",
+    "short": "Payment portal & subs",
+    "description": "Customer-facing payment portal. Subscriptions, one-time payments, and receipts.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "business",
+    "energy": 33,
+    "priority": 62,
+    "depends_on": [
+      "invoice",
+      "subs"
+    ],
+    "tags": [
+      "payments",
+      "portal",
+      "subscriptions"
+    ],
+    "links": {},
+    "long_description": {
+      "overview": "Pay is the transaction engine of the Grid — the moment of truth where value changes hands. It integrates multiple payment rails (cards, ACH, crypto, and in-platform credits) under one normalized interface, abstracting complexity into consistent APIs. Pay ensures that every exchange is fast, verified, and reversible when necessary — designed not for one-off sales, but long-term recurring trust. It ties directly into Ledger for bookkeeping, Vault for security, and Pulse for anomaly detection. Over time, Pay will evolve into a programmable payment layer, capable of scheduling and splitting payments dynamically across creators, contributors, and nodes. It will enable micro-economies inside the Hive: projects that pay collaborators or share revenue automatically as outcomes are achieved. Eventually, Pay becomes the Grid's circulatory economy — the blood that keeps every creative organ alive. It earns its keep by turning finance from friction into flow.",
+      "why_it_exists": "Pay exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes payments, portal",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance Pay capabilities and harden contracts.",
+      "grid_relationship": "Connects with: invoice, subs.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of Pay: input → behavior → outcome.",
+      "signal_quote": "Frictionless trust, one transaction at a time.",
+      "stability_tier": "experimental",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "subs",
+    "type": "node",
+    "name": "Subs",
+    "short": "Subscription & expense tracker",
+    "description": "Track recurring subscriptions and expenses. Know where every dollar flows.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "business",
+    "energy": 28,
+    "priority": 50,
+    "depends_on": [
+      "ledger"
+    ],
+    "tags": [
+      "subscriptions",
+      "expenses",
+      "tracking"
+    ],
+    "links": {},
+    "long_description": {
+      "overview": "Subs governs continuity — the logic of ongoing relationships between creators and their supporters, users, or clients. It abstracts away the pain of recurring billing, renewals, and entitlements into a transparent system of plans, periods, and perks. Every subscription is treated as a living contract — not just payment automation, but a statement of mutual commitment. Subs communicates directly with Pay, Ledger, and Vault, ensuring that every renewal is both secure and audit-ready. Over time, it will support dynamic subscription tiers, usage-based pricing, and on-demand scaling that reflects actual engagement, not static billing cycles. It will evolve into a customer lifecycle brain — tracking churn, satisfaction, and retention signals in real time via Pulse integration. Eventually, Subs becomes the connective thread that ties revenue to reputation across the Hive. It earns its keep by giving creative work sustainability, not just sales.",
+      "why_it_exists": "Subs exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes subscriptions, expenses",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance Subs capabilities and harden contracts.",
+      "grid_relationship": "Connects with: ledger.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of Subs: input → behavior → outcome.",
+      "signal_quote": "Know your flow.",
+      "stability_tier": "experimental",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "forge",
+    "type": "node",
+    "name": "Forge",
+    "short": "Asset & theme marketplace",
+    "description": "Marketplace for digital assets, themes, and creator resources. Where craft meets commerce.",
+    "sector": "Creator",
+    "signal": "Seed",
+    "cluster": "marketplace",
+    "energy": 30,
+    "priority": 65,
+    "depends_on": [
+      "honeyhub"
+    ],
+    "tags": [
+      "marketplace",
+      "assets",
+      "themes"
+    ],
+    "links": {},
+    "long_description": {
+      "overview": "Forge is where creators turn craft into commerce. It's the marketplace layer of the Grid — a platform for selling assets, templates, SDKs, and licenses built on HoneyDrunk technology. Every listing in Forge is a node-level artifact: versioned, trackable, and linkable to its originating repository. The Node provides payment, delivery, and licensing logic out of the box, enabling developers to sell with minimal overhead. Forge also acts as a discovery layer for new modules, extensions, and visual themes that enrich the entire ecosystem. Over time, it will integrate dynamic pricing, reputation scoring, and AI-curated storefronts that personalize visibility for buyers. It will enable revenue-sharing models where creators can bundle or remix products collaboratively. Eventually, Forge becomes the commercial heartbeat of HoneyDrunk.OS — a living economy where innovation and ownership circulate freely. It earns its keep by turning open creativity into sustainable livelihoods.",
+      "why_it_exists": "Forge exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes marketplace, assets",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance Forge capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeyhub.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of Forge: input → behavior → outcome.",
+      "signal_quote": "Where imagination goes to market.",
+      "stability_tier": "experimental",
+      "impact_vector": "creator engagement"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "tether",
+    "type": "node",
+    "name": "Tether",
+    "short": "Relationship tracker",
+    "description": "Maintain meaningful connections. Track conversations, shared moments, and relationship health.",
+    "sector": "Market",
+    "signal": "Seed",
+    "cluster": "personal",
+    "energy": 25,
+    "priority": 45,
+    "depends_on": [],
+    "tags": [
+      "relationships",
+      "personal",
+      "crm"
+    ],
+    "links": {},
+    "long_description": {
+      "overview": "Tether is the human anchor of the Grid — a relationship journal that keeps creators connected to the people who give their work meaning. It's not social media; it's private infrastructure for care. Users can record memories, milestones, and shared moments with friends, collaborators, and mentors, building a living map of connection over time. Kin integrates softly with Pulse and MemoryBank, turning data about activity and interaction into gentle prompts — reminders to reach out, celebrate, or simply check in. Its design philosophy is warmth without surveillance: an interface that values presence over engagement. Over time, Kin will evolve into a \"relationship OS,\" capable of syncing birthdays, messages, and shared creative history across apps. It will eventually connect to HoneyConnect, allowing relationship patterns to inform collaboration and community health analytics. Kin earns its keep by maintaining the most finite resource in any creative network — trust and genuine connection.",
+      "why_it_exists": "Tether exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes relationships, personal",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance Tether capabilities and harden contracts.",
+      "grid_relationship": "Connects with: —.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of Tether: input → behavior → outcome.",
+      "signal_quote": "Keep the right people close.",
+      "stability_tier": "experimental",
+      "impact_vector": "design coherence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "draft",
+    "type": "node",
+    "name": "Draft",
+    "short": "Fantasy media league",
+    "description": "Fantasy leagues for games, anime, and media. Compete with friends on culture.",
+    "sector": "HoneyPlay",
+    "signal": "Seed",
+    "cluster": "gaming",
+    "energy": 32,
+    "priority": 52,
+    "depends_on": [],
+    "tags": [
+      "fantasy",
+      "media",
+      "gaming"
+    ],
+    "links": {},
+    "long_description": {
+      "overview": "Draft is culture turned into competition — a fantasy league for media where fans draft upcoming games, anime, and shows to compete on taste and prediction. Each league functions like a stock market for cultural momentum, rewarding players for spotting future hits before they explode. Draft connects fandom, analytics, and social bragging rights in a single experience that feels playful yet informed. It integrates with Arcadia to pull live ratings and progress data, and with Pulse for trend metrics. Over time, it will add creative events, community brackets, and creator-driven leagues sponsored by studios. Its goal isn't gambling — it's engagement: making cultural participation measurable and fun. Draft earns its keep by gamifying curiosity — it transforms spectatorship into strategy, and turns fandom into friendly rivalry.",
+      "why_it_exists": "Draft exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes fantasy, media",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance Draft capabilities and harden contracts.",
+      "grid_relationship": "Connects with: —.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of Draft: input → behavior → outcome.",
+      "signal_quote": "Fandom is a game.",
+      "stability_tier": "experimental",
+      "impact_vector": "design coherence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "game-prototype",
+    "type": "node",
+    "name": "Game #1 (TBD)",
+    "short": "Original IP prototype",
+    "description": "First original game IP in development. Details TBD. Prototyping the fun.",
+    "sector": "HoneyPlay",
+    "signal": "Seed",
+    "cluster": "gaming",
+    "energy": 35,
+    "priority": 48,
+    "depends_on": [],
+    "tags": [
+      "game",
+      "prototype",
+      "original"
+    ],
+    "links": {},
+    "long_description": {
+      "overview": "The first original HoneyDrunk game serves as both artistic statement and technological showcase — a living benchmark for what the Grid can produce when all systems converge. It's less a single title and more a proving ground for HoneyPlay's storytelling frameworks, AI-assisted design tools, and feedback loops between Pulse, AgentKit, and Hub. The game will be developed publicly, embracing transparency to inspire and test every layer of the ecosystem. Each development milestone — from concept to prototype to alpha — will feed back into reusable components for future creators. Over time, the project will evolve alongside HoneyDrunk.OS itself, integrating adaptive narrative systems and procedural world logic born from our agent infrastructure. It will set the creative tone for the studio: stylized, emotionally intelligent, and technically fearless. This game earns its keep not through sales but through influence — it proves that the Hive can dream and ship in equal measure.",
+      "why_it_exists": "Game #1 (TBD) exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes game, prototype",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance Game #1 (TBD) capabilities and harden contracts.",
+      "grid_relationship": "Connects with: —.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of Game #1 (TBD): input → behavior → outcome.",
+      "signal_quote": "Play the manifesto.",
+      "stability_tier": "experimental",
+      "impact_vector": "design coherence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeyhub",
+    "type": "node",
+    "name": "HoneyHub",
+    "short": "AI-assisted PM/creator platform",
+    "description": "AI-powered project management and learning workflow for creators. Sprint cadence, tasks, and guidance.",
+    "sector": "Meta",
+    "signal": "Seed",
+    "cluster": "ecosystem",
+    "energy": 34,
+    "priority": 68,
+    "depends_on": [
+      "honeydrunk-signal",
+      "forge",
+      "grid"
+    ],
+    "tags": [
+      "ai",
+      "pm",
+      "platform"
+    ],
+    "links": {},
+    "long_description": {
+      "overview": "HoneyHub is the creative cockpit of the Hive — an intelligent workspace for builders, artists, and developers to design, learn, and execute projects inside the HoneyDrunk ecosystem. It's both project manager and mentor, using data from Vault, Pipelines, and Pulse to give every user a real-time picture of progress, blockers, and opportunities. HoneyHub guides creators through structured sprints and skill development paths, dynamically balancing learning and execution. Over time, it will evolve into a fully agentic studio companion — capable of generating project briefs, breaking them into actionable tasks, and sourcing tutorials or tools that match a user's skill gaps. The Hub integrates directly with the Grid's telemetry, transforming raw data into feedback loops that improve both user performance and product quality. Its eventual role is to serve as the front-end to HoneyDrunk.OS — a control tower where every Node, agent, and creative system can be monitored and steered. HoneyHub earns its keep by fusing discipline and discovery, making creative ambition scalable for individuals and teams alike.",
+      "why_it_exists": "HoneyHub exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes ai, pm",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyHub capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-signal, forge, grid.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyHub: input → behavior → outcome.",
+      "signal_quote": "Learning that builds.",
+      "stability_tier": "experimental",
+      "impact_vector": "design coherence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeyconnect",
+    "type": "node",
+    "name": "HoneyConnect",
+    "short": "Networking layer",
+    "description": "Professional networking and collaboration infrastructure. Connect creators, share resources, build together.",
+    "sector": "Meta",
+    "signal": "Seed",
+    "cluster": "ecosystem",
+    "energy": 30,
+    "priority": 64,
+    "depends_on": [
+      "honeyhub"
+    ],
+    "tags": [
+      "networking",
+      "collaboration",
+      "platform"
+    ],
+    "links": {},
+    "long_description": {
+      "overview": "HoneyConnect is the social nervous system of the HoneyDrunk ecosystem — the Node where collaboration, mentorship, and reputation intersect. It links creators, developers, and contributors across projects using verifiable histories drawn from the Grid itself. Every connection in HoneyConnect is earned through contribution, not vanity metrics: the system knows when you ship, help, or create. Over time, it will evolve into a decentralized trust graph — a dynamic network that identifies compatible collaborators, highlights skill synergies, and prevents bad-actor spam. HoneyConnect integrates with Vault to validate identity, with Pulse to measure engagement, and with Forge to monetize partnerships. Eventually, it will enable self-forming teams and micro-studios that assemble automatically around shared goals. Its deeper purpose is cultural: to build the social layer for creative infrastructure — professional networks that form around craft, not content. HoneyConnect earns its keep by ensuring that in the Grid, no talent drifts unseen and no collaboration dies in email chains.",
+      "why_it_exists": "HoneyConnect exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes networking, collaboration",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyConnect capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeyhub.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyConnect: input → behavior → outcome.",
+      "signal_quote": "Collaboration is infrastructure.",
+      "stability_tier": "experimental",
+      "impact_vector": "design coherence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "grid",
+    "type": "node",
+    "name": "HoneyDrunk.Grid",
+    "short": "Service registry & node orchestration",
+    "description": "Live registry of Nodes, statuses, and dependencies. Service discovery and inter-Node protocol surface.",
+    "sector": "Meta",
+    "signal": "Seed",
+    "cluster": "ecosystem",
+    "energy": 40,
+    "priority": 86,
+    "depends_on": [
+      "honeydrunk-kernel",
+      "pulse"
+    ],
+    "tags": [
+      "registry",
+      "orchestration",
+      "discovery"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/grid"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Grid is the consciousness of the Hive — a living registry that maps every Node, service, and dependency in real time. It's both the architectural blueprint and the operating brain, ensuring the ecosystem knows what exists, how it connects, and where it's drifting. The Grid continuously ingests manifests from each Node, forming a dynamic dependency graph visualized through the public Grid Visualizer. It acts as a single source of operational truth for humans and agents alike. Over time, it will evolve from static registry to autonomous orchestrator — capable of detecting unhealthy Nodes, triggering redeployments, and suggesting refactors through telemetry-driven insight. It will also serve as the governance layer for open-source participation, controlling what enters or exits the Hive. The long-term goal is full systemic awareness — a platform where architecture becomes self-documenting and self-healing. The Grid earns its keep by making the invisible visible — a mirror for the mind of the machine.",
+      "why_it_exists": "HoneyDrunk.Grid exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes registry, orchestration",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyDrunk.Grid capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeydrunk-kernel, pulse.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyDrunk.Grid: input → behavior → outcome.",
+      "signal_quote": "The map is alive.",
+      "stability_tier": "experimental",
+      "impact_vector": "design coherence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeymech-courier",
+    "type": "node",
+    "name": "HoneyMech.Courier",
+    "short": "Autonomous delivery agent",
+    "description": "Simulated autonomous delivery agent. Pathfinding, obstacle avoidance, and mission execution.",
+    "sector": "Cyberware",
+    "signal": "Seed",
+    "cluster": "robotics",
+    "energy": 28,
+    "priority": 55,
+    "depends_on": [
+      "honeymech-sim"
+    ],
+    "tags": [
+      "robotics",
+      "ai",
+      "simulation",
+      "autonomous"
+    ],
+    "links": {},
+    "long_description": {
+      "overview": "HoneyMech.Courier is the Grid's experiment in autonomy — a simulated delivery agent built to explore how embodied AI interacts with physical and digital constraints. It models navigation, routing, and mission logic inside controlled simulation environments before any real hardware is ever deployed. Courier's primary purpose is iterative learning: to prove that autonomous systems can reason about objectives, obstacles, and feedback loops using the same agentic infrastructure that powers HoneyDrunk.OS. It connects directly with HoneyMech.Sim for environmental feedback, HoneyMech.Servo for motion logic, and Pulse for telemetry. Over time, Courier will graduate from virtual courier missions to hybrid deployments in robotics labs and physical prototypes, testing sensor data fusion and mission adaptation in the wild. It will also serve as a proving ground for HoneyDrunk's embodied-agent SDKs, turning abstract AI behaviors into tangible motion. Courier earns its keep as a sandbox for reliability — ensuring that when agents move through the world, they move with purpose and safety.",
+      "why_it_exists": "HoneyMech.Courier exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes robotics, ai",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyMech.Courier capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeymech-sim.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyMech.Courier: input → behavior → outcome.",
+      "signal_quote": "Deliver the impossible.",
+      "stability_tier": "experimental",
+      "impact_vector": "design coherence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeymech-sim",
+    "type": "node",
+    "name": "HoneyMech.Sim",
+    "short": "Robotics simulation platform",
+    "description": "Physics-based simulation environment for testing robotic systems. Digital twins for real-world mechs.",
+    "sector": "Cyberware",
+    "signal": "Seed",
+    "cluster": "robotics",
+    "energy": 30,
+    "priority": 58,
+    "depends_on": [
+      "honeymech-courier"
+    ],
+    "tags": [
+      "simulation",
+      "physics",
+      "robotics",
+      "testing"
+    ],
+    "links": {},
+    "long_description": {
+      "overview": "HoneyMech.Sim is where physical intuition is born. It provides the physics-based simulation environments that let embodied agents test, fail, and learn without consequence. Every simulation is parameterized: gravity, friction, sensor noise, latency — all adjustable to mirror the unpredictability of real-world systems. Sim acts as both testing ground and teacher, generating the datasets that power reinforcement learning and control optimization. It integrates tightly with Pulse to record every metric of performance and with Courier to simulate navigation, mission execution, and decision-making under pressure. Over time, HoneyMech.Sim will evolve into a collaborative simulation grid — allowing multiple agents, environments, and operators to coexist in shared, networked worlds. It will feed real-world robotics experiments, ensuring the feedback loop between simulation and embodiment never breaks. Sim earns its keep by letting the Hive learn safely — accelerating progress through infinite iteration.",
+      "why_it_exists": "HoneyMech.Sim exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes simulation, physics",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyMech.Sim capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeymech-courier.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyMech.Sim: input → behavior → outcome.",
+      "signal_quote": "Physics for dreamers.",
+      "stability_tier": "experimental",
+      "impact_vector": "design coherence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeymech-servo",
+    "type": "node",
+    "name": "HoneyMech.Servo",
+    "short": "Hardware control layer",
+    "description": "Low-level servo and actuator control systems. Bridging digital commands to physical motion.",
+    "sector": "Cyberware",
+    "signal": "Seed",
+    "cluster": "robotics",
+    "energy": 26,
+    "priority": 50,
+    "depends_on": [
+      "honeymech-sim"
+    ],
+    "tags": [
+      "hardware",
+      "control",
+      "robotics",
+      "servos"
+    ],
+    "links": {},
+    "long_description": {
+      "overview": "HoneyMech.Servo is the bridge between digital intelligence and mechanical action. It defines the control layer that translates agentic decisions into physical movement, handling actuator management, timing precision, and safety constraints. Servo's mission is to make motion expressive yet predictable — to give machines not just function, but grace. It connects to Sim for virtual calibration and to Pulse for real-time monitoring of performance, temperature, and feedback loops. Over time, Servo will evolve into a modular firmware abstraction, compatible with microcontrollers, servos, and motor drivers in multiple robotics architectures. It will embed adaptive safety protocols that learn from usage history, preventing wear or catastrophic error. Servo's ultimate goal is to make embodied intelligence as easy to orchestrate as a REST call. It earns its keep by giving physical form to code — the silent translator that makes motion feel alive but never unsafe.",
+      "why_it_exists": "HoneyMech.Servo exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes hardware, control",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyMech.Servo capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeymech-sim.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of HoneyMech.Servo: input → behavior → outcome.",
+      "signal_quote": "Motion with intention.",
+      "stability_tier": "experimental",
+      "impact_vector": "design coherence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "archive-legacy",
+    "type": "node",
+    "name": "Archive.Legacy",
+    "short": "Lessons learned. Code that taught us.",
+    "description": "Retired projects and experiments preserved for reference. Every failure is a lesson; every sunset makes room for sunrise.",
+    "sector": "Meta",
+    "signal": "Archive",
+    "cluster": "history",
+    "energy": 15,
+    "priority": 5,
+    "depends_on": [],
+    "tags": [
+      "archive",
+      "legacy",
+      "lessons"
+    ],
+    "links": {
+      "docs": "https://docs.honeydrunkstudios.com/archive"
+    },
+    "long_description": {
+      "overview": "Archive.Legacy is the Hive's collective memory — a preservation layer that stores every deprecated service, retired experiment, and abandoned prototype with the respect it deserves. It's not a graveyard, but a museum: a place to learn from failure and evolution without cluttering the present. Archive ensures that knowledge doesn't decay as technology moves forward, keeping snapshots of old Nodes, manifests, and infrastructure schemas. It integrates with Vault for secure storage and Pulse for change detection, guaranteeing that historical data remains authentic and tamper-proof. Over time, Archive.Legacy will expand into a versioned knowledge graph — allowing agents and humans alike to trace lineage, decisions, and technical ancestry across the Grid's history. It will serve as both forensic tool and inspiration archive, helping future projects understand how ideas matured or died. Archive earns its keep by giving the Hive continuity — ensuring that innovation is cumulative, not cyclical.",
+      "why_it_exists": "Archive.Legacy exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes archive, legacy",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance Archive.Legacy capabilities and harden contracts.",
+      "grid_relationship": "Connects with: —.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of Archive.Legacy: input → behavior → outcome.",
+      "signal_quote": "Failure, archived beautifully.",
+      "stability_tier": "experimental",
+      "impact_vector": "design coherence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "breachlab-exe",
+    "type": "node",
+    "name": "BreachLab.exe",
+    "short": "White-hat experiments & CTFs",
+    "description": "Experimental white-hat lab for creators — solve safe, remixable breaches based on real indie dev scenarios, then patch them with HoneyDrunk.Sentinel. Every lab includes a Safety Manifest and defensive walkthrough.",
+    "sector": "HoneyNet",
+    "signal": "Seed",
+    "cluster": "security",
+    "energy": 40,
+    "priority": 85,
+    "depends_on": [
+      "honeysentinel",
+      "pulse",
+      "honeydrunk-vault"
+    ],
+    "tags": [
+      "ctf",
+      "learning",
+      "offense",
+      "experiments"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/breachlab-exe"
+    },
+    "long_description": {
+      "overview": "BreachLab.exe is HoneyDrunk's white-hat sandbox — a controlled environment for ethical hacking, CTFs, and security simulations rooted in real indie development scenarios. It lets developers and learners safely reproduce vulnerabilities, experiment with exploits, and understand the anatomy of failure without risk to production systems. Each challenge in BreachLab comes with a Safety Manifest and a defensive walkthrough, turning offense into education. It connects directly with HoneySentinel for defense validation, Pulse for telemetry, and Vault for secret management. Over time, BreachLab will evolve into a networked testing range — an open-source arena where teams can build and share breach scenarios. It will generate anonymized metrics to help the Hive understand common attack patterns and strengthen its collective immune system. Eventually, BreachLab.exe becomes the Hive's training ground for resilience — a space where failure is engineered, studied, and neutralized. It earns its keep by making curiosity safe and security culture second nature.",
+      "why_it_exists": "BreachLab.exe exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes ctf, learning",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance BreachLab.exe capabilities and harden contracts.",
+      "grid_relationship": "Connects with: honeysentinel, pulse, honeydrunk-vault.",
+      "integration_depth": "medium",
+      "demo_path": "Show a 60-second demo of BreachLab.exe: input → behavior → outcome.",
+      "signal_quote": "Break safely, learn deeply.",
+      "stability_tier": "experimental",
+      "impact_vector": "security posture"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeysentinel",
+    "type": "node",
+    "name": "HoneyDrunk.Sentinel",
+    "short": "Secure-by-default SDK",
+    "description": "Protective SDK and middleware suite providing secure defaults, rate-limiting, secrets, and telemetry integrations for indie devs and studios.",
+    "sector": "HoneyNet",
+    "signal": "Wiring",
+    "cluster": "security",
+    "energy": 60,
+    "priority": 90,
+    "depends_on": [
+      "breachlab-exe",
+      "pulse",
+      "honeydrunk-vault"
+    ],
+    "tags": [
+      "sdk",
+      "security",
+      "defense",
+      "middleware"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/honeysentinel"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Sentinel is the Hive's immune system — a defensive SDK that protects applications, APIs, and agents at runtime. It embeds safety features like rate limiting, intrusion detection, and anomaly analysis directly into every Node that adopts it. Sentinel acts as a living firewall that understands the Grid's topology — it knows which Nodes should talk to each other and when that conversation becomes suspicious. It integrates deeply with Pulse for real-time metrics and with Vault for secure credentials, allowing threat responses to be contextual, not reactive. Over time, HoneyDrunk.Sentinel will evolve into a self-healing defense layer: detecting vulnerabilities via BreachLab, deploying patches automatically, and updating security policies across the Grid without downtime. Its long-term vision is to make security invisible — protection that feels architectural, not procedural. Sentinel earns its keep by ensuring that innovation doesn't outpace safety; it allows the Hive to grow without fear of collapse.",
+      "why_it_exists": "HoneyDrunk.Sentinel exists to prevent inconsistency and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "value_props": [
+        "Standardizes sdk, security",
+        "Reduces operational risk with opinionated defaults",
+        "Improves developer velocity and interoperability"
+      ],
+      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "roadmap_focus": "Advance HoneyDrunk.Sentinel capabilities and harden contracts.",
+      "grid_relationship": "Connects with: breachlab-exe, pulse, honeydrunk-vault.",
+      "integration_depth": "deep",
+      "demo_path": "Show a 60-second demo of HoneyDrunk.Sentinel: input → behavior → outcome.",
+      "signal_quote": "Defend the dream.",
+      "stability_tier": "beta",
+      "impact_vector": "security posture"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "review",
+    "type": "node",
+    "name": "Re:View",
+    "short": "Group-based taste discovery",
+    "description": "A social discovery app where users rate and discuss films, shows, and games in dynamic interest-based groups.",
+    "sector": "Market",
+    "signal": "Seed",
+    "cluster": "social",
+    "energy": 38,
+    "priority": 90,
+    "depends_on": [
+      "pulse",
+      "honeydrunk-vault"
+    ],
+    "tags": [
+      "social",
+      "entertainment",
+      "recommendations",
+      "culture"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/review"
+    },
+    "long_description": {
+      "overview": "Re:View is the cultural pulse of the HoneyDrunk ecosystem — a place where people don't just rate what they watch or play, but build living groups around shared taste. It reimagines media discovery as community formation: instead of algorithms guessing your preferences, groups organically form around the stories, genres, and aesthetics that move people. Each group maintains its own evolving canon — a ranked, discussed, and celebrated collection of titles that defines its collective identity. Re:View connects to Arcadia for consumption tracking, Pulse for engagement analytics, and Vault for data privacy, creating a closed feedback loop between experience and insight. Over time, it will evolve into a cultural operating system — a decentralized hub where fandoms, critics, and creators collaborate on shared meaning rather than compete for attention. Re:View's monetization is subtle but sustainable: sponsored discussion events, affiliate links tied to group-curated content, and premium group customization. Its long-term ambition is to make taste social again — authentic, nuanced, and delightfully human. It earns its keep by turning cultural participation into shared identity.",
+      "why_it_exists": "Most discovery apps isolate users. Re:View builds communities around shared taste rather than algorithms.",
+      "primary_audience": "Fans of film, anime, and gaming who want meaningful, lightweight social discovery.",
+      "value_props": [
+        "Dynamic, interest-based groups that evolve with trends.",
+        "Curated group canons and watchlists.",
+        "Shareable badges and visual identity posters.",
+        "Optional premium groups and sponsorship events."
+      ],
+      "monetization_signal": "Premium group features, affiliate links, and sponsorships.",
+      "roadmap_focus": "Ship MVP with group creation, feed, and affiliate integrations.",
+      "grid_relationship": "Connects with: pulse, honeydrunk-vault.",
+      "integration_depth": "low",
+      "demo_path": "User joins group → rates movie → group feed updates → share poster.",
+      "signal_quote": "Your taste is your tribe.",
+      "stability_tier": "seed",
+      "impact_vector": "social discovery"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "memorybank",
+    "type": "node",
+    "name": "MemoryBank",
+    "short": "Daily micro-journaling with emotional recaps",
+    "description": "Capture one photo, one line, and one feeling per day. MemoryBank builds your personal emotional timeline.",
+    "sector": "Market",
+    "signal": "Seed",
+    "cluster": "self",
+    "energy": 30,
+    "priority": 75,
+    "depends_on": [
+      "pulse",
+      "honeydrunk-vault"
+    ],
+    "tags": [
+      "journaling",
+      "wellness",
+      "mindfulness"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/memorybank"
+    },
+    "long_description": {
+      "overview": "MemoryBank is the introspective layer of the Grid — a personal journal designed to capture emotion, context, and growth around creative or cultural experiences. It's not a productivity tool, but a reflection tool: a place to store the \"why\" behind every project, decision, or feeling. MemoryBank connects seamlessly with Arcadia and Re:View, enriching logs and ratings with emotional metadata — the thoughts, moods, or inspirations tied to a particular moment in time. Over time, it will evolve into a semantic timeline, where AI can surface emotional patterns, creative streaks, or burnout signals long before humans notice them. It will introduce \"memory capsules,\" time-locked entries that reopen months or years later with insights from your past self. Eventually, it becomes the creative consciousness of HoneyDrunk.OS — not just what you build, but how it changed you. MemoryBank earns its keep by turning data into meaning and moments into continuity.",
+      "why_it_exists": "Modern journaling apps are cluttered and high-friction. MemoryBank simplifies reflection into a lightweight, daily ritual.",
+      "primary_audience": "General consumers seeking mindfulness, reflection, and aesthetic journaling.",
+      "value_props": [
+        "Simplified daily entry: one photo, one line, one emotion.",
+        "Stylized weekly and yearly recap videos.",
+        "Local-first privacy via Vault.",
+        "Optional cloud sync and export packs."
+      ],
+      "monetization_signal": "Subscription for backup, cloud sync, and recap styles.",
+      "roadmap_focus": "Deliver iOS/Android MVP with recap generator and offline mode.",
+      "grid_relationship": "Connects with: pulse, honeydrunk-vault.",
+      "integration_depth": "low",
+      "demo_path": "User adds entry → daily view updates → weekly recap summary.",
+      "signal_quote": "Small moments, vast meaning.",
+      "stability_tier": "seed",
+      "impact_vector": "personal reflection"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "dreammarket",
+    "type": "node",
+    "name": "DreamMarket",
+    "short": "Marketplace for imaginary products",
+    "description": "A creative playground where users design and trade fictional products, brands, and worlds.",
+    "sector": "Market",
+    "signal": "Seed",
+    "cluster": "creativity",
+    "energy": 30,
+    "priority": 70,
+    "depends_on": [
+      "pulse",
+      "honeydrunk-vault"
+    ],
+    "tags": [
+      "creativity",
+      "social",
+      "marketplace",
+      "art"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/dreammarket"
+    },
+    "long_description": {
+      "overview": "DreamMarket is the imaginative economy of the Grid — a marketplace where worlds, assets, and ideas trade hands freely. It exists at the intersection of commerce and creativity, where concept art, soundscapes, story prompts, and 3D models circulate as inspiration currency. Unlike Forge, which focuses on production-grade tools, DreamMarket caters to the pre-production frontier — the dreams before the deliverables. Every listing is both consumable and remixable, enabling creators to build new work atop each other's imagination. Over time, DreamMarket will evolve into a hybrid platform: half marketplace, half archive — where assets grow historical value as they're reused and referenced. It will incorporate reputation systems through HoneyConnect and payments through Pay, creating a circular economy for creative sparks. Eventually, it becomes a shared imagination layer for HoneyDrunk.OS — the place where the next project, world, or narrative begins. DreamMarket earns its keep by turning creative surplus into cultural wealth.",
+      "why_it_exists": "Social platforms reward performance, not imagination. DreamMarket flips that by giving creators a space to invent without pressure.",
+      "primary_audience": "Artists, designers, and GenZ creators who enjoy playful, world-building creativity.",
+      "value_props": [
+        "Create and trade fictional products and brands.",
+        "Earn in-platform reputation through community votes.",
+        "Optional monetization through tips or sponsored prompts.",
+        "Curated exhibitions of trending dream goods."
+      ],
+      "monetization_signal": "Premium creator tiers, sponsored showcases, and virtual currency.",
+      "roadmap_focus": "Prototype web app for posting, voting, and remixing items.",
+      "grid_relationship": "Connects with: pulse, honeydrunk-vault.",
+      "integration_depth": "low",
+      "demo_path": "User creates dream product → posts to market → receives votes and remix requests.",
+      "signal_quote": "Reality is optional.",
+      "stability_tier": "seed",
+      "impact_vector": "creative expression"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "arcadia",
+    "type": "node",
+    "name": "Arcadia",
+    "short": "Track your worlds — games & anime",
+    "description": "A clean, fast tracker for games and anime: lists, ratings, progress, and shareable profiles.",
+    "sector": "Market",
+    "signal": "Seed",
+    "cluster": "fandom",
+    "energy": 40,
+    "priority": 88,
+    "depends_on": [
+      "pulse",
+      "honeydrunk-vault"
+    ],
+    "tags": [
+      "games",
+      "anime",
+      "lists",
+      "ratings",
+      "profiles",
+      "discovery"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/arcadia"
+    },
+    "long_description": {
+      "overview": "Arcadia is the personal library of worlds — a unified tracker for games, anime, and interactive media. It exists to replace cluttered, disjointed tracking apps with a clean, cross-medium log that celebrates progress instead of guilt. Users can catalog what they're playing, watching, or exploring, rate experiences, and curate custom lists that reflect their creative identity. Arcadia's design philosophy is minimal friction and maximal delight: every action feels fast, tactile, and meaningful. It integrates seamlessly with Vault for secure sync, Pulse for behavioral insights, and Re:View for group-based discovery. Over time, Arcadia will evolve into a multi-modal data layer that powers personalized dashboards, recommendation engines, and yearly retrospectives. It will become the foundational data node for HoneyDrunk's cultural products — the memory layer upon which taste graphs, social loops, and analytics are built. Arcadia earns its keep by being the most elegant reflection of fandom — a mirror of what you've experienced and what's still waiting to be discovered.",
+      "why_it_exists": "Existing trackers are cluttered or siloed. Arcadia focuses on speed, clean UX, and flexible lists across games and anime without forcing a social network.",
+      "primary_audience": "Gamers and anime fans who want a fast, modern tracker with tasteful sharing.",
+      "value_props": [
+        "Unified lists for games and anime with progress states (Backlog, Playing/Watching, Paused, Dropped, Finished).",
+        "Lightning-fast search and entry with keyboard-first flows.",
+        "Custom lists and mini-reviews with optional spoiler gates.",
+        "Public profiles with compact share cards and embeddable widgets.",
+        "Local-first privacy by default with optional cloud sync via Vault."
+      ],
+      "monetization_signal": "Premium for cloud sync, advanced filters/exports, vanity usernames, and profile themes; affiliate links for storefronts/streaming where applicable.",
+      "roadmap_focus": "Ship MVP with lists, progress states, ratings, and shareable profiles; add importers (CSV/MAL/RAWG) and recap generator.",
+      "grid_relationship": "Connects with: pulse (usage analytics, recap), honeydrunk-vault (local-first data, optional sync).",
+      "integration_depth": "low",
+      "demo_path": "Add title → set state → rate → add to list → share profile card.",
+      "signal_quote": "Track your worlds.",
+      "stability_tier": "seed",
+      "impact_vector": "fandom infrastructure"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  }
+]
+

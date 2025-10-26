@@ -1,0 +1,41 @@
+{
+  "version": "v1",
+  "labels": {
+    "overview": "Node Manifest",
+    "why_it_exists": "Why It Exists",
+    "primary_audience": "Primary Audience",
+    "value_props": "Value Props",
+    "monetization_signal": "Monetization Signal",
+    "roadmap_focus": "Roadmap Focus",
+    "grid_relationship": "Grid Relationship",
+    "integration_depth": "Integration Depth",
+    "demo_path": "Demo Path",
+    "signal_quote": "Signal Quote",
+    "stability_tier": "Stability Tier",
+    "impact_vector": "Impact Vector"
+  },
+  "tooltips": {
+    "overview": "A narrative explaining what the Node is, the problem it solves, and how it fits the Grid.",
+    "why_it_exists": "One clear sentence describing the core pain this Node removes. If it vanished, what pain returns?",
+    "primary_audience": "Who benefits most from this Node (e.g., indie devs, OSS maintainers, studio ops). Guides tone and priorities.",
+    "value_props": "Three action-verb benefits (e.g., Enforces X, Automates Y, Prevents Z). Keep them concrete.",
+    "monetization_signal": "How this Node sustains itself: Open core, Pro add-ons, SaaS tier, Internal-only, etc.",
+    "roadmap_focus": "The next tangible milestone for this Node. A single, near-term statement.",
+    "grid_relationship": "How this Node interacts with its connected siblings. Describe data/contract flow in 1–2 sentences.",
+    "integration_depth": "How central this Node is: shallow/medium/deep. Drives edge weight or glow in the Grid.",
+    "demo_path": "What a 60-second demo shows: input → behavior → outcome. One sentence.",
+    "signal_quote": "A short in-universe tagline that gives the Node a voice. One line only.",
+    "stability_tier": "Maturity: experimental, beta, stable, critical. Influences trust/UX cues.",
+    "impact_vector": "Primary leverage area (e.g., developer velocity, security, observability, creator engagement).",
+    "modules": "Extensions that dock into this Node's slots. Modules implement adapters, providers, sinks, and harnesses.",
+    "used_by_services": "Services that depend on this Node as a critical runtime or operational component."
+  },
+  "enums": {
+    "integration_depth": ["shallow", "medium", "deep"],
+    "stability_tier": ["experimental", "beta", "stable", "critical"]
+  },
+  "i18n": {
+    "default_locale": "en-US",
+    "locales": ["en-US"]
+  }
+}

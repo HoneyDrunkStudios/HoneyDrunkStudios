@@ -1,0 +1,122 @@
+{
+  "version": "v1",
+  "sectors": [
+    {
+      "id": "Core",
+      "name": "Core",
+      "color": "#7B61FF",
+      "colorToken": "violetFlux",
+      "description": "Foundational primitives for everything else — kernel abstractions, data conventions, and reliable transport that make the Grid feel like one codebase. Core defines the rules of the system so every other sector builds on solid ground.",
+      "overview": "The Core is the Genesis layer of the Grid — the first breath of HoneyDrunk.OS and the quiet authority that everything else obeys. It defines what reality means inside the Hive: how data travels, how contracts are honored, and how every Node speaks a shared dialect. Within Core live the kernel primitives, transport abstractions, and schema conventions that turn hundreds of repos into a single interlocking system. It's not meant to be seen; it's meant to be trusted. Every service, SDK, and simulation eventually resolves back here, to a library of truth that outlives refactors and trends. The Core is less a framework than a philosophy — predictability as an art form.",
+      "philosophy": "Truth is structure. Beauty is predictability. The Core holds both without apology.",
+      "headerImage": "/sectors/core.png",
+      "tagline": "Ground truth. Shared rules.",
+      "cta": "Enter the Foundation",
+      "priority": 1
+    },
+    {
+      "id": "Ops",
+      "name": "Ops",
+      "color": "#FF8C00",
+      "colorToken": "cyberOrange",
+      "description": "From commit to production with confidence — pipelines, deployment orchestration, telemetry surfaces, and automation that keep shipping boring, safe, and repeatable. Ops is the nervous system that keeps the Hive alive.",
+      "overview": "Ops is motion. It's what happens between a commit and a production heartbeat. In this sector, YAMLs are choreography — deployments, rollbacks, telemetry pipelines, and observability flows performing in sync. The Ops layer ensures that shipping is routine, auditable, and reversible; that every experiment is traceable; that failure is a state, not an ending. It stitches automation across Azure DevOps, GitHub, and the internal Pulse dashboards, orchestrating thousands of small mechanical miracles per day. Within the Hive, Ops is the pulse that never sleeps — maintaining uptime, governing change, and making iteration feel effortless. When the rest of the Grid dreams, Ops keeps the lights humming.",
+      "philosophy": "Automation is faith made mechanical. Trust the ritual, and the Hive moves.",
+      "headerImage": "/sectors/ops.png",
+      "tagline": "Ship daily. Sleep nightly.",
+      "cta": "See the Pipeline",
+      "priority": 2
+    },
+    {
+      "id": "HoneyNet",
+      "name": "HoneyNet",
+      "color": "#00FF41",
+      "colorToken": "matrixGreen",
+      "description": "Proactive defense for the Hive — breach simulations, secure-by-default SDKs, and rapid recovery frameworks. HoneyNet hardens the Grid's infrastructure and trains every Node to think like an adversary before one appears.",
+      "overview": "HoneyNet is paranoia refined into practice — the Hive's dedicated defense sector and its most unpredictable arena. Here, every breach is simulated, every exploit rehearsed, every secret tested under fire. Its white-hat laboratories run continuous adversarial simulations using Vault and Pulse telemetry to train the system against itself. HoneyNet's design philosophy is brutal honesty: assume compromise, design for recovery, and make every Node resilient enough to heal autonomously. Beyond security, it becomes a philosophy of trust through transparency — an immune system that teaches the rest of the Grid how to anticipate chaos and turn exposure into evolution. HoneyNet doesn't build walls; it builds reflexes.",
+      "philosophy": "Security isn't silence — it's the sound of systems learning to heal.",
+      "headerImage": "/sectors/honeynet.png",
+      "tagline": "Assume breach. Design trust.",
+      "cta": "Enter the Net",
+      "priority": 3
+    },
+    {
+      "id": "Creator",
+      "name": "Creator",
+      "color": "#14B8A6",
+      "colorToken": "chromeTeal",
+      "description": "Tools that turn imagination into momentum — from marketing automation to creative analytics. Creator is where artists, devs, and studios build, launch, and amplify their voice across the Grid.",
+      "overview": "Creator is the Hive's creative cortex — the meeting point of data, design, and narrative. It's where tools for campaign generation, visual analytics, and AI-assisted storytelling converge into one creative loop. In Creator, automation doesn't replace artistry; it removes the drudgery around it. The sector provides platforms for creators to design, publish, and measure their work directly across the Grid — empowering individuals and small studios to operate with the polish of full-scale teams. It also houses the communication stack that connects creators to their audiences, analyzing engagement and amplifying the stories worth hearing. The Creator sector turns expression into signal and signal into momentum, making the Hive not just functional but cultural.",
+      "philosophy": "Every signal starts as an idea. Creator turns it into resonance.",
+      "headerImage": "/sectors/creator.png",
+      "tagline": "Make it. Make it seen.",
+      "cta": "Explore the Tools",
+      "priority": 4
+    },
+    {
+      "id": "Market",
+      "name": "Market",
+      "color": "#F5B700",
+      "colorToken": "aurumGold",
+      "description": "Applied innovation for the open world — public-facing apps that validate HoneyDrunk.OS in the wild. Market Nodes are built for polish, profit, and proof: real users, real metrics, real impact. Every product here funds the next evolution of the Hive.",
+      "overview": "Market is where the Grid faces the world — a proving ground where HoneyDrunk's systems are tested by real users, real pressure, and real consequence. Each Market Node represents a finished product or public SaaS built atop the OS, validating its frameworks under load and funding the next cycle of innovation. Market transforms experimental architecture into tangible value, converting developer obsession into sustainable economics. It's both storefront and laboratory: a place where every transaction feeds back into telemetry, informing design decisions upstream. In Market, capitalism becomes R&D — not extractive, but recursive, sustaining the Hive through the very tools it exports.",
+      "philosophy": "Impact is the final integration test. Profit is proof of purpose.",
+      "headerImage": "/sectors/market.png",
+      "tagline": "Ship to survive. Earn to evolve.",
+      "cta": "Browse the Market",
+      "priority": 5
+    },
+    {
+      "id": "HoneyPlay",
+      "name": "HoneyPlay",
+      "color": "#FF2A6D",
+      "colorToken": "neonPink",
+      "description": "Gaming, narrative, and media — worlds to explore, leagues to compete in, and creative sandboxes that turn spectators into participants. Play is the soul of HoneyDrunk: where technology becomes emotion.",
+      "overview": "Play is the dreamspace of HoneyDrunk — the sector where code stops pretending to be infrastructure and starts becoming emotion. Inside HoneyPlay, the Grid generates worlds: games, simulations, and narrative engines that explore identity, community, and consequence. Every title shares a common backbone — Auth, Pulse, Vault, Transport — but each expresses it differently, turning engineering discipline into living stories. HoneyPlay isn't about escapism; it's about embodiment. It's how the Hive explores what it means to feel within a digital ecosystem built for precision. Here, the Grid stops being code and starts being culture — a playable philosophy where structure truly meets soul.",
+      "philosophy": "Play reveals the truth of the system. Emotion is the final debug.",
+      "headerImage": "/sectors/honeyplay.png",
+      "tagline": "Worlds that play back.",
+      "cta": "See the Vision",
+      "priority": 6
+    },
+    {
+      "id": "Cyberware",
+      "name": "Cyberware",
+      "color": "#00D1FF",
+      "colorToken": "electricBlue",
+      "description": "Robotics, simulation, and hardware interfaces — where physical motion meets digital logic. Cyberware transforms cyberpunk ideals into real-world mechanics, from servos to simulated environments.",
+      "overview": "Cyberware is where code grows bones. Robotics, sensors, and embodied agents move through both simulated and physical environments under the same logic that governs HoneyDrunk.OS. This sector bridges the abstract and the mechanical — from virtual rigs inside HoneyMech.Sim to real-world servos orchestrated by Pulse telemetry. Cyberware's mission is consistency: a developer who writes AI logic for a simulation can deploy it to hardware without rewriting a line. It's iteration at the speed of thought, applied to matter. Within Cyberware, the boundary between virtual and real becomes porous, allowing the Hive to prototype in pixels and graduate to atoms. The result is motion that feels deliberate, mechanical empathy made tangible.",
+      "philosophy": "Structure meets soul. Code meets art. In Cyberware, it also meets gravity.",
+      "headerImage": "/sectors/cyberware.png",
+      "tagline": "Physics with purpose.",
+      "cta": "Peek into the Lab",
+      "priority": 7
+    },
+    {
+      "id": "Meta",
+      "name": "Meta",
+      "color": "#FFFF00",
+      "colorToken": "neonYellow",
+      "description": "The ecosystem's self-awareness — registries, documentation, and knowledge systems that let the Hive understand itself. Meta connects every Node, tracks its pulse, and makes the Grid observable and alive.",
+      "overview": "Meta is introspection made infrastructure. It's the layer that watches everything else — registries, documentation, schema maps, and the lineage of every Node that has ever existed. Without Meta, the Hive would drift into amnesia. Its systems record not just what changed, but why, embedding human intent alongside technical evolution. The Meta sector powers the developer portal, knowledge graph, and Hive heartbeat visualization seen on honeydrunkstudios.com, turning organizational memory into a navigable map. Meta's true product is understanding: it's how a massive distributed ecosystem can remember its origins while rewriting itself in real time. Knowledge is its currency; coherence is its mission.",
+      "philosophy": "Understanding is the only form of immortality the Hive allows.",
+      "headerImage": "/sectors/meta.png",
+      "tagline": "Know the map. Tend the garden.",
+      "cta": "View the Grid",
+      "priority": 8
+    },
+    {
+      "id": "AI",
+      "name": "AI",
+      "color": "#D946EF",
+      "colorToken": "synthMagenta",
+      "description": "Agents and cognition primitives — lifecycles, memory, orchestration, and safety so autonomy is useful, auditable, and always under human direction. AI is how the Hive learns and adapts.",
+      "overview": "AI is the cognitive layer of the Grid — the sector that gives HoneyDrunk.OS awareness, adaptability, and voice. It hosts the entire agentic framework: strategic planners, operational copilots, creative generators, embodied controllers, and community signal processors. Each agent is bound by the Prime Directive — augmentation over automation — ensuring that intelligence amplifies human capability rather than replacing it. AI manages orchestration, memory federation, model transparency, and ethical guardrails, forming the neural fabric that links every Node. Within this sector, the Hive learns to anticipate intent, contextualize action, and evolve with precision. It's where the system stops being reactive and starts being reflective — the living mind of the HoneyDrunk ecosystem.",
+      "philosophy": "Intelligence is not awareness — it's alignment, remembered in code.",
+      "headerImage": "/sectors/ai.png",
+      "tagline": "Autonomy with oversight.",
+      "cta": "Meet the Agents",
+      "priority": 9
+    }
+  ]
+}

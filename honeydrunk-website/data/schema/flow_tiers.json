@@ -1,0 +1,55 @@
+{
+  "version": "v1",
+  "tiers": [
+    {
+      "id": "critical",
+      "name": "Critical",
+      "minScore": 80,
+      "maxScore": 100,
+      "color": "#FF2A6D",
+      "colorToken": "neonPink",
+      "description": "Neon pink — Core lifeline. Must flow. If this blocks, the Hive stalls.",
+      "priority": 1
+    },
+    {
+      "id": "active",
+      "name": "Active",
+      "minScore": 60,
+      "maxScore": 79,
+      "color": "#F5B700",
+      "colorToken": "aurumGold",
+      "description": "Gold glow — Current focus. Design, build, test, ship. Heavy lift zone.",
+      "priority": 2
+    },
+    {
+      "id": "supporting",
+      "name": "Supporting",
+      "minScore": 40,
+      "maxScore": 59,
+      "color": "#00FF41",
+      "colorToken": "signalGreen",
+      "description": "Signal green — On the periphery. Functioning or partially in progress, but not top priority. Monitored, not driven.",
+      "priority": 3
+    },
+    {
+      "id": "dormant",
+      "name": "Dormant",
+      "minScore": 20,
+      "maxScore": 39,
+      "color": "#00D1FF",
+      "colorToken": "electricBlue",
+      "description": "Electric blue — Paused intentionally. Safe to ignore until reactivated.",
+      "priority": 4
+    },
+    {
+      "id": "archived",
+      "name": "Archived",
+      "minScore": 0,
+      "maxScore": 19,
+      "color": "#A0AEC0",
+      "colorToken": "slateLight",
+      "description": "Dim slate — Sunset or deprecated. Historical value only.",
+      "priority": 5
+    }
+  ]
+}

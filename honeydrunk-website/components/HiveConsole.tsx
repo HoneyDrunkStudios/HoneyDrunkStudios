@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { colors, zIndex } from '@/lib/tokens';
 import { commands, executeCommand } from '@/lib/console/commands';
 import { registerConsoleCallback } from './LandingFooter';
+import { useIsMobile } from '@/lib/hooks/useIsMobile';
 
 interface HistoryEntry {
   input: string;
@@ -17,6 +18,7 @@ interface HistoryEntry {
 }
 
 export default function HiveConsole() {
+  const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<HistoryEntry[]>([]);
@@ -235,7 +237,7 @@ export default function HiveConsole() {
                   e.currentTarget.style.backgroundColor = 'transparent';
                 }}
               >
-                [ESC]
+                {isMobile ? '[X]' : '[ESC]'}
               </button>
             </div>
 

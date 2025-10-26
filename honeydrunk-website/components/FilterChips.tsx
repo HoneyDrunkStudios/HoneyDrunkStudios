@@ -6,6 +6,7 @@
 
 import { colors } from '@/lib/tokens';
 import type { Sector, Signal } from '@/lib/types';
+import { getSectorColor } from '@/lib/sectors';
 
 interface FilterChipsProps<T extends string> {
   options: T[];
@@ -49,9 +50,11 @@ export default function FilterChips<T extends string>({
             <button
               key={option}
               onClick={() => toggleOption(option)}
-              className="px-5 py-2.5 rounded-full text-xs font-mono cursor-pointer
+              className="rounded-full font-mono cursor-pointer
                        transition-all duration-200 hover:scale-105"
               style={{
+                padding: '4px 12px',
+                fontSize: '11px',
                 backgroundColor: isSelected
                   ? `${chipColor}30`
                   : `${chipColor}10`,
@@ -67,22 +70,6 @@ export default function FilterChips<T extends string>({
       </div>
     </div>
   );
-}
-
-// Sector color mapping
-export function getSectorColor(sector: Sector): string {
-  const map: Record<Sector, string> = {
-    Core: colors.violetFlux,
-    Ops: colors.electricBlue,
-    Creator: colors.aurumGold,
-    Life: colors.signalGreen,
-    Play: colors.neonPink,
-    Cyberware: colors.chromeTeal,
-    Meta: colors.slateLight,
-    AI: colors.synthMagenta,
-    HoneyNet: colors.matrixGreen,
-  };
-  return map[sector];
 }
 
 // Signal color mapping

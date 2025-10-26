@@ -16,11 +16,11 @@ import LandingFooter from '@/components/LandingFooter';
 import { colors } from '@/lib/tokens';
 
 const flowTierDescriptions = {
-  critical: 'Critical path — unlocks others',
-  active: 'Actively advancing — next to queue',
-  stable: 'Stable, iterative, or dependent',
-  dormant: 'Background maintenance or resting',
-  archived: 'Cold storage — revisit or archive',
+  critical: 'Core lifeline — Must flow',
+  active: 'Current focus — Heavy lift zone',
+  supporting: 'On the periphery — Monitored, not driven',
+  dormant: 'Paused intentionally',
+  archived: 'Sunset or deprecated',
 };
 
 export default function FlowPage() {
@@ -52,7 +52,7 @@ export default function FlowPage() {
       <div className="relative z-10 pt-20 md:pt-32 px-4 md:px-8 lg:px-16 pb-16">
         <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
           {/* Page Title */}
-          <header className="space-y-4 md:space-y-6">
+          <header className="space-y-4 md:space-y-6 text-center md:text-left">
             <h1
               className="text-3xl md:text-5xl lg:text-6xl font-display font-bold py-2 md:py-4 holographic-text"
             >
@@ -61,7 +61,7 @@ export default function FlowPage() {
             <p className="text-base md:text-lg px-1 md:px-2" style={{ color: colors.slateLight }}>
               The living roadmap. Sorted by Energy + Priority. The Hive tells you what's next.
             </p>
-            <div className="flex gap-3 pt-2">
+            <div className="flex gap-3 pt-2 justify-center md:justify-start">
               <Link
                 href="/about/flow"
                 className="px-6 py-3 rounded-lg text-sm font-mono font-bold uppercase tracking-wider
@@ -77,7 +77,7 @@ export default function FlowPage() {
               </Link>
               <Link
                 href="/grid?flowMode=true"
-                className="px-6 py-3 rounded-lg text-sm font-mono font-bold uppercase tracking-wider
+                className="hidden md:flex px-6 py-3 rounded-lg text-sm font-mono font-bold uppercase tracking-wider
                            transition-all duration-200 hover:scale-105 border-2"
                 style={{
                   backgroundColor: `${colors.electricBlue}15`,
@@ -92,7 +92,7 @@ export default function FlowPage() {
           </header>
 
           {/* Flow Tier Filters */}
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3 justify-center md:justify-start">
             <button
               onClick={() => setSelectedTier(null)}
               className="px-5 py-2.5 rounded-full text-sm font-mono cursor-pointer transition-all duration-200 hover:scale-105"
@@ -105,7 +105,7 @@ export default function FlowPage() {
             >
               All ({allNodes.length})
             </button>
-            {(['critical', 'active', 'stable', 'dormant', 'archived'] as const).map((tier) => {
+            {(['critical', 'active', 'supporting', 'dormant', 'archived'] as const).map((tier) => {
               const count = tierCounts[tier] || 0;
               const tierColor = getTierColor(tier);
               const isSelected = selectedTier === tier;
@@ -174,50 +174,73 @@ function FlowNodeCard({ node }: { node: VisualNode }) {
   return (
     <Link
       href={`/grid?search=${node.id}`}
-      className="block p-5 md:p-6 rounded-lg border-2 transition-all duration-300 hover:scale-[1.02]"
+      className="block rounded-lg border-2 transition-all duration-300 hover:scale-[1.02]"
       style={{
+        padding: '12px 16px',
         backgroundColor: `${colors.gunmetal}90`,
         borderColor: `${flowColor}40`,
         boxShadow: `0 0 20px ${flowColor}20`,
       }}
     >
-      <div className="flex items-start justify-between gap-4 mb-3">
-        <div className="flex-1">
+      <div className="flex items-start justify-between gap-3" style={{ marginBottom: '8px' }}>
+        <div className="flex-1 min-w-0">
           <h3
-            className="text-xl md:text-2xl font-display font-bold mb-2"
-            style={{ color: colors.offWhite }}
+            className="font-display font-bold mb-1"
+            style={{ 
+              color: colors.offWhite,
+              fontSize: '18px',
+              lineHeight: '1.3',
+            }}
           >
             {node.name}
           </h3>
-          <p className="text-sm mb-3" style={{ color: colors.slateLight }}>
+          <p style={{ 
+            color: colors.slateLight,
+            fontSize: '13px',
+            lineHeight: '1.4',
+            marginBottom: '8px',
+          }}>
             {node.short}
           </p>
         </div>
 
         {/* Flow Index Badge */}
         <div
-          className="flex-shrink-0 px-4 py-2 rounded-lg text-center min-w-[80px]"
+          className="flex-shrink-0 text-center"
           style={{
+            padding: '6px 12px',
+            borderRadius: '8px',
+            minWidth: '64px',
             backgroundColor: `${flowColor}20`,
             borderWidth: '2px',
             borderColor: flowColor,
             boxShadow: `0 0 15px ${flowColor}30`,
           }}
         >
-          <div className="text-2xl font-display font-bold" style={{ color: flowColor }}>
+          <div className="font-display font-bold" style={{ 
+            color: flowColor,
+            fontSize: '22px',
+            lineHeight: '1',
+          }}>
             {flowIndex}
           </div>
-          <div className="text-xs font-mono uppercase" style={{ color: flowColor }}>
+          <div className="font-mono uppercase" style={{ 
+            color: flowColor,
+            fontSize: '10px',
+            marginTop: '2px',
+          }}>
             Flow
           </div>
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
+      <div className="flex flex-wrap items-center font-mono" style={{ gap: '6px', fontSize: '11px' }}>
         {/* Tier */}
         <span
-          className="px-3 py-1 rounded-full capitalize"
+          className="capitalize"
           style={{
+            padding: '3px 10px',
+            borderRadius: '12px',
             backgroundColor: `${flowColor}20`,
             borderWidth: '1px',
             borderColor: flowColor,
@@ -229,8 +252,9 @@ function FlowNodeCard({ node }: { node: VisualNode }) {
 
         {/* Signal */}
         <span
-          className="px-3 py-1 rounded-full"
           style={{
+            padding: '3px 10px',
+            borderRadius: '12px',
             backgroundColor: `${node.signalVisuals.color}20`,
             borderWidth: '1px',
             borderColor: node.signalVisuals.color,
@@ -242,8 +266,9 @@ function FlowNodeCard({ node }: { node: VisualNode }) {
 
         {/* Sector */}
         <span
-          className="px-3 py-1 rounded-full"
           style={{
+            padding: '3px 10px',
+            borderRadius: '12px',
             backgroundColor: `${node.sectorVisuals.color}20`,
             borderWidth: '1px',
             borderColor: node.sectorVisuals.color,
@@ -264,11 +289,11 @@ function FlowNodeCard({ node }: { node: VisualNode }) {
 
 function getTierColor(tier: string): string {
   switch (tier) {
-    case 'critical': return colors.aurumGold;
-    case 'active': return colors.electricBlue;
-    case 'stable': return colors.violetFlux;
-    case 'dormant': return colors.slateLight;
-    case 'archived': return colors.archiveRed;
+    case 'critical': return colors.neonPink;
+    case 'active': return colors.aurumGold;
+    case 'supporting': return colors.signalGreen;
+    case 'dormant': return colors.electricBlue;
+    case 'archived': return colors.slateLight;
     default: return colors.slateLight;
   }
 }

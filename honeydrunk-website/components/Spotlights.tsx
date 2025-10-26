@@ -1,44 +1,17 @@
 'use client';
 
 /**
- * Spotlights — HoneyPlay & HoneyMech feature panels
- * Side-by-side on desktop, stacked on mobile
+ * Spotlights — Sector showcase on landing page
+ * Displays all sectors from sectors.json
  */
 
 import Link from 'next/link';
 import { colors } from '@/lib/tokens';
-
-const spotlights = [
-  {
-    title: 'HoneyPlay',
-    tagline: 'Stories wired to the soul.',
-    description:
-      'We build tools that build worlds — and the worlds themselves.',
-    cta: 'See the vision',
-    href: '/spotlight/honeyplay',
-    accent: colors.neonPink,
-  },
-  {
-    title: 'Cyberware',
-    tagline: 'Form meets function.',
-    description:
-      'Embodied agents and simulation. From neon couriers to real servos.',
-    cta: 'Peek into the lab',
-    href: '/spotlight/cyberware',
-    accent: colors.electricBlue,
-  },
-  {
-    title: 'HoneyNet',
-    tagline: 'Run the sim. Guard the Hive.',
-    description:
-      'Where breaches are forged and defenses are born. BreachLab, Sentinel, Vault, and Pulse - the Hive\'s security division.',
-    cta: 'Enter the sector',
-    href: '/spotlight/honeynet',
-    accent: colors.matrixGreen,
-  },
-];
+import { getAllSectorConfigs } from '@/lib/sectors';
 
 export default function Spotlights() {
+  const sectors = getAllSectorConfigs();
+
   return (
     <section className="w-full py-12 px-8" style={{ backgroundColor: colors.deepSpace }}>
       <div className="max-w-7xl mx-auto">
@@ -50,12 +23,20 @@ export default function Spotlights() {
             marginBottom: '60px',
           }}
         >
-          Spotlight Systems
+          Explore the Sectors
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {spotlights.map((spotlight, index) => (
-            <SpotlightPanel key={index} {...spotlight} />
+          {sectors.map((sector) => (
+            <SpotlightPanel
+              key={sector.id}
+              title={sector.name}
+              tagline={sector.tagline}
+              description={sector.description}
+              cta={sector.cta}
+              href={`/sectors/${sector.id.toLowerCase()}`}
+              accent={sector.color}
+            />
           ))}
         </div>
       </div>
@@ -80,7 +61,7 @@ function SpotlightPanel({
 }) {
   return (
     <div
-      className="relative p-8 md:p-10 backdrop-blur-sm border-2 transition-all duration-300 hover:scale-[1.02] group"
+      className="relative p-8 md:p-10 backdrop-blur-sm border-2 transition-all duration-300 hover:scale-[1.02] group flex flex-col"
       style={{
         backgroundColor: `${colors.gunmetal}95`,
         borderColor: `${accent}40`,
@@ -118,16 +99,16 @@ function SpotlightPanel({
 
       {/* Tagline */}
       <p
-        className="text-lg md:text-xl font-mono font-bold mb-4 italic"
-        style={{ color: colors.offWhite }}
+        className="text-lg md:text-xl font-mono font-bold italic"
+        style={{ color: colors.offWhite, marginBottom: '24px' }}
       >
         {tagline}
       </p>
 
       {/* Description */}
       <p
-        className="text-sm md:text-base leading-relaxed"
-        style={{ color: colors.slateLight, marginBottom: '40px' }}
+        className="text-sm md:text-base leading-relaxed flex-grow"
+        style={{ color: colors.slateLight, marginBottom: '24px' }}
       >
         {description}
       </p>
@@ -135,7 +116,7 @@ function SpotlightPanel({
       {/* CTA */}
       <Link
         href={href}
-        className="inline-block font-mono font-bold text-sm uppercase tracking-wider px-6 py-3 border-2 transition-all duration-200 hover:scale-105"
+        className="inline-block font-mono font-bold text-sm uppercase tracking-wider px-6 py-3 border-2 transition-all duration-200 hover:scale-105 mt-auto text-center"
         style={{
           color: accent,
           borderColor: accent,

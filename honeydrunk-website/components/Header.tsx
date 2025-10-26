@@ -16,11 +16,11 @@ export default function Header() {
 
   const navLinks: Array<{ href: string; label: string; hideOnMobile?: boolean; highlight?: boolean }> = [
     { href: '/grid', label: 'GRID', hideOnMobile: true },
-    { href: '/flow', label: 'FLOW' }, // Living roadmap (no highlight)
-    { href: '/spotlight', label: 'SPOTLIGHT' },
+    { href: '/flow', label: 'FLOW' },
+    { href: '/sectors', label: 'SECTORS' },
+    { href: '/nodes', label: 'NODES' },
     { href: '/services', label: 'SERVICES' },
-    { href: '/signal', label: 'SIGNAL' },
-    { href: '/status', label: 'STATUS' },
+    { href: '/modules', label: 'MODULES' },
     { href: '/about', label: 'ABOUT' },
   ];
 

@@ -10,6 +10,7 @@ import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import { colors } from '@/lib/tokens';
+import { flowTierDefinitions } from '@/lib/nodes';
 
 export default function AboutFlowPage() {
   return (
@@ -26,7 +27,7 @@ export default function AboutFlowPage() {
       <div className="relative z-10 pt-20 md:pt-32 px-4 md:px-8 lg:px-16 pb-16">
         <div className="max-w-4xl mx-auto space-y-10 md:space-y-12">
           {/* Page Title */}
-          <header className="space-y-4 md:space-y-6">
+          <header className="space-y-4 md:space-y-6 text-center md:text-left">
             <h1
               className="text-3xl md:text-5xl lg:text-6xl font-display font-bold py-2 md:py-4 holographic-text"
             >
@@ -46,7 +47,7 @@ export default function AboutFlowPage() {
               boxShadow: `0 0 30px ${colors.aurumGold}20`,
             }}
           >
-            <h2 className="text-2xl md:text-3xl font-display font-bold mb-6" style={{ color: colors.aurumGold }}>
+            <h2 className="text-2xl md:text-3xl font-display font-bold" style={{ color: colors.aurumGold, marginBottom: '24px' }}>
               The Flow Index Formula
             </h2>
             <div
@@ -68,8 +69,8 @@ export default function AboutFlowPage() {
           </section>
 
           {/* Energy */}
-          <section className="space-y-4">
-            <h2 className="text-2xl font-display font-bold" style={{ color: colors.electricBlue }}>
+          <section className="space-y-4 text-center md:text-left">
+            <h2 className="text-2xl font-display font-bold" style={{ color: colors.electricBlue, marginBottom: '16px' }}>
               Energy (40% weight)
             </h2>
             <div
@@ -97,8 +98,8 @@ export default function AboutFlowPage() {
           </section>
 
           {/* Priority */}
-          <section className="space-y-4">
-            <h2 className="text-2xl font-display font-bold" style={{ color: colors.violetCore }}>
+          <section className="space-y-4 text-center md:text-left">
+            <h2 className="text-2xl font-display font-bold" style={{ color: colors.violetCore, marginBottom: '16px' }}>
               Priority (60% weight)
             </h2>
             <div
@@ -133,7 +134,7 @@ export default function AboutFlowPage() {
               borderColor: `${colors.slateLight}30`,
             }}
           >
-            <h3 className="text-xl font-display font-bold mb-4" style={{ color: colors.offWhite }}>
+            <h3 className="text-xl font-display font-bold" style={{ color: colors.offWhite, marginBottom: '16px' }}>
               Why 40% Energy / 60% Priority?
             </h3>
             <p className="text-base leading-relaxed" style={{ color: colors.slateLight }}>
@@ -146,25 +147,19 @@ export default function AboutFlowPage() {
           </section>
 
           {/* Flow Tiers */}
-          <section className="space-y-6">
-            <h2 className="text-2xl font-display font-bold" style={{ color: colors.aurumGold }}>
+          <section className="space-y-6 text-center md:text-left">
+            <h2 className="text-2xl font-display font-bold" style={{ color: colors.aurumGold, marginBottom: '16px' }}>
               Flow Tiers
             </h2>
-            <p className="text-base leading-relaxed" style={{ color: colors.slateLight }}>
+            <p className="text-base leading-relaxed" style={{ color: colors.slateLight, marginBottom: '24px' }}>
               Every node is assigned a Flow Tier based on its Flow Index score. This creates visual hierarchy and tells you at a glance what needs attention.
             </p>
 
             {/* Tier Cards */}
             <div className="space-y-4">
-              {[
-                { tier: 'Critical', range: '80-100', color: colors.aurumGold, description: 'Gold glow — critical path. Unlocks others. Blocks progress if stalled.' },
-                { tier: 'Active', range: '60-79', color: colors.electricBlue, description: 'Electric blue pulse — actively advancing. Next in the queue.' },
-                { tier: 'Stable', range: '40-59', color: colors.violetFlux, description: 'Violet fade — stable, iterative, or dependent. Steady state.' },
-                { tier: 'Dormant', range: '20-39', color: colors.slateLight, description: 'Dim slate — background maintenance or resting. Low urgency.' },
-                { tier: 'Archived', range: '0-19', color: colors.archiveRed, description: 'Deep red embers — cold storage. Revisit or archive permanently.' },
-              ].map(({ tier, range, color, description }) => (
+              {flowTierDefinitions.map(({ label, range, color, description }) => (
                 <div
-                  key={tier}
+                  key={label}
                   className="p-5 rounded-lg border-2"
                   style={{
                     backgroundColor: `${color}10`,
@@ -173,7 +168,7 @@ export default function AboutFlowPage() {
                 >
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="text-lg font-display font-bold" style={{ color }}>
-                      {tier}
+                      {label}
                     </h3>
                     <span className="text-sm font-mono" style={{ color: `${color}cc` }}>
                       {range}
@@ -195,7 +190,7 @@ export default function AboutFlowPage() {
               borderColor: `${colors.slateLight}30`,
             }}
           >
-            <h3 className="text-xl font-display font-bold mb-4" style={{ color: colors.offWhite }}>
+            <h3 className="text-xl font-display font-bold" style={{ color: colors.offWhite, marginBottom: '16px' }}>
               How to Use Flow
             </h3>
             <ol className="space-y-3 text-base list-decimal list-inside" style={{ color: colors.slateLight }}>

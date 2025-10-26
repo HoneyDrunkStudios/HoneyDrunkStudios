@@ -8,6 +8,7 @@
 import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { colors } from '@/lib/tokens';
+import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import type { HexGridOverlayHandle } from './HexGridOverlay';
 
 export interface HeroCopyHandle {
@@ -26,6 +27,7 @@ interface HeroCopyProps {
 
 const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
   function HeroCopy({ onExploreGrid, onFollowSignal, hexGridRef }, ref) {
+    const isMobile = useIsMobile();
     const [emblemVisible, setEmblemVisible] = useState(false);
     const [headlineVisible, setHeadlineVisible] = useState(false);
     const [sublineVisible, setSublineVisible] = useState(false);
@@ -41,6 +43,20 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
     const holdAnimationRef = useRef<number | null>(null);
     const holdStartRef = useRef<number>(0);
     const holdDuration = 1000; // ms to hold for activation
+
+    // Toast state
+    const [toastMessage, setToastMessage] = useState<string | null>(null);
+    const [toastVisible, setToastVisible] = useState(false);
+    const lastToastTimeRef = useRef<number>(0);
+    const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+    const toastMessages = [
+      "Hold it, runner. The Grid doesn't open for half-presses.",
+      "Achievement unlocked: Impatience Protocol. Hold to jack in.",
+      "Signal too brief. Hold to connect.",
+      "Almost there, runner. Hold to link with the Grid.",
+      "Contact detected… now hold to establish connection."
+    ];
 
     const exploreButtonRef = useRef<HTMLButtonElement>(null);
     const signalButtonRef = useRef<HTMLButtonElement>(null);
@@ -147,6 +163,30 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
         holdAnimationRef.current = null;
       }
       
+      const currentProgress = buttonType === 'explore' ? exploreProgress : signalProgress;
+      
+      // Show toast if user clicked but didn't hold long enough
+      if (currentProgress > 0 && currentProgress < 100) {
+        const now = Date.now();
+        const timeSinceLastToast = now - lastToastTimeRef.current;
+        
+        // Only show toast if 10 seconds have passed since last one
+        if (timeSinceLastToast > 10000) {
+          const randomMessage = toastMessages[Math.floor(Math.random() * toastMessages.length)];
+          setToastMessage(randomMessage);
+          setToastVisible(true);
+          lastToastTimeRef.current = now;
+          
+          // Hide toast after 3 seconds
+          if (toastTimeoutRef.current) {
+            clearTimeout(toastTimeoutRef.current);
+          }
+          toastTimeoutRef.current = setTimeout(() => {
+            setToastVisible(false);
+          }, 3000);
+        }
+      }
+      
       if (buttonType === 'explore') {
         setIsHoldingExplore(false);
         setExploreProgress(0);
@@ -161,6 +201,9 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
       return () => {
         if (holdAnimationRef.current) {
           cancelAnimationFrame(holdAnimationRef.current);
+        }
+        if (toastTimeoutRef.current) {
+          clearTimeout(toastTimeoutRef.current);
         }
       };
     }, []);
@@ -566,7 +609,7 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                   <span className="relative z-10">&gt;&gt; JACK IN</span>
                 </button>
 
-                {/* Secondary CTA - View The Grid */}
+                {/* Secondary CTA - View Sectors */}
                 <button
                   ref={signalButtonRef}
                   onMouseDown={() => startHold('signal')}
@@ -578,7 +621,7 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                   }}
                   onTouchEnd={() => cancelHold('signal')}
                   onTouchCancel={() => cancelHold('signal')}
-                  aria-label="View The Grid"
+                  aria-label="View Sectors"
                   className="font-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-wider transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:outline-none cursor-pointer w-full sm:w-auto relative overflow-hidden select-none"
                   style={{
                     padding: '0.65rem 1.5rem',
@@ -613,7 +656,7 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                       transition: signalProgress === 0 ? 'width 0.2s ease-out, box-shadow 0.2s ease-out' : 'none',
                     }}
                   />
-                  <span className="relative z-10">VIEW THE GRID</span>
+                  <span className="relative z-10">{isMobile ? 'VIEW SECTORS' : 'VIEW THE GRID'}</span>
                 </button>
               </motion.div>
             )}
@@ -621,6 +664,46 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
           </div>
           )}
         </div>
+
+        {/* Toast Notification */}
+        <AnimatePresence>
+          {toastVisible && toastMessage && (
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.3 }}
+              className="fixed bottom-8 left-1/2 -translate-x-1/2 pointer-events-none"
+              style={{ zIndex: 50, width: 'calc(100vw - 2rem)', maxWidth: '600px' }}
+            >
+              <div
+                className="rounded-lg border-2 font-mono text-sm md:text-base"
+                style={{
+                  backgroundColor: `${colors.deepSpace}E6`,
+                  borderColor: colors.neonPink,
+                  color: colors.offWhite,
+                  boxShadow: `0 0 40px ${colors.neonPink}60, inset 0 0 20px ${colors.neonPink}10`,
+                  backdropFilter: 'blur(12px)',
+                  padding: '8px 16px',
+                }}
+              >
+                <div className="flex items-center" style={{ gap: '8px' }}>
+                  <span
+                    className="flex-shrink-0"
+                    style={{
+                      fontSize: '20px',
+                      color: colors.neonPink,
+                      textShadow: `0 0 20px ${colors.neonPink}`,
+                    }}
+                  >
+                    ⚠
+                  </span>
+                  <p style={{ color: colors.offWhite, lineHeight: '1.3' }}>{toastMessage}</p>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     );
   }

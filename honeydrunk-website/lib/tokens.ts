@@ -13,6 +13,8 @@ export const colors = {
   chromeTeal: '#14B8A6',       // Chrome Teal - industrial mech, metallic systems
   synthMagenta: '#D946EF',     // Synth Magenta - AI/digital intelligence, computational
   matrixGreen: '#00FF41',      // Matrix Green - HoneyNet security sector, terminal aesthetic
+  cyberOrange: '#FF8C00',      // Cyber Orange - operations sector, system workflows
+  neonYellow: '#FFFF00',       // Neon Yellow - Meta sector, bright cyberpunk yellow
 
   // Backgrounds
   deepSpace: '#0A0E12',        // Deep Space - base 950

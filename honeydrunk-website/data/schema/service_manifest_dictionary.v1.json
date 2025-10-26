@@ -1,0 +1,42 @@
+{
+  "version": "v1",
+  "labels": {
+    "overview": "Service Manifest",
+    "why_it_exists": "Why It Exists",
+    "primary_audience": "Primary Audience",
+    "value_props": "Value Propositions",
+    "monetization_signal": "Monetization Signal",
+    "roadmap_focus": "Roadmap Focus",
+    "grid_relationship": "Grid Relationship",
+    "integration_depth": "Integration Depth",
+    "impact_vector": "Impact Vector",
+    "signal_quote": "Signal Quote"
+  },
+  "tooltips": {
+    "overview": "A clear explanation of what this service does, who it serves, and how it integrates into the HoneyDrunk ecosystem.",
+    "why_it_exists": "The specific problem this service solves. What pain point would return if this service disappeared?",
+    "primary_audience": "Who benefits most from this service (e.g., internal ops, creators, developers, end-users).",
+    "value_props": "Key benefits this service delivers. Concrete, action-oriented statements of what it provides.",
+    "monetization_signal": "How this service sustains itself: Internal-only, Open-source, Pro tier, SaaS, etc.",
+    "roadmap_focus": "The next major milestone or development priority for this service.",
+    "grid_relationship": "How this service connects to and depends on other nodes/services in the Grid.",
+    "integration_depth": "How tightly coupled this service is to the Grid: shallow (standalone), medium (some dependencies), deep (core infrastructure).",
+    "impact_vector": "The primary area of leverage this service provides (e.g., performance, security, developer experience).",
+    "signal_quote": "An in-universe tagline that captures the essence of what this service does.",
+    "technical_details": "Stability tier and demo path showing the service's maturity and how to interact with it.",
+    "stability_tier": "Service maturity level: experimental (early stage), beta (testing), stable (production-ready), critical (mission-critical infrastructure).",
+    "demo_path": "A quick walkthrough showing how to use this service from input to outcome.",
+    "runtime_deployment": "Infrastructure details: what runtime the service uses, where it's deployed, and what environments it runs in.",
+    "interfaces": "How external systems communicate with this service: HTTP endpoints, event subscriptions, and event publications.",
+    "depends_on": "Other nodes, modules, or services this service requires to function properly.",
+    "observability": "Monitoring dashboards and configured alerts for tracking service health and performance."
+  },
+  "enums": {
+    "integration_depth": ["shallow", "medium", "deep"],
+    "tier": ["prod-critical", "internal", "experimental"]
+  },
+  "i18n": {
+    "default_locale": "en-US",
+    "locales": ["en-US"]
+  }
+}

@@ -1,312 +1,188 @@
 'use client';
 
-/**
- * /nodes — Full Grid view with filters
- */
-
-import { useState, useEffect, Suspense } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { getAllSectors, getAllSignals, filterNodes, getNodeById, getConnectedNodes } from '@/lib/nodes';
-import type { Sector, Signal, FlowMetrics } from '@/lib/types';
-import NeonGridCanvas from '@/components/NeonGridCanvas';
-import TheGrid from '@/components/TheGrid';
-import NodeDrawer from '@/components/NodeDrawer';
-import FilterChips, { getSectorColor, getSignalColor } from '@/components/FilterChips';
+import { useState, useMemo, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
+import NeonGridCanvas from '@/components/NeonGridCanvas';
+import EntityCard from '@/components/EntityCard';
 import { colors } from '@/lib/tokens';
+import { getNodesBySector, getModulesByParent } from '@/lib/entities';
+import { getSectorColorsMap, getAllSectorConfigs } from '@/lib/sectors';
+import Link from 'next/link';
 
-// Helper to get Flow Tier color
-function getFlowTierColor(tier: FlowMetrics['flowTier']): string {
-  switch (tier) {
-    case 'critical': return colors.aurumGold;
-    case 'active': return colors.electricBlue;
-    case 'stable': return colors.violetFlux;
-    case 'dormant': return colors.slateLight;
-    case 'archived': return colors.archiveRed;
-    default: return colors.slateLight;
-  }
-}
+// Sector color mapping (now from sectors.json)
+const sectorColors = getSectorColorsMap();
+
+// Signal color mapping
+const signalColors: Record<string, string> = {
+  Seed: colors.slateLight,
+  Awake: colors.violetFlux,
+  Wiring: colors.aurumGold,
+  Live: colors.signalGreen,
+  Echo: colors.electricBlue,
+  Archive: colors.neonPink,
+};
 
 function NodesContent() {
-  const router = useRouter();
   const searchParams = useSearchParams();
-
-  const [selectedSectors, setSelectedSectors] = useState<Sector[]>([]);
-  const [selectedSignals, setSelectedSignals] = useState<Signal[]>([]);
-  const [selectedFlowTiers, setSelectedFlowTiers] = useState<FlowMetrics['flowTier'][]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedNodeId, setSelectedNodeId] = useState<string | undefined>();
-  const [showFilters, setShowFilters] = useState(true);
-  const [hasAutoOpened, setHasAutoOpened] = useState(false);
-
-  // Initialize from URL params
-  useEffect(() => {
-    const sectorsParam = searchParams.get('sectors');
-    const signalsParam = searchParams.get('signals');
-    const flowTiersParam = searchParams.get('flowTiers');
-    const searchParam = searchParams.get('search');
-
-    if (sectorsParam) {
-      setSelectedSectors(sectorsParam.split(',') as Sector[]);
-    }
-    if (signalsParam) {
-      setSelectedSignals(signalsParam.split(',') as Signal[]);
-    }
-    if (flowTiersParam) {
-      setSelectedFlowTiers(flowTiersParam.split(',') as FlowMetrics['flowTier'][]);
-    }
-    if (searchParam) {
-      setSearchQuery(searchParam);
-    }
-  }, [searchParams]);
-
-  // Update URL when filters change
-  useEffect(() => {
-    const params = new URLSearchParams();
-
-    if (selectedSectors.length > 0) {
-      params.set('sectors', selectedSectors.join(','));
-    }
-    if (selectedSignals.length > 0) {
-      params.set('signals', selectedSignals.join(','));
-    }
-    if (selectedFlowTiers.length > 0) {
-      params.set('flowTiers', selectedFlowTiers.join(','));
-    }
-    if (searchQuery) {
-      params.set('search', searchQuery);
-    }
-
-    const newUrl = params.toString() ? `/nodes?${params.toString()}` : '/nodes';
-    router.replace(newUrl, { scroll: false });
-  }, [selectedSectors, selectedSignals, selectedFlowTiers, searchQuery, router]);
-
-  const allSectors = getAllSectors();
-  const allSignals = getAllSignals();
-
-  let filteredNodes = filterNodes(
-    selectedSectors.length > 0 ? selectedSectors : undefined,
-    selectedSignals.length > 0 ? selectedSignals : undefined,
-    searchQuery || undefined
-  );
-
-  // Additional filtering by Flow Tier
-  if (selectedFlowTiers.length > 0) {
-    filteredNodes = filteredNodes.filter(node => 
-      selectedFlowTiers.includes(node.flowMetrics.flowTier)
+  const sectorFilter = searchParams.get('sector');
+  const [showFilters, setShowFilters] = useState(false);
+  
+  const nodesBySector = getNodesBySector();
+  const allSectors = getAllSectorConfigs();
+  
+  // Filter nodes by sector if parameter is provided
+  const filteredNodesBySector = useMemo(() => {
+    if (!sectorFilter) return nodesBySector;
+    return Object.fromEntries(
+      Object.entries(nodesBySector).filter(([sector]) => sector === sectorFilter)
     );
-  }
-
-  // Auto-open drawer when navigating from services with search query (only once)
-  useEffect(() => {
-    if (searchQuery && filteredNodes.length === 1 && !hasAutoOpened) {
-      setSelectedNodeId(filteredNodes[0].id);
-      setHasAutoOpened(true);
-    }
-  }, [searchQuery, filteredNodes, hasAutoOpened]);
-
-  const selectedNode = selectedNodeId ? getNodeById(selectedNodeId) : null;
-  const connectedNodes = selectedNodeId ? getConnectedNodes(selectedNodeId) : [];
+  }, [nodesBySector, sectorFilter]);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative min-h-screen" style={{ backgroundColor: colors.deepSpace, color: colors.offWhite }}>
       {/* Background */}
-      <NeonGridCanvas particleCount={200} enableMotion={true} />
+      <div className="fixed inset-0">
+        <NeonGridCanvas particleCount={100} enableMotion={true} />
+      </div>
 
       {/* Header */}
       <Header />
 
-      {/* Search and Filter Bar */}
-      <div className="absolute top-20 left-0 right-0 z-40 px-8 py-4 flex items-center justify-end gap-4">
-        {/* Search */}
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search nodes..."
-          className="px-6 py-4 rounded-lg text-sm font-mono
-                   focus:outline-none focus:ring-2"
-          style={{
-            backgroundColor: `${colors.gunmetal}80`,
-            borderWidth: '1px',
-            borderColor: `${colors.slateLight}40`,
-            color: colors.offWhite,
-          }}
-        />
-
-        {/* Filter toggle */}
-        <button
-          onClick={() => setShowFilters(!showFilters)}
-          className="px-6 py-4 rounded-lg text-sm font-mono cursor-pointer
-                   transition-all duration-200 hover:scale-105 whitespace-nowrap"
-          style={{
-            backgroundColor: showFilters
-              ? `${colors.violetCore}30`
-              : `${colors.gunmetal}80`,
-            borderWidth: '1px',
-            borderColor: showFilters
-              ? colors.violetCore
-              : `${colors.slateLight}40`,
-            color: showFilters ? colors.violetCore : colors.slateLight,
-          }}
-        >
-          {showFilters ? '✓ ' : ''}Filters ({filteredNodes.length})
-        </button>
-      </div>
-
-      {/* Filters sidebar */}
-      {showFilters && (
-        <aside
-          className="absolute left-6 z-30 w-64
-                     p-5 rounded-lg backdrop-blur-sm border space-y-5"
-          style={{
-            top: '7rem',
-            backgroundColor: `${colors.deepSpace}90`,
-            borderColor: `${colors.slateLight}30`,
-          }}
-        >
-          <FilterChips
-            label="Sector"
-            options={allSectors}
-            selected={selectedSectors}
-            onChange={setSelectedSectors}
-            getColor={getSectorColor}
-          />
-
-          <FilterChips
-            label="Signal"
-            options={allSignals}
-            selected={selectedSignals}
-            onChange={setSelectedSignals}
-            getColor={getSignalColor}
-          />
-
-          <FilterChips
-            label="Flow Tier"
-            options={['critical', 'active', 'stable', 'dormant', 'archived'] as const}
-            selected={selectedFlowTiers}
-            onChange={setSelectedFlowTiers}
-            getColor={getFlowTierColor}
-          />
-
-          {(selectedSectors.length > 0 ||
-            selectedSignals.length > 0 ||
-            selectedFlowTiers.length > 0 ||
-            searchQuery) && (
-            <button
-              onClick={() => {
-                setSelectedSectors([]);
-                setSelectedSignals([]);
-                setSelectedFlowTiers([]);
-                setSearchQuery('');
-              }}
-              className="w-full px-4 py-3 rounded-lg text-xs font-mono cursor-pointer
-                       transition-all duration-200 hover:scale-105"
-              style={{
-                backgroundColor: `${colors.gunmetal}60`,
-                borderWidth: '1px',
-                borderColor: `${colors.slateLight}40`,
-                color: colors.slateLight,
-              }}
+      {/* Content */}
+      <div className="relative z-10 pt-20 md:pt-32 px-4 md:px-8 lg:px-16 pb-20 md:pb-24">
+        <div className="max-w-6xl mx-auto space-y-12 md:space-y-16">
+          {/* Page Title */}
+          <header className="space-y-5 md:space-y-6 text-center md:text-left">
+            <h1
+              className="text-3xl md:text-5xl lg:text-6xl font-display font-bold py-2 md:py-4 holographic-text"
             >
-              Clear All Filters
-            </button>
-          )}
-        </aside>
-      )}
+              Nodes
+            </h1>
+            <p className="text-base md:text-lg px-1 md:px-2" style={{ color: colors.slateLight }}>
+              Product platforms in The Grid. Each Node defines stable contracts and exposes slots where Modules dock.
+            </p>
 
-      {/* Main Grid */}
-      <div className="relative z-20 w-full h-full pt-20">
-        <TheGrid
-          nodes={filteredNodes}
-          selectedNodeId={selectedNodeId}
-          onNodeClick={(node) => setSelectedNodeId(node.id)}
-        />
-      </div>
+            {/* Sector Filters */}
+            <div className="flex flex-wrap gap-2 items-center justify-center md:justify-start" style={{ marginTop: '32px' }}>
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className="px-4 py-2 rounded border text-sm font-mono transition-all cursor-pointer"
+                style={{
+                  color: colors.electricBlue,
+                  borderColor: colors.electricBlue,
+                  backgroundColor: showFilters ? `${colors.electricBlue}20` : 'transparent',
+                }}
+              >
+                {showFilters ? '✕ Hide' : '⚙'} Filters
+              </button>
+              
+              {sectorFilter && (
+                <Link
+                  href="/nodes"
+                  className="px-4 py-2 rounded border text-sm font-mono transition-all hover:scale-105"
+                  style={{
+                    color: colors.neonPink,
+                    borderColor: colors.neonPink,
+                    backgroundColor: `${colors.neonPink}20`,
+                  }}
+                >
+                  Clear Filter ✕
+                </Link>
+              )}
+            </div>
 
-      {/* Legend */}
-      <div
-        className="absolute right-6 z-10
-                   p-4 rounded-lg backdrop-blur-sm border space-y-3"
-        style={{
-          top: '15rem',
-          backgroundColor: `${colors.deepSpace}90`,
-          borderColor: `${colors.slateLight}30`,
-        }}
-      >
-        <div
-          className="text-xs font-mono uppercase tracking-wider font-semibold"
-          style={{ color: colors.slateLight }}
-        >
-          Legend
-        </div>
-
-        <div className="space-y-2">
-          <div className="text-xs font-mono" style={{ color: colors.slateLight }}>
-            <div className="font-semibold mb-2 text-xs" style={{ color: colors.offWhite }}>Signals</div>
-            {allSignals.map((signal) => {
-              const descriptions: Record<string, string> = {
-                Seed: 'Queued/Backlog',
-                Awake: 'Planning/Starting',
-                Wiring: 'Active Development',
-                Live: 'Production/Deployed',
-                Echo: 'Maintenance/Iteration',
-                Archive: 'Retired/Deprecated',
-              };
-              return (
-                <div key={signal} className="flex items-start gap-2 mb-1.5">
-                  <div
-                    className="w-2.5 h-2.5 rounded-full mt-0.5 flex-shrink-0"
-                    style={{ backgroundColor: getSignalColor(signal) }}
-                  />
-                  <div className="flex-1">
-                    <div className="font-semibold text-xs" style={{ color: colors.offWhite }}>
-                      {signal}
-                    </div>
-                    <div className="text-xs opacity-70 leading-tight">{descriptions[signal]}</div>
-                  </div>
+            {showFilters && (
+              <div
+                className="p-6 rounded-lg border"
+                style={{
+                  backgroundColor: `${colors.gunmetal}60`,
+                  borderColor: `${colors.slateLight}30`,
+                }}
+              >
+                <h3 className="text-sm font-mono font-bold uppercase mb-4" style={{ color: colors.electricBlue }}>
+                  Filter by Sector
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {allSectors.map((sector) => {
+                    const isSelected = sectorFilter === sector.id;
+                    return (
+                      <Link
+                        key={sector.id}
+                        href={`/nodes?sector=${sector.id}`}
+                        className="px-4 py-2 rounded border text-sm font-mono transition-all hover:scale-105"
+                        style={{
+                          color: sector.color,
+                          borderColor: isSelected ? sector.color : `${sector.color}60`,
+                          backgroundColor: isSelected ? `${sector.color}30` : `${sector.color}10`,
+                        }}
+                      >
+                        {sector.name}
+                      </Link>
+                    );
+                  })}
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            )}
+          </header>
+
+          {/* Nodes by Sector */}
+          {Object.entries(filteredNodesBySector).map(([sector, nodes]) => {
+            const sectorColor = sectorColors[sector] || colors.electricBlue;
+
+            return (
+              <section key={sector} className="space-y-8 md:space-y-10">
+                <h2
+                  className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-6 md:pt-8 border-b-2"
+                  style={{
+                    color: sectorColor,
+                    borderColor: `${sectorColor}30`,
+                    paddingBottom: '16px',
+                    marginBottom: '48px',
+                  }}
+                >
+                  {sector}
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {nodes.map((node) => {
+                    const moduleCount = getModulesByParent(node.id).length;
+                    const signalColor = signalColors[node.signal] || colors.slateLight;
+
+                    return (
+                      <EntityCard
+                        key={node.id}
+                        id={node.id}
+                        name={node.name}
+                        signal={node.signal}
+                        signalColor={signalColor}
+                        primaryColor={sectorColor}
+                        description={node.short}
+                        href={`/nodes/${node.id}`}
+                        tags={node.tags}
+                        badges={
+                          moduleCount > 0 ? (
+                            <span
+                              className="inline-flex items-center gap-1 text-xs font-mono px-2 py-1 rounded"
+                              style={{
+                                backgroundColor: `${colors.electricBlue}15`,
+                                color: colors.electricBlue,
+                              }}
+                            >
+                              <span>🔌</span>
+                              <span>{moduleCount} {moduleCount === 1 ? 'Module' : 'Modules'}</span>
+                            </span>
+                          ) : undefined
+                        }
+                      />
+                    );
+                  })}
+                </div>
+              </section>
+            );
+          })}
         </div>
-      </div>
-
-      {/* Node Detail Drawer */}
-      <NodeDrawer
-        node={selectedNode || null}
-        onClose={() => setSelectedNodeId(undefined)}
-        connectedNodes={connectedNodes}
-      />
-
-      {/* Back to Landing button */}
-      <div
-        className="absolute bottom-8 right-8 z-20 max-w-xs
-                   p-4 backdrop-blur-sm border-2 hidden md:block"
-        style={{
-          backgroundColor: `${colors.deepSpace}95`,
-          borderColor: colors.electricBlue,
-          boxShadow: `0 0 30px ${colors.electricBlue}40, inset 0 0 20px ${colors.electricBlue}10`,
-          clipPath: 'polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)',
-        }}
-      >
-        <Link
-          href="/"
-          className="font-mono font-bold text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105 cursor-pointer flex items-center justify-center"
-          style={{
-            padding: '0.5rem 1rem',
-            backgroundColor: `${colors.electricBlue}20`,
-            borderWidth: '2px',
-            borderColor: colors.electricBlue,
-            color: colors.offWhite,
-            boxShadow: `0 0 20px ${colors.electricBlue}60, inset 0 0 10px ${colors.electricBlue}20`,
-            clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)',
-          }}
-        >
-          &lt;&lt; BACK TO LANDING
-        </Link>
       </div>
 
       {/* Footer */}
@@ -317,9 +193,9 @@ function NodesContent() {
   );
 }
 
-export default function NodesPage() {
+export default function NodesIndexPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-deep-space" />}>
+    <Suspense fallback={<div style={{ minHeight: '100vh', backgroundColor: colors.deepSpace }} />}>
       <NodesContent />
     </Suspense>
   );

@@ -40,7 +40,14 @@
       "Bash(mkdir:*)",
       "Bash(netstat:*)",
       "Bash(findstr:*)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "WebFetch(domain:honeydrunkstudios.com)",
+      "Bash(node -e:*)",
+      "Bash(node merge-nodes.js:*)",
+      "Bash(timeout:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(powershell -ExecutionPolicy Bypass -File fix-params.ps1)",
+      "Bash(node fix-params.js:*)"
     ],
     "deny": [],
     "ask": []

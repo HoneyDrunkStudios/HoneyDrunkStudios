@@ -4,57 +4,75 @@
  * /grid — Full Grid view with filters
  */
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useMemo, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { getAllSectors, getAllSignals, filterNodes, getNodeById, getConnectedNodes } from '@/lib/nodes';
+import { getAllSectors as getNodesAllSectors, getAllSignals as getNodesAllSignals } from '@/lib/nodes';
+import { getAllSectors, getAllSignals, getGridData, type VisualNode, type VisualService, type VisualModule } from '@/lib/entities';
 import type { Sector, Signal } from '@/lib/types';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import TheGrid from '@/components/TheGrid';
-import NodeDrawer from '@/components/NodeDrawer';
-import FilterChips, { getSectorColor, getSignalColor } from '@/components/FilterChips';
+import FlowLanes from '@/components/FlowLanes';
+import FilterChips, { getSignalColor } from '@/components/FilterChips';
+import { getSectorColor } from '@/lib/sectors';
+import SignalLegend from '@/components/SignalLegend';
 import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
 import { colors } from '@/lib/tokens';
+import { useIsMobile } from '@/lib/hooks/useIsMobile';
 
 function GridContent() {
+  const isMobile = useIsMobile();
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [selectedSectors, setSelectedSectors] = useState<Sector[]>([]);
-  const [selectedSignals, setSelectedSignals] = useState<Signal[]>([]);
+  const [selectedSectors, setSelectedSectors] = useState<string[]>([]);
+  const [selectedSignals, setSelectedSignals] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedNodeId, setSelectedNodeId] = useState<string | undefined>();
+  const [selectedEntityId, setSelectedEntityId] = useState<string | undefined>();
   const [showFilters, setShowFilters] = useState(true);
-  const [hasAutoOpened, setHasAutoOpened] = useState(false);
-  const [useFlowVisuals, setUseFlowVisuals] = useState(false); // Toggle for Flow-based visuals
+  const [flowMode, setFlowMode] = useState(false);
+  const lastUrlRef = useRef<string>('');
+  const filterStateBeforeFlowMode = useRef<boolean>(true);
+
+  // Save filter state and hide when entering Flow Mode, restore when exiting
+  useEffect(() => {
+    if (flowMode) {
+      // Entering Flow Mode - save current state and hide
+      filterStateBeforeFlowMode.current = showFilters;
+      setShowFilters(false);
+    } else {
+      // Exiting Flow Mode - restore previous state
+      setShowFilters(filterStateBeforeFlowMode.current);
+    }
+  }, [flowMode]);
 
   // Initialize from URL params
   useEffect(() => {
     const sectorsParam = searchParams.get('sectors');
     const signalsParam = searchParams.get('signals');
     const searchParam = searchParams.get('search');
-    const flowModeParam = searchParams.get('flowMode');
     const nodeParam = searchParams.get('node');
+    const serviceParam = searchParams.get('service');
 
     if (sectorsParam) {
-      setSelectedSectors(sectorsParam.split(',') as Sector[]);
+      setSelectedSectors(sectorsParam.split(','));
     }
     if (signalsParam) {
-      setSelectedSignals(signalsParam.split(',') as Signal[]);
+      setSelectedSignals(signalsParam.split(','));
     }
     if (searchParam) {
       setSearchQuery(searchParam);
     }
-    if (flowModeParam === 'true') {
-      setUseFlowVisuals(true);
-    }
     if (nodeParam) {
-      setSelectedNodeId(nodeParam);
+      setSelectedEntityId(nodeParam);
+    }
+    if (serviceParam) {
+      setSelectedEntityId(serviceParam);
     }
   }, [searchParams]);
 
-  // Update URL when filters change
+  // Update URL when filters change - but only if actually changed
   useEffect(() => {
     const params = new URLSearchParams();
 
@@ -69,28 +87,119 @@ function GridContent() {
     }
 
     const newUrl = params.toString() ? `/grid?${params.toString()}` : '/grid';
-    router.replace(newUrl, { scroll: false });
+    
+    // Only update if URL actually changed
+    if (newUrl !== lastUrlRef.current) {
+      lastUrlRef.current = newUrl;
+      router.replace(newUrl, { scroll: false });
+    }
   }, [selectedSectors, selectedSignals, searchQuery, router]);
 
   const allSectors = getAllSectors();
   const allSignals = getAllSignals();
 
-  const filteredNodes = filterNodes(
-    selectedSectors.length > 0 ? selectedSectors : undefined,
-    selectedSignals.length > 0 ? selectedSignals : undefined,
-    searchQuery || undefined
-  );
+  // Create signal color map
+  const signalColorMap = useMemo(() => {
+    const map: Record<string, string> = {};
+    allSignals.forEach(signal => {
+      map[signal] = getSignalColor(signal as any);
+    });
+    return map;
+  }, [allSignals]);
 
-  // Auto-open drawer when navigating from services with search query (only once)
-  useEffect(() => {
-    if (searchQuery && filteredNodes.length === 1 && !hasAutoOpened) {
-      setSelectedNodeId(filteredNodes[0].id);
-      setHasAutoOpened(true);
-    }
-  }, [searchQuery, filteredNodes, hasAutoOpened]);
+  // Get all grid data - memoized
+  const fullGridData = useMemo(() => getGridData(), []);
 
-  const selectedNode = selectedNodeId ? getNodeById(selectedNodeId) : null;
-  const connectedNodes = selectedNodeId ? getConnectedNodes(selectedNodeId) : [];
+  // Apply filters to grid data - memoized
+  const filteredGridData = useMemo(() => {
+    const filteredNodes = fullGridData.nodes.filter(node => {
+      const matchesSector = selectedSectors.length === 0 || selectedSectors.includes(node.sector);
+      const matchesSignal = selectedSignals.length === 0 || selectedSignals.includes(node.signal);
+      const matchesSearch = !searchQuery ||
+        node.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        node.short?.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesSector && matchesSignal && matchesSearch;
+    });
+
+    const filteredModules = fullGridData.modules.filter(module => {
+      // Show module if its parent node is visible
+      const parentVisible = filteredNodes.some(node => node.id === module.parent);
+      return parentVisible;
+    });
+
+    const filteredServices = fullGridData.services.filter(service => {
+      const matchesSignal = selectedSignals.length === 0 || selectedSignals.includes(service.signal);
+      const matchesSearch = !searchQuery ||
+        service.name.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesSignal && matchesSearch;
+    });
+
+    const filteredEdges = fullGridData.edges.filter(edge => {
+      // Show edge if both endpoints are visible
+      const fromVisible =
+        filteredNodes.some(n => n.id === edge.from) ||
+        filteredServices.some(s => s.id === edge.from);
+      const toVisible =
+        filteredNodes.some(n => n.id === edge.to) ||
+        filteredModules.some(m => m.id === edge.to);
+      return fromVisible && toVisible;
+    });
+
+    return {
+      nodes: filteredNodes,
+      modules: filteredModules,
+      services: filteredServices,
+      edges: filteredEdges,
+    };
+  }, [fullGridData, selectedSectors, selectedSignals, searchQuery]);
+
+  // Hide grid on mobile
+  if (isMobile) {
+    return (
+      <div className="relative w-full h-screen overflow-hidden flex items-center justify-center">
+        <NeonGridCanvas particleCount={100} enableMotion={true} />
+        <Header />
+        <div className="absolute inset-0 flex items-center justify-center px-6">
+          <div
+            className="p-8 rounded-lg border-2 backdrop-blur-sm text-center max-w-md"
+            style={{
+              backgroundColor: `${colors.deepSpace}95`,
+              borderColor: colors.neonPink,
+              boxShadow: `0 0 30px ${colors.neonPink}30`,
+            }}
+          >
+            <div
+              className="text-2xl font-mono font-bold mb-4"
+              style={{
+                color: colors.neonPink,
+                textShadow: `0 0 20px ${colors.neonPink}80`,
+              }}
+            >
+              GRID UNAVAILABLE
+            </div>
+            <p
+              className="text-sm font-mono"
+              style={{ color: colors.slateLight, marginBottom: '32px' }}
+            >
+              The Grid view is only available on desktop devices for optimal visualization.
+            </p>
+            <Link
+              href="/"
+              className="inline-block px-6 py-3 rounded-lg border-2 font-mono font-bold transition-all"
+              style={{
+                color: colors.electricBlue,
+                borderColor: colors.electricBlue,
+                backgroundColor: `${colors.electricBlue}10`,
+              }}
+            >
+              Return Home
+            </Link>
+          </div>
+        </div>
+        <LandingFooter />
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
@@ -102,66 +211,70 @@ function GridContent() {
 
       {/* Search and Filter Bar */}
       <div className="absolute top-20 left-0 right-0 z-40 px-8 py-4 flex items-center justify-end gap-4">
-        {/* Search */}
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search nodes..."
-          className="px-6 py-4 rounded-lg text-sm font-mono
-                   focus:outline-none focus:ring-2"
-          style={{
-            backgroundColor: `${colors.gunmetal}80`,
-            borderWidth: '1px',
-            borderColor: `${colors.slateLight}40`,
-            color: colors.offWhite,
-          }}
-        />
+        {/* Search - hidden in Flow Mode */}
+        {!flowMode && (
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search nodes..."
+            className="px-6 py-4 rounded-lg text-sm font-mono
+                     focus:outline-none focus:ring-2"
+            style={{
+              backgroundColor: `${colors.gunmetal}80`,
+              borderWidth: '1px',
+              borderColor: `${colors.slateLight}40`,
+              color: colors.offWhite,
+            }}
+          />
+        )}
 
-        {/* Flow Visual toggle */}
+        {/* Filter toggle - hidden in Flow Mode */}
+        {!flowMode && (
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="px-6 py-4 rounded-lg text-sm font-mono cursor-pointer
+                     transition-all duration-200 hover:scale-105 whitespace-nowrap"
+            style={{
+              backgroundColor: showFilters
+                ? `${colors.violetCore}30`
+                : `${colors.gunmetal}80`,
+              borderWidth: '1px',
+              borderColor: showFilters
+                ? colors.violetCore
+                : `${colors.slateLight}40`,
+              color: showFilters ? colors.violetCore : colors.slateLight,
+            }}
+          >
+            {showFilters ? '✓ ' : ''}Filters ({filteredGridData.nodes.length}N / {filteredGridData.services.length}S)
+          </button>
+        )}
+
+        {/* Flow Mode toggle */}
         <button
-          onClick={() => setUseFlowVisuals(!useFlowVisuals)}
+          onClick={() => setFlowMode(!flowMode)}
           className="px-6 py-4 rounded-lg text-sm font-mono cursor-pointer
                    transition-all duration-200 hover:scale-105 whitespace-nowrap"
           style={{
-            backgroundColor: useFlowVisuals
+            backgroundColor: flowMode
               ? `${colors.aurumGold}30`
               : `${colors.gunmetal}80`,
             borderWidth: '1px',
-            borderColor: useFlowVisuals
+            borderColor: flowMode
               ? colors.aurumGold
               : `${colors.slateLight}40`,
-            color: useFlowVisuals ? colors.aurumGold : colors.slateLight,
+            color: flowMode ? colors.aurumGold : colors.slateLight,
           }}
         >
-          {useFlowVisuals ? '⚡ ' : ''}Flow Mode
-        </button>
-
-        {/* Filter toggle */}
-        <button
-          onClick={() => setShowFilters(!showFilters)}
-          className="px-6 py-4 rounded-lg text-sm font-mono cursor-pointer
-                   transition-all duration-200 hover:scale-105 whitespace-nowrap"
-          style={{
-            backgroundColor: showFilters
-              ? `${colors.violetCore}30`
-              : `${colors.gunmetal}80`,
-            borderWidth: '1px',
-            borderColor: showFilters
-              ? colors.violetCore
-              : `${colors.slateLight}40`,
-            color: showFilters ? colors.violetCore : colors.slateLight,
-          }}
-        >
-          {showFilters ? '✓ ' : ''}Filters ({filteredNodes.length})
+          {flowMode ? '✓ ' : ''}Flow Mode
         </button>
       </div>
 
       {/* Filters sidebar */}
       {showFilters && (
         <aside
-          className="absolute left-6 z-30 w-64
-                     p-5 rounded-lg backdrop-blur-sm border space-y-5"
+          className="absolute left-6 z-30 w-56
+                     p-4 rounded-lg backdrop-blur-sm border space-y-4"
           style={{
             top: '7rem',
             backgroundColor: `${colors.deepSpace}90`,
@@ -170,18 +283,18 @@ function GridContent() {
         >
           <FilterChips
             label="Sector"
-            options={allSectors}
-            selected={selectedSectors}
-            onChange={setSelectedSectors}
-            getColor={getSectorColor}
+            options={allSectors as any[]}
+            selected={selectedSectors as any[]}
+            onChange={setSelectedSectors as any}
+            getColor={getSectorColor as any}
           />
 
           <FilterChips
             label="Signal"
-            options={allSignals}
-            selected={selectedSignals}
-            onChange={setSelectedSignals}
-            getColor={getSignalColor}
+            options={allSignals as any[]}
+            selected={selectedSignals as any[]}
+            onChange={setSelectedSignals as any}
+            getColor={getSignalColor as any}
           />
 
           {(selectedSectors.length > 0 ||
@@ -205,101 +318,146 @@ function GridContent() {
               Clear All Filters
             </button>
           )}
+
+          {/* Stats */}
+          <div
+            className="pt-3 border-t space-y-1.5"
+            style={{ borderColor: `${colors.slateLight}20` }}
+          >
+            <div
+              className="text-xs font-mono uppercase tracking-wider mb-2"
+              style={{ color: colors.slateLight }}
+            >
+              Grid Stats
+            </div>
+            <div className="text-xs font-mono space-y-0.5" style={{ color: colors.offWhite }}>
+              <div>Nodes: {filteredGridData.nodes.length}</div>
+              <div>Modules: {filteredGridData.modules.length}</div>
+              <div>Services: {filteredGridData.services.length}</div>
+              <div>Edges: {filteredGridData.edges.length}</div>
+            </div>
+          </div>
+
+          {/* Shape Legend */}
+          <div
+            className="pt-3 border-t space-y-2"
+            style={{ borderColor: `${colors.slateLight}20` }}
+          >
+            <div
+              className="text-xs font-mono uppercase tracking-wider"
+              style={{ color: colors.slateLight }}
+            >
+              Shape Guide
+            </div>
+            <div className="space-y-1.5">
+              {/* Hexagon = Node */}
+              <div className="flex items-center gap-2">
+                <svg width="20" height="20" viewBox="0 0 24 24">
+                  <polygon
+                    points="12,2 20,7 20,17 12,22 4,17 4,7"
+                    fill={`${colors.violetFlux}30`}
+                    stroke={colors.violetFlux}
+                    strokeWidth="1.5"
+                  />
+                </svg>
+                <span className="text-xs font-mono" style={{ color: colors.offWhite }}>
+                  Hexagon = Node
+                </span>
+              </div>
+              {/* Pill = Module */}
+              <div className="flex items-center gap-2">
+                <svg width="20" height="20" viewBox="0 0 24 24">
+                  <rect
+                    x="4"
+                    y="9"
+                    width="16"
+                    height="6"
+                    rx="3"
+                    fill={`${colors.aurumGold}50`}
+                    stroke={colors.aurumGold}
+                    strokeWidth="1.5"
+                  />
+                </svg>
+                <span className="text-xs font-mono" style={{ color: colors.offWhite }}>
+                  Pill = Module
+                </span>
+              </div>
+              {/* Rectangle = Service */}
+              <div className="flex items-center gap-2">
+                <svg width="20" height="20" viewBox="0 0 24 24">
+                  <rect
+                    x="5"
+                    y="8"
+                    width="14"
+                    height="8"
+                    rx="2"
+                    fill={`${colors.electricBlue}30`}
+                    stroke={colors.electricBlue}
+                    strokeWidth="1.5"
+                  />
+                </svg>
+                <span className="text-xs font-mono" style={{ color: colors.offWhite }}>
+                  Rectangle = Service
+                </span>
+              </div>
+            </div>
+          </div>
         </aside>
       )}
 
-      {/* Main Grid */}
+      {/* Main Grid / Flow View */}
       <div className="relative z-20 w-full h-full pt-20">
-        <TheGrid
-          nodes={filteredNodes}
-          selectedNodeId={selectedNodeId}
-          onNodeClick={(node) => setSelectedNodeId(node.id)}
-          useFlowVisuals={useFlowVisuals}
-        />
-      </div>
-
-      {/* Legend */}
-      <div
-        className="absolute right-6 z-10
-                   p-4 rounded-lg backdrop-blur-sm border space-y-3"
-        style={{
-          top: '15rem',
-          backgroundColor: `${colors.deepSpace}90`,
-          borderColor: `${colors.slateLight}30`,
-        }}
-      >
-        <div
-          className="text-xs font-mono uppercase tracking-wider font-semibold"
-          style={{ color: colors.slateLight }}
-        >
-          Legend
-        </div>
-
-        <div className="space-y-2">
-          <div className="text-xs font-mono" style={{ color: colors.slateLight }}>
-            <div className="font-semibold mb-2 text-xs" style={{ color: colors.offWhite }}>Signals</div>
-            {allSignals.map((signal) => {
-              const descriptions: Record<string, string> = {
-                Seed: 'Queued/Backlog',
-                Awake: 'Planning/Starting',
-                Wiring: 'Active Development',
-                Live: 'Production/Deployed',
-                Echo: 'Maintenance/Iteration',
-                Archive: 'Retired/Deprecated',
-              };
-              return (
-                <div key={signal} className="flex items-start gap-2 mb-1.5">
-                  <div
-                    className="w-2.5 h-2.5 rounded-full mt-0.5 flex-shrink-0"
-                    style={{ backgroundColor: getSignalColor(signal) }}
-                  />
-                  <div className="flex-1">
-                    <div className="font-semibold text-xs" style={{ color: colors.offWhite }}>
-                      {signal}
-                    </div>
-                    <div className="text-xs opacity-70 leading-tight">{descriptions[signal]}</div>
-                  </div>
+        {flowMode ? (
+          <>
+            {/* Flow Mode Header */}
+            <div
+              className="absolute left-1/2 transform -translate-x-1/2 z-40 px-6 py-3 rounded-lg backdrop-blur-sm border"
+              style={{
+                top: '6.5rem',
+                backgroundColor: `${colors.deepSpace}90`,
+                borderColor: `${colors.aurumGold}40`,
+                maxWidth: '800px',
+              }}
+            >
+              <div className="text-center">
+                <div className="text-sm font-mono font-bold mb-1" style={{ color: colors.aurumGold }}>
+                  Flow Index View
                 </div>
-              );
-            })}
-          </div>
+                <div className="text-xs font-mono" style={{ color: colors.slateLight }}>
+                  Organized by Flow = (Energy × 0.4) + (Priority × 0.6). Higher flow needs attention next.
+                </div>
+              </div>
+            </div>
+            <FlowLanes
+              nodes={filteredGridData.nodes}
+              onNodeClick={(node: VisualNode) => {
+                router.push(`/nodes/${node.id}`);
+              }}
+            />
+          </>
+        ) : (
+          <TheGrid
+            gridData={filteredGridData}
+            selectedEntityId={selectedEntityId}
+            onNodeClick={(node: VisualNode) => {
+              router.push(`/nodes/${node.id}`);
+            }}
+            onServiceClick={(service: VisualService) => {
+              router.push(`/services/${service.id}`);
+            }}
+            onModuleClick={(module: VisualModule) => {
+              router.push(`/nodes/${module.parent}#module-${module.id}`);
+            }}
+          />
+        )}
+      </div>
+
+      {/* Signal Legend - hidden in Flow Mode */}
+      {!flowMode && (
+        <div className="absolute right-6 z-30" style={{ top: '15rem' }}>
+          <SignalLegend signalColors={signalColorMap} />
         </div>
-      </div>
-
-      {/* Node Detail Drawer */}
-      <NodeDrawer
-        node={selectedNode || null}
-        onClose={() => setSelectedNodeId(undefined)}
-        connectedNodes={connectedNodes}
-      />
-
-      {/* Back to Home button */}
-      <div
-        className="absolute bottom-8 right-8 z-20 max-w-xs
-                   p-4 backdrop-blur-sm border-2 hidden md:block"
-        style={{
-          backgroundColor: `${colors.deepSpace}95`,
-          borderColor: colors.electricBlue,
-          boxShadow: `0 0 30px ${colors.electricBlue}40, inset 0 0 20px ${colors.electricBlue}10`,
-          clipPath: 'polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)',
-        }}
-      >
-        <Link
-          href="/"
-          className="font-mono font-bold text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105 cursor-pointer flex items-center justify-center"
-          style={{
-            padding: '0.5rem 1rem',
-            backgroundColor: `${colors.electricBlue}20`,
-            borderWidth: '2px',
-            borderColor: colors.electricBlue,
-            color: colors.offWhite,
-            boxShadow: `0 0 20px ${colors.electricBlue}60, inset 0 0 10px ${colors.electricBlue}20`,
-            clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)',
-          }}
-        >
-          &lt;&lt; BACK TO HOME
-        </Link>
-      </div>
+      )}
 
       {/* Footer */}
       <div className="relative z-10">

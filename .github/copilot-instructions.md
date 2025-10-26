@@ -60,6 +60,9 @@ Centralized in `lib/tokens.ts`:
 - **Why**: Intentional design for zero-bloat—no browser defaults, explicit spacing only
 - **Pattern**: Inline styles for `<p>`, `<h2>`, `<blockquote>` margins; Tailwind for divs/sections
 
+**Known Issue (Deferred)**: 
+The typography reset in `globals.css` conflicts with Tailwind's utility-first philosophy by forcing inline styles instead of using margin utilities. This was an intentional design choice for zero-bloat control, but creates verbose code. Consider removing the reset and using Tailwind's built-in preflight or `!important` utilities in a future refactor.
+
 ## Tech Stack Specifics
 
 ### Next.js 15 + React 19

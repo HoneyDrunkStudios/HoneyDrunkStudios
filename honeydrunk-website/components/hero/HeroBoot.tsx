@@ -171,9 +171,9 @@ export default function HeroBoot({
   };
 
   const handleFollowSignal = () => {
-    console.log('[Analytics] cta_view_grid');
-    // Navigate to /services on mobile, /grid on desktop
-    window.location.href = isMobile ? '/services' : '/grid';
+    console.log('[Analytics] cta_view_sectors');
+    // Navigate to /sectors on mobile, /grid on desktop
+    window.location.href = isMobile ? '/sectors' : '/grid';
     onFollowSignal?.();
   };
 

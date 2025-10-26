@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: "HoneyDrunk Studios",
     images: [
       {
-        url: "/neoncity.png",
+        url: "/neoncity-og.png",
         width: 1200,
         height: 630,
         alt: "HoneyDrunk Studios - Neon cyberpunk cityscape",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "HoneyDrunk Studios — The Grid",
     description: "Building the HoneyDrunk Grid — open systems, tools, games, and cyberware that empower creators.",
-    images: ["/neoncity.png"],
+    images: ["/neoncity-og.png"],
     creator: "@honeydrunk",
   },
   verification: {
@@ -62,8 +62,31 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'HoneyDrunk Studios',
+    url: siteUrl,
+    logo: `${siteUrl}/neoncity-og.png`,
+    description: 'Building the HoneyDrunk Grid — open systems, tools, games, and cyberware that empower creators.',
+    sameAs: [
+      'https://twitter.com/honeydrunk',
+      'https://github.com/honeydrunkstudios',
+    ],
+    founder: {
+      '@type': 'Person',
+      name: 'HoneyDrunk Studios Team',
+    },
+  };
+
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="antialiased">
         <CyberpunkEffects />
         <PageTransition />

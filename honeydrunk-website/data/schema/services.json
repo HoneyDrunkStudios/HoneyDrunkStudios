@@ -1,0 +1,748 @@
+[
+  {
+    "id": "svc-grid-visualizer",
+    "type": "service",
+    "name": "Grid.Visualizer",
+    "owner": "Meta",
+    "tier": "prod-critical",
+    "runtime": {
+      "language": "typescript",
+      "target": "nextjs"
+    },
+    "region": "global",
+    "envs": [
+      "prod"
+    ],
+    "depends_on": [
+      "grid",
+      "honeydrunk-transport",
+      "pulse",
+      "honeydrunk-vault"
+    ],
+    "interfaces": {
+      "http": [
+        "/"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://grid-visualizer",
+      "alerts": []
+    },
+    "release_channel": {
+      "ring": "prod",
+      "flags": []
+    },
+    "signal": "Live",
+    "long_description": {
+      "overview": "The live front-end of The Hive: renders all Nodes, Modules, and Services with signal-based animation. Public-facing, neon-lit visualization that keeps the ecosystem transparent.",
+      "why_it_exists": "To make the state of The Grid observable to contributors and the community.",
+      "primary_audience": "Developers, contributors, and anyone tracking HoneyDrunk\u2019s build-in-public roadmap.",
+      "value_props": [
+        "Visualizes Node and Service dependencies in real time",
+        "Acts as the public dashboard for Hive activity",
+        "Serves as the canonical source for Grid states and Signals"
+      ],
+      "monetization_signal": "Internal showcase; potential for interactive SaaS dashboard in future.",
+      "roadmap_focus": "Add Services lane, module dock views, and live signal updates via WebSockets.",
+      "grid_relationship": "Consumes HoneyDrunk.Grid and Pulse data to render the map and state of each entity.",
+      "integration_depth": "deep",
+      "demo_path": "Open honeydrunkstudios.com \u2192 explore the lattice.",
+      "signal_quote": "The lattice, lit.",
+      "stability_tier": "critical",
+      "impact_vector": "creator engagement"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-grid-registry",
+    "type": "service",
+    "name": "Grid.Registry",
+    "owner": "Meta",
+    "tier": "internal",
+    "runtime": {
+      "language": "dotnet",
+      "target": "container"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev",
+      "prod"
+    ],
+    "depends_on": [
+      "grid",
+      "honeydrunk-transport",
+      "honeydrunk-vault",
+      "pulse"
+    ],
+    "interfaces": {
+      "http": [
+        "/api/entities",
+        "/api/heartbeat"
+      ],
+      "events_in": [
+        "Service.Heartbeat"
+      ],
+      "events_out": [
+        "Entity.Updated"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://grid-registry",
+      "alerts": [
+        "registry-latency"
+      ]
+    },
+    "release_channel": {
+      "ring": "prod",
+      "flags": []
+    },
+    "signal": "Awake",
+    "long_description": {
+      "overview": "The internal service registry of the Grid. Tracks entity metadata, Signals, and health checks for all Nodes, Modules, and Services.",
+      "why_it_exists": "Ensures every entity in the Grid reports its status, dependencies, and health consistently.",
+      "primary_audience": "HoneyDrunk engineers and automation agents.",
+      "value_props": [
+        "Central registry for entity states",
+        "Publishes health and status events to Pulse",
+        "Backs the Grid.Visualizer with real data"
+      ],
+      "monetization_signal": "Internal-only service.",
+      "roadmap_focus": "Add version tracking and dependency health scoring.",
+      "grid_relationship": "Core backend of HoneyDrunk.Grid; feeds status and updates to the visualizer.",
+      "integration_depth": "deep",
+      "demo_path": "Register a new Node \u2192 watch live propagation to Grid.Visualizer.",
+      "signal_quote": "Heartbeat of The Hive.",
+      "stability_tier": "stable",
+      "impact_vector": "system observability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-deploy-webhookrelay",
+    "type": "service",
+    "name": "Deploy.WebhookRelay",
+    "owner": "Ops",
+    "tier": "internal",
+    "runtime": {
+      "language": "dotnet",
+      "target": "container"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev",
+      "prod"
+    ],
+    "depends_on": [
+      "honeydrunk-transport",
+      "honeydrunk-vault"
+    ],
+    "interfaces": {
+      "http": [
+        "/hooks/vercel",
+        "/hooks/azdo"
+      ],
+      "events_out": [
+        "Deploy.Succeeded",
+        "Deploy.Failed"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://deploy-webhookrelay",
+      "alerts": [
+        "deploy-hook-errors"
+      ]
+    },
+    "release_channel": {
+      "ring": "prod",
+      "flags": []
+    },
+    "signal": "Seed",
+    "long_description": {
+      "overview": "Relays webhooks from CI/CD platforms (Azure DevOps, Vercel) into the Transport event system for unified deploy tracking.",
+      "why_it_exists": "Deploy events should flow into the same telemetry fabric as other services.",
+      "primary_audience": "Ops and deployment automation systems.",
+      "value_props": [
+        "Normalizes webhooks from multiple platforms",
+        "Emits standardized Deploy events into Transport",
+        "Simplifies observability and deploy metrics in Pulse"
+      ],
+      "monetization_signal": "Internal-only utility service.",
+      "roadmap_focus": "Support GitHub Actions and additional deploy metadata.",
+      "grid_relationship": "Bridges CI/CD platforms to the Grid\u2019s telemetry and Deploy domain.",
+      "integration_depth": "medium",
+      "demo_path": "Trigger a deploy on Vercel \u2192 observe a Deploy.Succeeded event in Pulse.",
+      "signal_quote": "One webhook to rule them all.",
+      "stability_tier": "beta",
+      "impact_vector": "ops automation"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-pulse-collector",
+    "type": "service",
+    "name": "Pulse.Collector",
+    "owner": "HoneyNet",
+    "tier": "internal",
+    "runtime": {
+      "language": "dotnet",
+      "target": "container"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev",
+      "prod"
+    ],
+    "depends_on": [
+      "pulse",
+      "honeydrunk-telemetry-abstractions",
+      "honeydrunk-telemetry-opentelemetry",
+      "honeydrunk-telemetry-sink-sentry",
+      "honeydrunk-telemetry-sink-posthog",
+      "honeydrunk-vault"
+    ],
+    "interfaces": {
+      "http": [
+        "/otlp/v1/traces",
+        "/otlp/v1/metrics",
+        "/logs"
+      ],
+      "events_out": [
+        "Pulse.Ingested"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://pulse-collector",
+      "alerts": [
+        "ingest-failure-rate"
+      ]
+    },
+    "release_channel": {
+      "ring": "prod",
+      "flags": []
+    },
+    "signal": "Seed",
+    "long_description": {
+      "overview": "Central ingestion point for all telemetry data flowing into Pulse. Handles OTLP traces, metrics, and logs, routing to sinks and analytics.",
+      "why_it_exists": "Consolidates observability data and enforces schema consistency.",
+      "primary_audience": "Ops and observability teams within the Hive.",
+      "value_props": [
+        "Unified telemetry intake across protocols",
+        "Applies standard enrichment and tagging",
+        "Feeds multiple sinks (Sentry, PostHog, etc.)"
+      ],
+      "monetization_signal": "Internal backbone service.",
+      "roadmap_focus": "Add adaptive sampling and anomaly detection.",
+      "grid_relationship": "Consumes telemetry from all Nodes and Services; powers dashboards in Pulse.",
+      "integration_depth": "deep",
+      "demo_path": "Send OTLP data \u2192 verify unified metrics in Pulse dashboards.",
+      "signal_quote": "Where signals converge.",
+      "stability_tier": "stable",
+      "impact_vector": "observability throughput"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-honeyhub-projects-api",
+    "type": "service",
+    "name": "HoneyHub.Projects.API",
+    "owner": "Meta",
+    "tier": "internal",
+    "runtime": {
+      "language": "dotnet",
+      "target": "appservice"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev"
+    ],
+    "depends_on": [
+      "honeycore-web-rest",
+      "honeydrunk-auth",
+      "honeydrunk-vault",
+      "honeydrunk-transport",
+      "pulse",
+      "honeydrunk-data"
+    ],
+    "interfaces": {
+      "http": [
+        "/api/projects",
+        "/api/projects/{id}"
+      ],
+      "events_out": [
+        "Project.Created",
+        "Project.Updated"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://honeyhub-projects",
+      "alerts": [
+        "projects-5xx"
+      ]
+    },
+    "release_channel": {
+      "ring": "dev",
+      "flags": [
+        "audit.traces"
+      ]
+    },
+    "signal": "Seed",
+    "long_description": {
+      "overview": "Project catalog and CRUD for HoneyHub. Provides a clean API surface for managing projects, relationships, and audit data.",
+      "why_it_exists": "HoneyHub needs a first-party API to anchor PM workflows and public-facing views.",
+      "primary_audience": "HoneyHub UI and internal automations.",
+      "value_props": [
+        "Consistent REST contracts via Web.Rest",
+        "Event-first updates for real-time UIs",
+        "Auth and audit built-in"
+      ],
+      "monetization_signal": "Internal service powering HoneyHub experiences.",
+      "roadmap_focus": "Add search, tags, and cross-node linking.",
+      "grid_relationship": "Consumes Auth, Vault, Transport, Data; emits events to Pulse and Transport.",
+      "integration_depth": "medium",
+      "demo_path": "Create a project \u2192 see Project.Created event and audit trail.",
+      "signal_quote": "Projects, on rails.",
+      "stability_tier": "experimental",
+      "impact_vector": "creator workflow"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-signal-scheduler",
+    "type": "service",
+    "name": "Signal.Scheduler",
+    "owner": "Creator",
+    "tier": "internal",
+    "runtime": {
+      "language": "dotnet",
+      "target": "container"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev"
+    ],
+    "depends_on": [
+      "honeydrunk-agentkit",
+      "honeydrunk-transport",
+      "pulse",
+      "honeydrunk-vault"
+    ],
+    "interfaces": {
+      "events_in": [
+        "Content.Enqueue"
+      ],
+      "events_out": [
+        "Content.Published",
+        "Metric.Updated"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://signal-scheduler",
+      "alerts": [
+        "schedule-lag"
+      ]
+    },
+    "release_channel": {
+      "ring": "dev",
+      "flags": []
+    },
+    "signal": "Seed",
+    "long_description": {
+      "overview": "Agent-driven scheduler that takes content tasks and publishes across channels at optimal times, with feedback loops via metrics.",
+      "why_it_exists": "Creators need automated, context-aware posting without brittle cron jobs.",
+      "primary_audience": "HoneyDrunk.Signal and creator tools.",
+      "value_props": [
+        "AgentKit lifecycle for robust scheduling",
+        "Event-driven architecture with retries",
+        "Telemetry on engagement outcomes"
+      ],
+      "monetization_signal": "Internal engine for creator-facing features.",
+      "roadmap_focus": "Channel adapters and A/B timing experiments.",
+      "grid_relationship": "Consumes AgentKit, Vault, Transport; pushes metrics to Pulse.",
+      "integration_depth": "medium",
+      "demo_path": "Enqueue content \u2192 observe publish events and metrics updates.",
+      "signal_quote": "Post with purpose.",
+      "stability_tier": "experimental",
+      "impact_vector": "creator engagement"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-forge-web",
+    "type": "service",
+    "name": "Forge.Web",
+    "owner": "Creator",
+    "tier": "experimental",
+    "runtime": {
+      "language": "typescript",
+      "target": "nextjs"
+    },
+    "region": "global",
+    "envs": [
+      "dev"
+    ],
+    "depends_on": [
+      "honeydrunk-vault",
+      "pulse"
+    ],
+    "interfaces": {
+      "http": [
+        "/"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://forge-web",
+      "alerts": []
+    },
+    "release_channel": {
+      "ring": "dev",
+      "flags": []
+    },
+    "signal": "Seed",
+    "long_description": {
+      "overview": "Public-facing web surface for Forge marketplace. Serves product pages, search, and account flows.",
+      "why_it_exists": "Creators need a storefront to publish and monetize assets and themes.",
+      "primary_audience": "Creators and buyers browsing Forge.",
+      "value_props": [
+        "Fast Next.js storefront",
+        "Pulse-instrumented UX flows",
+        "Tight Vault integration for secrets and feature flags"
+      ],
+      "monetization_signal": "Revenue-facing surface for marketplace transactions.",
+      "roadmap_focus": "Add discovery, tags, and checkout integration.",
+      "grid_relationship": "Depends on Vault and Pulse; pairs with Forge.API for data.",
+      "integration_depth": "shallow",
+      "demo_path": "Open the homepage \u2192 browse assets and themes.",
+      "signal_quote": "Craft meets commerce.",
+      "stability_tier": "experimental",
+      "impact_vector": "creator monetization"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-forge-api",
+    "type": "service",
+    "name": "Forge.API",
+    "owner": "Creator",
+    "tier": "experimental",
+    "runtime": {
+      "language": "dotnet",
+      "target": "appservice"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev"
+    ],
+    "depends_on": [
+      "honeycore-web-rest",
+      "honeydrunk-transport",
+      "honeydrunk-vault",
+      "pulse"
+    ],
+    "interfaces": {
+      "http": [
+        "/api/assets",
+        "/api/themes"
+      ],
+      "events_out": [
+        "Asset.Published"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://forge-api",
+      "alerts": [
+        "forge-5xx"
+      ]
+    },
+    "release_channel": {
+      "ring": "dev",
+      "flags": []
+    },
+    "signal": "Seed",
+    "long_description": {
+      "overview": "Backend for Forge marketplace: asset metadata, theme catalogs, publishing flows, and eventing.",
+      "why_it_exists": "Separates public web from domain logic and enables event-driven integrations.",
+      "primary_audience": "Forge.Web and creator tooling.",
+      "value_props": [
+        "Clean REST contracts via Web.Rest",
+        "Event outbox for publication lifecycle",
+        "Pulse metrics on publish/consume"
+      ],
+      "monetization_signal": "Supports marketplace transactions and analytics.",
+      "roadmap_focus": "Add search, ratings, and revenue splits.",
+      "grid_relationship": "Consumes Vault and Transport; emits Product events.",
+      "integration_depth": "medium",
+      "demo_path": "Publish an asset \u2192 see Asset.Published fired and UI updated.",
+      "signal_quote": "Ship the catalog.",
+      "stability_tier": "experimental",
+      "impact_vector": "creator monetization"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-draft-api",
+    "type": "service",
+    "name": "Draft.API",
+    "owner": "HoneyPlay",
+    "tier": "experimental",
+    "runtime": {
+      "language": "dotnet",
+      "target": "appservice"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev"
+    ],
+    "depends_on": [
+      "honeycore-web-rest",
+      "honeydrunk-transport",
+      "pulse",
+      "honeydrunk-vault"
+    ],
+    "interfaces": {
+      "http": [
+        "/api/leagues",
+        "/api/teams"
+      ],
+      "events_out": [
+        "League.Created",
+        "Score.Updated"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://draft-api",
+      "alerts": [
+        "draft-5xx"
+      ]
+    },
+    "release_channel": {
+      "ring": "dev",
+      "flags": []
+    },
+    "signal": "Seed",
+    "long_description": {
+      "overview": "Domain API for the Draft fantasy media league: leagues, rosters, scoring rules, and live updates.",
+      "why_it_exists": "Keeps gameplay rules and data independent from clients and workers.",
+      "primary_audience": "Draft clients and the Scorer worker.",
+      "value_props": [
+        "Clear REST contracts for league management",
+        "Event-first scoring updates",
+        "Pulse metrics for game health"
+      ],
+      "monetization_signal": "Foundation for future premium leagues or paid seasons.",
+      "roadmap_focus": "Add drafts, trades, and season timelines.",
+      "grid_relationship": "Pairs with Draft.Scorer.Worker via Transport events.",
+      "integration_depth": "medium",
+      "demo_path": "Create a league \u2192 receive League.Created and fetch via API.",
+      "signal_quote": "Rules. Rosters. Rivalry.",
+      "stability_tier": "experimental",
+      "impact_vector": "player engagement"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-draft-scorer-worker",
+    "type": "service",
+    "name": "Draft.Scorer.Worker",
+    "owner": "HoneyPlay",
+    "tier": "experimental",
+    "runtime": {
+      "language": "dotnet",
+      "target": "container"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev"
+    ],
+    "depends_on": [
+      "honeydrunk-transport",
+      "pulse",
+      "honeydrunk-vault"
+    ],
+    "interfaces": {
+      "events_in": [
+        "Score.Compute.Request"
+      ],
+      "events_out": [
+        "Score.Compute.Done"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://draft-scorer",
+      "alerts": [
+        "scorer-lag"
+      ]
+    },
+    "release_channel": {
+      "ring": "dev",
+      "flags": []
+    },
+    "signal": "Seed",
+    "long_description": {
+      "overview": "Background worker that computes fantasy scores based on events and rules emitted by Draft.API.",
+      "why_it_exists": "Offloads compute-heavy, asynchronous scoring from the API and clients.",
+      "primary_audience": "Draft.API and internal ops dashboards.",
+      "value_props": [
+        "Reliable event-driven scoring with retries",
+        "Clear in/out event contracts",
+        "Traceable compute for fairness and debugging"
+      ],
+      "monetization_signal": "Enables premium scoring modes at scale.",
+      "roadmap_focus": "Add parallelism strategies and anti-cheat checks.",
+      "grid_relationship": "Consumes score requests via Transport; reports metrics to Pulse.",
+      "integration_depth": "medium",
+      "demo_path": "Emit Score.Compute.Request \u2192 observe Score.Compute.Done and updated leaderboard.",
+      "signal_quote": "Score it clean.",
+      "stability_tier": "experimental",
+      "impact_vector": "system scalability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-breachlab-web",
+    "type": "service",
+    "name": "BreachLab.Web",
+    "owner": "HoneyNet",
+    "tier": "experimental",
+    "runtime": {
+      "language": "typescript",
+      "target": "nextjs"
+    },
+    "region": "global",
+    "envs": [
+      "dev"
+    ],
+    "depends_on": [
+      "honeydrunk-vault",
+      "pulse"
+    ],
+    "interfaces": {
+      "http": [
+        "/"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://breachlab-web",
+      "alerts": []
+    },
+    "release_channel": {
+      "ring": "dev",
+      "flags": []
+    },
+    "signal": "Seed",
+    "long_description": {
+      "overview": "Web surface for BreachLab.exe: browse labs, run safe scenarios, and read defensive walkthroughs.",
+      "why_it_exists": "Makes security education approachable for creators with hands-on labs.",
+      "primary_audience": "Indie devs, students, and security-curious creators.",
+      "value_props": [
+        "Interactive CTF-lite experiences",
+        "Safety Manifest per lab",
+        "Integrated telemetry for learning progress"
+      ],
+      "monetization_signal": "Potential premium lab packs later.",
+      "roadmap_focus": "User accounts, progress tracking, and lab publishing.",
+      "grid_relationship": "Leans on Vault for secrets and Pulse for usage analytics.",
+      "integration_depth": "shallow",
+      "demo_path": "Open a lab \u2192 follow instructions \u2192 view results and remediation.",
+      "signal_quote": "Break to learn.",
+      "stability_tier": "experimental",
+      "impact_vector": "security literacy"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-honeymech-sim-orchestrator",
+    "type": "service",
+    "name": "HoneyMech.Sim.Orchestrator",
+    "owner": "Cyberware",
+    "tier": "internal",
+    "runtime": {
+      "language": "dotnet",
+      "target": "container"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev"
+    ],
+    "depends_on": [
+      "honeydrunk-transport",
+      "pulse",
+      "honeydrunk-vault"
+    ],
+    "interfaces": {
+      "events_in": [
+        "Sim.Run.Request"
+      ],
+      "events_out": [
+        "Sim.Run.Complete"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://sim-orchestrator",
+      "alerts": [
+        "sim-failures"
+      ]
+    },
+    "release_channel": {
+      "ring": "dev",
+      "flags": []
+    },
+    "signal": "Seed",
+    "long_description": {
+      "overview": "Coordinator for robotics simulation runs. Spins up scenarios, tracks state, and aggregates results for downstream analysis.",
+      "why_it_exists": "Separates orchestration and scheduling from physics and control loops.",
+      "primary_audience": "HoneyMech.Sim, Courier, Servo developers.",
+      "value_props": [
+        "Event-driven orchestration of simulation jobs",
+        "Status tracking and result aggregation",
+        "Traceable runs with Pulse linkage"
+      ],
+      "monetization_signal": "Internal R&D service.",
+      "roadmap_focus": "Scenario templating and artifact storage pipelines.",
+      "grid_relationship": "Consumes requests via Transport; surfaces run metrics in Pulse.",
+      "integration_depth": "medium",
+      "demo_path": "Submit a Sim.Run.Request \u2192 watch orchestration and completion event.",
+      "signal_quote": "Sim like you mean it.",
+      "stability_tier": "experimental",
+      "impact_vector": "robotics velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  }
+]
+
+

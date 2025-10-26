@@ -3,6 +3,7 @@ import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import { colors } from '@/lib/tokens';
+import { flowTierDefinitions } from '@/lib/nodes';
 
 export const metadata = {
   title: 'About — HoneyDrunk Studios',
@@ -24,7 +25,7 @@ export default function AboutPage() {
       <div className="relative z-10 pt-20 md:pt-32 px-4 md:px-8 lg:px-16 pb-16">
         <div className="max-w-3xl mx-auto space-y-8 md:space-y-12">
           {/* Page Title */}
-          <header className="space-y-3 md:space-y-4">
+          <header className="space-y-3 md:space-y-4 text-center md:text-left">
             <h1
             className="text-3xl md:text-5xl lg:text-6xl font-display font-bold py-2 md:py-4 holographic-text"
           >
@@ -33,7 +34,7 @@ export default function AboutPage() {
         </header>
 
         {/* Manifesto */}
-        <section className="space-y-4 md:space-y-6">
+        <section className="space-y-4 md:space-y-6 text-center md:text-left">
           <h2
             className="text-2xl md:text-3xl lg:text-4xl font-display font-bold"
             style={{
@@ -64,7 +65,7 @@ export default function AboutPage() {
         </section>
 
         {/* Vision */}
-        <section className="space-y-4 md:space-y-6">
+        <section className="space-y-4 md:space-y-6 text-center md:text-left">
           <h2
             className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-2 md:pt-4"
             style={{ color: colors.electricBlue, marginBottom: '24px' }}
@@ -100,7 +101,7 @@ export default function AboutPage() {
         </section>
 
         {/* Pillars */}
-        <section className="space-y-4 md:space-y-6">
+        <section className="space-y-4 md:space-y-6 text-center md:text-left">
           <h2
             className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-2 md:pt-4"
             style={{ color: colors.electricBlue, marginBottom: '24px' }}
@@ -149,7 +150,7 @@ export default function AboutPage() {
         </section>
 
         {/* Philosophy */}
-        <section>
+        <section className="text-center md:text-left">
           <h2
             className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-2 md:pt-4"
             style={{ color: colors.electricBlue, marginBottom: '24px' }}
@@ -187,7 +188,7 @@ export default function AboutPage() {
         </section>
 
         {/* Signal States */}
-        <section className="space-y-4 md:space-y-6">
+        <section className="space-y-4 md:space-y-6 text-center md:text-left">
           <div style={{ marginBottom: '24px' }}>
             <h2
               className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-2 md:pt-4"
@@ -235,7 +236,7 @@ export default function AboutPage() {
         </section>
 
         {/* In Short */}
-        <section className="space-y-4 md:space-y-6">
+        <section className="space-y-4 md:space-y-6 text-center md:text-left">
           <div
             className="p-6 md:p-8 rounded-lg border-2 text-center space-y-3"
             style={{
@@ -265,7 +266,7 @@ export default function AboutPage() {
         </section>
 
         {/* Flow Index System */}
-        <section className="space-y-4 md:space-y-6">
+        <section className="space-y-4 md:space-y-6 text-center md:text-left">
           <div style={{ marginBottom: '24px' }}>
             <h2
               className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-2 md:pt-4"
@@ -292,15 +293,9 @@ export default function AboutPage() {
             </p>
 
             <div className="grid gap-3 md:gap-4">
-              {[
-                { tier: 'Critical', range: '80-100', color: colors.aurumGold, desc: 'Critical path — unlocks others' },
-                { tier: 'Active', range: '60-79', color: colors.electricBlue, desc: 'Actively advancing — next to queue' },
-                { tier: 'Stable', range: '40-59', color: colors.violetFlux, desc: 'Stable, iterative, or dependent' },
-                { tier: 'Dormant', range: '20-39', color: colors.slateLight, desc: 'Background maintenance or resting' },
-                { tier: 'Archived', range: '<20', color: colors.archiveRed, desc: 'Cold storage — revisit or archive' },
-              ].map((item) => (
+              {flowTierDefinitions.map((item) => (
                 <div
-                  key={item.tier}
+                  key={item.label}
                   className="flex items-center gap-4 p-3 md:p-4 rounded-lg border"
                   style={{
                     backgroundColor: `${item.color}10`,
@@ -320,20 +315,20 @@ export default function AboutPage() {
                   </div>
                   <div className="flex-1">
                     <div className="font-display font-bold text-sm mb-1" style={{ color: item.color }}>
-                      {item.tier}
+                      {item.label}
                     </div>
                     <div className="text-xs" style={{ color: colors.slateLight }}>
-                      {item.desc}
+                      {item.description.split('—')[1]?.trim() || item.description}
                     </div>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="flex gap-3 pt-4">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <Link
                 href="/about/flow"
-                className="flex-1 px-6 py-3 rounded-lg text-center text-sm font-mono font-bold uppercase tracking-wider
+                className="px-6 py-3 rounded-lg text-center text-sm font-mono font-bold uppercase tracking-wider
                            transition-all duration-200 hover:scale-105"
                 style={{
                   backgroundColor: colors.aurumGold,
@@ -345,7 +340,7 @@ export default function AboutPage() {
               </Link>
               <Link
                 href="/flow"
-                className="flex-1 px-6 py-3 rounded-lg text-center text-sm font-mono font-bold uppercase tracking-wider
+                className="px-6 py-3 rounded-lg text-center text-sm font-mono font-bold uppercase tracking-wider
                            transition-all duration-200 hover:scale-105 border-2"
                 style={{
                   backgroundColor: `${colors.aurumGold}20`,

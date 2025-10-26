@@ -12,7 +12,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import nodesData from '@/data/nodes.json';
+import nodesData from '@/data/schema/nodes.json';
 import type { Node } from '@/lib/types';
 
 const nodes = nodesData as Node[];
