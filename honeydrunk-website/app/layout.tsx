@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: "HoneyDrunk Studios",
     images: [
       {
-        url: "/neoncity-og.png",
+        url: `${siteUrl}/neoncity-og.png`,
         width: 1200,
         height: 630,
         alt: "HoneyDrunk Studios - Neon cyberpunk cityscape",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "HoneyDrunk Studios — The Grid",
     description: "Building the HoneyDrunk Grid — open systems, tools, games, and cyberware that empower creators.",
-    images: ["/neoncity-og.png"],
+    images: [`${siteUrl}/neoncity-og.png`],
     creator: "@honeydrunk",
   },
   verification: {
