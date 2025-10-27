@@ -36,7 +36,7 @@
     "long_description": {
       "overview": "The live front-end of The Hive: renders all Nodes, Modules, and Services with signal-based animation. Public-facing, neon-lit visualization that keeps the ecosystem transparent.",
       "why_it_exists": "To make the state of The Grid observable to contributors and the community.",
-      "primary_audience": "Developers, contributors, and anyone tracking HoneyDrunk\u2019s build-in-public roadmap.",
+      "primary_audience": "Developers, contributors, and anyone tracking HoneyDrunk’s build-in-public roadmap.",
       "value_props": [
         "Visualizes Node and Service dependencies in real time",
         "Acts as the public dashboard for Hive activity",
@@ -46,7 +46,7 @@
       "roadmap_focus": "Add Services lane, module dock views, and live signal updates via WebSockets.",
       "grid_relationship": "Consumes HoneyDrunk.Grid and Pulse data to render the map and state of each entity.",
       "integration_depth": "deep",
-      "demo_path": "Open honeydrunkstudios.com \u2192 explore the lattice.",
+      "demo_path": "Open honeydrunkstudios.com → explore the lattice.",
       "signal_quote": "The lattice, lit.",
       "stability_tier": "critical",
       "impact_vector": "creator engagement"
@@ -113,7 +113,7 @@
       "roadmap_focus": "Add version tracking and dependency health scoring.",
       "grid_relationship": "Core backend of HoneyDrunk.Grid; feeds status and updates to the visualizer.",
       "integration_depth": "deep",
-      "demo_path": "Register a new Node \u2192 watch live propagation to Grid.Visualizer.",
+      "demo_path": "Register a new Node → watch live propagation to Grid.Visualizer.",
       "signal_quote": "Heartbeat of The Hive.",
       "stability_tier": "stable",
       "impact_vector": "system observability"
@@ -174,9 +174,9 @@
       ],
       "monetization_signal": "Internal-only utility service.",
       "roadmap_focus": "Support GitHub Actions and additional deploy metadata.",
-      "grid_relationship": "Bridges CI/CD platforms to the Grid\u2019s telemetry and Deploy domain.",
+      "grid_relationship": "Bridges CI/CD platforms to the Grid’s telemetry and Deploy domain.",
       "integration_depth": "medium",
-      "demo_path": "Trigger a deploy on Vercel \u2192 observe a Deploy.Succeeded event in Pulse.",
+      "demo_path": "Trigger a deploy on Vercel → observe a Deploy.Succeeded event in Pulse.",
       "signal_quote": "One webhook to rule them all.",
       "stability_tier": "beta",
       "impact_vector": "ops automation"
@@ -243,7 +243,7 @@
       "roadmap_focus": "Add adaptive sampling and anomaly detection.",
       "grid_relationship": "Consumes telemetry from all Nodes and Services; powers dashboards in Pulse.",
       "integration_depth": "deep",
-      "demo_path": "Send OTLP data \u2192 verify unified metrics in Pulse dashboards.",
+      "demo_path": "Send OTLP data → verify unified metrics in Pulse dashboards.",
       "signal_quote": "Where signals converge.",
       "stability_tier": "stable",
       "impact_vector": "observability throughput"
@@ -311,7 +311,7 @@
       "roadmap_focus": "Add search, tags, and cross-node linking.",
       "grid_relationship": "Consumes Auth, Vault, Transport, Data; emits events to Pulse and Transport.",
       "integration_depth": "medium",
-      "demo_path": "Create a project \u2192 see Project.Created event and audit trail.",
+      "demo_path": "Create a project → see Project.Created event and audit trail.",
       "signal_quote": "Projects, on rails.",
       "stability_tier": "experimental",
       "impact_vector": "creator workflow"
@@ -374,7 +374,7 @@
       "roadmap_focus": "Channel adapters and A/B timing experiments.",
       "grid_relationship": "Consumes AgentKit, Vault, Transport; pushes metrics to Pulse.",
       "integration_depth": "medium",
-      "demo_path": "Enqueue content \u2192 observe publish events and metrics updates.",
+      "demo_path": "Enqueue content → observe publish events and metrics updates.",
       "signal_quote": "Post with purpose.",
       "stability_tier": "experimental",
       "impact_vector": "creator engagement"
@@ -429,7 +429,7 @@
       "roadmap_focus": "Add discovery, tags, and checkout integration.",
       "grid_relationship": "Depends on Vault and Pulse; pairs with Forge.API for data.",
       "integration_depth": "shallow",
-      "demo_path": "Open the homepage \u2192 browse assets and themes.",
+      "demo_path": "Open the homepage → browse assets and themes.",
       "signal_quote": "Craft meets commerce.",
       "stability_tier": "experimental",
       "impact_vector": "creator monetization"
@@ -492,7 +492,7 @@
       "roadmap_focus": "Add search, ratings, and revenue splits.",
       "grid_relationship": "Consumes Vault and Transport; emits Product events.",
       "integration_depth": "medium",
-      "demo_path": "Publish an asset \u2192 see Asset.Published fired and UI updated.",
+      "demo_path": "Publish an asset → see Asset.Published fired and UI updated.",
       "signal_quote": "Ship the catalog.",
       "stability_tier": "experimental",
       "impact_vector": "creator monetization"
@@ -556,7 +556,7 @@
       "roadmap_focus": "Add drafts, trades, and season timelines.",
       "grid_relationship": "Pairs with Draft.Scorer.Worker via Transport events.",
       "integration_depth": "medium",
-      "demo_path": "Create a league \u2192 receive League.Created and fetch via API.",
+      "demo_path": "Create a league → receive League.Created and fetch via API.",
       "signal_quote": "Rules. Rosters. Rivalry.",
       "stability_tier": "experimental",
       "impact_vector": "player engagement"
@@ -617,7 +617,7 @@
       "roadmap_focus": "Add parallelism strategies and anti-cheat checks.",
       "grid_relationship": "Consumes score requests via Transport; reports metrics to Pulse.",
       "integration_depth": "medium",
-      "demo_path": "Emit Score.Compute.Request \u2192 observe Score.Compute.Done and updated leaderboard.",
+      "demo_path": "Emit Score.Compute.Request → observe Score.Compute.Done and updated leaderboard.",
       "signal_quote": "Score it clean.",
       "stability_tier": "experimental",
       "impact_vector": "system scalability"
@@ -672,7 +672,7 @@
       "roadmap_focus": "User accounts, progress tracking, and lab publishing.",
       "grid_relationship": "Leans on Vault for secrets and Pulse for usage analytics.",
       "integration_depth": "shallow",
-      "demo_path": "Open a lab \u2192 follow instructions \u2192 view results and remediation.",
+      "demo_path": "Open a lab → follow instructions → view results and remediation.",
       "signal_quote": "Break to learn.",
       "stability_tier": "experimental",
       "impact_vector": "security literacy"
@@ -733,7 +733,7 @@
       "roadmap_focus": "Scenario templating and artifact storage pipelines.",
       "grid_relationship": "Consumes requests via Transport; surfaces run metrics in Pulse.",
       "integration_depth": "medium",
-      "demo_path": "Submit a Sim.Run.Request \u2192 watch orchestration and completion event.",
+      "demo_path": "Submit a Sim.Run.Request → watch orchestration and completion event.",
       "signal_quote": "Sim like you mean it.",
       "stability_tier": "experimental",
       "impact_vector": "robotics velocity"
@@ -742,7 +742,507 @@
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
     }
+  },
+  {
+    "id": "svc-hivegigs-api",
+    "type": "service",
+    "name": "HiveGigs.API",
+    "owner": "Market",
+    "tier": "prod-critical",
+    "runtime": {
+      "language": "dotnet",
+      "target": "container"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev",
+      "prod"
+    ],
+    "depends_on": [
+      "hivegigs",
+      "hivexp",
+      "honeydrunk-transport",
+      "honeydrunk-vault",
+      "pulse",
+      "marketcore"
+    ],
+    "interfaces": {
+      "http": [
+        "/api/gigs",
+        "/api/gigs/{id}",
+        "/api/gigs/{id}/accept",
+        "/api/gigs/{id}/submit",
+        "/api/creators/{id}/portfolio"
+      ],
+      "events_in": [
+        "Gig.Verification.Passed",
+        "Gig.Verification.Failed",
+        "XP.Awarded"
+      ],
+      "events_out": [
+        "Gig.Published",
+        "Gig.Accepted",
+        "Gig.Submitted",
+        "Gig.Completed.Verified",
+        "Creator.Payout.Requested",
+        "XP.Event"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://hivegigs-api",
+      "alerts": [
+        "api-latency",
+        "error-rate",
+        "verification-timeout"
+      ]
+    },
+    "release_channel": {
+      "ring": "prod",
+      "flags": []
+    },
+    "signal": "Awake",
+    "long_description": {
+      "overview": "Public and partner API for discovering, accepting, and completing Gigs. Orchestrates verification flow and emits XP and payout events.",
+      "why_it_exists": "Unifies Gig lifecycle across mobile/web while centralizing XP and payout side effects.",
+      "primary_audience": "Players, creators, partner apps.",
+      "value_props": [
+        "Consistent Gig lifecycle",
+        "XP emission with auditable events",
+        "Creator earnings hooks"
+      ],
+      "monetization_signal": "Enables paid/sponsored Gigs and marketplace fees.",
+      "roadmap_focus": "Rate-limited partner POSTs, bulk Gig ingestion, sponsor inventory.",
+      "grid_relationship": "Backs Market surfaces; emits status to Grid.Visualizer.",
+      "integration_depth": "deep",
+      "demo_path": "Publish Gig → accept → submit → verify → award XP.",
+      "signal_quote": "The quest board goes live.",
+      "stability_tier": "beta",
+      "impact_vector": "user engagement"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-hivegigs-agents",
+    "type": "service",
+    "name": "HiveGigs.Agents",
+    "owner": "Market",
+    "tier": "internal",
+    "runtime": {
+      "language": "dotnet",
+      "target": "container"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev",
+      "prod"
+    ],
+    "depends_on": [
+      "hivegigs",
+      "honeydrunk-transport",
+      "honeydrunk-vault",
+      "pulse"
+    ],
+    "interfaces": {
+      "http": [
+        "/internal/agents/regions",
+        "/internal/agents/generate",
+        "/internal/agents/templates"
+      ],
+      "events_in": [
+        "POI.Seed.Ready",
+        "Seasonal.Event.Updated"
+      ],
+      "events_out": [
+        "Gig.Candidate.Generated",
+        "Gig.Published"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://hivegigs-agents",
+      "alerts": [
+        "agent-failure",
+        "low-gig-density"
+      ]
+    },
+    "release_channel": {
+      "ring": "prod",
+      "flags": []
+    },
+    "signal": "Awake",
+    "long_description": {
+      "overview": "Region-scoped agent workers generating and refreshing Gigs from POI data and templates.",
+      "why_it_exists": "Keeps local catalogs fresh without manual editorial load.",
+      "primary_audience": "Market ops and auto-curation.",
+      "value_props": [
+        "Procedural content",
+        "Density targets by region",
+        "Template compliance"
+      ],
+      "monetization_signal": "Enables venue packs and sponsored drops.",
+      "roadmap_focus": "Event-aware generation and partner constraints.",
+      "grid_relationship": "Consumes POI modules; publishes to HiveGigs.API via Transport.",
+      "integration_depth": "deep",
+      "demo_path": "Seed city → generate 20 Gigs → publish.",
+      "signal_quote": "Writers that scale with the map.",
+      "stability_tier": "alpha",
+      "impact_vector": "content velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-hivegigs-verifier",
+    "type": "service",
+    "name": "HiveGigs.Verifier",
+    "owner": "Market",
+    "tier": "internal",
+    "runtime": {
+      "language": "dotnet",
+      "target": "container"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev",
+      "prod"
+    ],
+    "depends_on": [
+      "hivegigs",
+      "honeydrunk-transport",
+      "honeydrunk-vault",
+      "pulse"
+    ],
+    "interfaces": {
+      "http": [
+        "/internal/verify/gps",
+        "/internal/verify/vision"
+      ],
+      "events_in": [
+        "Gig.Submitted"
+      ],
+      "events_out": [
+        "Gig.Verification.Passed",
+        "Gig.Verification.Failed"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://hivegigs-verifier",
+      "alerts": [
+        "verify-latency",
+        "cv-error-rate"
+      ]
+    },
+    "release_channel": {
+      "ring": "prod",
+      "flags": []
+    },
+    "signal": "Awake",
+    "long_description": {
+      "overview": "Geo + vision verification pipeline for IRL and artifact-based Gigs with anti-spoofing heuristics.",
+      "why_it_exists": "Trust layer for payouts and XP awards.",
+      "primary_audience": "All IRL Gig categories; creator economy.",
+      "value_props": [
+        "Low-friction verification",
+        "Indoor/geo blend",
+        "Template-aware CV checks"
+      ],
+      "monetization_signal": "Gate for premium payouts and sponsored gigs.",
+      "roadmap_focus": "BLE beacons, indoor maps, few-shot CV prompts.",
+      "grid_relationship": "Emits canonical pass/fail consumed by HiveGigs.API and HiveXP.",
+      "integration_depth": "deep",
+      "demo_path": "Submit → verify → emit pass/fail.",
+      "signal_quote": "Proof of presence, proof of play.",
+      "stability_tier": "beta",
+      "impact_vector": "trust"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-hivegigs-notify",
+    "type": "service",
+    "name": "HiveGigs.Notify",
+    "owner": "Market",
+    "tier": "internal",
+    "runtime": {
+      "language": "dotnet",
+      "target": "container"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev",
+      "prod"
+    ],
+    "depends_on": [
+      "hivegigs",
+      "honeydrunk-transport",
+      "honeydrunk-vault",
+      "pulse"
+    ],
+    "interfaces": {
+      "http": [
+        "/internal/notify/test"
+      ],
+      "events_in": [
+        "Gig.Published",
+        "Gig.Expiring.Soon",
+        "Player.Entered.GeoFence"
+      ],
+      "events_out": [
+        "Notify.Push.Sent",
+        "Notify.InApp.Banner",
+        "Notify.Email.Queued"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://hivegigs-notify",
+      "alerts": [
+        "push-failure-rate",
+        "queue-backlog"
+      ]
+    },
+    "release_channel": {
+      "ring": "prod",
+      "flags": []
+    },
+    "signal": "Seed",
+    "long_description": {
+      "overview": "Geo-triggered and lifecycle-triggered notifications for nearby Gigs, expirations, and creator earnings.",
+      "why_it_exists": "Closes the loop between discovery and action.",
+      "primary_audience": "Players and creators.",
+      "value_props": [
+        "Smart geo pings",
+        "Quiet hours",
+        "Sponsor-safe throttling"
+      ],
+      "monetization_signal": "Sponsored placement where appropriate.",
+      "roadmap_focus": "LLM-personalized gig recommendations.",
+      "grid_relationship": "Bridges Transport to device channels (SignalR/FCM/APNs).",
+      "integration_depth": "medium",
+      "demo_path": "Enter zone → push ping → open Gig.",
+      "signal_quote": "The Hive taps your shoulder.",
+      "stability_tier": "alpha",
+      "impact_vector": "retention"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-hivexp-api",
+    "type": "service",
+    "name": "HiveXP.API",
+    "owner": "Core",
+    "tier": "internal",
+    "runtime": {
+      "language": "dotnet",
+      "target": "container"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev",
+      "prod"
+    ],
+    "depends_on": [
+      "hivexp",
+      "honeydrunk-transport",
+      "honeydrunk-vault",
+      "pulse"
+    ],
+    "interfaces": {
+      "http": [
+        "/api/xp/events",
+        "/api/xp/levels",
+        "/api/xp/categories",
+        "/api/xp/leaderboards"
+      ],
+      "events_in": [
+        "XP.Event"
+      ],
+      "events_out": [
+        "XP.Awarded",
+        "XP.Badge.Awarded",
+        "XP.Rollup.Updated"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://hivexp-api",
+      "alerts": [
+        "ingest-latency",
+        "schema-violations"
+      ]
+    },
+    "release_channel": {
+      "ring": "prod",
+      "flags": []
+    },
+    "signal": "Awake",
+    "long_description": {
+      "overview": "System-of-record API for XP events, level thresholds, category packs, leaderboards, and badge emissions.",
+      "why_it_exists": "Prevents per-product XP re-implementations and drift.",
+      "primary_audience": "All Nodes emitting or consuming XP.",
+      "value_props": [
+        "Central ledger semantics",
+        "Consistent curves",
+        "Auditable rollups"
+      ],
+      "monetization_signal": "Enables premium analytics in Market surfaces.",
+      "roadmap_focus": "Multi-tenant keys and replay tools.",
+      "grid_relationship": "Core backbone for progression; feeds Market, Creator, Play.",
+      "integration_depth": "deep",
+      "demo_path": "Post XP → check level → view leaderboard.",
+      "signal_quote": "One grammar for growth.",
+      "stability_tier": "beta",
+      "impact_vector": "system cohesion"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-hivexp-ledger",
+    "type": "service",
+    "name": "HiveXP.Ledger",
+    "owner": "Core",
+    "tier": "internal",
+    "runtime": {
+      "language": "dotnet",
+      "target": "container"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev",
+      "prod"
+    ],
+    "depends_on": [
+      "hivexp",
+      "honeydrunk-transport",
+      "honeydrunk-vault",
+      "pulse"
+    ],
+    "interfaces": {
+      "http": [
+        "/internal/ledger/health"
+      ],
+      "events_in": [
+        "XP.Event"
+      ],
+      "events_out": [
+        "XP.Ledger.Written",
+        "XP.Rollup.Updated"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://hivexp-ledger",
+      "alerts": [
+        "write-failures",
+        "cdc-backlog"
+      ]
+    },
+    "release_channel": {
+      "ring": "prod",
+      "flags": []
+    },
+    "signal": "Awake",
+    "long_description": {
+      "overview": "Immutable XP transaction store with category rollups and CDC streams for analytics.",
+      "why_it_exists": "System truth for all progression events.",
+      "primary_audience": "Core/Meta analytics and consumer apps.",
+      "value_props": [
+        "Auditable, replayable history",
+        "Fast rollups",
+        "CDC to warehouse"
+      ],
+      "monetization_signal": "Unlocks analytics products downstream.",
+      "roadmap_focus": "Temporal tables and partitioned archives.",
+      "grid_relationship": "Feeds leaderboards, badges, and external analytics.",
+      "integration_depth": "deep",
+      "demo_path": "Emit event → ledger write → rollup update.",
+      "signal_quote": "Progress remembers.",
+      "stability_tier": "beta",
+      "impact_vector": "integrity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-hivexp-analytics",
+    "type": "service",
+    "name": "HiveXP.Analytics",
+    "owner": "Core",
+    "tier": "internal",
+    "runtime": {
+      "language": "dotnet",
+      "target": "container"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev",
+      "prod"
+    ],
+    "depends_on": [
+      "hivexp",
+      "honeydrunk-transport",
+      "honeydrunk-vault",
+      "pulse"
+    ],
+    "interfaces": {
+      "http": [
+        "/internal/analytics/cohorts",
+        "/internal/analytics/funnels",
+        "/internal/analytics/retention"
+      ],
+      "events_in": [
+        "XP.Ledger.Written",
+        "XP.Rollup.Updated"
+      ],
+      "events_out": [
+        "Analytics.Dataset.Ready"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://hivexp-analytics",
+      "alerts": [
+        "etl-failure",
+        "dataset-stale"
+      ]
+    },
+    "release_channel": {
+      "ring": "prod",
+      "flags": []
+    },
+    "signal": "Seed",
+    "long_description": {
+      "overview": "Cohort, funnel, and retention analytics over XP events and rollups; prepares BI datasets.",
+      "why_it_exists": "Turns XP into product insight without hammering OLTP paths.",
+      "primary_audience": "Ops, growth, product owners.",
+      "value_props": [
+        "Windowed metrics",
+        "Cohort comparisons",
+        "Pre-modeled datasets"
+      ],
+      "monetization_signal": "Supports premium analytics in Market products.",
+      "roadmap_focus": "Auto-generated dashboards and anomaly alerts.",
+      "grid_relationship": "Consumes ledger CDC; publishes datasets cataloged in Meta.",
+      "integration_depth": "medium",
+      "demo_path": "Replay 7 days → generate retention curve.",
+      "signal_quote": "See the shape of progress.",
+      "stability_tier": "alpha",
+      "impact_vector": "operational intelligence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
   }
 ]
-
-

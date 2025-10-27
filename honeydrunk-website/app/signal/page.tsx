@@ -9,6 +9,17 @@ import NeonGridCanvas from '@/components/NeonGridCanvas';
 import { colors } from '@/lib/tokens';
 import { getAllSectorConfigs } from '@/lib/sectors';
 import { getNodes, getModules, getServices } from '@/lib/entities';
+import signalsData from '@/data/schema/signals.json';
+
+interface Signal {
+  date: string;
+  title: string;
+  desc: string;
+  tags: string[];
+  sector: string;
+}
+
+const signals = signalsData as Signal[];
 
 function SignalContent() {
   const searchParams = useSearchParams();
@@ -52,80 +63,6 @@ function SignalContent() {
     
     return map;
   }, [allNodes, allModules, allServices]);
-
-  // In production, this would pull from commits/releases
-  const signals = [
-    {
-      date: '2025-10-26',
-      title: 'Entity Architecture — Sectors, Nodes, Services, Modules',
-      desc: 'Clarified The Grid\'s entity hierarchy: Sectors (Core, Ops, Creator, Life, HoneyPlay, Cyberware, HoneyNet, Meta) are top-level divisions. Nodes are projects/systems within sectors. Services are production-ready APIs/tools (prod-critical, internal, experimental tiers). Modules are reusable components within nodes. Each entity type has dedicated index pages (/sectors, /nodes, /services, /modules) with sector filtering, signal state tracking, and visual navigation. The taxonomy now maps cleanly across Grid, Flow Index, and Signal systems.',
-      tags: ['Core', 'Meta', 'HoneyDrunk.Grid'],
-      sector: 'Core',
-    },
-    {
-      date: '2025-10-26',
-      title: 'SEO Infrastructure — Search Engine Optimization',
-      desc: 'Implemented comprehensive SEO foundation: JSON-LD structured data with Organization schema, unique page metadata for About page and 404, improved sitemap with /sectors and /modules routes, verified OpenGraph image exists. Root layout includes full metadata with OpenGraph, Twitter cards, and proper robots directives. Site now fully optimized for search engines with structured data for rich results.',
-      tags: ['Meta', 'HoneyDrunk.Grid'],
-      sector: 'Meta',
-    },
-    {
-      date: '2025-10-26',
-      title: 'Mobile UX Polish — Responsive Refinements',
-      desc: 'Systematic mobile optimization across 8+ pages: toast notifications (wider/shorter), responsive button text ("VIEW SECTORS" mobile, "VIEW THE GRID" desktop), centered headers with text-center md:text-left pattern, Flow cards compact styling, filter pills size reduction (4px/12px padding, 11px font), modules accordion compact design, footer tagline addition, HiveConsole [X] button on mobile. Inline styles for pixel-perfect control over Tailwind limitations.',
-      tags: ['Core', 'HoneyDrunk.Grid', 'HoneyDrunk.Signal'],
-      sector: 'Core',
-    },
-    {
-      date: '2025-10-26',
-      title: 'Navigation & Layout — Mobile-First Routing',
-      desc: 'Enhanced navigation logic: mobile users land on /sectors (sector hub), desktop users on /grid (interactive visualization). Footer console helper text hidden on mobile, tagline "Boot. Build. Refactor. Evolve." added. Systematic spacing with inline marginBottom styles across About Flow page headings. Improved readability and mobile-first experience across The Grid.',
-      tags: ['Core', 'Meta'],
-      sector: 'Meta',
-    },
-    {
-      date: '2025-10-25',
-      title: 'HoneyNet — Security Division Launch',
-      desc: 'Launched HoneyNet sector—the Hive\'s security division. Four active nodes: BreachLab.exe (white-hat CTF lab with Safety Manifests), HoneyDrunk.Sentinel (secure-by-default SDK), Vault (secrets management, moved from Core), and Pulse (observability suite, moved from Ops). Added Matrix Green (#00FF41) to the color system. Built complete /spotlight/honeynet page with hero, gallery, build log, philosophy. Integrated HoneyNet into spotlight hub, grid filtering, and cross-sector navigation. "Break it. Learn it. Build it stronger."',
-      tags: ['HoneyNet', 'BreachLab.exe', 'HoneyDrunk.Sentinel', 'HoneyDrunk.Vault', 'Pulse'],
-      sector: 'HoneyNet',
-    },
-    {
-      date: '2025-10-24',
-      title: 'Flow Index System — Living Roadmap',
-      desc: 'Implemented complete Flow Index system: Flow = (Energy × 0.4) + (Priority × 0.6). Five-tier classification (Critical/Active/Stable/Dormant/Archived). Flow-based visual mode in Grid with dynamic glow intensity. New /flow page with sortable rankings, /about/flow documentation, Flow Tier filtering in /nodes, and global header navigation. The Hive now breathes—showing what needs attention next.',
-      tags: ['Core', 'HoneyDrunk.Grid', 'HoneyDrunk.Signal'],
-      sector: 'Core',
-    },
-    {
-      date: '2025-10-24',
-      title: 'Grid Enhancements — Color, Copy, and Scale',
-      desc: 'Sector color expansion (Chrome Teal for Mech, Synth Magenta for AI). Copy refinement across landing pages—cyberpunk minimalism, em-dash rhythm. Expanded to 43 Nodes across 8 sectors (AgentKit, Signal, Data, Grid orchestration).',
-      tags: ['Core', 'Cyberware', 'AI', 'HoneyDrunk.AgentKit', 'HoneyDrunk.Data'],
-      sector: 'Core',
-    },
-    {
-      date: '2025-10-18',
-      title: 'The Grid v1.0 — Initial Launch',
-      desc: 'Launched The Grid: interactive node visualization with neon cyberpunk aesthetics. Featured nodes across Core, Ops, Creator, Life, Play, Mech, and Meta sectors.',
-      tags: ['Core', 'HoneyDrunk.Grid', 'Meta'],
-      sector: 'Meta',
-    },
-    {
-      date: '2025-10-17',
-      title: 'Signal System Implementation',
-      desc: 'Implemented the Signal state system for tracking node lifecycle: Seed → Awake → Wiring → Live → Echo → Archive. Each state has distinct visual characteristics.',
-      tags: ['Core', 'HoneyDrunk.Signal'],
-      sector: 'Core',
-    },
-    {
-      date: '2025-10-16',
-      title: 'Brand System Finalized',
-      desc: 'Locked in the cyberpunk realism color palette: Aurum Gold, Electric Blue, Violet Flux against Deep Space. Zero-bloat typography with Space Grotesk, Inter, and JetBrains Mono.',
-      tags: ['Core', 'Meta'],
-      sector: 'Meta',
-    },
-  ];
 
   // Filter signals by sector if parameter is provided
   // Sector filter checks if the signal's sector matches OR if any tags belong to that sector

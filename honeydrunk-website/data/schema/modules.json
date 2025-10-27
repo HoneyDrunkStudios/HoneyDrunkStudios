@@ -430,5 +430,474 @@
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
     }
+  },
+  {
+    "id": "hivegigs-agents-writer",
+    "type": "module",
+    "name": "HiveGigs.Agents.Writer",
+    "parent": "hivegigs",
+    "slot": "agent-writer",
+    "signal": "Awake",
+    "status_dot": "alpha",
+    "integration_depth": "deep",
+    "tags": [
+      "ai",
+      "agents",
+      "generation",
+      "templates"
+    ],
+    "long_description": {
+      "overview": "Region-scoped agent that procedurally authors Gigs using POI data, seasonal events, and house style guides.",
+      "why_it_exists": "Bootstraps and refreshes local content without a centralized editorial team.",
+      "primary_audience": "Market ops, city curators, and auto-maintained catalogs.",
+      "value_props": [
+        "High coverage with low manual effort",
+        "Style-consistent copy",
+        "Auto-rotation of stale Gigs"
+      ],
+      "monetization_signal": "Enables sponsored/location-partnered Gig packs.",
+      "roadmap_focus": "Context memory, event-awareness, partner templates.",
+      "grid_relationship": "Consumes POI adapters; publishes to HiveGigs via Transport; secrets via Vault; telemetry to Meta.",
+      "demo_path": "Seed a city → generate 20 Gigs → publish preview.",
+      "signal_quote": "Writers that never sleep.",
+      "stability_tier": "alpha",
+      "impact_vector": "content velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "hivegigs-verifier-geo",
+    "type": "module",
+    "name": "HiveGigs.Verifier.Geo",
+    "parent": "hivegigs",
+    "slot": "verifier",
+    "signal": "Awake",
+    "status_dot": "beta",
+    "integration_depth": "deep",
+    "tags": [
+      "geofencing",
+      "gps",
+      "spoofing-detect"
+    ],
+    "long_description": {
+      "overview": "Location verification with radius/shape geofences, dwell-time checks, and spoofing heuristics.",
+      "why_it_exists": "Prevents fake completions and anchors IRL Gigs to real places.",
+      "primary_audience": "All IRL Gig categories.",
+      "value_props": [
+        "Low-friction check-ins",
+        "Anti-spoof heuristics",
+        "Configurable radii & dwell"
+      ],
+      "monetization_signal": "Required for paid/sponsored IRL Gigs.",
+      "roadmap_focus": "BLE/beacon support; indoor map hints.",
+      "grid_relationship": "Integrates with POI provider; emits verification events to HiveGigs API and HiveXP.",
+      "demo_path": "Enter fence → satisfy dwell → emit verified completion.",
+      "signal_quote": "Proof you were there.",
+      "stability_tier": "beta",
+      "impact_vector": "trust"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "hivegigs-verifier-vision",
+    "type": "module",
+    "name": "HiveGigs.Verifier.Vision",
+    "parent": "hivegigs",
+    "slot": "verifier",
+    "signal": "Seed",
+    "status_dot": "alpha",
+    "integration_depth": "medium",
+    "tags": [
+      "cv",
+      "ocr",
+      "safety"
+    ],
+    "long_description": {
+      "overview": "Photo/video evidence checker using object detection/OCR prompts tied to Gig templates.",
+      "why_it_exists": "Adds visual proof for challenges that need more than a GPS ping.",
+      "primary_audience": "Museums, landmarks, scavenger tasks.",
+      "value_props": [
+        "Template-aware prompts",
+        "Privacy-first redaction",
+        "Fast pass/fail feedback"
+      ],
+      "monetization_signal": "Quality gate for premium creator payouts.",
+      "roadmap_focus": "Few-shot tuning per template family.",
+      "grid_relationship": "Stores artifacts in Vault-backed storage; emits pass/fail to HiveGigs and HiveXP.",
+      "demo_path": "Upload artifact → detect target → verify.",
+      "signal_quote": "See it to believe it.",
+      "stability_tier": "alpha",
+      "impact_vector": "verification quality"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "hivegigs-poi-openstreetmap",
+    "type": "module",
+    "name": "HiveGigs.POI.OpenStreetMap",
+    "parent": "hivegigs",
+    "slot": "poi-provider",
+    "signal": "Awake",
+    "status_dot": "beta",
+    "integration_depth": "medium",
+    "tags": [
+      "poi",
+      "osm",
+      "geodata"
+    ],
+    "long_description": {
+      "overview": "OpenStreetMap-backed POI adapter with filters for parks, museums, and cultural venues.",
+      "why_it_exists": "Gives agents structured seeds for Gig generation.",
+      "primary_audience": "Agent writers and curators.",
+      "value_props": [
+        "Open data",
+        "Category filters",
+        "Rate-limit aware caches"
+      ],
+      "monetization_signal": "Foundation for sponsored venue packs.",
+      "roadmap_focus": "Hybrid enrichment with Wikipedia/Wikidata.",
+      "grid_relationship": "Feeds Agents.Writer; shares cache with Geo verifier.",
+      "demo_path": "Query city → return POIs → generate candidate Gigs.",
+      "signal_quote": "Places become prompts.",
+      "stability_tier": "beta",
+      "impact_vector": "coverage density"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "hivegigs-payouts-stripe",
+    "type": "module",
+    "name": "HiveGigs.Payouts.Stripe",
+    "parent": "hivegigs",
+    "slot": "payouts-adapter",
+    "signal": "Awake",
+    "status_dot": "beta",
+    "integration_depth": "deep",
+    "tags": [
+      "stripe",
+      "payments",
+      "connect"
+    ],
+    "long_description": {
+      "overview": "Creator earnings and sponsor payments via Stripe Connect with split rules per Gig.",
+      "why_it_exists": "Turns creation into income, safely and at scale.",
+      "primary_audience": "Quest authors, partners, and Market ops.",
+      "value_props": [
+        "Programmatic splits",
+        "Dispute/chargeback flows",
+        "KYC support"
+      ],
+      "monetization_signal": "Marketplace fee on paid Gigs.",
+      "roadmap_focus": "Holdbacks, clawbacks, tax document automation.",
+      "grid_relationship": "Uses Vault for secrets; emits financial events to Meta/MarketCore.",
+      "demo_path": "Complete Gig → credit creator → payout batch.",
+      "signal_quote": "Do the work. Get paid.",
+      "stability_tier": "beta",
+      "impact_vector": "economics"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "hivegigs-notify-signal",
+    "type": "module",
+    "name": "HiveGigs.Notify.Signal",
+    "parent": "hivegigs",
+    "slot": "notification-adapter",
+    "signal": "Awake",
+    "status_dot": "alpha",
+    "integration_depth": "medium",
+    "tags": [
+      "notifications",
+      "realtime",
+      "signalr"
+    ],
+    "long_description": {
+      "overview": "Real-time alerts for nearby Gigs, expiring missions, and creator earnings.",
+      "why_it_exists": "Keeps engagement loops tight and timely.",
+      "primary_audience": "Players and creators.",
+      "value_props": [
+        "Geo-triggered nudges",
+        "Quiet hours",
+        "Rate limiting"
+      ],
+      "monetization_signal": "Sponsored notifications for partner venues.",
+      "roadmap_focus": "LLM-personalized mission recommendations.",
+      "grid_relationship": "Push via Transport; web/mobile via SignalR or FCM/APNs bridge.",
+      "demo_path": "Enter zone → receive mission ping → accept.",
+      "signal_quote": "The Hive whispers.",
+      "stability_tier": "alpha",
+      "impact_vector": "retention"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "hivexp-sink-transport",
+    "type": "module",
+    "name": "HiveXP.Sink.Transport",
+    "parent": "hivexp",
+    "slot": "event-ingest-adapter",
+    "signal": "Awake",
+    "status_dot": "beta",
+    "integration_depth": "deep",
+    "tags": [
+      "xp-events",
+      "transport",
+      "ingest"
+    ],
+    "long_description": {
+      "overview": "Standardized ingestion of XP events from Nodes via Transport envelopes.",
+      "why_it_exists": "Prevents bespoke XP plumbing per product.",
+      "primary_audience": "Any Node emitting XP (Gigs, HoneyHub, HoneyPlay).",
+      "value_props": [
+        "Idempotent ingest",
+        "Schema validation",
+        "Dead-letter strategy"
+      ],
+      "monetization_signal": "Internal backbone for all Market-facing XP loops.",
+      "roadmap_focus": "Bulk ingest and replay.",
+      "grid_relationship": "Consumes Transport; validates against Core schemas; forwards to Ledger.",
+      "demo_path": "Emit event → validate → ledger write.",
+      "signal_quote": "All growth enters here.",
+      "stability_tier": "beta",
+      "impact_vector": "system cohesion"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "hivexp-ledger-sql",
+    "type": "module",
+    "name": "HiveXP.Ledger.Sql",
+    "parent": "hivexp",
+    "slot": "ledger-adapter",
+    "signal": "Awake",
+    "status_dot": "beta",
+    "integration_depth": "deep",
+    "tags": [
+      "sql",
+      "ledger",
+      "audit"
+    ],
+    "long_description": {
+      "overview": "Auditable XP transaction store with category partitions and rollups.",
+      "why_it_exists": "Single source of truth for progression.",
+      "primary_audience": "XP consumers and analytics.",
+      "value_props": [
+        "Immutable event log",
+        "Category rollups",
+        "Backfill-safe"
+      ],
+      "monetization_signal": "Enables premium analytics surfaces.",
+      "roadmap_focus": "Temporal tables; columnstore aggregates.",
+      "grid_relationship": "Writes to SQL via Core data conventions; emits change feed to Analytics.",
+      "demo_path": "Insert XP → query level/rollup → verify audit.",
+      "signal_quote": "Progress remembers.",
+      "stability_tier": "beta",
+      "impact_vector": "integrity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "hivexp-curve-exponential",
+    "type": "module",
+    "name": "HiveXP.Curve.Exponential",
+    "parent": "hivexp",
+    "slot": "level-curve",
+    "signal": "Seed",
+    "status_dot": "alpha",
+    "integration_depth": "light",
+    "tags": [
+      "levels",
+      "curves",
+      "progression"
+    ],
+    "long_description": {
+      "overview": "Exponential level curve with configurable base and scaling factors.",
+      "why_it_exists": "Gives consistent difficulty ramp across products.",
+      "primary_audience": "Designers setting progression pace.",
+      "value_props": [
+        "Simple params",
+        "Predictable scaling",
+        "Multi-category support"
+      ],
+      "monetization_signal": "N/A (Core progression primitive).",
+      "roadmap_focus": "Hybrid curves (exp + plateau).",
+      "grid_relationship": "Plug-in to Engine; used by Leaderboards/Profiles.",
+      "demo_path": "Set curve → simulate 1–50 → export thresholds.",
+      "signal_quote": "Climb should feel earned.",
+      "stability_tier": "alpha",
+      "impact_vector": "player experience"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "hivexp-category-pack-default",
+    "type": "module",
+    "name": "HiveXP.CategoryPack.Default",
+    "parent": "hivexp",
+    "slot": "category-pack",
+    "signal": "Awake",
+    "status_dot": "beta",
+    "integration_depth": "medium",
+    "tags": [
+      "taxonomy",
+      "xp",
+      "categories"
+    ],
+    "long_description": {
+      "overview": "Default XP categories (Creation, Discovery, Social, Learning) with weights and display strings.",
+      "why_it_exists": "Shared language of effort across Nodes.",
+      "primary_audience": "All XP emitters/consumers.",
+      "value_props": [
+        "Consistent UX",
+        "Weight tuning per sector",
+        "i18n-ready labels"
+      ],
+      "monetization_signal": "N/A; improves UX consistency for Market products.",
+      "roadmap_focus": "Sector-specific packs.",
+      "grid_relationship": "Served by API; cached by clients; logged in Ledger.",
+      "demo_path": "Fetch pack → emit events by category → show profile rollups.",
+      "signal_quote": "Different paths, same grammar.",
+      "stability_tier": "beta",
+      "impact_vector": "coherence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "hivexp-leaderboard-redis",
+    "type": "module",
+    "name": "HiveXP.Leaderboard.Redis",
+    "parent": "hivexp",
+    "slot": "leaderboard-adapter",
+    "signal": "Awake",
+    "status_dot": "beta",
+    "integration_depth": "medium",
+    "tags": [
+      "leaderboards",
+      "redis",
+      "ranking"
+    ],
+    "long_description": {
+      "overview": "Sorted-set leaderboards by category, region, and time window.",
+      "why_it_exists": "Fast public rankings without hitting the ledger hot path.",
+      "primary_audience": "Public apps and Market surfaces.",
+      "value_props": [
+        "Windowed boards",
+        "Atomic updates",
+        "Cheap reads"
+      ],
+      "monetization_signal": "Premium board filters and seasonal events.",
+      "roadmap_focus": "Anti-cheat outlier dampening.",
+      "grid_relationship": "Consumes events from Ledger; exposes cached reads to apps.",
+      "demo_path": "Emit XP → board update → query top N.",
+      "signal_quote": "Recognition at line speed.",
+      "stability_tier": "beta",
+      "impact_vector": "engagement"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "hivexp-badges-engine",
+    "type": "module",
+    "name": "HiveXP.Badges.Engine",
+    "parent": "hivexp",
+    "slot": "badges",
+    "signal": "Seed",
+    "status_dot": "alpha",
+    "integration_depth": "medium",
+    "tags": [
+      "achievements",
+      "rules",
+      "badges"
+    ],
+    "long_description": {
+      "overview": "Rule-based achievements over XP events and category milestones.",
+      "why_it_exists": "Adds durable goals beyond raw levels.",
+      "primary_audience": "All consumer apps.",
+      "value_props": [
+        "Declarative rules",
+        "Timeboxed challenges",
+        "Retroactive awarding"
+      ],
+      "monetization_signal": "Season passes; sponsor badges.",
+      "roadmap_focus": "Rule DSL with simulator.",
+      "grid_relationship": "Reads Ledger; writes badge events; surfaces to Leaderboards/Profiles.",
+      "demo_path": "Define rule → ingest events → award badge.",
+      "signal_quote": "Milestones that matter.",
+      "stability_tier": "alpha",
+      "impact_vector": "retention"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "hivexp-export-warehouse",
+    "type": "module",
+    "name": "HiveXP.Export.Warehouse",
+    "parent": "hivexp",
+    "slot": "export-adapter",
+    "signal": "Awake",
+    "status_dot": "beta",
+    "integration_depth": "medium",
+    "tags": [
+      "analytics",
+      "etl",
+      "warehouse"
+    ],
+    "long_description": {
+      "overview": "Batch and streaming exports of XP events and rollups to the analytics warehouse.",
+      "why_it_exists": "Lets Meta/Market surfaces run deep analysis without hammering OLTP.",
+      "primary_audience": "Ops, analytics, and growth.",
+      "value_props": [
+        "CDC stream",
+        "Schema versioning",
+        "Backfill jobs"
+      ],
+      "monetization_signal": "Enables premium analytics for Market products.",
+      "roadmap_focus": "Auto-generated BI datasets.",
+      "grid_relationship": "Reads from Ledger; writes to warehouse; cataloged in Meta.",
+      "demo_path": "Replay last 24h → build dashboard.",
+      "signal_quote": "Insight is a byproduct.",
+      "stability_tier": "beta",
+      "impact_vector": "operational intelligence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
   }
 ]

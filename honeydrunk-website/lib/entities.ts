@@ -336,7 +336,6 @@ export interface GridEdge {
 export interface GridData {
   nodes: VisualNode[];
   modules: VisualModule[];
-  services: VisualService[];
   edges: GridEdge[];
 }
 
@@ -405,27 +404,27 @@ class SeededRandom {
 function generateNodePosition(node: Node, index: number): GridPosition {
   const rng = new SeededRandom(hashString(node.id));
 
-  // Hex lattice layout
-  const cols = 4; // Increased columns for wider spread
-  const hexWidth = 450;
-  const hexHeight = 400;
+  // Hex lattice layout with 5 nodes per row
+  const cols = 5;
+  const hexWidth = 380; // Slightly tighter horizontal spacing
+  const hexHeight = 380; // Consistent spacing
 
   const col = index % cols;
   const row = Math.floor(index / cols);
 
-  // Hex offset for alternating rows
+  // Hex offset for alternating rows (creates honeycomb pattern)
   const offsetX = row % 2 === 1 ? hexWidth / 2 : 0;
 
-  // Center the grid horizontally by offsetting from negative X
-  const gridCenterOffset = -(cols * hexWidth) / 2;
+  // Center the grid horizontally
+  const gridCenterOffset = -(cols * hexWidth) / 2 + hexWidth / 2;
 
   // Base position
   let x = col * hexWidth + offsetX + gridCenterOffset;
   let y = row * hexHeight;
 
-  // Add slight random variation
-  x += (rng.next() - 0.5) * 50;
-  y += (rng.next() - 0.5) * 50;
+  // Add slight random variation for organic feel
+  x += (rng.next() - 0.5) * 40;
+  y += (rng.next() - 0.5) * 40;
 
   return { x, y, z: (node.energy || 50) / 100 };
 }
@@ -450,27 +449,6 @@ function generateModulePosition(
     position: { x, y },
     angle,
   };
-}
-
-/**
- * Generate position for a service (in services lane)
- */
-function generateServicePosition(service: Service, index: number): GridPosition {
-  const rng = new SeededRandom(hashString(service.id));
-
-  // Services are in a horizontal lane at the top
-  const laneY = -300; // Closer to the nodes
-  const spacing = 350;
-  
-  // Center the services horizontally by offsetting based on total count
-  // Assuming we have around 12 services, center them around x=0
-  const totalServices = 12; // approximate
-  const startX = -(totalServices * spacing) / 2;
-
-  let x = startX + (index * spacing);
-  const y = laneY + (rng.next() - 0.5) * 60; // Slight vertical variation
-
-  return { x, y };
 }
 
 /**
@@ -524,14 +502,6 @@ export function getGridData(): GridData {
     modulePositions.set(module.id, module.position);
   });
 
-  // Generate visual services
-  const visualServices: VisualService[] = services.map((service, index) => ({
-    ...service,
-    position: generateServicePosition(service, index),
-    tierColor: tierColorMap[service.tier] || colors.slateLight,
-    signalColor: signalColorMap[service.signal] || colors.slateLight,
-  }));
-
   // Generate edges
   const edges: GridEdge[] = [];
 
@@ -555,44 +525,9 @@ export function getGridData(): GridData {
     });
   });
 
-  // Service-to-entity edges (dotted)
-  visualServices.forEach(service => {
-    service.depends_on.forEach(targetId => {
-      // Check if target is a node
-      const nodePos = nodePositions.get(targetId);
-      if (nodePos) {
-        edges.push({
-          from: service.id,
-          to: targetId,
-          type: 'service-node',
-          fromPos: service.position,
-          toPos: nodePos,
-          color: service.tierColor,
-          style: 'dotted',
-        });
-        return;
-      }
-
-      // Check if target is a module
-      const modulePos = modulePositions.get(targetId);
-      if (modulePos) {
-        edges.push({
-          from: service.id,
-          to: targetId,
-          type: 'service-module',
-          fromPos: service.position,
-          toPos: modulePos,
-          color: service.tierColor,
-          style: 'dotted',
-        });
-      }
-    });
-  });
-
   return {
     nodes: visualNodes,
     modules: visualModules,
-    services: visualServices,
     edges,
   };
 }

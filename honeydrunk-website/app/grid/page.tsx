@@ -116,6 +116,11 @@ function GridContent() {
 
   // Apply filters to grid data - memoized
   const filteredGridData = useMemo(() => {
+    // Early return if no filters - avoid unnecessary processing
+    if (selectedSectors.length === 0 && selectedSignals.length === 0 && !searchQuery) {
+      return fullGridData;
+    }
+
     const filteredNodes = fullGridData.nodes.filter(node => {
       const matchesSector = selectedSectors.length === 0 || selectedSectors.includes(node.sector);
       const matchesSignal = selectedSignals.length === 0 || selectedSignals.includes(node.signal);
@@ -131,18 +136,9 @@ function GridContent() {
       return parentVisible;
     });
 
-    const filteredServices = fullGridData.services.filter(service => {
-      const matchesSignal = selectedSignals.length === 0 || selectedSignals.includes(service.signal);
-      const matchesSearch = !searchQuery ||
-        service.name.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesSignal && matchesSearch;
-    });
-
     const filteredEdges = fullGridData.edges.filter(edge => {
       // Show edge if both endpoints are visible
-      const fromVisible =
-        filteredNodes.some(n => n.id === edge.from) ||
-        filteredServices.some(s => s.id === edge.from);
+      const fromVisible = filteredNodes.some(n => n.id === edge.from);
       const toVisible =
         filteredNodes.some(n => n.id === edge.to) ||
         filteredModules.some(m => m.id === edge.to);
@@ -152,7 +148,6 @@ function GridContent() {
     return {
       nodes: filteredNodes,
       modules: filteredModules,
-      services: filteredServices,
       edges: filteredEdges,
     };
   }, [fullGridData, selectedSectors, selectedSignals, searchQuery]);
@@ -250,7 +245,7 @@ function GridContent() {
               color: showFilters ? colors.violetCore : colors.slateLight,
             }}
           >
-            {showFilters ? '✓ ' : ''}Filters ({filteredGridData.nodes.length}N / {filteredGridData.services.length}S)
+            {showFilters ? '✓ ' : ''}Filters ({filteredGridData.nodes.length}N / {filteredGridData.modules.length}M)
           </button>
         )}
 
@@ -337,7 +332,6 @@ function GridContent() {
             <div className="text-xs font-mono space-y-0.5" style={{ color: colors.offWhite }}>
               <div>Nodes: {filteredGridData.nodes.length}</div>
               <div>Modules: {filteredGridData.modules.length}</div>
-              <div>Services: {filteredGridData.services.length}</div>
               <div>Edges: {filteredGridData.edges.length}</div>
             </div>
           </div>
@@ -386,24 +380,6 @@ function GridContent() {
                   Pill = Module
                 </span>
               </div>
-              {/* Rectangle = Service */}
-              <div className="flex items-center gap-2">
-                <svg width="20" height="20" viewBox="0 0 24 24">
-                  <rect
-                    x="5"
-                    y="8"
-                    width="14"
-                    height="8"
-                    rx="2"
-                    fill={`${colors.electricBlue}30`}
-                    stroke={colors.electricBlue}
-                    strokeWidth="1.5"
-                  />
-                </svg>
-                <span className="text-xs font-mono" style={{ color: colors.offWhite }}>
-                  Rectangle = Service
-                </span>
-              </div>
             </div>
           </div>
         </aside>
@@ -445,9 +421,6 @@ function GridContent() {
             selectedEntityId={selectedEntityId}
             onNodeClick={(node: VisualNode) => {
               router.push(`/nodes/${node.id}`);
-            }}
-            onServiceClick={(service: VisualService) => {
-              router.push(`/services/${service.id}`);
             }}
             onModuleClick={(module: VisualModule) => {
               router.push(`/nodes/${module.parent}#module-${module.id}`);

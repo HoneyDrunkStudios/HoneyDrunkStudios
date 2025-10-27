@@ -1716,6 +1716,104 @@
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
     }
+  },
+  {
+    "id": "hivexp",
+    "type": "node",
+    "name": "HiveXP",
+    "short": "Unified XP and progression framework for the Hive.",
+    "description": "Centralized service defining XP, level curves, and growth logic for all Nodes across HoneyDrunk.OS. Tracks player, creator, and system progression as structured, auditable data.",
+    "sector": "Core",
+    "signal": "Wiring",
+    "cluster": "foundation",
+    "energy": 91,
+    "priority": 50,
+    "depends_on": [
+      "vault",
+      "transport",
+      "marketcore"
+    ],
+    "tags": [
+      "xp",
+      "progression",
+      "ledger",
+      "growth",
+      "core-service"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/HiveXP"
+    },
+    "long_description": {
+      "overview": "HiveXP is the backbone of progression across the Grid — a shared ledger that translates action into growth. Whether it’s a developer pushing code, a player completing a mission, or a creator publishing work, every event emits XP through the HiveXP engine. The system defines category curves, prestige logic, and level schemas, ensuring that progress feels consistent across worlds. As a Core Node, HiveXP sets the laws of advancement, letting Market apps, Play titles, and Creator tools all speak the same language of effort and reward.",
+      "why_it_exists": "To unify XP logic across the Hive, avoiding redundant or conflicting progression systems.",
+      "primary_audience": "Developers, integrators, and any Node that needs measurable growth mechanics.",
+      "value_props": [
+        "Centralized XP and level tracking.",
+        "Customizable category weighting per sector.",
+        "Seamless integration across Market and Creator products."
+      ],
+      "monetization_signal": "Internal core Node; indirectly monetized through Market nodes using XP loops.",
+      "roadmap_focus": "Expand XP events to support multi-category weighting and decay models.",
+      "grid_relationship": "Connects with: HiveGigs, HoneyHub, HoneyPlay, MarketCore.",
+      "integration_depth": "high",
+      "demo_path": "Show XP transaction lifecycle: event → ledger → visible level change.",
+      "signal_quote": "Growth is a pattern, not a prize.",
+      "stability_tier": "stable",
+      "impact_vector": "system cohesion"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "hivegigs",
+    "type": "node",
+    "name": "HiveGigs",
+    "short": "AI + community-powered mission marketplace.",
+    "description": "Micro-mission marketplace for real and digital worlds — AI-generated and user-authored Gigs that reward exploration, creativity, and community participation.",
+    "sector": "Market",
+    "signal": "Wiring",
+    "cluster": "application",
+    "energy": 88,
+    "priority": 120,
+    "depends_on": [
+      "hivexp",
+      "vault",
+      "transport",
+      "marketcore"
+    ],
+    "tags": [
+      "market",
+      "missions",
+      "ai",
+      "community",
+      "xp"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/HiveGigs"
+    },
+    "long_description": {
+      "overview": "HiveGigs turns the world into a living quest board. From local parks to online creative challenges, players and creators engage through short, rewarding missions called Gigs. AI agents seed the grid with procedurally written Gigs, while community members design and publish their own, earning payouts as others complete them. XP flows through HiveXP, rewards through MarketCore, and telemetry through Meta, forming a complete feedback loop of discovery and reward. HiveGigs is how the Hive leaves the screen and touches the world — one mission at a time.",
+      "why_it_exists": "To create a self-sustaining ecosystem of micro-missions that reward exploration and creativity without needing constant manual curation.",
+      "primary_audience": "Players, creators, and AI agents that populate the Hive with real and virtual missions.",
+      "value_props": [
+        "Procedurally generated and community-authored missions.",
+        "XP and payout integration through HiveXP and MarketCore.",
+        "Expands Hive activity into real-world and hybrid contexts."
+      ],
+      "monetization_signal": "Revenue share from sponsored or premium Gigs; creator commissions; possible event partnerships.",
+      "roadmap_focus": "Integrate multi-agent authorship and dynamic quest templates per location.",
+      "grid_relationship": "Connects with: HiveXP, Vault, MarketCore, Transport.",
+      "integration_depth": "medium",
+      "demo_path": "Show HiveGigs flow: AI → published Gig → player completion → XP reward.",
+      "signal_quote": "Small actions create big signals.",
+      "stability_tier": "experimental",
+      "impact_vector": "user engagement"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
   }
 ]
-

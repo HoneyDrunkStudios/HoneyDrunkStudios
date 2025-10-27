@@ -13,6 +13,17 @@ import { getNodes, getModules, getServices } from '@/lib/entities';
 import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
 import { use, useMemo } from 'react';
+import signalsData from '@/data/schema/signals.json';
+
+interface Signal {
+  date: string;
+  title: string;
+  desc: string;
+  tags: string[];
+  sector: string;
+}
+
+const allSignals = signalsData as Signal[];
 
 export default function SectorDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
@@ -64,80 +75,6 @@ export default function SectorDetailPage({ params }: { params: Promise<{ id: str
     
     return map;
   }, [allNodes, allModules, allServices]);
-
-  // Signal posts data (same as signal page)
-  const allSignals = [
-    {
-      date: '2025-10-26',
-      title: 'Entity Architecture — Sectors, Nodes, Services, Modules',
-      desc: 'Clarified The Grid\'s entity hierarchy: Sectors are top-level divisions. Nodes are projects/systems within sectors. Services are production-ready APIs/tools. Modules are reusable components within nodes. Each entity type has dedicated index pages with sector filtering and signal state tracking.',
-      tags: ['Core', 'Meta', 'HoneyDrunk.Grid'],
-      sector: 'Core',
-    },
-    {
-      date: '2025-10-26',
-      title: 'SEO Infrastructure — Search Engine Optimization',
-      desc: 'Implemented comprehensive SEO foundation: JSON-LD structured data with Organization schema, unique page metadata for About page and 404, improved sitemap with /sectors and /modules routes, verified OpenGraph image exists.',
-      tags: ['Meta', 'HoneyDrunk.Grid'],
-      sector: 'Meta',
-    },
-    {
-      date: '2025-10-26',
-      title: 'Mobile UX Polish — Responsive Refinements',
-      desc: 'Systematic mobile optimization across 8+ pages: toast notifications (wider/shorter), responsive button text, centered headers with text-center md:text-left pattern, Flow cards compact styling, filter pills size reduction, modules accordion compact design.',
-      tags: ['Core', 'HoneyDrunk.Grid', 'HoneyDrunk.Signal'],
-      sector: 'Core',
-    },
-    {
-      date: '2025-10-26',
-      title: 'Navigation & Layout — Mobile-First Routing',
-      desc: 'Enhanced navigation logic: mobile users land on /sectors (sector hub), desktop users on /grid (interactive visualization). Footer console helper text hidden on mobile, tagline "Boot. Build. Refactor. Evolve." added.',
-      tags: ['Core', 'Meta'],
-      sector: 'Meta',
-    },
-    {
-      date: '2025-10-25',
-      title: 'HoneyNet — Security Division Launch',
-      desc: 'Launched HoneyNet sector—the Hive\'s security division. Four active nodes: BreachLab.exe (white-hat CTF lab with Safety Manifests), HoneyDrunk.Sentinel (secure-by-default SDK), Vault (secrets management, moved from Core), and Pulse (observability suite, moved from Ops).',
-      tags: ['HoneyNet', 'BreachLab.exe', 'HoneyDrunk.Sentinel', 'HoneyDrunk.Vault', 'Pulse'],
-      sector: 'HoneyNet',
-    },
-    {
-      date: '2025-10-24',
-      title: 'Flow Index System — Living Roadmap',
-      desc: 'Implemented complete Flow Index system: Flow = (Energy × 0.4) + (Priority × 0.6). Five-tier classification (Critical/Active/Stable/Dormant/Archived). Flow-based visual mode in Grid with dynamic glow intensity.',
-      tags: ['Core', 'HoneyDrunk.Grid', 'HoneyDrunk.Signal'],
-      sector: 'Core',
-    },
-    {
-      date: '2025-10-24',
-      title: 'Grid Enhancements — Color, Copy, and Scale',
-      desc: 'Sector color expansion (Chrome Teal for Cyberware, Synth Magenta for AI). Copy refinement across landing pages—cyberpunk minimalism, em-dash rhythm. Expanded to 43 Nodes across 8 sectors (AgentKit, Signal, Data, Grid orchestration).',
-      tags: ['Core', 'Cyberware', 'AI', 'HoneyDrunk.AgentKit', 'HoneyDrunk.Data'],
-      sector: 'Core',
-    },
-    {
-      date: '2025-10-18',
-      title: 'The Grid v1.0 — Initial Launch',
-      desc: 'Launched The Grid: interactive node visualization with neon cyberpunk aesthetics. Featured nodes across Core, Ops, Creator, Life, HoneyPlay, Cyberware, and Meta sectors.',
-      tags: ['Core', 'HoneyDrunk.Grid', 'Meta'],
-      sector: 'Meta',
-    },
-    {
-      date: '2025-10-17',
-      title: 'Signal System Implementation',
-      desc: 'Implemented the Signal state system for tracking node lifecycle: Seed → Awake → Wiring → Live → Echo → Archive. Each state has distinct visual characteristics.',
-      tags: ['Core', 'HoneyDrunk.Signal'],
-      sector: 'Core',
-    },
-    {
-      date: '2025-10-16',
-      title: 'Brand System Finalized',
-      desc: 'Locked in the cyberpunk realism color palette: Aurum Gold, Electric Blue, Violet Flux against Deep Space. Zero-bloat typography with Space Grotesk, Inter, and JetBrains Mono.',
-      tags: ['Core', 'Meta'],
-      sector: 'Meta',
-    },
-  ];
 
   // Get latest 3 signal posts for this sector
   // Filter by: direct sector match OR any tag that maps to this sector

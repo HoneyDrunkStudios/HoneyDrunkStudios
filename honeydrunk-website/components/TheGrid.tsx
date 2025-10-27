@@ -1,19 +1,18 @@
 'use client';
 
 /**
- * TheGrid — Enhanced grid visualization for nodes, modules, and services
- * Renders all three entity types with proper visual hierarchy
+ * TheGrid — Enhanced grid visualization for nodes and modules
+ * Renders nodes and their attached modules with proper visual hierarchy
  */
 
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
-import type { GridData, VisualNode, VisualModule, VisualService, GridEdge, GridPosition } from '@/lib/entities';
+import type { GridData, VisualNode, VisualModule, GridEdge, GridPosition } from '@/lib/entities';
 import { colors } from '@/lib/tokens';
 
 interface TheGridProps {
   gridData: GridData;
   selectedEntityId?: string;
   onNodeClick?: (node: VisualNode) => void;
-  onServiceClick?: (service: VisualService) => void;
   onModuleClick?: (module: VisualModule) => void;
   className?: string;
 }
@@ -24,7 +23,6 @@ export default function TheGrid({
   gridData,
   selectedEntityId,
   onNodeClick,
-  onServiceClick,
   onModuleClick,
   className = '',
 }: TheGridProps) {
@@ -71,9 +69,10 @@ export default function TheGrid({
   const nodesWithPositions = useMemo(() => 
     gridData.nodes.map(node => ({
       ...node,
-      position: getNodePosition(node),
+      position: nodePositions[node.id] || node.position,
     })),
-    [gridData.nodes, nodePositions]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [gridData.nodes, JSON.stringify(nodePositions)]
   );
 
   // Recalculate module positions based on updated parent node positions - memoized
@@ -106,17 +105,16 @@ export default function TheGrid({
     return gridData.edges.map(edge => {
       // Find the from/to entities and their current positions
       const fromNode = nodesWithPositions.find(n => n.id === edge.from);
-      const fromService = gridData.services.find(s => s.id === edge.from);
       const toNode = nodesWithPositions.find(n => n.id === edge.to);
       const toModule = modulesWithPositions.find(m => m.id === edge.to);
       
       return {
         ...edge,
-        fromPos: fromNode?.position || fromService?.position || edge.fromPos,
+        fromPos: fromNode?.position || edge.fromPos,
         toPos: toNode?.position || toModule?.position || edge.toPos,
       };
     });
-  }, [gridData.edges, gridData.services, nodesWithPositions, modulesWithPositions]);
+  }, [gridData.edges, nodesWithPositions, modulesWithPositions]);
 
   // Center view on mount and when gridData changes
   const hasInitialized = useRef(false);
@@ -126,20 +124,18 @@ export default function TheGrid({
     if (hasInitialized.current) return;
     
     if (!containerRef.current) return;
-    if (gridData.nodes.length === 0 && gridData.services.length === 0) return;
+    if (gridData.nodes.length === 0) return;
 
     const container = containerRef.current;
 
-    // Calculate bounds of ALL entities (nodes, modules, services)
+    // Calculate bounds of all entities (nodes and modules)
     const allX = [
       ...nodesWithPositions.map(n => n.position.x),
       ...modulesWithPositions.map(m => m.position.x),
-      ...gridData.services.map(s => s.position.x),
     ];
     const allY = [
       ...nodesWithPositions.map(n => n.position.y),
       ...modulesWithPositions.map(m => m.position.y),
-      ...gridData.services.map(s => s.position.y),
     ];
 
     if (allX.length === 0 || allY.length === 0) return;
@@ -165,7 +161,7 @@ export default function TheGrid({
 
     setPan({ x: centerX, y: centerY });
     hasInitialized.current = true;
-  }, [nodesWithPositions, modulesWithPositions, gridData.services]);
+  }, [nodesWithPositions, modulesWithPositions]);
 
   // Node drag handlers with proper click prevention
   const handleNodeDragStart = useCallback((e: React.MouseEvent, nodeId: string) => {
@@ -252,69 +248,76 @@ export default function TheGrid({
     setZoom((prev) => Math.min(Math.max(0.5, prev + delta), 2));
   };
 
+  // Memoized Edge component
+  const GridEdge = React.memo(({ edge, index }: { edge: GridEdge; index: number }) => {
+    const isHighlighted = edge.from === selectedEntityId ||
+                         edge.to === selectedEntityId ||
+                         edge.from === hoveredId ||
+                         edge.to === hoveredId;
+
+    const strokeDasharray = edge.style === 'dotted' ? '8,4' : undefined;
+
+    return (
+      <g>
+        {/* Glow layer */}
+        <line
+          x1={edge.fromPos.x}
+          y1={edge.fromPos.y}
+          x2={edge.toPos.x}
+          y2={edge.toPos.y}
+          stroke={edge.color}
+          strokeWidth={isHighlighted ? 8 : 4}
+          opacity={isHighlighted ? 0.2 : 0.05}
+          strokeLinecap="round"
+        />
+        {/* Main line */}
+        <line
+          x1={edge.fromPos.x}
+          y1={edge.fromPos.y}
+          x2={edge.toPos.x}
+          y2={edge.toPos.y}
+          stroke={edge.color}
+          strokeWidth={isHighlighted ? 2 : 1}
+          strokeDasharray={strokeDasharray}
+          opacity={isHighlighted ? 0.7 : 0.2}
+          strokeLinecap="round"
+        />
+      </g>
+    );
+  });
+  GridEdge.displayName = 'GridEdge';
+
   // Render connection edges with updated positions
   const renderEdges = useCallback(() => {
-    return edgesWithPositions.map((edge, idx) => {
-      const isHighlighted = edge.from === selectedEntityId ||
-                           edge.to === selectedEntityId ||
-                           edge.from === hoveredId ||
-                           edge.to === hoveredId;
-
-      const strokeDasharray = edge.style === 'dotted' ? '8,4' : undefined;
-
-      return (
-        <g key={`edge-${idx}`}>
-          {/* Glow layer */}
-          <line
-            x1={edge.fromPos.x}
-            y1={edge.fromPos.y}
-            x2={edge.toPos.x}
-            y2={edge.toPos.y}
-            stroke={edge.color}
-            strokeWidth={isHighlighted ? 8 : 4}
-            opacity={isHighlighted ? 0.2 : 0.05}
-            strokeLinecap="round"
-          />
-          {/* Main line */}
-          <line
-            x1={edge.fromPos.x}
-            y1={edge.fromPos.y}
-            x2={edge.toPos.x}
-            y2={edge.toPos.y}
-            stroke={edge.color}
-            strokeWidth={isHighlighted ? 2 : 1}
-            strokeDasharray={strokeDasharray}
-            opacity={isHighlighted ? 0.7 : 0.2}
-            strokeLinecap="round"
-          />
-        </g>
-      );
-    });
+    return edgesWithPositions.map((edge, idx) => (
+      <GridEdge key={`edge-${idx}`} edge={edge} index={idx} />
+    ));
   }, [edgesWithPositions, selectedEntityId, hoveredId]);
 
-  // Render a node as a hexagon
-  const renderNode = useCallback((node: VisualNode) => {
+  // Memoized GridNode component
+  const GridNode = React.memo(({ node }: { node: VisualNode }) => {
     const isSelected = node.id === selectedEntityId;
     const isHovered = node.id === hoveredId;
     const size = 80;
 
     // Create hexagon points
-    const points: string[] = [];
-    for (let i = 0; i < 6; i++) {
-      const angle = (Math.PI / 3) * i - Math.PI / 2;
-      const x = node.position.x + size * Math.cos(angle);
-      const y = node.position.y + size * Math.sin(angle);
-      points.push(`${x},${y}`);
-    }
+    const points = useMemo(() => {
+      const pts: string[] = [];
+      for (let i = 0; i < 6; i++) {
+        const angle = (Math.PI / 3) * i - Math.PI / 2;
+        const x = node.position.x + size * Math.cos(angle);
+        const y = node.position.y + size * Math.sin(angle);
+        pts.push(`${x},${y}`);
+      }
+      return pts.join(' ');
+    }, [node.position.x, node.position.y]);
 
     return (
       <g
-        key={node.id}
         onMouseEnter={() => setHoveredId(node.id)}
         onMouseLeave={() => setHoveredId(undefined)}
         onMouseDown={(e) => handleNodeDragStart(e, node.id)}
         onClick={(e) => {
-          // Only trigger click if we haven't dragged more than 10 pixels
           if (dragDistance < 10) {
             onNodeClick?.(node);
           }
@@ -323,14 +326,14 @@ export default function TheGrid({
       >
         {/* Glow */}
         <polygon
-          points={points.join(' ')}
+          points={points}
           fill={node.sectorColor}
           opacity={0.2}
-          filter={isSelected || isHovered ? `url(#glow-${node.id})` : undefined}
+          filter={isSelected || isHovered ? `url(#glow-node)` : undefined}
         />
         {/* Main hex */}
         <polygon
-          points={points.join(' ')}
+          points={points}
           fill={`${node.sectorColor}60`}
           stroke={isSelected ? node.signalColor : node.sectorColor}
           strokeWidth={isSelected || isHovered ? 3 : 2}
@@ -353,42 +356,24 @@ export default function TheGrid({
         >
           {node.name.startsWith('HoneyDrunk.') ? node.name.split('.').pop() : node.name}
         </text>
-        {/* Signal indicator dot - positioned below text */}
+        {/* Signal indicator dot */}
         <circle
           cx={node.position.x}
           cy={node.position.y + 14}
           r={6}
           fill={node.signalColor}
           opacity={0.9}
-          filter={`url(#signal-glow-${node.id})`}
+          filter="url(#signal-glow)"
           pointerEvents="none"
         />
-
-        {/* Glow filter definition */}
-        {(isSelected || isHovered) && (
-          <defs>
-            <filter id={`glow-${node.id}`} x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="10" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-          </defs>
-        )}
-        {/* Signal dot glow filter - always present */}
-        <defs>
-          <filter id={`signal-glow-${node.id}`} x="-200%" y="-200%" width="500%" height="500%">
-            <feGaussianBlur stdDeviation="4" result="signalBlur"/>
-            <feMerge>
-              <feMergeNode in="signalBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
       </g>
     );
-  }, [selectedEntityId, hoveredId, isDraggingNode, dragDistance, handleNodeDragStart, onNodeClick]);
+  });
+  GridNode.displayName = 'GridNode';
+
+  const renderNode = useCallback((node: VisualNode) => {
+    return <GridNode key={node.id} node={node} />;
+  }, [selectedEntityId, hoveredId, isDraggingNode, dragDistance]);
 
   // Render a module as a larger, more descriptive chip
   const renderModule = useCallback((module: VisualModule) => {
@@ -544,66 +529,6 @@ export default function TheGrid({
     );
   }, [hoveredId, selectedEntityId, onModuleClick]);
 
-  // Render a service as a rounded rectangle
-  const renderService = useCallback((service: VisualService) => {
-    const isSelected = service.id === selectedEntityId;
-    const isHovered = service.id === hoveredId;
-    const width = 180;
-    const height = 60;
-
-    return (
-      <g
-        key={service.id}
-        onMouseEnter={() => setHoveredId(service.id)}
-        onMouseLeave={() => setHoveredId(undefined)}
-        onClick={() => onServiceClick?.(service)}
-        style={{ cursor: 'pointer' }}
-      >
-        {/* Service box */}
-        <rect
-          x={service.position.x - width / 2}
-          y={service.position.y - height / 2}
-          width={width}
-          height={height}
-          rx={8}
-          fill={`${service.tierColor}50`}
-          stroke={isSelected ? service.signalColor : service.tierColor}
-          strokeWidth={isSelected || isHovered ? 2 : 1}
-          opacity={isHovered ? 1 : 0.9}
-        />
-
-        {/* Service name */}
-        <text
-          x={service.position.x}
-          y={service.position.y - 8}
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fill={colors.offWhite}
-          fontSize="11"
-          fontFamily="monospace"
-          fontWeight="bold"
-          pointerEvents="none"
-        >
-          {service.name}
-        </text>
-
-        {/* Service tier */}
-        <text
-          x={service.position.x}
-          y={service.position.y + 8}
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fill={service.tierColor}
-          fontSize="8"
-          fontFamily="monospace"
-          pointerEvents="none"
-        >
-          {service.tier}
-        </text>
-      </g>
-    );
-  }, [selectedEntityId, hoveredId, onServiceClick]);
-
   return (
     <div
       ref={containerRef}
@@ -634,6 +559,38 @@ export default function TheGrid({
             overflow: 'visible',
           }}
         >
+          {/* Shared filter definitions - defined once for all entities */}
+          <defs>
+            <filter id="glow-node" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="10" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <filter id="signal-glow" x="-200%" y="-200%" width="500%" height="500%">
+              <feGaussianBlur stdDeviation="4" result="signalBlur"/>
+              <feMerge>
+                <feMergeNode in="signalBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <filter id="glow-module" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="8" result="moduleBlur"/>
+              <feMerge>
+                <feMergeNode in="moduleBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <filter id="glow-service" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="6" result="serviceBlur"/>
+              <feMerge>
+                <feMergeNode in="serviceBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
           {/* Render edges first (background) */}
           {renderEdges()}
 
@@ -642,9 +599,6 @@ export default function TheGrid({
 
           {/* Render modules (with updated positions based on parent nodes) */}
           {modulesWithPositions.map(renderModule)}
-
-          {/* Render services */}
-          {gridData.services.map(renderService)}
         </svg>
       </div>
 

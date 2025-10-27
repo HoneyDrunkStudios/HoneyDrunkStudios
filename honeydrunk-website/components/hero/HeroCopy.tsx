@@ -669,12 +669,19 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
         <AnimatePresence>
           {toastVisible && toastMessage && (
             <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              initial={{ opacity: 0, y: -20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
               transition={{ duration: 0.3 }}
-              className="fixed bottom-8 left-1/2 -translate-x-1/2 pointer-events-none"
-              style={{ zIndex: 50, width: 'calc(100vw - 2rem)', maxWidth: '600px' }}
+              className="pointer-events-none flex justify-center"
+              style={{
+                position: 'fixed',
+                top: '150px',
+                left: 0,
+                right: 0,
+                zIndex: 50,
+                padding: '0 1rem'
+              }}
             >
               <div
                 className="rounded-lg border-2 font-mono text-sm md:text-base"
@@ -685,6 +692,8 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                   boxShadow: `0 0 40px ${colors.neonPink}60, inset 0 0 20px ${colors.neonPink}10`,
                   backdropFilter: 'blur(12px)',
                   padding: '8px 16px',
+                  maxWidth: '600px',
+                  width: '100%'
                 }}
               >
                 <div className="flex items-center" style={{ gap: '8px' }}>
