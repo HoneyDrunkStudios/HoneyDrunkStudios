@@ -1,5 +1,12 @@
 [
   {
+    "date": "2025-10-28",
+    "title": "Grid Expansion — 6 New Infrastructure Nodes",
+    "desc": "Added 6 critical infrastructure nodes (45 total): Meta.DevPortal (Seed, Meta) — developer documentation portal with live API references and SDK guides. Meta.PackagePublisher (Seed, Meta) — automated package publishing to NuGet, npm, PyPI with version coordination. Meta.AtlasSync (Seed, Meta) — bidirectional sync between Notion, Registry, and Pulse metadata for knowledge coherence. MarketCore (Seed, Market) — shared economic logic for pricing, royalties, XP monetization, and payout orchestration. HoneyDrunk.Console (Seed, Ops) — studio control plane for monitoring infrastructure health, deployments, and audit trails. Audit.Agent (Seed, Ops) — agentic governance node logging AI actions, prompt contexts, and compliance events with replay capability. Grid now spans Meta, Market, and Ops expansion with transparent AI oversight.",
+    "tags": ["Meta", "Market", "Ops", "Meta.DevPortal", "Meta.PackagePublisher", "Meta.AtlasSync", "MarketCore", "HoneyDrunk.Console", "Audit.Agent"],
+    "sector": "Meta"
+  },
+  {
     "date": "2025-10-27",
     "title": "HiveXP & HiveGigs — Progression & Quest Framework",
     "desc": "Added two new Core/Market nodes to power unified progression and real-world engagement: HiveXP (Wiring, Core) — centralized XP and leveling system defining category curves, prestige logic, and level schemas across all Grid apps. Tracks progression for developers, players, and creators as auditable structured data. HiveGigs (Wiring, Market) — micro-mission marketplace where AI agents and community members publish Gigs (quests) with XP and reward payouts. Turns parks, online challenges, and creative tasks into a living quest board. Both nodes integrate with MarketCore, Vault, and Transport. Grid now at 39 nodes across 8 sectors.",

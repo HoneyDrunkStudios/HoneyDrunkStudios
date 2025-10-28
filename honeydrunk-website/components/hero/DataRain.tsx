@@ -62,27 +62,20 @@ export default function DataRain({
       const columnWidth = 20;
       const columns = Math.floor(window.innerWidth / columnWidth);
 
-      const rainColors = [
-        colors.electricBlue,
-        colors.neonPink,
-        colors.violetFlux,
-        colors.aurumGold,
-      ];
-
       for (let i = 0; i < actualDensity; i++) {
         const trailLength = Math.random() * 15 + 10;
         // Generate random characters for each position in the trail
-        const chars = Array.from({ length: Math.ceil(trailLength) }, () => 
+        const chars = Array.from({ length: Math.ceil(trailLength) }, () =>
           dataChars[Math.floor(Math.random() * dataChars.length)]
         );
-        
+
         drops.push({
           x: Math.floor(Math.random() * columns) * columnWidth,
           y: Math.random() * -500, // Start above viewport
           speed: Math.random() * 1.5 + 1, // Slowed down from 3+2 to 1.5+1
           length: trailLength,
           opacity: Math.random() * 0.4 + 0.5, // Increased opacity for visibility
-          color: rainColors[Math.floor(Math.random() * rainColors.length)],
+          color: colors.neonPink,
           chars: chars,
         });
       }

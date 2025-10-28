@@ -1815,5 +1815,186 @@
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
     }
+  },
+  {
+    "id": "meta-devportal",
+    "type": "node",
+    "name": "Meta.DevPortal",
+    "sector": "Meta",
+    "signal": "Seed",
+    "status_dot": "beta",
+    "tags": [
+      "docs",
+      "sdk",
+      "developer",
+      "portal"
+    ],
+    "long_description": {
+      "overview": "The public developer portal for HoneyDrunk.OS — documentation, SDK guides, changelogs, and onboarding surfaces for anyone building on the Grid.",
+      "why_it_exists": "Developers and partners need a canonical, searchable source of truth for SDKs and integration patterns.",
+      "primary_audience": "External developers, contributors, and partner studios.",
+      "value_props": [
+        "Unified docs and changelogs across all SDKs",
+        "Live examples linked to Pulse telemetry and Registry schema",
+        "Open RFC index and version diff viewer"
+      ],
+      "monetization_signal": "Drives adoption of open-core SDKs; optional pro-tier integrations later.",
+      "roadmap_focus": "Automated doc generation from Registry + AtlasSync feeds.",
+      "grid_relationship": "Serves all public Nodes as the documentation and onboarding entry point.",
+      "demo_path": "Open developers.honeydrunkstudios.com → browse Node docs → follow Quickstart.",
+      "signal_quote": "Knowledge should travel as fast as code.",
+      "stability_tier": "beta",
+      "impact_vector": "developer experience"
+    }
+  },
+  {
+    "id": "meta-packagepublisher",
+    "type": "node",
+    "name": "Meta.PackagePublisher",
+    "sector": "Meta",
+    "signal": "Seed",
+    "status_dot": "beta",
+    "tags": [
+      "ci",
+      "release",
+      "automation"
+    ],
+    "long_description": {
+      "overview": "Automated release orchestrator for SDKs and libraries — handles versioning, changelogs, and multi-feed publication (NuGet, NPM, internal).",
+      "why_it_exists": "Every Node that ships code needs a consistent, auditable release pipeline.",
+      "primary_audience": "Core engineers and maintainers.",
+      "value_props": [
+        "Semantic-version enforcement across repos",
+        "Auto-generated changelogs from commits",
+        "Multi-feed push with rollback capability"
+      ],
+      "monetization_signal": "Internal infrastructure; saves operational time.",
+      "roadmap_focus": "Integrate with Pulse metrics for release impact tracking.",
+      "grid_relationship": "Extends HoneyDrunk.Pipelines; reports release events to Registry and Pulse.",
+      "demo_path": "Tag repo → Pipeline triggers → packages published → Registry updated.",
+      "signal_quote": "Ship once, publish everywhere.",
+      "stability_tier": "beta",
+      "impact_vector": "operational velocity"
+    }
+  },
+  {
+    "id": "meta-atlassync",
+    "type": "node",
+    "name": "Meta.AtlasSync",
+    "sector": "Meta",
+    "signal": "Seed",
+    "status_dot": "experimental",
+    "tags": [
+      "ai",
+      "memory",
+      "sync"
+    ],
+    "long_description": {
+      "overview": "Neural synchronization layer connecting manifests, docs, and agent memory — keeps The Hive's knowledge consistent across mediums.",
+      "why_it_exists": "Context drifts fast between code, docs, and AI agents; AtlasSync keeps them aligned.",
+      "primary_audience": "AI and documentation subsystems.",
+      "value_props": [
+        "Manages federated context for all agents",
+        "Detects doc/manifest drift and proposes updates",
+        "Feeds DevPortal and Console with latest summaries"
+      ],
+      "monetization_signal": "Internal alignment tool; enables reliable agentic workflows.",
+      "roadmap_focus": "Bidirectional sync between Notion, Registry, and Pulse metadata.",
+      "grid_relationship": "Bridges Meta.DevPortal, Audit.Agent, and Registry.",
+      "demo_path": "Update manifest → AtlasSync detects → regenerates docs → logs in Audit.Agent.",
+      "signal_quote": "Memory is the backbone of coherence.",
+      "stability_tier": "experimental",
+      "impact_vector": "knowledge integrity"
+    }
+  },
+  {
+    "id": "marketcore",
+    "type": "node",
+    "name": "MarketCore",
+    "sector": "Market",
+    "signal": "Seed",
+    "status_dot": "beta",
+    "tags": [
+      "economy",
+      "payouts",
+      "ledger"
+    ],
+    "long_description": {
+      "overview": "Shared economic and payout logic for Grid products — pricing, royalties, XP monetization, and marketplace rules.",
+      "why_it_exists": "Multiple Market Nodes require a consistent, transparent economic backbone.",
+      "primary_audience": "Product teams using HiveXP and Payouts systems.",
+      "value_props": [
+        "Centralized pricing and fee models",
+        "Royalty splits and payout orchestration",
+        "Transaction auditing through Ledger"
+      ],
+      "monetization_signal": "Enables revenue consistency across Market products.",
+      "roadmap_focus": "Add dynamic pricing and partner rev-share APIs.",
+      "grid_relationship": "Interfaces with HiveGigs, HiveXP, Payouts, and Ledger.",
+      "demo_path": "Creator completes Gig → MarketCore computes split → Payout emitted via Stripe.",
+      "signal_quote": "Every credit must trace its origin.",
+      "stability_tier": "beta",
+      "impact_vector": "financial integrity"
+    }
+  },
+  {
+    "id": "honeydrunk-console",
+    "type": "node",
+    "name": "HoneyDrunk.Console",
+    "sector": "Ops",
+    "signal": "Seed",
+    "status_dot": "alpha",
+    "tags": [
+      "ops",
+      "control-plane",
+      "dashboard"
+    ],
+    "long_description": {
+      "overview": "Studio control plane for the Hive — monitors infrastructure Nodes, deployments, and audit trails in real time.",
+      "why_it_exists": "The Grid needs a single cockpit for operators to observe, manage, and align systems.",
+      "primary_audience": "Studio operators and maintainers.",
+      "value_props": [
+        "Unified view of Vault, Pulse, Registry, and Transport health",
+        "Feature-flag and config metadata management",
+        "AuditAgent integration for all privileged actions"
+      ],
+      "monetization_signal": "Internal tool; improves reliability and incident response.",
+      "roadmap_focus": "Real-time Registry diff visualizations and Atlas job viewer.",
+      "grid_relationship": "Consumes internal APIs from Ops sector Nodes; writes audit events to Pulse and Audit.Agent.",
+      "demo_path": "Open Console → view sector health → request deploy → audit logged.",
+      "signal_quote": "Control is not authority; it’s awareness in motion.",
+      "stability_tier": "alpha",
+      "impact_vector": "operational visibility"
+    }
+  },
+  {
+    "id": "audit-agent",
+    "type": "node",
+    "name": "Audit.Agent",
+    "sector": "Ops",
+    "signal": "Seed",
+    "status_dot": "experimental",
+    "tags": [
+      "audit",
+      "ai",
+      "governance"
+    ],
+    "long_description": {
+      "overview": "Agentic governance node that logs and reviews automated actions, prompt contexts, and compliance events across the Hive.",
+      "why_it_exists": "As agents gain autonomy, the Hive needs transparent oversight to ensure safety and accountability.",
+      "primary_audience": "Operators, ethics reviewers, and AI orchestration layers.",
+      "value_props": [
+        "Immutable audit logs for AI and human actions",
+        "Prompt + response context capture",
+        "Replay and policy enforcement engine"
+      ],
+      "monetization_signal": "Internal compliance infrastructure.",
+      "roadmap_focus": "Cross-link with AtlasSync for contextual replay of events.",
+      "grid_relationship": "Consumes logs from Console, Pulse, and AgentKit; exposes read APIs to Ops and Meta.",
+      "demo_path": "Agent executes task → AuditAgent logs context → reviewer replays action.",
+      "signal_quote": "Transparency is the truest form of control.",
+      "stability_tier": "experimental",
+      "impact_vector": "accountability"
+    }
   }
 ]

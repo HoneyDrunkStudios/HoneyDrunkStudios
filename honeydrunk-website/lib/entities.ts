@@ -404,10 +404,10 @@ class SeededRandom {
 function generateNodePosition(node: Node, index: number): GridPosition {
   const rng = new SeededRandom(hashString(node.id));
 
-  // Hex lattice layout with 5 nodes per row
-  const cols = 5;
-  const hexWidth = 380; // Slightly tighter horizontal spacing
-  const hexHeight = 380; // Consistent spacing
+  // Hex lattice layout with 4 nodes per row
+  const cols = 4;
+  const hexWidth = 500; // Spacing for 4-column layout
+  const hexHeight = 450; // Consistent spacing
 
   const col = index % cols;
   const row = Math.floor(index / cols);
