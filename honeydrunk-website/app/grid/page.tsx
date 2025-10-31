@@ -404,7 +404,7 @@ function GridContent() {
                   Flow Index View
                 </div>
                 <div className="text-xs font-mono" style={{ color: colors.slateLight }}>
-                  Organized by Flow = (Energy × 0.4) + (Priority × 0.6). Higher flow needs attention next.
+                  Organized by Flow = (Energy × 0.35) + (Priority × 0.65). Higher flow needs attention next.
                 </div>
               </div>
             </div>

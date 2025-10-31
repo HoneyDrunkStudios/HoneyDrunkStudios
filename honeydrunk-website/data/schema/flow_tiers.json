@@ -15,7 +15,7 @@
       "id": "active",
       "name": "Active",
       "minScore": 60,
-      "maxScore": 79,
+      "maxScore": 80,
       "color": "#F5B700",
       "colorToken": "aurumGold",
       "description": "Gold glow — Current focus. Design, build, test, ship. Heavy lift zone.",
@@ -25,7 +25,7 @@
       "id": "supporting",
       "name": "Supporting",
       "minScore": 40,
-      "maxScore": 59,
+      "maxScore": 60,
       "color": "#00FF41",
       "colorToken": "signalGreen",
       "description": "Signal green — On the periphery. Functioning or partially in progress, but not top priority. Monitored, not driven.",
@@ -35,20 +35,20 @@
       "id": "dormant",
       "name": "Dormant",
       "minScore": 20,
-      "maxScore": 39,
+      "maxScore": 40,
       "color": "#00D1FF",
       "colorToken": "electricBlue",
       "description": "Electric blue — Paused intentionally. Safe to ignore until reactivated.",
       "priority": 4
     },
     {
-      "id": "archived",
-      "name": "Archived",
+      "id": "future",
+      "name": "Future",
       "minScore": 0,
-      "maxScore": 19,
+      "maxScore": 20,
       "color": "#A0AEC0",
       "colorToken": "slateLight",
-      "description": "Dim slate — Sunset or deprecated. Historical value only.",
+      "description": "Dim slate — Future work, ideas, or long-term vision (2-3+ years out). Seeds waiting to grow.",
       "priority": 5
     }
   ]

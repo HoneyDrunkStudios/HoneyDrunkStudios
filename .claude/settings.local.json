@@ -47,7 +47,18 @@
       "Bash(timeout:*)",
       "mcp__ide__getDiagnostics",
       "Bash(powershell -ExecutionPolicy Bypass -File fix-params.ps1)",
-      "Bash(node fix-params.js:*)"
+      "Bash(node fix-params.js:*)",
+      "Bash(node scripts/compute-flow.js:*)",
+      "Bash(node scripts/validate-flow.js:*)",
+      "Bash(node scripts/find-cycles.js:*)",
+      "Bash(node scripts/find-direct-cycles.js:*)",
+      "Bash(node scripts/test-tiers.js:*)",
+      "Bash(node scripts/fix-params.js:*)",
+      "Bash(node scripts/verify-nodes.js:*)",
+      "Bash(node scripts/find-missing-descriptions.js:*)",
+      "Bash(node scripts/add-descriptions.js:*)",
+      "Bash(node scripts/check-tags.js:*)",
+      "Bash(node scripts/tag-suggestions.js:*)"
     ],
     "deny": [],
     "ask": []

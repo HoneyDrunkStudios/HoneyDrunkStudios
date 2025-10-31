@@ -20,7 +20,7 @@ const flowTierDescriptions = {
   active: 'Current focus — Heavy lift zone',
   supporting: 'On the periphery — Monitored, not driven',
   dormant: 'Paused intentionally',
-  archived: 'Sunset or deprecated',
+  future: 'Future work — Seeds waiting to grow',
 };
 
 export default function FlowPage() {
@@ -105,7 +105,7 @@ export default function FlowPage() {
             >
               All ({allNodes.length})
             </button>
-            {(['critical', 'active', 'supporting', 'dormant', 'archived'] as const).map((tier) => {
+            {(['critical', 'active', 'supporting', 'dormant', 'future'] as const).map((tier) => {
               const count = tierCounts[tier] || 0;
               const tierColor = getTierColor(tier);
               const isSelected = selectedTier === tier;
@@ -141,13 +141,13 @@ export default function FlowPage() {
             </h2>
             <p className="text-sm md:text-base leading-relaxed mb-4" style={{ color: colors.slateLight }}>
               <span className="font-mono font-bold" style={{ color: colors.offWhite }}>
-                Flow = (Energy × 0.4) + (Priority × 0.6)
+                Flow = (Energy × 0.35) + (Priority × 0.65)
               </span>
             </p>
             <div className="space-y-2 text-sm" style={{ color: colors.slateLight }}>
-              <div><span className="font-bold" style={{ color: colors.offWhite }}>Energy (0–100)</span> — How active. Recent commits, connections firing, signals broadcast.</div>
-              <div><span className="font-bold" style={{ color: colors.offWhite }}>Priority (0–100)</span> — Strategic impact. Unlocks others. Moves the Hive forward.</div>
-              <div><span className="font-bold" style={{ color: colors.offWhite }}>Flow Index</span> — Your automatic "what's next" list. No backlog grooming. Just watch the Grid breathe.</div>
+              <div><span className="font-bold" style={{ color: colors.offWhite }}>Energy (0–100)</span> — Signal readiness + usage. How hot the node is based on its stage (Live, Wiring, Awake) and how many others depend on it.</div>
+              <div><span className="font-bold" style={{ color: colors.offWhite }}>Priority (0–100)</span> — Strategic weight + centrality + guardrails. Sector importance, tier level, time pressure, and ancestor overrides ensure critical foundations stay ahead.</div>
+              <div><span className="font-bold" style={{ color: colors.offWhite }}>Flow Index</span> — Your automatic "what's next" list. Recomputed server-side, respects circular dependencies, and caps surge work-in-progress. No backlog grooming. Just watch the Grid breathe.</div>
             </div>
           </div>
 
@@ -293,7 +293,7 @@ function getTierColor(tier: string): string {
     case 'active': return colors.aurumGold;
     case 'supporting': return colors.signalGreen;
     case 'dormant': return colors.electricBlue;
-    case 'archived': return colors.slateLight;
+    case 'future': return colors.slateLight;
     default: return colors.slateLight;
   }
 }

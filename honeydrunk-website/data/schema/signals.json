@@ -1,5 +1,12 @@
 [
   {
+    "date": "2025-10-30",
+    "title": "Flow Physics Overhaul — SCC-Aware Prioritization",
+    "desc": "Fixed two critical issues bending the Flow computation: (1) Ops bootstrap boost reduced from +80 to +20—was warping the map and letting Ops permanently eclipse Core foundational nodes. (2) Implemented Tarjan's algorithm for strongly connected components (SCCs) to handle 27 circular dependencies. Ancestor override now works on the acyclic SCC DAG, with smart normalization inside cycles (foundational nodes get maxPriority - 5, others equalize). Updated 10 key nodes with tuned time_pressure and strategy_base parameters. Results: Kernel (100) and Vault (100) now anchor the top, Transport (85) and Web.Rest (82) follow as foundational, Pipelines (80) holds reasonable position. Foundational nodes exempt from WIP sequencing penalties. Core physics now stable—bootstrap gives temporary lift without permanent throne, cycles handled gracefully.",
+    "tags": ["Core", "Ops", "HoneyDrunk.Kernel", "HoneyDrunk.Transport", "HoneyCore.Web.Rest", "HoneyDrunk.Data", "HoneyDrunk.Pipelines", "Flow"],
+    "sector": "Core"
+  },
+  {
     "date": "2025-10-28",
     "title": "Grid Expansion — 6 New Infrastructure Nodes",
     "desc": "Added 6 critical infrastructure nodes (45 total): Meta.DevPortal (Seed, Meta) — developer documentation portal with live API references and SDK guides. Meta.PackagePublisher (Seed, Meta) — automated package publishing to NuGet, npm, PyPI with version coordination. Meta.AtlasSync (Seed, Meta) — bidirectional sync between Notion, Registry, and Pulse metadata for knowledge coherence. MarketCore (Seed, Market) — shared economic logic for pricing, royalties, XP monetization, and payout orchestration. HoneyDrunk.Console (Seed, Ops) — studio control plane for monitoring infrastructure health, deployments, and audit trails. Audit.Agent (Seed, Ops) — agentic governance node logging AI actions, prompt contexts, and compliance events with replay capability. Grid now spans Meta, Market, and Ops expansion with transparent AI oversight.",

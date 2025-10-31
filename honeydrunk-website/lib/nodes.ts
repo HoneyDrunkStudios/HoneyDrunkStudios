@@ -95,16 +95,29 @@ export function getSignalColorsMap(): Record<Signal, string> {
 
 /**
  * Calculate Flow Index and metrics for a node
- * Flow = (Energy × 0.4) + (Priority × 0.6)
+ * Flow = (Energy × 0.35) + (Priority × 0.65)
  *
  * Flow determines the "living roadmap" — what needs attention next
+ * Note: Flow is computed server-side and written to nodes.json.
+ * This fallback exists for when flow field is missing.
  */
 function calculateFlowMetrics(node: Node): FlowMetrics {
+  // Prefer server-computed flow if available
+  if (node.flow !== undefined) {
+    const tierConfig = getFlowTierFromScore(node.flow);
+    return {
+      flowIndex: Math.round(node.flow),
+      flowTier: tierConfig.id,
+      flowColor: tierConfig.color,
+    };
+  }
+
+  // Fallback: compute client-side using same formula as server
   const energy = node.energy ?? 50;    // Default to mid-range if not set
   const priority = node.priority ?? 50;
 
-  // Flow Index: weighted combination
-  const flowIndex = (energy * 0.4) + (priority * 0.6);
+  // Flow Index: weighted combination (matches server formula)
+  const flowIndex = (energy * 0.35) + (priority * 0.65);
 
   // Determine flow tier from score using centralized config
   const tierConfig = getFlowTierFromScore(flowIndex);

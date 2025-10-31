@@ -57,21 +57,21 @@ export default function AboutFlowPage() {
                 color: colors.electricBlue,
               }}
             >
-              Flow = (Energy × 0.4) + (Priority × 0.6)
+              Flow = (Energy × 0.35) + (Priority × 0.65)
             </div>
             <p className="text-base leading-relaxed" style={{ color: colors.slateLight }}>
               Flow Index is a weighted combination of two metrics that tells us{' '}
               <span className="font-bold" style={{ color: colors.offWhite }}>
                 what needs attention next
               </span>
-              . It's not a backlog—it's The Hive breathing, showing where energy flows naturally.
+              . It's not a backlog—it's The Hive breathing, showing where energy flows naturally. Computed server-side with guardrails that respect dependencies and strategic priorities.
             </p>
           </section>
 
           {/* Energy */}
           <section className="space-y-4 text-center md:text-left">
             <h2 className="text-2xl font-display font-bold" style={{ color: colors.electricBlue, marginBottom: '16px' }}>
-              Energy (40% weight)
+              Energy (35% weight)
             </h2>
             <div
               className="p-6 rounded-lg border"
@@ -81,17 +81,17 @@ export default function AboutFlowPage() {
               }}
             >
               <p className="text-base leading-relaxed mb-4" style={{ color: colors.slateLight }}>
-                Energy measures <span className="font-bold" style={{ color: colors.offWhite }}>how active</span> a node is right now:
+                Energy measures <span className="font-bold" style={{ color: colors.offWhite }}>how ready and active</span> a node is:
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside" style={{ color: colors.slateLight }}>
-                <li>Recent commits and development activity</li>
-                <li>Connections firing — how many other nodes depend on it</li>
-                <li>Community engagement and discussion</li>
-                <li>Signal broadcasts and announcements</li>
+                <li><strong>Signal baseline:</strong> Live (90), Wiring (75), Awake (60), Echo (50), Seed (30)</li>
+                <li><strong>Usage bump:</strong> +10 max based on how many nodes depend on it</li>
+                <li><strong>Cooldown:</strong> ×0.8 if marked done or in Echo state</li>
+                <li>Normalized 0–100 across all nodes</li>
               </ul>
               <div className="mt-4 p-4 rounded" style={{ backgroundColor: `${colors.deepSpace}60` }}>
                 <p className="text-sm font-mono" style={{ color: colors.electricBlue }}>
-                  <span className="font-bold">Example:</span> A node with 90 Energy is hot—actively developed, frequently referenced, buzzing with activity.
+                  <span className="font-bold">Example:</span> A Wiring node with 8 dependents would score ~85 raw energy (75 + 8), then get normalized to 0–100 range.
                 </p>
               </div>
             </div>
@@ -100,7 +100,7 @@ export default function AboutFlowPage() {
           {/* Priority */}
           <section className="space-y-4 text-center md:text-left">
             <h2 className="text-2xl font-display font-bold" style={{ color: colors.violetCore, marginBottom: '16px' }}>
-              Priority (60% weight)
+              Priority (65% weight)
             </h2>
             <div
               className="p-6 rounded-lg border"
@@ -110,23 +110,25 @@ export default function AboutFlowPage() {
               }}
             >
               <p className="text-base leading-relaxed mb-4" style={{ color: colors.slateLight }}>
-                Priority measures <span className="font-bold" style={{ color: colors.offWhite }}>strategic impact</span>:
+                Priority measures <span className="font-bold" style={{ color: colors.offWhite }}>strategic impact</span> with multiple layers:
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside" style={{ color: colors.slateLight }}>
-                <li>Foundation nodes that unlock others (e.g., Kernel, Build)</li>
-                <li>Critical path dependencies</li>
-                <li>Revenue impact and business value</li>
-                <li>Long-term vision alignment</li>
+                <li><strong>Sector weight:</strong> Core (1.6×), Transport (1.4×), Web.Rest (1.4×), Ops (1.25×), AI/Agents (1.15×)</li>
+                <li><strong>Centrality:</strong> ln(1 + dependents) — nodes that unlock many others score higher</li>
+                <li><strong>Stage score:</strong> Wiring (14), Awake (8), Live (6), Echo (2), Seed (0)</li>
+                <li><strong>Tier boost:</strong> Platform (+8), Prod-Critical (+6), Internal (+4)</li>
+                <li><strong>Time pressure:</strong> Manual urgency dial (0–10)</li>
+                <li><strong>Guardrails:</strong> Foundational floor, ancestor override (parents ≥ children - 5)</li>
               </ul>
               <div className="mt-4 p-4 rounded" style={{ backgroundColor: `${colors.deepSpace}60` }}>
                 <p className="text-sm font-mono" style={{ color: colors.violetCore }}>
-                  <span className="font-bold">Example:</span> A node with 95 Priority is essential—it moves The Hive forward, even if current Energy is lower.
+                  <span className="font-bold">Example:</span> HoneyDrunk.Kernel (Core sector, 5 dependents, Wiring stage) scores 100 Priority—it's foundational and unlocks everything else.
                 </p>
               </div>
             </div>
           </section>
 
-          {/* Why the 40/60 split? */}
+          {/* Why the 35/65 split? */}
           <section
             className="p-6 rounded-lg border"
             style={{
@@ -135,14 +137,14 @@ export default function AboutFlowPage() {
             }}
           >
             <h3 className="text-xl font-display font-bold" style={{ color: colors.offWhite, marginBottom: '16px' }}>
-              Why 40% Energy / 60% Priority?
+              Why 35% Energy / 65% Priority?
             </h3>
             <p className="text-base leading-relaxed" style={{ color: colors.slateLight }}>
-              Priority gets the edge because{' '}
+              Priority gets the stronger weight because{' '}
               <span className="font-bold" style={{ color: colors.offWhite }}>
                 strategic impact outlasts momentum
               </span>
-              . A high-energy project can fade; a high-priority foundation stays critical. The 60/40 split ensures we follow both the path of least resistance (Energy) <em>and</em> the path that matters most (Priority).
+              . A high-energy project can fade; a high-priority foundation stays critical. The 65/35 split ensures we follow the path of least resistance (Energy) <em>while prioritizing</em> the path that matters most (Priority).
             </p>
           </section>
 

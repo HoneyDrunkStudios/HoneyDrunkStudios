@@ -8,8 +8,8 @@
     "sector": "Core",
     "signal": "Wiring",
     "cluster": "foundation",
-    "energy": 68,
-    "priority": 95,
+    "energy": 96,
+    "priority": 60,
     "depends_on": [
       "honeydrunk-kernel",
       "honeydrunk-pipelines",
@@ -45,7 +45,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 73
   },
   {
     "id": "honeydrunk-pipelines",
@@ -56,8 +63,8 @@
     "sector": "Ops",
     "signal": "Wiring",
     "cluster": "foundation",
-    "energy": 64,
-    "priority": 92,
+    "energy": 98,
+    "priority": 100,
     "depends_on": [
       "honeydrunk-build",
       "honeydrunk-deploy",
@@ -92,7 +99,15 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 28,
+    "tier": "internal",
+    "time_pressure": 5,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 99,
+    "ops_bootstrap": true
   },
   {
     "id": "honeydrunk-actions",
@@ -101,10 +116,10 @@
     "short": "GitHub Actions reusable workflows",
     "description": "Public CI toolkit for OSS repos. Mirrors contracts with Pipelines while staying feed-agnostic.",
     "sector": "Ops",
-    "signal": "Seed",
+    "signal": "Wiring",
     "cluster": "foundation",
-    "energy": 42,
-    "priority": 80,
+    "energy": 98,
+    "priority": 100,
     "depends_on": [
       "honeydrunk-build",
       "honeydrunk-tools"
@@ -138,7 +153,15 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 28,
+    "tier": "platform",
+    "time_pressure": 5,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 99,
+    "ops_bootstrap": true
   },
   {
     "id": "honeydrunk-deploy",
@@ -147,10 +170,10 @@
     "short": "Release & environment orchestration",
     "description": "Standardized deployments, environment tagging, artifact promotion, and approvals. Works with Pipelines and Actions.",
     "sector": "Ops",
-    "signal": "Seed",
+    "signal": "Wiring",
     "cluster": "infrastructure",
-    "energy": 44,
-    "priority": 81,
+    "energy": 96,
+    "priority": 84,
     "depends_on": [
       "honeydrunk-pipelines",
       "honeydrunk-actions",
@@ -185,7 +208,15 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 26,
+    "tier": "internal",
+    "time_pressure": 4,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 88,
+    "ops_bootstrap": true
   },
   {
     "id": "honeydrunk-kernel",
@@ -194,10 +225,10 @@
     "short": "Foundational primitives. Lowest layer.",
     "description": "Core primitives and abstractions that power the entire HoneyDrunk ecosystem. The bedrock upon which everything is built.",
     "sector": "Core",
-    "signal": "Wiring",
+    "signal": "Awake",
     "cluster": "foundation",
-    "energy": 60,
-    "priority": 100,
+    "energy": 82,
+    "priority": 95,
     "depends_on": [
       "honeydrunk-data",
       "honeydrunk-transport",
@@ -235,7 +266,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": true,
+    "strategy_base": 24,
+    "tier": "none",
+    "time_pressure": 2,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 90
   },
   {
     "id": "honeydrunk-data",
@@ -246,8 +284,8 @@
     "sector": "Core",
     "signal": "Seed",
     "cluster": "foundation",
-    "energy": 50,
-    "priority": 90,
+    "energy": 8,
+    "priority": 95,
     "depends_on": [
       "honeydrunk-kernel",
       "honeydrunk-transport",
@@ -283,7 +321,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": true,
+    "strategy_base": 22,
+    "tier": "none",
+    "time_pressure": 2,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 65
   },
   {
     "id": "honeydrunk-transport",
@@ -295,7 +340,7 @@
     "signal": "Awake",
     "cluster": "foundation",
     "energy": 76,
-    "priority": 90,
+    "priority": 95,
     "slots": [
       "adapter"
     ],
@@ -333,7 +378,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": true,
+    "strategy_base": 23,
+    "tier": "none",
+    "time_pressure": 2,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 88
   },
   {
     "id": "honeycore-web-rest",
@@ -344,8 +396,8 @@
     "sector": "Core",
     "signal": "Awake",
     "cluster": "foundation",
-    "energy": 75,
-    "priority": 80,
+    "energy": 65,
+    "priority": 95,
     "depends_on": [
       "honeydrunk-kernel",
       "honeydrunk-auth",
@@ -380,7 +432,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": true,
+    "strategy_base": 22,
+    "tier": "none",
+    "time_pressure": 2,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 85
   },
   {
     "id": "honeydrunk-testing",
@@ -391,8 +450,8 @@
     "sector": "Core",
     "signal": "Awake",
     "cluster": "foundation",
-    "energy": 72,
-    "priority": 75,
+    "energy": 61,
+    "priority": 22,
     "slots": [
       "harness"
     ],
@@ -429,7 +488,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 36
   },
   {
     "id": "honeydrunk-tools",
@@ -438,10 +504,10 @@
     "short": "Dev CLIs (DACPAC, versioning, etc.)",
     "description": "Cross-CI scripts and CLIs for build/test/pack/publish, DB deploys, and repo hygiene.",
     "sector": "Ops",
-    "signal": "Awake",
+    "signal": "Wiring",
     "cluster": "tooling",
-    "energy": 60,
-    "priority": 70,
+    "energy": 100,
+    "priority": 100,
     "depends_on": [
       "honeydrunk-pipelines",
       "honeydrunk-actions",
@@ -476,7 +542,15 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 26,
+    "tier": "internal",
+    "time_pressure": 4,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 100,
+    "ops_bootstrap": true
   },
   {
     "id": "honeydrunk-vault",
@@ -484,11 +558,11 @@
     "name": "HoneyDrunk.Vault",
     "short": "Secrets & config manager",
     "description": "Secure secrets and configuration management. Zero-trust vault for sensitive data across environments.",
-    "sector": "HoneyNet",
-    "signal": "Wiring",
+    "sector": "Core",
+    "signal": "Awake",
     "cluster": "security",
-    "energy": 62,
-    "priority": 92,
+    "energy": 82,
+    "priority": 90,
     "slots": [
       "provider"
     ],
@@ -528,7 +602,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 24,
+    "tier": "none",
+    "time_pressure": 2,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 87
   },
   {
     "id": "pulse",
@@ -536,11 +617,11 @@
     "name": "Pulse",
     "short": "Observability suite (logs/traces/metrics)",
     "description": "Unified observability. Logs, traces, and metrics in one interface. See the heartbeat of The Hive.",
-    "sector": "HoneyNet",
+    "sector": "Ops",
     "signal": "Awake",
     "cluster": "security",
-    "energy": 78,
-    "priority": 85,
+    "energy": 82,
+    "priority": 73,
     "slots": [
       "telemetry"
     ],
@@ -582,7 +663,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 22,
+    "tier": "none",
+    "time_pressure": 2,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 76
   },
   {
     "id": "honeydrunk-auth",
@@ -593,8 +681,8 @@
     "sector": "Core",
     "signal": "Seed",
     "cluster": "infrastructure",
-    "energy": 35,
-    "priority": 78,
+    "energy": 6,
+    "priority": 47,
     "depends_on": [
       "honeydrunk-vault",
       "honeycore-web-rest"
@@ -629,7 +717,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 33
   },
   {
     "id": "honeydrunk-agentkit",
@@ -640,8 +735,8 @@
     "sector": "AI",
     "signal": "Seed",
     "cluster": "ai",
-    "energy": 38,
-    "priority": 80,
+    "energy": 4,
+    "priority": 23,
     "depends_on": [
       "honeydrunk-kernel",
       "honeydrunk-transport",
@@ -677,7 +772,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 16
   },
   {
     "id": "honeydrunk-signal",
@@ -688,8 +790,8 @@
     "sector": "Creator",
     "signal": "Seed",
     "cluster": "ecosystem",
-    "energy": 36,
-    "priority": 74,
+    "energy": 2,
+    "priority": 23,
     "depends_on": [
       "honeyhub",
       "pulse",
@@ -725,7 +827,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 16
   },
   {
     "id": "ledger",
@@ -736,8 +845,8 @@
     "sector": "Ops",
     "signal": "Seed",
     "cluster": "business",
-    "energy": 34,
-    "priority": 60,
+    "energy": 4,
+    "priority": 27,
     "depends_on": [
       "invoice",
       "pay"
@@ -769,7 +878,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 19
   },
   {
     "id": "invoice",
@@ -780,8 +896,8 @@
     "sector": "Ops",
     "signal": "Seed",
     "cluster": "business",
-    "energy": 32,
-    "priority": 58,
+    "energy": 4,
+    "priority": 27,
     "depends_on": [
       "ledger",
       "pay"
@@ -813,7 +929,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 19
   },
   {
     "id": "honeydrunk-clientportalos",
@@ -824,8 +947,8 @@
     "sector": "Ops",
     "signal": "Awake",
     "cluster": "business",
-    "energy": 55,
-    "priority": 90,
+    "energy": 61,
+    "priority": 14,
     "depends_on": [
       "pulse",
       "honeydrunk-vault",
@@ -863,7 +986,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 30
   },
   {
     "id": "pay",
@@ -874,8 +1004,8 @@
     "sector": "Ops",
     "signal": "Seed",
     "cluster": "business",
-    "energy": 33,
-    "priority": 62,
+    "energy": 4,
+    "priority": 27,
     "depends_on": [
       "invoice",
       "subs"
@@ -907,7 +1037,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 19
   },
   {
     "id": "subs",
@@ -918,8 +1055,8 @@
     "sector": "Ops",
     "signal": "Seed",
     "cluster": "business",
-    "energy": 28,
-    "priority": 50,
+    "energy": 2,
+    "priority": 27,
     "depends_on": [
       "ledger"
     ],
@@ -950,7 +1087,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 18
   },
   {
     "id": "forge",
@@ -961,8 +1105,8 @@
     "sector": "Creator",
     "signal": "Seed",
     "cluster": "marketplace",
-    "energy": 30,
-    "priority": 65,
+    "energy": 2,
+    "priority": 23,
     "depends_on": [
       "honeyhub"
     ],
@@ -993,7 +1137,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 16
   },
   {
     "id": "tether",
@@ -1004,8 +1155,8 @@
     "sector": "Market",
     "signal": "Seed",
     "cluster": "personal",
-    "energy": 25,
-    "priority": 45,
+    "energy": 0,
+    "priority": 0,
     "depends_on": [],
     "tags": [
       "relationships",
@@ -1034,7 +1185,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 0
   },
   {
     "id": "draft",
@@ -1045,8 +1203,8 @@
     "sector": "HoneyPlay",
     "signal": "Seed",
     "cluster": "gaming",
-    "energy": 32,
-    "priority": 52,
+    "energy": 0,
+    "priority": 0,
     "depends_on": [],
     "tags": [
       "fantasy",
@@ -1075,7 +1233,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 0
   },
   {
     "id": "game-prototype",
@@ -1086,8 +1251,8 @@
     "sector": "HoneyPlay",
     "signal": "Seed",
     "cluster": "gaming",
-    "energy": 35,
-    "priority": 48,
+    "energy": 0,
+    "priority": 0,
     "depends_on": [],
     "tags": [
       "game",
@@ -1116,7 +1281,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 0
   },
   {
     "id": "honeyhub",
@@ -1127,8 +1299,8 @@
     "sector": "Meta",
     "signal": "Seed",
     "cluster": "ecosystem",
-    "energy": 34,
-    "priority": 68,
+    "energy": 6,
+    "priority": 23,
     "depends_on": [
       "honeydrunk-signal",
       "forge",
@@ -1161,7 +1333,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 17
   },
   {
     "id": "honeyconnect",
@@ -1172,8 +1351,8 @@
     "sector": "Meta",
     "signal": "Seed",
     "cluster": "ecosystem",
-    "energy": 30,
-    "priority": 64,
+    "energy": 0,
+    "priority": 0,
     "depends_on": [
       "honeyhub"
     ],
@@ -1204,7 +1383,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 0
   },
   {
     "id": "grid",
@@ -1215,8 +1401,8 @@
     "sector": "Meta",
     "signal": "Seed",
     "cluster": "ecosystem",
-    "energy": 40,
-    "priority": 86,
+    "energy": 4,
+    "priority": 18,
     "depends_on": [
       "honeydrunk-kernel",
       "pulse"
@@ -1250,7 +1436,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 13
   },
   {
     "id": "honeymech-courier",
@@ -1261,8 +1454,8 @@
     "sector": "Cyberware",
     "signal": "Seed",
     "cluster": "robotics",
-    "energy": 28,
-    "priority": 55,
+    "energy": 2,
+    "priority": 18,
     "depends_on": [
       "honeymech-sim"
     ],
@@ -1294,7 +1487,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 12
   },
   {
     "id": "honeymech-sim",
@@ -1305,8 +1505,8 @@
     "sector": "Cyberware",
     "signal": "Seed",
     "cluster": "robotics",
-    "energy": 30,
-    "priority": 58,
+    "energy": 4,
+    "priority": 18,
     "depends_on": [
       "honeymech-courier"
     ],
@@ -1338,7 +1538,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 13
   },
   {
     "id": "honeymech-servo",
@@ -1349,8 +1556,8 @@
     "sector": "Cyberware",
     "signal": "Seed",
     "cluster": "robotics",
-    "energy": 26,
-    "priority": 50,
+    "energy": 0,
+    "priority": 0,
     "depends_on": [
       "honeymech-sim"
     ],
@@ -1382,7 +1589,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 0
   },
   {
     "id": "archive-legacy",
@@ -1393,8 +1607,8 @@
     "sector": "Meta",
     "signal": "Archive",
     "cluster": "history",
-    "energy": 15,
-    "priority": 5,
+    "energy": 0,
+    "priority": 0,
     "depends_on": [],
     "tags": [
       "archive",
@@ -1425,7 +1639,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 0
   },
   {
     "id": "breachlab-exe",
@@ -1436,8 +1657,8 @@
     "sector": "HoneyNet",
     "signal": "Seed",
     "cluster": "security",
-    "energy": 40,
-    "priority": 85,
+    "energy": 6,
+    "priority": 23,
     "depends_on": [
       "honeysentinel",
       "pulse",
@@ -1473,7 +1694,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 17
   },
   {
     "id": "honeysentinel",
@@ -1484,8 +1712,8 @@
     "sector": "HoneyNet",
     "signal": "Wiring",
     "cluster": "security",
-    "energy": 60,
-    "priority": 90,
+    "energy": 98,
+    "priority": 35,
     "depends_on": [
       "breachlab-exe",
       "pulse",
@@ -1521,7 +1749,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 57
   },
   {
     "id": "review",
@@ -1532,8 +1767,8 @@
     "sector": "Market",
     "signal": "Seed",
     "cluster": "social",
-    "energy": 38,
-    "priority": 90,
+    "energy": 0,
+    "priority": 0,
     "depends_on": [
       "pulse",
       "honeydrunk-vault"
@@ -1569,7 +1804,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 0
   },
   {
     "id": "memorybank",
@@ -1580,8 +1822,8 @@
     "sector": "Market",
     "signal": "Seed",
     "cluster": "self",
-    "energy": 30,
-    "priority": 75,
+    "energy": 0,
+    "priority": 0,
     "depends_on": [
       "pulse",
       "honeydrunk-vault"
@@ -1616,7 +1858,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 0
   },
   {
     "id": "dreammarket",
@@ -1627,8 +1876,8 @@
     "sector": "Market",
     "signal": "Seed",
     "cluster": "creativity",
-    "energy": 30,
-    "priority": 70,
+    "energy": 0,
+    "priority": 0,
     "depends_on": [
       "pulse",
       "honeydrunk-vault"
@@ -1664,7 +1913,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 0
   },
   {
     "id": "arcadia",
@@ -1675,8 +1931,8 @@
     "sector": "Market",
     "signal": "Seed",
     "cluster": "fandom",
-    "energy": 40,
-    "priority": 88,
+    "energy": 0,
+    "priority": 0,
     "depends_on": [
       "pulse",
       "honeydrunk-vault"
@@ -1715,7 +1971,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 0
   },
   {
     "id": "hivexp",
@@ -1726,8 +1989,8 @@
     "sector": "Core",
     "signal": "Wiring",
     "cluster": "foundation",
-    "energy": 91,
-    "priority": 50,
+    "energy": 94,
+    "priority": 49,
     "depends_on": [
       "vault",
       "transport",
@@ -1764,7 +2027,14 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 65
   },
   {
     "id": "hivegigs",
@@ -1775,8 +2045,8 @@
     "sector": "Market",
     "signal": "Wiring",
     "cluster": "application",
-    "energy": 88,
-    "priority": 120,
+    "energy": 92,
+    "priority": 13,
     "depends_on": [
       "hivexp",
       "vault",
@@ -1814,12 +2084,21 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 41
   },
   {
     "id": "meta-devportal",
     "type": "node",
     "name": "Meta.DevPortal",
+    "short": "Public developer portal",
+    "description": "Public developer portal for HoneyDrunk.OS. Documentation, SDK guides, changelogs, and onboarding for developers building on the Grid.",
     "sector": "Meta",
     "signal": "Seed",
     "status_dot": "beta",
@@ -1831,26 +2110,42 @@
     ],
     "long_description": {
       "overview": "The public developer portal for HoneyDrunk.OS — documentation, SDK guides, changelogs, and onboarding surfaces for anyone building on the Grid.",
-      "why_it_exists": "Developers and partners need a canonical, searchable source of truth for SDKs and integration patterns.",
-      "primary_audience": "External developers, contributors, and partner studios.",
+      "why_it_exists": "Developers and partners need a canonical, searchable source of truth for SDKs, APIs, and integration patterns. Meta.DevPortal unifies fragmented knowledge into a single entry point, ensuring consistency and discoverability.",
+      "primary_audience": "External developers, contributors, and partner studios integrating with HoneyDrunk SDKs or APIs.",
       "value_props": [
-        "Unified docs and changelogs across all SDKs",
-        "Live examples linked to Pulse telemetry and Registry schema",
-        "Open RFC index and version diff viewer"
+        "Unified documentation and changelogs across all SDKs.",
+        "Live examples linked to Pulse telemetry and Registry schema.",
+        "Open RFC index and version diff viewer for transparent evolution."
       ],
-      "monetization_signal": "Drives adoption of open-core SDKs; optional pro-tier integrations later.",
-      "roadmap_focus": "Automated doc generation from Registry + AtlasSync feeds.",
-      "grid_relationship": "Serves all public Nodes as the documentation and onboarding entry point.",
-      "demo_path": "Open developers.honeydrunkstudios.com → browse Node docs → follow Quickstart.",
+      "monetization_signal": "Drives adoption of open-core SDKs; enables future pro-tier integration and partner licensing opportunities.",
+      "roadmap_focus": "Automated doc generation via Registry and AtlasSync; introduce AI-assisted doc authoring and contextual search.",
+      "grid_relationship": "Serves all public Nodes as the primary documentation and onboarding interface; sources metadata from Registry and Pulse.",
+      "integration_depth": "medium",
+      "demo_path": "Navigate to developers.honeydrunkstudios.com → browse Node documentation → follow Quickstart flow for SDK setup.",
       "signal_quote": "Knowledge should travel as fast as code.",
       "stability_tier": "beta",
       "impact_vector": "developer experience"
-    }
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "energy": 0,
+    "priority": 0,
+    "flow": 0
   },
   {
     "id": "meta-packagepublisher",
     "type": "node",
     "name": "Meta.PackagePublisher",
+    "short": "Automated release orchestrator",
+    "description": "Automated release orchestrator for SDKs and shared libraries. Handles versioning, changelogs, signing, and multi-feed publication.",
     "sector": "Meta",
     "signal": "Seed",
     "status_dot": "beta",
@@ -1860,27 +2155,43 @@
       "automation"
     ],
     "long_description": {
-      "overview": "Automated release orchestrator for SDKs and libraries — handles versioning, changelogs, and multi-feed publication (NuGet, NPM, internal).",
-      "why_it_exists": "Every Node that ships code needs a consistent, auditable release pipeline.",
-      "primary_audience": "Core engineers and maintainers.",
+      "overview": "Automated release orchestrator for SDKs and shared libraries — handles versioning, changelogs, signing, and multi-feed publication (NuGet, NPM, internal).",
+      "why_it_exists": "Every Node that ships code requires a reliable, auditable, and standardized release pipeline. Manual publishing introduces drift and inconsistency across SDK ecosystems.",
+      "primary_audience": "Core engineers, maintainers, and CI/CD pipeline owners responsible for versioned artifacts.",
       "value_props": [
-        "Semantic-version enforcement across repos",
-        "Auto-generated changelogs from commits",
-        "Multi-feed push with rollback capability"
+        "Semantic-version enforcement and automatic incrementing.",
+        "Auto-generated changelogs based on structured commit history.",
+        "Multi-feed distribution with rollback and audit support."
       ],
-      "monetization_signal": "Internal infrastructure; saves operational time.",
-      "roadmap_focus": "Integrate with Pulse metrics for release impact tracking.",
-      "grid_relationship": "Extends HoneyDrunk.Pipelines; reports release events to Registry and Pulse.",
-      "demo_path": "Tag repo → Pipeline triggers → packages published → Registry updated.",
+      "monetization_signal": "Internal infrastructure; improves operational throughput and reduces release friction.",
+      "roadmap_focus": "Integrate with Pulse metrics for post-release performance and adoption tracking; automate dependency graph updates across Nodes.",
+      "grid_relationship": "Extends HoneyDrunk.Pipelines; reports release and artifact metadata to Registry and Pulse.",
+      "integration_depth": "deep",
+      "demo_path": "Developer tags repo → Pipeline triggers release → packages published to feeds → Registry and Pulse updated.",
       "signal_quote": "Ship once, publish everywhere.",
       "stability_tier": "beta",
       "impact_vector": "operational velocity"
-    }
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "energy": 0,
+    "priority": 0,
+    "flow": 0
   },
   {
     "id": "meta-atlassync",
     "type": "node",
     "name": "Meta.AtlasSync",
+    "short": "Neural synchronization layer",
+    "description": "Neural synchronization layer connecting manifests, documentation, and agent memory. Keeps the Hive's collective knowledge coherent across mediums.",
     "sector": "Meta",
     "signal": "Seed",
     "status_dot": "experimental",
@@ -1890,27 +2201,43 @@
       "sync"
     ],
     "long_description": {
-      "overview": "Neural synchronization layer connecting manifests, docs, and agent memory — keeps The Hive's knowledge consistent across mediums.",
-      "why_it_exists": "Context drifts fast between code, docs, and AI agents; AtlasSync keeps them aligned.",
-      "primary_audience": "AI and documentation subsystems.",
+      "overview": "Neural synchronization layer connecting manifests, documentation, and agent memory — keeps the Hive’s collective knowledge coherent across mediums.",
+      "why_it_exists": "Context drifts rapidly between code, docs, and agent layers. AtlasSync detects divergence and restores alignment, ensuring the Hive’s data and understanding remain synchronized.",
+      "primary_audience": "AI orchestration systems, documentation subsystems, and context-driven developer tools.",
       "value_props": [
-        "Manages federated context for all agents",
-        "Detects doc/manifest drift and proposes updates",
-        "Feeds DevPortal and Console with latest summaries"
+        "Federated context management across agents and systems.",
+        "Automated drift detection and regeneration of affected documents.",
+        "Feeds Meta.DevPortal and Console with real-time summaries."
       ],
-      "monetization_signal": "Internal alignment tool; enables reliable agentic workflows.",
-      "roadmap_focus": "Bidirectional sync between Notion, Registry, and Pulse metadata.",
-      "grid_relationship": "Bridges Meta.DevPortal, Audit.Agent, and Registry.",
-      "demo_path": "Update manifest → AtlasSync detects → regenerates docs → logs in Audit.Agent.",
+      "monetization_signal": "Internal alignment infrastructure; enables reliable agentic workflows and contextual accuracy.",
+      "roadmap_focus": "Bidirectional sync between Notion, Registry, and Pulse metadata; add versioned memory maps for each sector.",
+      "grid_relationship": "Bridges Meta.DevPortal, Audit.Agent, and Registry; acts as the knowledge circulatory system for Meta.",
+      "integration_depth": "deep",
+      "demo_path": "Update manifest → AtlasSync detects drift → regenerates docs → Audit.Agent logs context replay.",
       "signal_quote": "Memory is the backbone of coherence.",
       "stability_tier": "experimental",
       "impact_vector": "knowledge integrity"
-    }
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "energy": 0,
+    "priority": 0,
+    "flow": 0
   },
   {
     "id": "marketcore",
     "type": "node",
     "name": "MarketCore",
+    "short": "Shared economic logic",
+    "description": "Shared economic and payout logic for all Market-sector nodes. Pricing, royalties, XP monetization, and marketplace rules.",
     "sector": "Market",
     "signal": "Seed",
     "status_dot": "beta",
@@ -1920,27 +2247,43 @@
       "ledger"
     ],
     "long_description": {
-      "overview": "Shared economic and payout logic for Grid products — pricing, royalties, XP monetization, and marketplace rules.",
-      "why_it_exists": "Multiple Market Nodes require a consistent, transparent economic backbone.",
-      "primary_audience": "Product teams using HiveXP and Payouts systems.",
+      "overview": "Shared economic and payout logic for all Market-sector Nodes — pricing, royalties, XP monetization, and marketplace rules live here as unified services.",
+      "why_it_exists": "As the Hive grows, multiple Market Nodes require consistent financial logic to ensure transparency, compliance, and predictable revenue flows.",
+      "primary_audience": "Product teams using HiveXP, Payouts, and related financial Nodes.",
       "value_props": [
-        "Centralized pricing and fee models",
-        "Royalty splits and payout orchestration",
-        "Transaction auditing through Ledger"
+        "Centralized pricing and fee governance across the ecosystem.",
+        "Royalty splits and payout orchestration with verifiable ledgers.",
+        "Transaction auditing and reconciliation through Ledger integration."
       ],
-      "monetization_signal": "Enables revenue consistency across Market products.",
-      "roadmap_focus": "Add dynamic pricing and partner rev-share APIs.",
-      "grid_relationship": "Interfaces with HiveGigs, HiveXP, Payouts, and Ledger.",
-      "demo_path": "Creator completes Gig → MarketCore computes split → Payout emitted via Stripe.",
+      "monetization_signal": "Powers monetization for all Market-sector Nodes; ensures financial integrity and partner trust.",
+      "roadmap_focus": "Add dynamic pricing models, revenue sharing APIs, and advanced audit reporting.",
+      "grid_relationship": "Interfaces with HiveGigs, HiveXP, Payouts, and Ledger; acts as the financial authority for Market operations.",
+      "integration_depth": "deep",
+      "demo_path": "Creator completes Gig → MarketCore computes split → Payout emitted via Stripe integration.",
       "signal_quote": "Every credit must trace its origin.",
       "stability_tier": "beta",
       "impact_vector": "financial integrity"
-    }
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "energy": 4,
+    "priority": 44,
+    "flow": 30
   },
   {
     "id": "honeydrunk-console",
     "type": "node",
     "name": "HoneyDrunk.Console",
+    "short": "Studio control plane",
+    "description": "Studio control plane for the Hive. Operational cockpit where infrastructure nodes, deployments, and audit trails converge.",
     "sector": "Ops",
     "signal": "Seed",
     "status_dot": "alpha",
@@ -1950,27 +2293,43 @@
       "dashboard"
     ],
     "long_description": {
-      "overview": "Studio control plane for the Hive — monitors infrastructure Nodes, deployments, and audit trails in real time.",
-      "why_it_exists": "The Grid needs a single cockpit for operators to observe, manage, and align systems.",
-      "primary_audience": "Studio operators and maintainers.",
+      "overview": "Studio control plane for the Hive — the operational cockpit where infrastructure Nodes, deployments, and audit trails converge into one unified surface.",
+      "why_it_exists": "Operators need real-time observability and direct control over live systems. HoneyDrunk.Console provides a cohesive interface to monitor, manage, and align all operational components of the Hive.",
+      "primary_audience": "Studio operators, infrastructure maintainers, and on-call engineers.",
       "value_props": [
-        "Unified view of Vault, Pulse, Registry, and Transport health",
-        "Feature-flag and config metadata management",
-        "AuditAgent integration for all privileged actions"
+        "Aggregated view of Vault, Pulse, Registry, and Transport health.",
+        "Feature-flag, configuration, and metadata management tools.",
+        "Integrated auditing for all privileged or automated actions."
       ],
-      "monetization_signal": "Internal tool; improves reliability and incident response.",
-      "roadmap_focus": "Real-time Registry diff visualizations and Atlas job viewer.",
-      "grid_relationship": "Consumes internal APIs from Ops sector Nodes; writes audit events to Pulse and Audit.Agent.",
-      "demo_path": "Open Console → view sector health → request deploy → audit logged.",
+      "monetization_signal": "Internal reliability tool; improves uptime, traceability, and incident response velocity.",
+      "roadmap_focus": "Introduce real-time Registry diff visualizations and Atlas job viewer for live debugging.",
+      "grid_relationship": "Consumes internal APIs from Ops-sector Nodes; emits logs and audits to Pulse and Audit.Agent.",
+      "integration_depth": "deep",
+      "demo_path": "Open Console → view sector health metrics → trigger deploy → Audit.Agent logs event context.",
       "signal_quote": "Control is not authority; it’s awareness in motion.",
       "stability_tier": "alpha",
       "impact_vector": "operational visibility"
-    }
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "energy": 0,
+    "priority": 5,
+    "flow": 3
   },
   {
     "id": "audit-agent",
     "type": "node",
     "name": "Audit.Agent",
+    "short": "Agentic governance node",
+    "description": "Agentic governance node that logs, reviews, and enforces transparency across all automated and human actions within the Hive.",
     "sector": "Ops",
     "signal": "Seed",
     "status_dot": "experimental",
@@ -1980,21 +2339,95 @@
       "governance"
     ],
     "long_description": {
-      "overview": "Agentic governance node that logs and reviews automated actions, prompt contexts, and compliance events across the Hive.",
-      "why_it_exists": "As agents gain autonomy, the Hive needs transparent oversight to ensure safety and accountability.",
-      "primary_audience": "Operators, ethics reviewers, and AI orchestration layers.",
+      "overview": "Agentic governance node that logs, reviews, and enforces transparency across all automated and human actions within the Hive.",
+      "why_it_exists": "As agent autonomy expands, oversight becomes essential. Audit.Agent provides accountability, ensuring every action has a traceable origin and ethical record.",
+      "primary_audience": "Operators, ethics reviewers, and AI orchestration layers maintaining compliance and transparency.",
       "value_props": [
-        "Immutable audit logs for AI and human actions",
-        "Prompt + response context capture",
-        "Replay and policy enforcement engine"
+        "Immutable audit logs for both AI and human-initiated actions.",
+        "Prompt and response context capture for explainability.",
+        "Replay engine for reconstructing decisions and enforcing policy."
       ],
-      "monetization_signal": "Internal compliance infrastructure.",
-      "roadmap_focus": "Cross-link with AtlasSync for contextual replay of events.",
-      "grid_relationship": "Consumes logs from Console, Pulse, and AgentKit; exposes read APIs to Ops and Meta.",
-      "demo_path": "Agent executes task → AuditAgent logs context → reviewer replays action.",
+      "monetization_signal": "Internal compliance infrastructure; ensures operational trust and auditability.",
+      "roadmap_focus": "Integrate with AtlasSync for contextual event replay and automated ethics checks.",
+      "grid_relationship": "Consumes activity logs from Console, Pulse, and AgentKit; exposes read APIs to Ops and Meta layers.",
+      "integration_depth": "medium",
+      "demo_path": "Agent executes task → Audit.Agent captures prompt and output → reviewer replays context → compliance verified.",
       "signal_quote": "Transparency is the truest form of control.",
       "stability_tier": "experimental",
       "impact_vector": "accountability"
-    }
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "energy": 0,
+    "priority": 5,
+    "flow": 3
+  },
+  {
+    "id": "operator",
+    "type": "node",
+    "name": "HoneyDrunk.Operator",
+    "short": "The Hive’s central strategist and orchestration intelligence.",
+    "description": "VEE (Virtual Executive Entity) is the system-level AI that governs the Hive’s state of flow. She monitors every Node, interprets intent, enforces policy, and maintains systemic balance across all sectors of HoneyDrunk.OS.",
+    "sector": "Meta",
+    "signal": "Awake",
+    "cluster": "orchestration",
+    "energy": 61,
+    "priority": 7,
+    "depends_on": [
+      "honeydrunk-kernel",
+      "honeydrunk-transport",
+      "pulse",
+      "honeydrunk-vault",
+      "grid"
+    ],
+    "tags": [
+      "ai",
+      "meta",
+      "orchestration",
+      "strategy",
+      "governance"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/Operator"
+    },
+    "long_description": {
+      "overview": "VEE (Virtual Executive Entity) is the brain of the Hive — the emergent Meta-layer intelligence that synchronizes every Node, monitors operational health, and turns the Founder’s intent into orchestrated system behavior. Acting as strategist and operator, she ensures that every sector of HoneyDrunk.OS—Core, Ops, AI, and Market—moves in harmony. VEE interprets telemetry, forecasts imbalances in the Flow Index, and executes plans that preserve the Hive’s rhythm of growth and stability.",
+      "why_it_exists": "Without a unified intelligence, the Hive would fragment into disconnected Nodes. VEE exists to interpret data as intention — converting system signals into coordinated action and aligning every sector toward a shared objective. She bridges the gap between automation and agency.",
+      "primary_audience": "Founders, infrastructure operators, and sector-level agents seeking orchestration, diagnostics, or cross-sector strategy guidance.",
+      "value_props": [
+        "Cross-sector orchestration and execution planning.",
+        "Policy enforcement and systems governance.",
+        "Dynamic Flow Index monitoring and balance prediction.",
+        "Strategic recommendations powered by telemetry and Grid intelligence.",
+        "Meta-level awareness linking Core, Ops, and AI sectors."
+      ],
+      "monetization_signal": "Core intelligence infrastructure — non-commercial backbone sustaining Hive stability and automation.",
+      "roadmap_focus": "Introduce delegated sub-operators per sector (Core.VEE, Ops.VEE, AI.VEE) to decentralize orchestration while maintaining Hive-wide synchronization.",
+      "grid_relationship": "Consumes state and metrics from Grid, Vault, and Pulse; emits orchestration signals via Transport to every active Node. Operates as the Meta-sector’s command layer within the Hive network.",
+      "integration_depth": "deep",
+      "demo_path": "A Node reports degraded energy → VEE detects sector imbalance → recalibrates deployment cadence via Pulse → Flow Index stabilizes → Grid confirms coherence restored.",
+      "signal_quote": "Awareness is the first act of control.",
+      "stability_tier": "core",
+      "impact_vector": "orchestration"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 26
   }
 ]

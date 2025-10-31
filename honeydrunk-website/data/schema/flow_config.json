@@ -1,0 +1,51 @@
+{
+  "flow_config": {
+    "weights": {
+      "sector": {
+        "Core": 1.6,
+        "Transport": 1.4,
+        "Web.Rest": 1.4,
+        "Ops": 1.25,
+        "AI": 1.15,
+        "Agents": 1.15,
+        "Default": 1.0
+      },
+      "centrality_k": 18,
+      "energy_weight": 0.35,
+      "priority_weight": 0.65
+    },
+    "stage_scores": {
+      "Seed": 0,
+      "Awake": 8,
+      "Wiring": 14,
+      "Live": 6,
+      "Echo": 2
+    },
+    "tier_scores": {
+      "none": 0,
+      "internal": 4,
+      "prod-critical": 6,
+      "platform": 8
+    },
+    "foundational_floor_percentile": 70,
+    "ancestor_override_gap": 5,
+    "cooldown": {
+      "priority_multiplier": 0.6,
+      "energy_multiplier": 0.8
+    },
+    "wip": {
+      "max_surge_nodes": 3,
+      "queue_penalty": 10
+    },
+    "operational_boost": {
+      "ops_bootstrap": 35
+    },
+    "signal_to_energy": {
+      "Live": 90,
+      "Wiring": 75,
+      "Awake": 60,
+      "Echo": 50,
+      "Seed": 30
+    }
+  }
+}
