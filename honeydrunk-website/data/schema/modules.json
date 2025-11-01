@@ -5,8 +5,7 @@
     "name": "HoneyDrunk.Transport.Messaging.InMemory",
     "parent": "honeydrunk-transport",
     "slot": "adapter",
-    "signal": "Live",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "shallow",
     "tags": [
       "messaging",
@@ -41,8 +40,7 @@
     "name": "HoneyDrunk.Transport.Messaging.StorageQueues",
     "parent": "honeydrunk-transport",
     "slot": "adapter",
-    "signal": "Wiring",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "medium",
     "tags": [
       "azure",
@@ -77,8 +75,7 @@
     "name": "HoneyDrunk.Transport.Messaging.ServiceBus",
     "parent": "honeydrunk-transport",
     "slot": "adapter",
-    "signal": "Awake",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "deep",
     "tags": [
       "azure",
@@ -114,8 +111,7 @@
     "name": "HoneyDrunk.Telemetry.Abstractions",
     "parent": "pulse",
     "slot": "telemetry",
-    "signal": "Awake",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "shallow",
     "tags": [
       "telemetry",
@@ -149,8 +145,7 @@
     "name": "HoneyDrunk.Telemetry.OpenTelemetry",
     "parent": "pulse",
     "slot": "telemetry",
-    "signal": "Wiring",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "medium",
     "tags": [
       "otlp",
@@ -187,8 +182,7 @@
     "name": "HoneyDrunk.Telemetry.Sink.Sentry",
     "parent": "pulse",
     "slot": "telemetry",
-    "signal": "Awake",
-    "status_dot": "experimental",
+    "signal": "Seed",
     "integration_depth": "shallow",
     "tags": [
       "sentry",
@@ -222,8 +216,7 @@
     "name": "HoneyDrunk.Telemetry.Sink.PostHog",
     "parent": "pulse",
     "slot": "telemetry",
-    "signal": "Awake",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "shallow",
     "tags": [
       "posthog",
@@ -258,8 +251,7 @@
     "name": "HoneyDrunk.Vault.Provider.File",
     "parent": "honeydrunk-vault",
     "slot": "provider",
-    "signal": "Live",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "shallow",
     "tags": [
       "filesystem",
@@ -293,8 +285,7 @@
     "name": "HoneyDrunk.Vault.Provider.AzureKeyVault",
     "parent": "honeydrunk-vault",
     "slot": "provider",
-    "signal": "Wiring",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "medium",
     "tags": [
       "azure",
@@ -330,7 +321,6 @@
     "parent": "honeydrunk-vault",
     "slot": "provider",
     "signal": "Seed",
-    "status_dot": "experimental",
     "integration_depth": "shallow",
     "tags": [
       "aws",
@@ -365,8 +355,7 @@
     "name": "HoneyDrunk.Testing.Harness",
     "parent": "honeydrunk-testing",
     "slot": "harness",
-    "signal": "Live",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "shallow",
     "tags": [
       "testing",
@@ -401,8 +390,7 @@
     "name": "HoneyDrunk.Testing.TraceSnapshots",
     "parent": "honeydrunk-testing",
     "slot": "harness",
-    "signal": "Wiring",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "shallow",
     "tags": [
       "testing",
@@ -437,8 +425,7 @@
     "name": "HiveGigs.Agents.Writer",
     "parent": "hivegigs",
     "slot": "agent-writer",
-    "signal": "Awake",
-    "status_dot": "alpha",
+    "signal": "Seed",
     "integration_depth": "deep",
     "tags": [
       "ai",
@@ -474,8 +461,7 @@
     "name": "HiveGigs.Verifier.Geo",
     "parent": "hivegigs",
     "slot": "verifier",
-    "signal": "Awake",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "deep",
     "tags": [
       "geofencing",
@@ -511,7 +497,6 @@
     "parent": "hivegigs",
     "slot": "verifier",
     "signal": "Seed",
-    "status_dot": "alpha",
     "integration_depth": "medium",
     "tags": [
       "cv",
@@ -546,8 +531,7 @@
     "name": "HiveGigs.POI.OpenStreetMap",
     "parent": "hivegigs",
     "slot": "poi-provider",
-    "signal": "Awake",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "medium",
     "tags": [
       "poi",
@@ -582,8 +566,7 @@
     "name": "HiveGigs.Payouts.Stripe",
     "parent": "hivegigs",
     "slot": "payouts-adapter",
-    "signal": "Awake",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "deep",
     "tags": [
       "stripe",
@@ -618,8 +601,7 @@
     "name": "HiveGigs.Notify.Signal",
     "parent": "hivegigs",
     "slot": "notification-adapter",
-    "signal": "Awake",
-    "status_dot": "alpha",
+    "signal": "Seed",
     "integration_depth": "medium",
     "tags": [
       "notifications",
@@ -654,8 +636,7 @@
     "name": "HiveXP.Sink.Transport",
     "parent": "hivexp",
     "slot": "event-ingest-adapter",
-    "signal": "Awake",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "deep",
     "tags": [
       "xp-events",
@@ -690,8 +671,7 @@
     "name": "HiveXP.Ledger.Sql",
     "parent": "hivexp",
     "slot": "ledger-adapter",
-    "signal": "Awake",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "deep",
     "tags": [
       "sql",
@@ -727,7 +707,6 @@
     "parent": "hivexp",
     "slot": "level-curve",
     "signal": "Seed",
-    "status_dot": "alpha",
     "integration_depth": "light",
     "tags": [
       "levels",
@@ -762,8 +741,7 @@
     "name": "HiveXP.CategoryPack.Default",
     "parent": "hivexp",
     "slot": "category-pack",
-    "signal": "Awake",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "medium",
     "tags": [
       "taxonomy",
@@ -798,8 +776,7 @@
     "name": "HiveXP.Leaderboard.Redis",
     "parent": "hivexp",
     "slot": "leaderboard-adapter",
-    "signal": "Awake",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "medium",
     "tags": [
       "leaderboards",
@@ -835,7 +812,6 @@
     "parent": "hivexp",
     "slot": "badges",
     "signal": "Seed",
-    "status_dot": "alpha",
     "integration_depth": "medium",
     "tags": [
       "achievements",
@@ -870,8 +846,7 @@
     "name": "HiveXP.Export.Warehouse",
     "parent": "hivexp",
     "slot": "export-adapter",
-    "signal": "Awake",
-    "status_dot": "beta",
+    "signal": "Seed",
     "integration_depth": "medium",
     "tags": [
       "analytics",

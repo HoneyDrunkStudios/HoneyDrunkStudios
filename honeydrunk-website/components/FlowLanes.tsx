@@ -5,9 +5,10 @@
  * Arranges nodes in columns by flow tier
  */
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { colors } from '@/lib/tokens';
-import { getNodesByFlow, flowTierDefinitions } from '@/lib/nodes';
+import { getNodesByFlow } from '@/lib/nodes';
+import { getAllFlowTiers } from '@/lib/flow';
 import type { VisualNode as EntitiesVisualNode } from '@/lib/entities';
 import type { VisualNode as NodesVisualNode } from '@/lib/types';
 
@@ -20,9 +21,12 @@ interface FlowLanesProps {
 export default function FlowLanes({ nodes, onNodeClick, className = '' }: FlowLanesProps) {
   const [hoveredId, setHoveredId] = useState<string | undefined>();
 
+  // Get flow tier configurations from centralized config
+  const flowTiers = useMemo(() => getAllFlowTiers(), []);
+
   // Get flow data for all nodes
   const flowNodes = getNodesByFlow();
-  
+
   // Create a map of node IDs to flow metrics
   const flowMetricsMap = flowNodes.reduce((acc, node) => {
     acc[node.id] = node.flowMetrics;
@@ -40,31 +44,10 @@ export default function FlowLanes({ nodes, onNodeClick, className = '' }: FlowLa
 
   // Sort each tier by flow index (descending - higher priority first)
   Object.keys(nodesByTier).forEach(tier => {
-    nodesByTier[tier].sort((a, b) => 
+    nodesByTier[tier].sort((a, b) =>
       (b.flowMetrics?.flowIndex || 0) - (a.flowMetrics?.flowIndex || 0)
     );
   });
-
-  const tiers = ['critical', 'active', 'supporting', 'dormant', 'archived'] as const;
-
-  const flowTierLabels = {
-    critical: 'Critical',
-    active: 'Active',
-    supporting: 'Supporting',
-    dormant: 'Dormant',
-    archived: 'Archived',
-  };
-
-  // Create a map of tier to color from flowTierDefinitions
-  const tierColorMap = flowTierDefinitions.reduce((acc, def) => {
-    acc[def.tier] = def.color;
-    return acc;
-  }, {} as Record<string, string>);
-
-  // Get tier color from the definition map (always returns correct color even if tier is empty)
-  const getTierColor = (tier: string) => {
-    return tierColorMap[tier] || colors.slateLight;
-  };
 
   const renderNode = useCallback((node: EntitiesVisualNode & { flowMetrics?: NodesVisualNode['flowMetrics'] }) => {
     const isHovered = node.id === hoveredId;
@@ -127,14 +110,12 @@ export default function FlowLanes({ nodes, onNodeClick, className = '' }: FlowLa
   return (
     <div className={`w-full h-full overflow-auto pb-6 ${className}`} style={{ paddingTop: '8rem' }}>
       <div className="flex gap-3 min-h-full justify-center px-8 max-w-[1600px] mx-auto">
-        {tiers.map(tier => {
-          const tierNodes = nodesByTier[tier] || [];
-          const tierColor = getTierColor(tier);
-          const tierLabel = flowTierLabels[tier as keyof typeof flowTierLabels];
+        {flowTiers.map(tierConfig => {
+          const tierNodes = nodesByTier[tierConfig.id] || [];
 
           return (
             <div
-              key={tier}
+              key={tierConfig.id}
               className="flex-1 min-w-[160px] lg:min-w-[180px] xl:min-w-[200px]"
             >
               {/* Lane header */}
@@ -142,15 +123,15 @@ export default function FlowLanes({ nodes, onNodeClick, className = '' }: FlowLa
                 className="sticky top-0 p-2.5 rounded-lg mb-3 backdrop-blur-sm border-2 z-10"
                 style={{
                   backgroundColor: `${colors.deepSpace}90`,
-                  borderColor: tierColor,
-                  boxShadow: `0 0 15px ${tierColor}30`,
+                  borderColor: tierConfig.color,
+                  boxShadow: `0 0 15px ${tierConfig.color}30`,
                 }}
               >
                 <div
                   className="text-sm font-mono font-bold uppercase tracking-wider mb-0.5"
-                  style={{ color: tierColor }}
+                  style={{ color: tierConfig.color }}
                 >
-                  {tierLabel}
+                  {tierConfig.name}
                 </div>
                 <div
                   className="text-xs font-mono"
@@ -171,7 +152,7 @@ export default function FlowLanes({ nodes, onNodeClick, className = '' }: FlowLa
                   className="text-center text-xs font-mono p-4 rounded-lg border"
                   style={{
                     color: colors.slateLight,
-                    borderColor: `${tierColor}20`,
+                    borderColor: `${tierConfig.color}20`,
                     opacity: 0.5,
                   }}
                 >

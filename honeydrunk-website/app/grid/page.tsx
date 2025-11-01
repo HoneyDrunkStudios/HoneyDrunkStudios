@@ -100,16 +100,17 @@ function GridContent() {
   }, [selectedSectors, selectedSignals, searchQuery, router]);
 
   const allSectors = getAllSectors();
-  const allSignals = getAllSignals();
+  const allSignals = getNodesAllSignals(); // Use complete signal list, not just signals in use
 
   // Create signal color map
   const signalColorMap = useMemo(() => {
+    const allPossibleSignals = getNodesAllSignals();
     const map: Record<string, string> = {};
-    allSignals.forEach(signal => {
+    allPossibleSignals.forEach(signal => {
       map[signal] = getSignalColor(signal as any);
     });
     return map;
-  }, [allSignals]);
+  }, []);
 
   // Get all grid data - memoized
   const fullGridData = useMemo(() => getGridData(), []);

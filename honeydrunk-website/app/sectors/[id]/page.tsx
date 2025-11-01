@@ -107,18 +107,32 @@ export default function SectorDetailPage({ params }: { params: Promise<{ id: str
             minHeight: '50vh',
           }}
         >
-          {/* Header Image */}
+          {/* Header Image - responsive mobile/desktop */}
           {sector.headerImage && (
-            <div
-              className="absolute inset-0 z-0"
-              style={{
-                backgroundImage: `url(${sector.headerImage})`,
-                backgroundSize: '110%',
-                backgroundPosition: 'center center',
-                backgroundRepeat: 'no-repeat',
-                opacity: 1.0,
-              }}
-            />
+            <>
+              {/* Mobile: cover for better fit */}
+              <div
+                className="absolute inset-0 z-0 md:hidden"
+                style={{
+                  backgroundImage: `url(${sector.headerImage})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center 40%',
+                  backgroundRepeat: 'no-repeat',
+                  opacity: 0.8,
+                }}
+              />
+              {/* Desktop: 110% zoom */}
+              <div
+                className="absolute inset-0 z-0 hidden md:block"
+                style={{
+                  backgroundImage: `url(${sector.headerImage})`,
+                  backgroundSize: '110%',
+                  backgroundPosition: 'center center',
+                  backgroundRepeat: 'no-repeat',
+                  opacity: 1.0,
+                }}
+              />
+            </>
           )}
 
           {/* Gradient Overlay */}

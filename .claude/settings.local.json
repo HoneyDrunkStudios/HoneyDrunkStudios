@@ -58,7 +58,12 @@
       "Bash(node scripts/find-missing-descriptions.js:*)",
       "Bash(node scripts/add-descriptions.js:*)",
       "Bash(node scripts/check-tags.js:*)",
-      "Bash(node scripts/tag-suggestions.js:*)"
+      "Bash(node scripts/tag-suggestions.js:*)",
+      "Bash(node scripts/update-priorities.js:*)",
+      "Bash(node scripts/verify-priorities.js:*)",
+      "Bash(node:*)",
+      "Bash(git checkout:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

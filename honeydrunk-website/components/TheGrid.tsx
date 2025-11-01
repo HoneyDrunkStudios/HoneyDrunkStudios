@@ -166,7 +166,7 @@ export default function TheGrid({
   // Node drag handlers with proper click prevention
   const handleNodeDragStart = useCallback((e: React.MouseEvent, nodeId: string) => {
     e.stopPropagation();
-    e.preventDefault();
+    // Don't preventDefault() here - it prevents click events from firing
     setIsDraggingNode(true);
     setDragDistance(0);
     const currentPos = nodePositions[nodeId] || gridData.nodes.find(n => n.id === nodeId)?.position;
@@ -203,13 +203,23 @@ export default function TheGrid({
   }, [isDraggingNode, zoom]);
 
   const handleNodeDragEnd = useCallback(() => {
+    // If drag distance is small, treat as click and navigate
+    const isClick = dragDistance < 10;
+    const draggedNode = dragStateRef.current?.nodeId;
+    
     setIsDraggingNode(false);
-    // Reset drag distance after a delay to allow click handler to check it
-    setTimeout(() => {
-      setDragDistance(0);
-      dragStateRef.current = null;
-    }, 100);
-  }, []);
+    setDragDistance(0);
+    
+    // Navigate if it was a click
+    if (isClick && draggedNode && onNodeClick) {
+      const node = gridData.nodes.find(n => n.id === draggedNode);
+      if (node) {
+        onNodeClick(node);
+      }
+    }
+    
+    dragStateRef.current = null;
+  }, [dragDistance, onNodeClick, gridData.nodes]);
 
   // Mouse pan handlers
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -295,7 +305,7 @@ export default function TheGrid({
   }, [edgesWithPositions, selectedEntityId, hoveredId]);
 
   // Memoized GridNode component
-  const GridNode = React.memo(({ node }: { node: VisualNode }) => {
+  const GridNode = React.memo(({ node, dragDistance }: { node: VisualNode; dragDistance: number }) => {
     const isSelected = node.id === selectedEntityId;
     const isHovered = node.id === hoveredId;
     const size = 80;
@@ -317,11 +327,7 @@ export default function TheGrid({
         onMouseEnter={() => setHoveredId(node.id)}
         onMouseLeave={() => setHoveredId(undefined)}
         onMouseDown={(e) => handleNodeDragStart(e, node.id)}
-        onClick={(e) => {
-          if (dragDistance < 10) {
-            onNodeClick?.(node);
-          }
-        }}
+        // Click handled in mouseUp via handleNodeDragEnd
         style={{ cursor: isDraggingNode ? 'grabbing' : 'grab' }}
       >
         {/* Glow */}
@@ -372,7 +378,7 @@ export default function TheGrid({
   GridNode.displayName = 'GridNode';
 
   const renderNode = useCallback((node: VisualNode) => {
-    return <GridNode key={node.id} node={node} />;
+    return <GridNode key={node.id} node={node} dragDistance={dragDistance} />;
   }, [selectedEntityId, hoveredId, isDraggingNode, dragDistance]);
 
   // Render a module as a larger, more descriptive chip

@@ -99,7 +99,7 @@
       "ring": "prod",
       "flags": []
     },
-    "signal": "Awake",
+    "signal": "Seed",
     "long_description": {
       "overview": "The internal service registry of the Grid. Tracks entity metadata, Signals, and health checks for all Nodes, Modules, and Services.",
       "why_it_exists": "Ensures every entity in the Grid reports its status, dependencies, and health consistently.",
@@ -800,7 +800,7 @@
       "ring": "prod",
       "flags": []
     },
-    "signal": "Awake",
+    "signal": "Seed",
     "long_description": {
       "overview": "Public and partner API for discovering, accepting, and completing Gigs. Orchestrates verification flow and emits XP and payout events.",
       "why_it_exists": "Unifies Gig lifecycle across mobile/web while centralizing XP and payout side effects.",
@@ -871,7 +871,7 @@
       "ring": "prod",
       "flags": []
     },
-    "signal": "Awake",
+    "signal": "Seed",
     "long_description": {
       "overview": "Region-scoped agent workers generating and refreshing Gigs from POI data and templates.",
       "why_it_exists": "Keeps local catalogs fresh without manual editorial load.",
@@ -940,7 +940,7 @@
       "ring": "prod",
       "flags": []
     },
-    "signal": "Awake",
+    "signal": "Seed",
     "long_description": {
       "overview": "Geo + vision verification pipeline for IRL and artifact-based Gigs with anti-spoofing heuristics.",
       "why_it_exists": "Trust layer for payouts and XP awards.",
@@ -1083,7 +1083,7 @@
       "ring": "prod",
       "flags": []
     },
-    "signal": "Awake",
+    "signal": "Seed",
     "long_description": {
       "overview": "System-of-record API for XP events, level thresholds, category packs, leaderboards, and badge emissions.",
       "why_it_exists": "Prevents per-product XP re-implementations and drift.",
@@ -1151,7 +1151,7 @@
       "ring": "prod",
       "flags": []
     },
-    "signal": "Awake",
+    "signal": "Seed",
     "long_description": {
       "overview": "Immutable XP transaction store with category rollups and CDC streams for analytics.",
       "why_it_exists": "System truth for all progression events.",
