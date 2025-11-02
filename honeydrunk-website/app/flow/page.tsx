@@ -8,7 +8,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { getNodesByFlow } from '@/lib/nodes';
+import { getNodesByFlow, getActiveFlowNodes, getCompletedFlowNodes } from '@/lib/nodes';
 import type { VisualNode } from '@/lib/types';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import Header from '@/components/Header';
@@ -24,16 +24,35 @@ const flowTierDescriptions = {
 };
 
 export default function FlowPage() {
-  const allNodes = getNodesByFlow();
+  const activeNodes = getActiveFlowNodes();
+  const completedNodes = getCompletedFlowNodes();
   const [selectedTier, setSelectedTier] = useState<string | null>(null);
+  const [selectedSection, setSelectedSection] = useState<'active' | 'completed' | 'all'>('active');
 
-  // Filter by tier if selected
-  const displayNodes = selectedTier
-    ? allNodes.filter(node => node.flowMetrics.flowTier === selectedTier)
-    : allNodes;
+  // Get display nodes based on section and tier filter
+  const getDisplayNodes = () => {
+    let baseNodes: VisualNode[];
+    switch (selectedSection) {
+      case 'active':
+        baseNodes = activeNodes;
+        break;
+      case 'completed':
+        baseNodes = completedNodes;
+        break;
+      case 'all':
+        baseNodes = [...activeNodes, ...completedNodes];
+        break;
+    }
+
+    return selectedTier
+      ? baseNodes.filter(node => node.flowMetrics.flowTier === selectedTier)
+      : baseNodes;
+  };
+
+  const displayNodes = getDisplayNodes();
 
   // Group nodes by tier for stats
-  const tierCounts = allNodes.reduce((acc, node) => {
+  const tierCounts = [...activeNodes, ...completedNodes].reduce((acc, node) => {
     acc[node.flowMetrics.flowTier] = (acc[node.flowMetrics.flowTier] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
@@ -102,8 +121,24 @@ export default function FlowPage() {
                 borderColor: selectedTier === null ? colors.electricBlue : `${colors.slateLight}40`,
                 color: selectedTier === null ? colors.electricBlue : colors.slateLight,
               }}
+              onMouseEnter={(e) => {
+                if (selectedTier !== null) {
+                  e.currentTarget.style.backgroundColor = `${colors.electricBlue}20`;
+                  e.currentTarget.style.borderColor = `${colors.electricBlue}60`;
+                  e.currentTarget.style.color = colors.electricBlue;
+                  e.currentTarget.style.boxShadow = `0 0 15px ${colors.electricBlue}30`;
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (selectedTier !== null) {
+                  e.currentTarget.style.backgroundColor = `${colors.gunmetal}60`;
+                  e.currentTarget.style.borderColor = `${colors.slateLight}40`;
+                  e.currentTarget.style.color = colors.slateLight;
+                  e.currentTarget.style.boxShadow = 'none';
+                }
+              }}
             >
-              All ({allNodes.length})
+              All ({activeNodes.length + completedNodes.length})
             </button>
             {(['critical', 'active', 'supporting', 'dormant', 'future'] as const).map((tier) => {
               const count = tierCounts[tier] || 0;
@@ -120,6 +155,22 @@ export default function FlowPage() {
                     borderWidth: '2px',
                     borderColor: isSelected ? tierColor : `${tierColor}40`,
                     color: isSelected ? tierColor : `${tierColor}cc`,
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isSelected) {
+                      e.currentTarget.style.backgroundColor = `${tierColor}20`;
+                      e.currentTarget.style.borderColor = `${tierColor}80`;
+                      e.currentTarget.style.color = tierColor;
+                      e.currentTarget.style.boxShadow = `0 0 15px ${tierColor}30`;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isSelected) {
+                      e.currentTarget.style.backgroundColor = `${colors.gunmetal}60`;
+                      e.currentTarget.style.borderColor = `${tierColor}40`;
+                      e.currentTarget.style.color = `${tierColor}cc`;
+                      e.currentTarget.style.boxShadow = 'none';
+                    }
                   }}
                 >
                   {tier} ({count})
@@ -151,11 +202,105 @@ export default function FlowPage() {
             </div>
           </div>
 
+          {/* Section Selector */}
+          <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+            <button
+              onClick={() => setSelectedSection('active')}
+              className="px-6 py-3 rounded-lg text-sm font-mono font-bold uppercase tracking-wider transition-all duration-200 hover:scale-105 border-2"
+              style={{
+                backgroundColor: selectedSection === 'active' ? `${colors.cyberOrange}20` : `${colors.gunmetal}60`,
+                borderColor: selectedSection === 'active' ? colors.cyberOrange : `${colors.slateLight}40`,
+                color: selectedSection === 'active' ? colors.cyberOrange : colors.slateLight,
+                cursor: 'pointer',
+              }}
+              onMouseEnter={(e) => {
+                if (selectedSection !== 'active') {
+                  e.currentTarget.style.backgroundColor = `${colors.cyberOrange}15`;
+                  e.currentTarget.style.borderColor = `${colors.cyberOrange}60`;
+                  e.currentTarget.style.color = colors.cyberOrange;
+                  e.currentTarget.style.boxShadow = `0 0 20px ${colors.cyberOrange}30`;
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (selectedSection !== 'active') {
+                  e.currentTarget.style.backgroundColor = `${colors.gunmetal}60`;
+                  e.currentTarget.style.borderColor = `${colors.slateLight}40`;
+                  e.currentTarget.style.color = colors.slateLight;
+                  e.currentTarget.style.boxShadow = 'none';
+                }
+              }}
+            >
+              🔥 Active ({activeNodes.length})
+            </button>
+            <button
+              onClick={() => setSelectedSection('completed')}
+              className="px-6 py-3 rounded-lg text-sm font-mono font-bold uppercase tracking-wider transition-all duration-200 hover:scale-105 border-2"
+              style={{
+                backgroundColor: selectedSection === 'completed' ? `${colors.signalGreen}20` : `${colors.gunmetal}60`,
+                borderColor: selectedSection === 'completed' ? colors.signalGreen : `${colors.slateLight}40`,
+                color: selectedSection === 'completed' ? colors.signalGreen : colors.slateLight,
+                cursor: 'pointer',
+              }}
+              onMouseEnter={(e) => {
+                if (selectedSection !== 'completed') {
+                  e.currentTarget.style.backgroundColor = `${colors.signalGreen}15`;
+                  e.currentTarget.style.borderColor = `${colors.signalGreen}60`;
+                  e.currentTarget.style.color = colors.signalGreen;
+                  e.currentTarget.style.boxShadow = `0 0 20px ${colors.signalGreen}30`;
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (selectedSection !== 'completed') {
+                  e.currentTarget.style.backgroundColor = `${colors.gunmetal}60`;
+                  e.currentTarget.style.borderColor = `${colors.slateLight}40`;
+                  e.currentTarget.style.color = colors.slateLight;
+                  e.currentTarget.style.boxShadow = 'none';
+                }
+              }}
+            >
+              ✅ Completed ({completedNodes.length})
+            </button>
+            <button
+              onClick={() => setSelectedSection('all')}
+              className="px-6 py-3 rounded-lg text-sm font-mono font-bold uppercase tracking-wider transition-all duration-200 hover:scale-105 border-2"
+              style={{
+                backgroundColor: selectedSection === 'all' ? `${colors.electricBlue}20` : `${colors.gunmetal}60`,
+                borderColor: selectedSection === 'all' ? colors.electricBlue : `${colors.slateLight}40`,
+                color: selectedSection === 'all' ? colors.electricBlue : colors.slateLight,
+                cursor: 'pointer',
+              }}
+              onMouseEnter={(e) => {
+                if (selectedSection !== 'all') {
+                  e.currentTarget.style.backgroundColor = `${colors.electricBlue}15`;
+                  e.currentTarget.style.borderColor = `${colors.electricBlue}60`;
+                  e.currentTarget.style.color = colors.electricBlue;
+                  e.currentTarget.style.boxShadow = `0 0 20px ${colors.electricBlue}30`;
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (selectedSection !== 'all') {
+                  e.currentTarget.style.backgroundColor = `${colors.gunmetal}60`;
+                  e.currentTarget.style.borderColor = `${colors.slateLight}40`;
+                  e.currentTarget.style.color = colors.slateLight;
+                  e.currentTarget.style.boxShadow = 'none';
+                }
+              }}
+            >
+              📊 All ({activeNodes.length + completedNodes.length})
+            </button>
+          </div>
+
           {/* Node List */}
           <div className="space-y-4">
-            {displayNodes.map((node) => (
-              <FlowNodeCard key={node.id} node={node} />
-            ))}
+            {displayNodes.length > 0 ? (
+              displayNodes.map((node) => (
+                <FlowNodeCard key={node.id} node={node} isCompleted={node.done === true} />
+              ))
+            ) : (
+              <div className="text-center py-8" style={{ color: colors.slateLight }}>
+                <p className="text-lg font-mono">No nodes in this section</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -168,8 +313,12 @@ export default function FlowPage() {
   );
 }
 
-function FlowNodeCard({ node }: { node: VisualNode }) {
+function FlowNodeCard({ node, isCompleted = false }: { node: VisualNode; isCompleted?: boolean }) {
   const { flowIndex, flowTier, flowColor } = node.flowMetrics;
+  
+  // Use green for completed nodes, otherwise use the tier color
+  const displayColor = isCompleted ? colors.signalGreen : flowColor;
+  const displayTier = isCompleted ? 'completed' : flowTier;
 
   return (
     <Link
@@ -178,8 +327,9 @@ function FlowNodeCard({ node }: { node: VisualNode }) {
       style={{
         padding: '12px 16px',
         backgroundColor: `${colors.gunmetal}90`,
-        borderColor: `${flowColor}40`,
-        boxShadow: `0 0 20px ${flowColor}20`,
+        borderColor: `${displayColor}40`,
+        boxShadow: `0 0 20px ${displayColor}20`,
+        opacity: isCompleted ? 0.85 : 1,
       }}
     >
       <div className="flex items-start justify-between gap-3" style={{ marginBottom: '8px' }}>
@@ -211,25 +361,25 @@ function FlowNodeCard({ node }: { node: VisualNode }) {
             padding: '6px 12px',
             borderRadius: '8px',
             minWidth: '64px',
-            backgroundColor: `${flowColor}20`,
+            backgroundColor: `${displayColor}20`,
             borderWidth: '2px',
-            borderColor: flowColor,
-            boxShadow: `0 0 15px ${flowColor}30`,
+            borderColor: displayColor,
+            boxShadow: `0 0 15px ${displayColor}30`,
           }}
         >
           <div className="font-display font-bold" style={{ 
-            color: flowColor,
+            color: displayColor,
             fontSize: '22px',
             lineHeight: '1',
           }}>
             {flowIndex}
           </div>
           <div className="font-mono uppercase" style={{ 
-            color: flowColor,
+            color: displayColor,
             fontSize: '10px',
             marginTop: '2px',
           }}>
-            Flow
+            {isCompleted ? 'Done' : 'Flow'}
           </div>
         </div>
       </div>
@@ -241,13 +391,13 @@ function FlowNodeCard({ node }: { node: VisualNode }) {
           style={{
             padding: '3px 10px',
             borderRadius: '12px',
-            backgroundColor: `${flowColor}20`,
+            backgroundColor: `${displayColor}20`,
             borderWidth: '1px',
-            borderColor: flowColor,
-            color: flowColor,
+            borderColor: displayColor,
+            color: displayColor,
           }}
         >
-          {flowTier}
+          {isCompleted ? '✓ completed' : displayTier}
         </span>
 
         {/* Signal */}

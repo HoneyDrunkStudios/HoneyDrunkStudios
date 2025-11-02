@@ -219,6 +219,28 @@ export function getNodesByFlow(): VisualNode[] {
 }
 
 /**
+ * Get active nodes sorted by Flow Index (excluding completed nodes)
+ * Filters out nodes where done === true
+ */
+export function getActiveFlowNodes(): VisualNode[] {
+  const allNodes = getNodes();
+  return allNodes
+    .filter(node => node.done !== true)
+    .sort((a, b) => b.flowMetrics.flowIndex - a.flowMetrics.flowIndex);
+}
+
+/**
+ * Get completed nodes sorted by Flow Index
+ * Only includes nodes where done === true
+ */
+export function getCompletedFlowNodes(): VisualNode[] {
+  const allNodes = getNodes();
+  return allNodes
+    .filter(node => node.done === true)
+    .sort((a, b) => b.flowMetrics.flowIndex - a.flowMetrics.flowIndex);
+}
+
+/**
  * Get a single node by ID
  * Supports legacy ID aliases for backward compatibility
  */

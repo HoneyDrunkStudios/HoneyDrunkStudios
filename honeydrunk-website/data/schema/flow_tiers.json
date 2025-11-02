@@ -16,9 +16,9 @@
       "name": "Active",
       "minScore": 60,
       "maxScore": 80,
-      "color": "#F5B700",
-      "colorToken": "aurumGold",
-      "description": "Gold glow — Current focus. Design, build, test, ship. Heavy lift zone.",
+      "color": "#FF8C00",
+      "colorToken": "cyberOrange",
+      "description": "Cyber orange — Current focus. Design, build, test, ship. Heavy lift zone.",
       "priority": 2
     },
     {
@@ -26,9 +26,9 @@
       "name": "Supporting",
       "minScore": 40,
       "maxScore": 60,
-      "color": "#00FF41",
-      "colorToken": "signalGreen",
-      "description": "Signal green — On the periphery. Functioning or partially in progress, but not top priority. Monitored, not driven.",
+      "color": "#FFFF00",
+      "colorToken": "neonYellow",
+      "description": "Neon yellow — On the periphery. Functioning or partially in progress, but not top priority. Monitored, not driven.",
       "priority": 3
     },
     {

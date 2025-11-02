@@ -9,7 +9,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 3,
-    "priority": 53,
+    "priority": 95,
     "depends_on": [
       "honeydrunk-kernel",
       "honeydrunk-standards"
@@ -53,7 +53,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 36
+    "flow": 63
   },
   {
     "id": "honeydrunk-pipelines",
@@ -65,7 +65,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 3,
-    "priority": 65,
+    "priority": 87,
     "depends_on": [
       "honeydrunk-build",
       "honeydrunk-deploy",
@@ -108,7 +108,7 @@
     "time_pressure": 5,
     "done": false,
     "cooldown_days": 14,
-    "flow": 43,
+    "flow": 58,
     "ops_bootstrap": true
   },
   {
@@ -118,10 +118,10 @@
     "short": "GitHub Actions reusable workflows",
     "description": "Public CI toolkit for OSS repos. Mirrors contracts with Pipelines while staying feed-agnostic.",
     "sector": "Ops",
-    "signal": "Seed",
+    "signal": "Wiring",
     "cluster": "foundation",
-    "energy": 3,
-    "priority": 68,
+    "energy": 76,
+    "priority": 100,
     "depends_on": [
       "honeydrunk-build",
       "honeydrunk-tools",
@@ -163,7 +163,7 @@
     "time_pressure": 5,
     "done": false,
     "cooldown_days": 14,
-    "flow": 45,
+    "flow": 92,
     "ops_bootstrap": true
   },
   {
@@ -176,7 +176,7 @@
     "signal": "Seed",
     "cluster": "infrastructure",
     "energy": 3,
-    "priority": 63,
+    "priority": 83,
     "depends_on": [
       "honeydrunk-pipelines",
       "honeydrunk-actions",
@@ -219,7 +219,7 @@
     "time_pressure": 4,
     "done": false,
     "cooldown_days": 14,
-    "flow": 42,
+    "flow": 55,
     "ops_bootstrap": true
   },
   {
@@ -232,7 +232,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 16,
-    "priority": 54,
+    "priority": 95,
     "depends_on": [
       "honeydrunk-data",
       "honeydrunk-transport",
@@ -278,7 +278,7 @@
     "time_pressure": 2,
     "done": false,
     "cooldown_days": 14,
-    "flow": 41
+    "flow": 67
   },
   {
     "id": "honeydrunk-data",
@@ -290,7 +290,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 6,
-    "priority": 53,
+    "priority": 95,
     "depends_on": [
       "honeydrunk-kernel",
       "honeydrunk-transport",
@@ -334,7 +334,7 @@
     "time_pressure": 2,
     "done": false,
     "cooldown_days": 14,
-    "flow": 37
+    "flow": 64
   },
   {
     "id": "honeydrunk-transport",
@@ -346,7 +346,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 11,
-    "priority": 53,
+    "priority": 95,
     "slots": [
       "adapter"
     ],
@@ -392,7 +392,7 @@
     "time_pressure": 2,
     "done": false,
     "cooldown_days": 14,
-    "flow": 38
+    "flow": 66
   },
   {
     "id": "honeycore-web-rest",
@@ -404,7 +404,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 3,
-    "priority": 53,
+    "priority": 95,
     "depends_on": [
       "honeydrunk-kernel",
       "honeydrunk-auth",
@@ -447,7 +447,7 @@
     "time_pressure": 2,
     "done": false,
     "cooldown_days": 14,
-    "flow": 36
+    "flow": 63
   },
   {
     "id": "honeydrunk-testing",
@@ -459,7 +459,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 0,
-    "priority": 7,
+    "priority": 12,
     "slots": [
       "harness"
     ],
@@ -504,7 +504,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 5
+    "flow": 8
   },
   {
     "id": "honeydrunk-tools",
@@ -516,7 +516,7 @@
     "signal": "Seed",
     "cluster": "tooling",
     "energy": 6,
-    "priority": 70,
+    "priority": 95,
     "depends_on": [
       "honeydrunk-pipelines",
       "honeydrunk-actions",
@@ -559,7 +559,7 @@
     "time_pressure": 4,
     "done": false,
     "cooldown_days": 14,
-    "flow": 48,
+    "flow": 64,
     "ops_bootstrap": true
   },
   {
@@ -572,7 +572,7 @@
     "signal": "Seed",
     "cluster": "security",
     "energy": 16,
-    "priority": 58,
+    "priority": 100,
     "slots": [
       "provider"
     ],
@@ -620,7 +620,7 @@
     "time_pressure": 2,
     "done": false,
     "cooldown_days": 14,
-    "flow": 43
+    "flow": 71
   },
   {
     "id": "pulse",
@@ -632,7 +632,7 @@
     "signal": "Seed",
     "cluster": "security",
     "energy": 16,
-    "priority": 42,
+    "priority": 73,
     "slots": [
       "telemetry"
     ],
@@ -682,7 +682,7 @@
     "time_pressure": 2,
     "done": false,
     "cooldown_days": 14,
-    "flow": 33
+    "flow": 53
   },
   {
     "id": "honeydrunk-auth",
@@ -694,7 +694,7 @@
     "signal": "Seed",
     "cluster": "infrastructure",
     "energy": 5,
-    "priority": 31,
+    "priority": 53,
     "depends_on": [
       "honeydrunk-vault",
       "honeycore-web-rest",
@@ -737,7 +737,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 22
+    "flow": 36
   },
   {
     "id": "honeydrunk-agentkit",
@@ -749,7 +749,7 @@
     "signal": "Seed",
     "cluster": "ai",
     "energy": 3,
-    "priority": 15,
+    "priority": 26,
     "depends_on": [
       "honeydrunk-kernel",
       "honeydrunk-transport",
@@ -793,7 +793,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 11
+    "flow": 18
   },
   {
     "id": "honeydrunk-signal",
@@ -805,7 +805,7 @@
     "signal": "Seed",
     "cluster": "ecosystem",
     "energy": 2,
-    "priority": 15,
+    "priority": 26,
     "depends_on": [
       "honeyhub",
       "pulse",
@@ -849,7 +849,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 10
+    "flow": 18
   },
   {
     "id": "ledger",
@@ -861,7 +861,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 3,
-    "priority": 18,
+    "priority": 30,
     "depends_on": [
       "invoice",
       "pay",
@@ -901,7 +901,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 13
+    "flow": 21
   },
   {
     "id": "invoice",
@@ -913,7 +913,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 3,
-    "priority": 18,
+    "priority": 30,
     "depends_on": [
       "ledger",
       "pay",
@@ -953,7 +953,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 13
+    "flow": 21
   },
   {
     "id": "honeydrunk-clientportalos",
@@ -965,7 +965,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 0,
-    "priority": 3,
+    "priority": 5,
     "depends_on": [
       "pulse",
       "honeydrunk-vault",
@@ -1011,7 +1011,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 2
+    "flow": 3
   },
   {
     "id": "pay",
@@ -1023,7 +1023,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 3,
-    "priority": 18,
+    "priority": 30,
     "depends_on": [
       "invoice",
       "subs",
@@ -1063,7 +1063,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 13
+    "flow": 21
   },
   {
     "id": "subs",
@@ -1075,7 +1075,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 2,
-    "priority": 18,
+    "priority": 30,
     "depends_on": [
       "ledger",
       "honeydrunk-standards"
@@ -1114,7 +1114,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 12
+    "flow": 20
   },
   {
     "id": "forge",
@@ -1126,7 +1126,7 @@
     "signal": "Seed",
     "cluster": "marketplace",
     "energy": 2,
-    "priority": 15,
+    "priority": 26,
     "depends_on": [
       "honeyhub",
       "honeydrunk-standards"
@@ -1165,7 +1165,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 10
+    "flow": 18
   },
   {
     "id": "tether",
@@ -1327,7 +1327,7 @@
     "signal": "Seed",
     "cluster": "ecosystem",
     "energy": 5,
-    "priority": 15,
+    "priority": 26,
     "depends_on": [
       "honeydrunk-signal",
       "forge",
@@ -1367,7 +1367,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 12
+    "flow": 19
   },
   {
     "id": "honeyconnect",
@@ -1429,7 +1429,7 @@
     "signal": "Live",
     "cluster": "ecosystem",
     "energy": 100,
-    "priority": 15,
+    "priority": 26,
     "depends_on": [
       "honeydrunk-kernel",
       "pulse"
@@ -1470,7 +1470,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 45
+    "flow": 52
   },
   {
     "id": "honeymech-courier",
@@ -1482,7 +1482,7 @@
     "signal": "Seed",
     "cluster": "robotics",
     "energy": 2,
-    "priority": 12,
+    "priority": 20,
     "depends_on": [
       "honeymech-sim",
       "honeydrunk-standards"
@@ -1522,7 +1522,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 9
+    "flow": 14
   },
   {
     "id": "honeymech-sim",
@@ -1534,7 +1534,7 @@
     "signal": "Seed",
     "cluster": "robotics",
     "energy": 3,
-    "priority": 12,
+    "priority": 20,
     "depends_on": [
       "honeymech-courier",
       "honeydrunk-standards"
@@ -1574,7 +1574,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 9
+    "flow": 14
   },
   {
     "id": "honeymech-servo",
@@ -1688,7 +1688,7 @@
     "signal": "Seed",
     "cluster": "security",
     "energy": 5,
-    "priority": 15,
+    "priority": 26,
     "depends_on": [
       "honeysentinel",
       "pulse",
@@ -1732,7 +1732,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 12
+    "flow": 19
   },
   {
     "id": "honeysentinel",
@@ -1744,7 +1744,7 @@
     "signal": "Seed",
     "cluster": "security",
     "energy": 5,
-    "priority": 15,
+    "priority": 26,
     "depends_on": [
       "breachlab-exe",
       "pulse",
@@ -1788,7 +1788,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 12
+    "flow": 19
   },
   {
     "id": "review",
@@ -2026,7 +2026,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 2,
-    "priority": 19,
+    "priority": 33,
     "depends_on": [
       "vault",
       "transport",
@@ -2071,7 +2071,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 13
+    "flow": 22
   },
   {
     "id": "hivegigs",
@@ -2313,8 +2313,8 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 3,
-    "priority": 14,
-    "flow": 10,
+    "priority": 28,
+    "flow": 19,
     "depends_on": [
       "honeydrunk-standards"
     ]
@@ -2362,8 +2362,8 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 0,
-    "priority": 3,
-    "flow": 2,
+    "priority": 5,
+    "flow": 3,
     "depends_on": [
       "honeydrunk-standards"
     ]
@@ -2411,8 +2411,8 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 0,
-    "priority": 3,
-    "flow": 2,
+    "priority": 5,
+    "flow": 3,
     "depends_on": [
       "honeydrunk-standards"
     ]
@@ -2484,10 +2484,10 @@
     "short": "Org-wide code style & lint rules",
     "description": "Language-agnostic standards: .editorconfig/.globalconfig, lint configs, naming rules, and contribution etiquette applied across the Hive.",
     "sector": "Core",
-    "signal": "Wiring",
+    "signal": "Live",
     "cluster": "foundation",
-    "energy": 89,
-    "priority": 100,
+    "energy": 81,
+    "priority": 95,
     "depends_on": [],
     "tags": [
       "standards",
@@ -2525,8 +2525,8 @@
     "strategy_base": 30,
     "tier": "platform",
     "time_pressure": 0,
-    "done": false,
+    "done": true,
     "cooldown_days": 14,
-    "flow": 96
+    "flow": 90
   }
 ]

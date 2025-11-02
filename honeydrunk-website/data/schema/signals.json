@@ -1,5 +1,18 @@
 [
   {
+    "date": "2025-11-02",
+    "title": "Flow Index Redesign — Active/Completed Separation & Standards Live",
+    "desc": "Major Flow Index overhaul with three-section architecture: (1) Implemented Active/Completed flow separation—separated living work from completed milestones with getActiveFlowNodes() and getCompletedFlowNodes() functions. Active section (🔥 orange) shows current priorities, Completed section (✅ green) showcases done work, All section (📊 blue) provides unified view. (2) Updated flow tier colors: Active tier → cyber orange (#FF8C00), Supporting tier → neon yellow (#FFFF00), maintaining neon pink for Critical. (3) Enhanced UX with pointer cursors and cyberpunk hover effects—all buttons feature color-matched glows, smooth transitions, and tactile feedback. (4) HoneyDrunk.Actions signal upgraded Seed → Wiring, jumping to Flow Index #1 (92) with proper energy baseline. (5) HoneyDrunk.Standards marked done=true, demonstrating cooldown mechanics while maintaining high Flow due to foundational importance. Flow Index now provides clear separation between active roadmap and completed achievements with enhanced visual feedback.",
+    "tags": [
+      "Core",
+      "Ops", 
+      "HoneyDrunk.Standards",
+      "HoneyDrunk.Actions",
+      "HoneyDrunk.Grid"
+    ],
+    "sector": "Core"
+  },
+  {
     "date": "2025-11-01",
     "title": "Grid Reality Sync — Standards Foundation & Signal Reset",
     "desc": "Major synchronization between Grid state and reality: (1) Added HoneyDrunk.Standards (Wiring, Core) as #1 priority foundational node—org-wide code style, lint rules, .editorconfig/.globalconfig consumed by all 38 nodes as dependency. Refactored HoneyDrunk.Build to delegate stylistic enforcement to Standards, keeping Build focused on MSBuild mechanics. (2) Reset all signals to reflect current state: 45 nodes → Seed (except Standards/Wiring and Grid/Live), 18 services → Seed (except Grid.Visualizer/Live), 25 modules → Seed. Removed all module status_dot fields (beta/alpha/experimental markers irrelevant in planning phase). (3) Fixed FlowLanes component to use flow_tiers.json instead of hardcoded tiers—replaced \"archived\" with correct \"future\" tier. (4) Fixed Echo signal visibility in /grid filters and legend (was missing due to incomplete signal list from entities). (5) Fixed hexagon click navigation on /grid while preserving drag-to-reposition behavior—moved click detection from onClick to mouseUp with 10px drag threshold. Flow recomputed: Standards (Flow: 96, Priority: 100, Energy: 89) now anchors the Grid as the discipline layer. Grid accurately reflects 3 live entities (Grid node, Grid.Visualizer service, Standards in active development) and 88 conceptual/future entities.",
