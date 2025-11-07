@@ -487,6 +487,20 @@ nodes.forEach(node => {
   node.flow = Math.round(flow);
 });
 
+// Apply hard cap to done nodes
+console.log('\n🔒 Applying hard cap to done nodes...');
+let cappedCount = 0;
+const doneNodeCap = 45; // Hard maximum flow for done nodes
+
+nodes.forEach(node => {
+  if (node.done === true && node.flow > doneNodeCap) {
+    node.flow = doneNodeCap;
+    cappedCount++;
+  }
+});
+
+console.log(`✓ Capped ${cappedCount} done nodes to max flow of ${doneNodeCap}`);
+
 // Clean up temporary fields
 nodes.forEach(node => {
   delete node._priorityPrime;

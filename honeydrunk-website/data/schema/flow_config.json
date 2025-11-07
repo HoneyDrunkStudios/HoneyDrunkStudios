@@ -27,11 +27,11 @@
       "prod-critical": 6,
       "platform": 8
     },
-    "foundational_floor_percentile": 70,
+    "foundational_floor_percentile": 0,
     "ancestor_override_gap": 5,
     "cooldown": {
-      "priority_multiplier": 0.6,
-      "energy_multiplier": 0.8
+      "priority_multiplier": 0.02,
+      "energy_multiplier": 0.05
     },
     "wip": {
       "max_surge_nodes": 3,
