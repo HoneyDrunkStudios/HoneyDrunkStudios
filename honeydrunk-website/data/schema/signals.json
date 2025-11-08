@@ -1,5 +1,18 @@
 [
   {
+    "date": "2025-11-08",
+    "title": "HoneyDrunk.Actions Live — Public CI/CD Framework Complete",
+    "desc": "HoneyDrunk.Actions officially shipped: signal upgraded Wiring → Live, marked done=true, and repository links standardized to HoneyDrunk.[NodeName] format across the Grid. Actions is now the public-facing CI/CD framework for GitHub repositories—a library of reusable workflows that bring HoneyDrunk's engineering discipline to the open world. With standardized testing, packaging, and deployment pipelines, Actions bridges closed-source craft and open-source community. The framework mirrors the rigor of Pipelines while staying feed-agnostic and transparent. Flow Index adjusted: Actions capped at 45 due to completion cooldown (98% penalty), while active work—Transport (90), Data (86), Tools (77)—dominates the roadmap. Repository standardization applied: 16 nodes updated from lowercase slugs (e.g., /actions, /vault, /grid) to proper Pascal case (e.g., /HoneyDrunk.Actions, /HoneyDrunk.Vault, /HoneyDrunk.Grid) for consistency with naming conventions. HoneyDrunk.Actions joins Standards and Kernel in the Completed section, representing shipped foundational infrastructure powering the entire ecosystem.",
+    "tags": [
+      "Ops",
+      "Core",
+      "HoneyDrunk.Actions",
+      "HoneyDrunk.Standards",
+      "HoneyDrunk.Kernel"
+    ],
+    "sector": "Ops"
+  },
+  {
     "date": "2025-11-07",
     "title": "Kernel Complete & Flow Cooldown Enforcement — Done Node Hard Cap",
     "desc": "Major milestone: HoneyDrunk.Kernel marked done=true and signal upgraded Seed → Live, representing the foundational layer now powering the entire ecosystem. Simultaneously overhauled flow cooldown mechanics to dramatically deprioritize completed work: (1) Cooldown multipliers reduced from 0.6/0.8 to 0.02/0.05 for priority/energy, applying 98% penalty to done nodes. (2) Implemented hard cap system in compute-flow.js — any done node automatically capped at Flow ≤ 45 regardless of centrality or foundational status. (3) Foundational floor guardrail disabled (percentile: 70 → 0) to prevent lifting completed nodes. (4) Kernel and Standards both dropped from Flow 73 to 45, clearing space for active development. (5) Adjusted Transport (strategy_base: 28, Awake), Data (strategy_base: 26, Awake), and Vault (strategy_base: 15, Awake) to establish clear 2nd/3rd/4th priority positions (Flow: 90/86/80). Flow Index now accurately reflects active roadmap: Actions (94), Transport (90), Data (86), Vault (80) lead active work, while completed Kernel and Standards sit at 45. Architecture enables completed foundational nodes to fade from priority view while remaining part of the Grid's history.",

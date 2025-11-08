@@ -306,7 +306,7 @@ export default function LandingFooter() {
             style={{ borderColor: `${colors.graphite}60` }}
           >
             <p className="text-xs font-mono" style={{ color: colors.slateLight }}>
-              © {currentYear} HoneyDrunk Studios. Boot. Build. Refactor. Evolve.
+              © {currentYear} HoneyDrunk Studios LLC. Boot. Build. Refactor. Evolve.
             </p>
           </div>
         </div>

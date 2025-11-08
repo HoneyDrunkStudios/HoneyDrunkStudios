@@ -338,7 +338,7 @@ export default function NodeGlyph({
                 }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <span className="text-base">🔗</span>
+                <span className="text-base">🔗︎</span>
               </a>
               <div
                 className="absolute -bottom-8 left-1/2 transform -translate-x-1/2
@@ -369,7 +369,7 @@ export default function NodeGlyph({
                 }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <span className="text-base">🌐</span>
+                <span className="text-base">🌐︎</span>
               </a>
               <div
                 className="absolute -bottom-8 left-1/2 transform -translate-x-1/2

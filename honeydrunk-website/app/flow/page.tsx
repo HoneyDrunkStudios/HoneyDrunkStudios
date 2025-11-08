@@ -92,7 +92,7 @@ export default function FlowPage() {
                   boxShadow: `0 0 20px ${colors.aurumGold}30`,
                 }}
               >
-                📚 Learn About Flow
+                📚︎ Learn About Flow
               </Link>
               <Link
                 href="/grid?flowMode=true"
@@ -105,7 +105,7 @@ export default function FlowPage() {
                   boxShadow: `0 0 15px ${colors.electricBlue}20`,
                 }}
               >
-                🎨 Visual Grid
+                🎨︎ Visual Grid
               </Link>
             </div>
           </header>
@@ -230,7 +230,7 @@ export default function FlowPage() {
                 }
               }}
             >
-              🔥 Active ({activeNodes.length})
+              🔥︎ Active ({activeNodes.length})
             </button>
             <button
               onClick={() => setSelectedSection('completed')}
@@ -258,7 +258,7 @@ export default function FlowPage() {
                 }
               }}
             >
-              ✅ Completed ({completedNodes.length})
+              ✅︎ Completed ({completedNodes.length})
             </button>
             <button
               onClick={() => setSelectedSection('all')}
@@ -286,7 +286,7 @@ export default function FlowPage() {
                 }
               }}
             >
-              📊 All ({activeNodes.length + completedNodes.length})
+              📊︎ All ({activeNodes.length + completedNodes.length})
             </button>
           </div>
 

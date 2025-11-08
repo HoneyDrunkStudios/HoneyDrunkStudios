@@ -1,22 +1,28 @@
+'use client';
+
 import { notFound } from 'next/navigation';
 import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import SectionTooltip from '@/components/SectionTooltip';
+import BuildLog from '@/components/BuildLog';
 import { colors } from '@/lib/tokens';
-import { getNodeById, getModulesByParent, getServicesByDependency, getNodesBySector } from '@/lib/entities';
+import { getNodeById, getModulesByParent, getServicesByDependency, getNodesBySector, getNodes, getModules, getServices } from '@/lib/entities';
 import { getSectorColorsMap } from '@/lib/sectors';
 import Link from 'next/link';
 import nodeManifestDictionary from '@/data/schema/node_manifest_dictionary.v1.json';
+import signalsData from '@/data/schema/signals.json';
+import { use, useMemo } from 'react';
 
-export async function generateStaticParams() {
-  const nodesBySector = getNodesBySector();
-  const nodes = Object.values(nodesBySector).flat();
-
-  return nodes.map((node) => ({
-    id: node.id,
-  }));
+interface Signal {
+  date: string;
+  title: string;
+  desc: string;
+  tags: string[];
+  sector: string;
 }
+
+const allSignals = signalsData as Signal[];
 
 // Sector color mapping (now from sectors.json)
 const sectorColors = getSectorColorsMap();
@@ -37,8 +43,8 @@ const statusDotColors: Record<string, string> = {
   experimental: colors.violetFlux,
 };
 
-export default async function NodeDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export default function NodeDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const node = getNodeById(id);
 
   if (!node) {
@@ -49,6 +55,51 @@ export default async function NodeDetailPage({ params }: { params: Promise<{ id:
   const signalColor = signalColors[node.signal] || colors.slateLight;
   const modules = getModulesByParent(node.id);
   const services = getServicesByDependency(node.id);
+
+  // Build entity to sector map for signal filtering
+  const allNodes = getNodes();
+  const allModules = getModules();
+  const allServices = getServices();
+  
+  const entityToSectorMap = useMemo(() => {
+    const map: Record<string, string> = {};
+    
+    // Add nodes
+    allNodes.forEach(n => {
+      map[n.name] = n.sector;
+      map[n.id] = n.sector;
+    });
+    
+    // Add modules (inherit sector from parent node)
+    allModules.forEach(module => {
+      const parentNode = allNodes.find(n => n.id === module.parent);
+      if (parentNode) {
+        map[module.name] = parentNode.sector;
+        map[module.id] = parentNode.sector;
+      }
+    });
+    
+    // Add services (use owner as sector)
+    allServices.forEach(service => {
+      map[service.name] = service.owner;
+      map[service.id] = service.owner;
+    });
+    
+    return map;
+  }, [allNodes, allModules, allServices]);
+
+  // Filter signals for this specific node
+  const nodeSignals = allSignals.filter((signal) => {
+    // Check if signal mentions this node by name or ID in tags
+    const mentionsNode = signal.tags.some(tag => 
+      tag === node.name || tag === node.id || tag.toLowerCase() === node.name.toLowerCase()
+    );
+    
+    // Also include signals from the same sector that might be relevant
+    const sameSector = signal.sector === node.sector || entityToSectorMap[signal.sector] === node.sector;
+    
+    return mentionsNode || (sameSector && signal.tags.length > 0);
+  }).slice(0, 3); // Show up to 3 most recent signals
 
   // Group modules by slot
   const modulesBySlot = modules.reduce((acc, module) => {
@@ -353,7 +404,7 @@ export default async function NodeDetailPage({ params }: { params: Promise<{ id:
                     backgroundColor: `${colors.electricBlue}10`,
                   }}
                 >
-                  🔗 Repository
+                  🔗︎ Repository
                 </a>
               )}
               {node.links.live && (
@@ -368,12 +419,12 @@ export default async function NodeDetailPage({ params }: { params: Promise<{ id:
                     backgroundColor: `${colors.signalGreen}10`,
                   }}
                 >
-                  🌐 Live Site
+                  🌐︎ Live Site
                 </a>
               )}
-              {node.links.docs && (
+              {(node.links.docs || node.links.repo) && (
                 <a
-                  href={node.links.docs}
+                  href={node.links.docs || `${node.links.repo}/blob/main/README.md`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-3 rounded-lg border-2 font-mono text-sm transition-all hover:scale-105"
@@ -383,11 +434,21 @@ export default async function NodeDetailPage({ params }: { params: Promise<{ id:
                     backgroundColor: `${colors.aurumGold}10`,
                   }}
                 >
-                  📚 Documentation
+                  📚︎ Documentation
                 </a>
               )}
             </section>
           )}
+
+          {/* Build Log */}
+          <BuildLog
+            signals={nodeSignals}
+            entityName={node.name}
+            entityId={node.id}
+            accentColor={sectorColor}
+            viewAllLink={`/signal?sector=${node.sector}`}
+            maxDisplay={3}
+          />
         </div>
       </div>
 

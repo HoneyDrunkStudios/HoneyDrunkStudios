@@ -335,7 +335,7 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
                   e.currentTarget.style.backgroundColor = `${colors.electricBlue}10`;
                 }}
               >
-                ▲
+                ▲︎
               </button>
               <div />
               <button
@@ -353,7 +353,7 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
                   e.currentTarget.style.backgroundColor = `${colors.electricBlue}10`;
                 }}
               >
-                ◀
+                ◀︎
               </button>
               <div />
               <button
@@ -371,7 +371,7 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
                   e.currentTarget.style.backgroundColor = `${colors.electricBlue}10`;
                 }}
               >
-                ▶
+                ▶︎
               </button>
               <div />
               <button
@@ -389,7 +389,7 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
                   e.currentTarget.style.backgroundColor = `${colors.electricBlue}10`;
                 }}
               >
-                ▼
+                ▼︎
               </button>
               <div />
             </div>

@@ -127,7 +127,7 @@ function SignalContent() {
                 backgroundColor: showFilters ? `${colors.electricBlue}20` : 'transparent',
               }}
             >
-              {showFilters ? '✕ Hide' : '⚙'} Filters
+              {showFilters ? '✕ Hide' : '⚙\uFE0E'} Filters
             </button>
             
             {/* Date Sort Toggle */}
@@ -140,7 +140,7 @@ function SignalContent() {
                 backgroundColor: `${colors.aurumGold}10`,
               }}
             >
-              📅 Date: {dateSort === 'desc' ? 'Newest First' : 'Oldest First'}
+              📅︎ Date: {dateSort === 'desc' ? 'Newest First' : 'Oldest First'}
             </Link>
             
             {sectorFilter && (

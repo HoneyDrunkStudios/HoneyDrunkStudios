@@ -12,6 +12,7 @@ import { getSectorConfig, getAllSectorConfigs } from '@/lib/sectors';
 import { getNodes, getModules, getServices } from '@/lib/entities';
 import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
+import BuildLog from '@/components/BuildLog';
 import { use, useMemo } from 'react';
 import signalsData from '@/data/schema/signals.json';
 
@@ -434,79 +435,13 @@ export default function SectorDetailPage({ params }: { params: Promise<{ id: str
                 )}
               </div>
 
-              {/* Recent Updates */}
-              {sectorSignals.length > 0 ? (
-                <div className="mt-12">
-                  <h3 className="text-xl font-mono font-bold" style={{ color: colors.offWhite, marginBottom: '16px' }}>
-                    Recent Updates
-                  </h3>
-                  <div className="space-y-4">
-                    {sectorSignals.map((signal, index) => (
-                      <div
-                        key={index}
-                        className="p-4 rounded-lg border"
-                        style={{
-                          backgroundColor: `${colors.deepSpace}80`,
-                          borderColor: `${sector.color}40`,
-                        }}
-                      >
-                        <div className="flex items-center justify-between mb-2">
-                          <div
-                            className="text-xs font-mono"
-                            style={{ color: colors.aurumGold }}
-                          >
-                            {signal.date}
-                          </div>
-                          <div className="flex gap-2">
-                            {signal.tags.slice(0, 2).map((tag) => (
-                              <span
-                                key={tag}
-                                className="text-xs font-mono px-2 py-0.5 rounded"
-                                style={{
-                                  backgroundColor: `${colors.slateLight}20`,
-                                  color: colors.slateLight,
-                                }}
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                        <h4 className="text-base font-display font-bold mb-2" style={{ color: sector.color }}>
-                          {signal.title}
-                        </h4>
-                        <p className="text-sm" style={{ color: colors.slateLight }}>
-                          {signal.desc}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                  <Link
-                    href={`/signal?sector=${sector.id}`}
-                    className="inline-block mt-6 text-sm font-mono transition-all hover:underline"
-                    style={{ color: sector.color }}
-                  >
-                    View all {sector.name} updates →
-                  </Link>
-                </div>
-              ) : (
-                <div className="mt-12">
-                  <h3 className="text-xl font-mono font-bold" style={{ color: colors.offWhite, marginBottom: '16px' }}>
-                    Recent Updates
-                  </h3>
-                  <div
-                    className="p-6 rounded-lg border text-center"
-                    style={{
-                      backgroundColor: `${colors.deepSpace}80`,
-                      borderColor: `${colors.slateLight}30`,
-                    }}
-                  >
-                    <p className="text-base" style={{ color: colors.slateLight }}>
-                      No signals found for {sector.name}. Check back soon.
-                    </p>
-                  </div>
-                </div>
-              )}
+              {/* Build Log */}
+              <BuildLog
+                signals={sectorSignals}
+                entityName={sector.name}
+                entityId={sector.id}
+                accentColor={sector.color}
+              />
             </div>
           </div>
         </section>

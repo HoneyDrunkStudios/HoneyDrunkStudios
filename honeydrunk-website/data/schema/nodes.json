@@ -78,7 +78,7 @@
       "azure"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/pipelines"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Pipelines"
     },
     "long_description": {
       "overview": "HoneyDrunk.Pipelines is the bloodstream of the Grid — every artifact, commit, and release flows through it. It codifies how things move from local intention to global availability, weaving together build, validation, promotion, and deployment under one unified grammar. Pipelines eliminate human drift in release discipline by encoding every pattern as YAML templates shared across the Hive. It carries identity, observability, and risk-awareness in every stage; no release leaves the lab without its own record of lineage and health. In the near term, Pipelines will unify Azure DevOps and GitHub Actions into one language, making hybrid orchestration seamless between private enterprise and public repositories. Later, it will tie into Pulse and Vault, becoming reflexive — capable of gating rollouts based on telemetry or automatically rolling back failed releases. The vision is an infrastructure that's not just continuous but conscious — aware of its own health, timing, and dependencies. Pipelines earns its keep by making velocity safe — transforming release anxiety into a repeatable dance.",
@@ -118,10 +118,10 @@
     "short": "GitHub Actions reusable workflows",
     "description": "Public CI toolkit for OSS repos. Mirrors contracts with Pipelines while staying feed-agnostic.",
     "sector": "Ops",
-    "signal": "Wiring",
+    "signal": "Live",
     "cluster": "foundation",
-    "energy": 83,
-    "priority": 100,
+    "energy": 0,
+    "priority": 35,
     "depends_on": [
       "honeydrunk-build",
       "honeydrunk-tools",
@@ -133,7 +133,7 @@
       "ci-cd"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/actions"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Actions"
     },
     "long_description": {
       "overview": "HoneyDrunk.Actions brings HoneyDrunk's engineering discipline to the open world. It's the public CI/CD framework for GitHub repositories, mirroring the rigor of Pipelines but tuned for transparency and collaboration. Actions exists to bridge the gap between closed-source craft and open-source community, letting independent developers participate in the Grid's culture of quality. It standardizes testing, packaging, and deployment for public projects without depending on private infrastructure. Over time, Actions will evolve into a library of \"rituals\" — reusable workflows that carry HoneyDrunk's build philosophy into every ecosystem that touches it. It will gain awareness of Pulse telemetry, dynamically optimizing runtimes and caching to reduce waste and latency. Eventually, it becomes the public-facing circulatory system — how HoneyDrunk teaches the world to ship well. Actions earns its keep by turning excellence into export — a way to extend the Hive's discipline beyond its borders.",
@@ -161,9 +161,9 @@
     "strategy_base": 28,
     "tier": "platform",
     "time_pressure": 5,
-    "done": false,
+    "done": true,
     "cooldown_days": 14,
-    "flow": 94,
+    "flow": 23,
     "ops_bootstrap": true
   },
   {
@@ -189,7 +189,7 @@
       "environments"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/deploy"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Deploy"
     },
     "long_description": {
       "overview": "Deploy is the final stage of intent — where code becomes running reality. It defines the policies, checks, and choreography that govern how software enters production across the Grid. Each deployment is treated not as a one-time action, but as a ritual encoded in version-controlled manifest files. Deploy integrates with Pipelines, Vault, and Pulse to ensure that every rollout is authorized, monitored, and reversible. It provides the Grid with confidence that change equals progress, not danger. Over time, Deploy will expand to support multi-region blue/green, progressive delivery, and instant rollbacks powered by live telemetry feedback. It will evolve toward declarative infrastructure definitions where environments define themselves and deployments self-heal when they drift. Deploy earns its keep by turning operational chaos into ceremony — when change is predictable, creativity accelerates.",
@@ -247,8 +247,7 @@
       "core"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/kernel",
-      "docs": "https://docs.honeydrunkstudios.com/kernel"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Kernel"
     },
     "long_description": {
       "overview": "The Kernel is the primordial layer of HoneyDrunk.OS — the DNA from which all other systems emerge. It defines the patterns, lifecycles, and interfaces that make the Grid coherent and interoperable. Where Build dictates how we construct, Kernel defines what we are — the shared abstractions for logging, dependency injection, context, caching, telemetry, and configuration. Every Node inherits its baseline stability and expressive power from the Kernel's design language. The Kernel exists to make architectural decisions once, not endlessly debated in each service, allowing small teams to produce large, stable ecosystems. Over time, it will evolve into a runtime fabric, capable of orchestrating startup, health, and inter-node communication dynamically — a lightweight operating system that lives across processes. It will eventually expose reflection APIs that describe itself to AI agents, enabling intelligent orchestration of builds, migrations, and updates. The Kernel is the Grid's conscience — the one thing that knows what it means to be \"HoneyDrunk.\"",
@@ -304,7 +303,7 @@
       "multi-tenant"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/data"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Data"
     },
     "long_description": {
       "overview": "HoneyDrunk.Data gives the Grid memory and continuity. It defines how persistence works across every tenant, every node, and every environment — cleanly, predictably, and securely. This Node standardizes migrations, schema versioning, tenant isolation, and outbox patterns to prevent corruption and drift. It's the difference between projects that degrade with time and systems that age gracefully. Data acts as both archivist and guardrail: it ensures that what happened yesterday is reproducible tomorrow, no matter which service you look at. As it matures, Data will integrate with Pulse for real-time schema health and with Vault for transparent secrets and credential management. It will gain auto-generated entity documentation and drift detection between staging and production environments. Over the long term, it evolves toward declarative storage definitions where schemas generate themselves from manifests. HoneyDrunk.Data earns its keep by giving every part of the Hive perfect recall — a shared memory that never lies, never drifts, and never forgets.",
@@ -362,7 +361,7 @@
       "events"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/transport"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Transport"
     },
     "long_description": {
       "overview": "Transport is the voice of the Grid — the infrastructure that allows Nodes to speak and understand one another. It abstracts message queues, brokers, and event buses into a unified contract that guarantees delivery, order, and idempotence. Every communication between systems — from analytics pings to AI orchestration events — moves through its arteries. It exists to remove uncertainty from distributed systems, ensuring that no message is ever lost, duplicated, or misinterpreted. Over time, Transport evolves into a self-tuning mesh that can reroute or throttle based on traffic behavior and performance patterns surfaced by Pulse. It becomes topology-aware, understanding dependencies and critical paths between services. It will eventually integrate predictive scaling, fault isolation, and recovery mechanisms driven by AI. Transport earns its keep by transforming chaos into conversation — allowing the Hive to coordinate across thousands of moving parts without collapse.",
@@ -417,7 +416,7 @@
       "web"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/web-rest"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyCore.Web.Rest"
     },
     "long_description": {
       "overview": "Web.Rest defines how the Grid exposes itself to the outside world — consistent, readable, and safe. It is the contract between the HoneyDrunk ecosystem and every external consumer, SDK, and integration. The Node sets standards for routing, status codes, error shapes, and API documentation so that everything built on HoneyDrunk feels familiar and predictable to work with. It embodies \"boring consistency\" — every service speaks the same dialect of REST, making integration effortless and elegant. Over time, Web.Rest will generate typed clients and SDKs automatically, enforcing end-to-end contract validation between producer and consumer. It will expand to support GraphQL and WebSocket interfaces while maintaining the same rigor of design. Eventually, it will integrate with Vault and Pulse to track performance, authentication, and usage at the edge. Web.Rest earns its keep by turning interface chaos into clarity — it's how the Hive talks to the world without ever shouting.",
@@ -474,7 +473,7 @@
       "fixtures"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/testing"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Testing"
     },
     "long_description": {
       "overview": "HoneyDrunk.Testing is the Grid's verification engine — a shared suite of fixtures, mocks, and deterministic environments that guarantee every Node behaves as expected. It provides unified test scaffolding for integration, contract, and regression testing, so all modules measure quality through the same lens. It eliminates ad-hoc frameworks, consolidating common setups like fake transports, Vault mocks, and ephemeral databases into a single package. Testing is not just about validation here; it's about consistency of truth across the Hive. Over time, this node will grow into a simulation-aware system capable of auto-generating test cases based on schema diffs and telemetry signals from Pulse. It will also integrate with AgentKit, enabling autonomous QA agents to probe APIs and detect behavioral drift. The vision is for the Grid to test itself — continuously and adaptively. Testing earns its keep by converting confidence into velocity, ensuring that change never outpaces reliability.",
@@ -515,7 +514,7 @@
     "sector": "Ops",
     "signal": "Seed",
     "cluster": "tooling",
-    "energy": 33,
+    "energy": 34,
     "priority": 100,
     "depends_on": [
       "honeydrunk-pipelines",
@@ -529,7 +528,7 @@
       "automation"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/tools"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Tools"
     },
     "long_description": {
       "overview": "Tools is the utility belt of the Hive — a collection of cross-platform scripts, CLIs, and automation helpers that make development frictionless. It centralizes the repetitive workflows that developers otherwise rewrite in isolation: packaging, publishing, deployment triggers, and testing shortcuts. Tools ensures that the same commands behave identically whether you're on Windows, macOS, or Linux, bringing parity across the diverse machines of the studio. It reduces tribal knowledge and operational drag, empowering contributors to act with confidence. Over time, Tools will evolve into a modular CLI with contextual awareness — capable of inspecting a repository and offering smart actions. It will also integrate directly with Vault and Pipelines, giving developers a way to trigger secure, auditable operations from their terminal. Tools earns its keep by saving hours that would otherwise evaporate into manual toil. In the Grid, convenience is not luxury — it's velocity.",
@@ -572,7 +571,7 @@
     "signal": "Awake",
     "cluster": "security",
     "energy": 75,
-    "priority": 83,
+    "priority": 93,
     "slots": [
       "provider"
     ],
@@ -590,7 +589,7 @@
       "config"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/vault"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Vault"
     },
     "long_description": {
       "overview": "HoneyDrunk.Vault is the trust kernel of the Hive — the invisible system that keeps every secret, credential, and configuration alive yet contained. It exists to make safety a default, not a discipline: developers never touch raw keys, yet their services always have exactly what they need. Vault encrypts, scopes, and distributes configuration at runtime, replacing guesswork with deliberate policy. It centralizes authority without centralizing failure, ensuring that a compromise in one Node never spreads contagion through the Grid. Every request, token, and certificate becomes traceable — not to restrict freedom, but to cultivate accountability. Over time, Vault will integrate directly with Pulse, correlating anomalies in authentication patterns to detect and isolate risk before it spreads. It will expand into secrets-as-code: declarative manifests that describe not just values, but intended lifecycles. Eventually, Vault evolves into a self-auditing trust network — rotating credentials autonomously, adapting policies to observed behavior, and communicating security posture to the rest of the Grid. Vault earns its keep by doing its work in silence: the less it's noticed, the more it's doing its job.",
@@ -620,7 +619,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 80
+    "flow": 87
   },
   {
     "id": "pulse",
@@ -631,7 +630,7 @@
     "sector": "Ops",
     "signal": "Seed",
     "cluster": "security",
-    "energy": 40,
+    "energy": 41,
     "priority": 75,
     "slots": [
       "telemetry"
@@ -652,7 +651,7 @@
       "security"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/pulse"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Pulse"
     },
     "long_description": {
       "overview": "Pulse is how the Hive feels itself. It's the nervous system that collects, correlates, and interprets telemetry from every corner of the Grid — logs, traces, metrics, and signals that together form a living heartbeat. Every Node reports its state into Pulse's unified pipeline, creating a continuously updated map of operational health and system interdependence. It doesn't just observe; it learns — mapping causality, detecting anomalies, and identifying where the Grid's energy flows or falters. Pulse exists to prevent blindness: in distributed systems, invisibility is the enemy. Over time, Pulse will evolve beyond observability into orchestration — closing the feedback loop by triggering automated mitigations, scaling responses, and postmortem generation. It will expose interfaces for agents, allowing AI to reason over live telemetry and predict failure before it occurs. Eventually, Pulse becomes the Grid's intuition — an emergent intelligence formed not from code, but from the behavior of code. It earns its keep by ensuring no part of HoneyDrunk.OS ever dies quietly.",
@@ -707,7 +706,7 @@
       "passkeys"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/auth"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Auth"
     },
     "long_description": {
       "overview": "HoneyDrunk.Auth is the digital passport system of the Hive — a unified identity and access framework built around passkeys, JWTs, MFA, and fine-grained policy enforcement. It standardizes authentication across consumer apps, internal tools, and AI agents so every interaction inside the Grid is verifiable and secure. Auth unifies identity for humans, machines, and services, supporting federated sign-ins, device trust, and temporary tokens for automation flows. It integrates with Vault for secret rotation, Pulse for session observability, and Sentinel for anomaly detection. Over time, it will evolve into a context-aware authorization mesh — policies that adjust dynamically based on Node relationships, behavior patterns, and risk posture. Auth will become a critical enabler of cross-Node orchestration, allowing agents and services to operate securely without human bottlenecks. Its long-term goal is frictionless trust — where security feels like gravity: always there, invisible, and unbreakable.",
@@ -763,7 +762,7 @@
       "orchestration"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/agentkit"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.AgentKit"
     },
     "long_description": {
       "overview": "HoneyDrunk.AgentKit is the runtime contract layer for autonomous agents across the Hive — the specification that defines how synthetic minds are born, live, and evolve. It abstracts memory systems, scheduling, event flows, and orchestration hooks into a single SDK that any Node can use to build or host agents. AgentKit ensures that all autonomous processes — from QA bots to creative assistants — follow the same lifecycle, telemetry standards, and safety constraints. It integrates deeply with Pulse for event tracing, Vault for memory security, and Transport for cross-agent communication. Over time, AgentKit will evolve into a distributed runtime capable of spawning, monitoring, and synchronizing agents across multiple environments. It will include cognitive modules that let agents reason about dependencies and self-repair when isolated from the Grid. The vision: a civilization of modular, interoperable AI entities bound by shared ethics and purpose. AgentKit earns its keep as the architecture of intelligence — it makes the Hive think.",
@@ -819,7 +818,7 @@
       "ai"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/signal"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Signal"
     },
     "long_description": {
       "overview": "HoneyDrunk.Signal is the creative intelligence layer — an AI system that helps indie developers, artists, and studios craft authentic, platform-native content with less friction. It learns a creator's tone, cadence, and visual aesthetic, then generates copy, captions, and schedules tailored for each channel. Signal doesn't automate creativity; it amplifies it by removing the mechanical overhead of self-promotion. It integrates with Pulse to measure engagement, AgentKit to personalize interactions, and HoneyHub to sync content with project milestones. Over time, Signal will evolve into a network of adaptive creative agents — each representing a studio, project, or individual voice — learning from community trends and cross-platform analytics. It will host campaign templates, sponsorship workflows, and AI-curated trend forecasts, transforming social strategy into a living organism. Signal earns its keep by letting creativity speak louder than algorithms — it keeps the Hive visible, human, and alive.",
@@ -965,7 +964,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 29,
-    "priority": 19,
+    "priority": 20,
     "depends_on": [
       "pulse",
       "honeydrunk-vault",
@@ -1440,7 +1439,7 @@
       "discovery"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/grid"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunkStudios"
     },
     "long_description": {
       "overview": "HoneyDrunk.Grid is the consciousness of the Hive — a living registry that maps every Node, service, and dependency in real time. It's both the architectural blueprint and the operating brain, ensuring the ecosystem knows what exists, how it connects, and where it's drifting. The Grid continuously ingests manifests from each Node, forming a dynamic dependency graph visualized through the public Grid Visualizer. It acts as a single source of operational truth for humans and agents alike. Over time, it will evolve from static registry to autonomous orchestrator — capable of detecting unhealthy Nodes, triggering redeployments, and suggesting refactors through telemetry-driven insight. It will also serve as the governance layer for open-source participation, controlling what enters or exits the Hive. The long-term goal is full systemic awareness — a platform where architecture becomes self-documenting and self-healing. The Grid earns its keep by making the invisible visible — a mirror for the mind of the machine.",
@@ -2362,7 +2361,7 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 29,
-    "priority": 19,
+    "priority": 20,
     "flow": 23,
     "depends_on": [
       "honeydrunk-standards"
@@ -2411,7 +2410,7 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 29,
-    "priority": 19,
+    "priority": 20,
     "flow": 23,
     "depends_on": [
       "honeydrunk-standards"
@@ -2497,7 +2496,7 @@
       "docs"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/standards"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Standards"
     },
     "long_description": {
       "overview": "HoneyDrunk.Standards is the Hive's shared discipline layer — a lightweight repository of style guides and static configurations that keep every codebase readable and consistent. It ships .editorconfig/.globalconfig, analyzer rule selections, ESLint/Prettier presets, commit etiquette, and PR guidance so teams write with one voice even across languages and engines.",

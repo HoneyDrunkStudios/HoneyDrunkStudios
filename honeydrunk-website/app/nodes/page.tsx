@@ -67,18 +67,16 @@ function NodesContent() {
             {/* Sector Filters */}
             <div className="flex flex-wrap gap-2 items-center justify-center md:justify-start" style={{ marginTop: '32px' }}>
               <button
-                onClick={() => setShowFilters(!showFilters)}
-                className="px-4 py-2 rounded border text-sm font-mono transition-all cursor-pointer"
-                style={{
-                  color: colors.electricBlue,
-                  borderColor: colors.electricBlue,
-                  backgroundColor: showFilters ? `${colors.electricBlue}20` : 'transparent',
-                }}
-              >
-                {showFilters ? '✕ Hide' : '⚙'} Filters
-              </button>
-              
-              {sectorFilter && (
+              onClick={() => setShowFilters(!showFilters)}
+              className="px-4 py-2 rounded border text-sm font-mono transition-all cursor-pointer"
+              style={{
+                color: colors.electricBlue,
+                borderColor: colors.electricBlue,
+                backgroundColor: showFilters ? `${colors.electricBlue}20` : 'transparent',
+              }}
+            >
+              {showFilters ? '✕ Hide' : '⚙\uFE0E'} Filters
+            </button>              {sectorFilter && (
                 <Link
                   href="/nodes"
                   className="px-4 py-2 rounded border text-sm font-mono transition-all hover:scale-105"
