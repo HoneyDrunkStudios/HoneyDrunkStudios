@@ -2527,5 +2527,174 @@
     "done": true,
     "cooldown_days": 14,
     "flow": 45
+  },
+  {
+    "id": "honeydrunk-collector",
+    "type": "node",
+    "name": "HoneyDrunk.Collector",
+    "short": "Telemetry ingestion sidecar",
+    "description": "Telemetry collector for distributed ingestion of logs, traces, and metrics from all services into Pulse.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "observability",
+    "energy": 10,
+    "priority": 80,
+    "depends_on": [
+      "pulse",
+      "honeydrunk-transport",
+      "honeydrunk-vault",
+      "honeydrunk-standards"
+    ],
+    "tags": [
+      "telemetry",
+      "collector",
+      "ingestion",
+      "observability"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/collector"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Collector is the inbound nerve ending of the Hive — a telemetry sidecar that ingests and normalizes data from every service before relaying it to Pulse. It receives traces, metrics, and logs through OTLP and custom channels, enforcing schema, correlation, and deduplication at the edge. Collector ensures the Grid's telemetry remains consistent and cost-efficient, buffering intelligently and self-healing under load.",
+      "why_it_exists": "Distributed systems need a standardized ingestion layer to prevent telemetry drift and ensure Pulse remains a single source of operational truth.",
+      "primary_audience": "Service owners and ops engineers integrating observability into HoneyDrunk Nodes.",
+      "value_props": [
+        "Unified OTLP and internal telemetry ingestion",
+        "Schema enforcement and tag normalization",
+        "Self-healing buffer and queue management"
+      ],
+      "monetization_signal": "Internal backbone; forms foundation for future observability SaaS offerings.",
+      "roadmap_focus": "Add eBPF-based trace capture and auto-routing to regional Pulse instances.",
+      "grid_relationship": "Feeds Pulse; integrates with Vault for auth and Transport for message relay.",
+      "integration_depth": "deep",
+      "demo_path": "Run Collector sidecar → send traces → verify in Pulse dashboard.",
+      "signal_quote": "Every heartbeat begins here.",
+      "stability_tier": "beta",
+      "impact_vector": "system observability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "foundational": false,
+    "strategy_base": 22,
+    "tier": "internal",
+    "time_pressure": 3,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 58
+  },
+  {
+    "id": "honeydrunk-comms",
+    "type": "node",
+    "name": "HoneyDrunk.Comms",
+    "short": "Outbound notifications & communication bridge",
+    "description": "Unified outbound communication system for email, push, SMS, and webhooks across the Hive.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "infrastructure",
+    "energy": 6,
+    "priority": 70,
+    "depends_on": [
+      "honeydrunk-transport",
+      "honeydrunk-vault",
+      "pulse",
+      "honeydrunk-standards"
+    ],
+    "tags": [
+      "notifications",
+      "comms",
+      "email",
+      "push",
+      "webhooks"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/comms"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Comms (Notify) is the Grid's voice to the outside world — the outbound layer that handles all communication across channels: email, push, SMS, and webhook events. It provides standardized templates, rate-limiting, and delivery tracking for both internal and user-facing notifications. Comms guarantees that every signal sent by the Hive — from release alerts to agent updates — follows the same secure and aesthetic conventions.",
+      "why_it_exists": "Without unified comms infrastructure, user notifications and internal alerts drift in tone, reliability, and security.",
+      "primary_audience": "Developers and maintainers needing safe, branded, auditable outbound communication.",
+      "value_props": [
+        "Unified templating for all outbound channels",
+        "Secure delivery with Vault-managed credentials",
+        "Pulse-linked tracking and retries for reliability"
+      ],
+      "monetization_signal": "Future SaaS or partner notification integrations (SendGrid, Twilio, FCM).",
+      "roadmap_focus": "Introduce webhook orchestration and adaptive send policies based on Pulse metrics.",
+      "grid_relationship": "Consumes events from Transport; integrates with Vault and Pulse for delivery audit.",
+      "integration_depth": "medium",
+      "demo_path": "Trigger workflow → Comms sends templated message → view telemetry in Pulse.",
+      "signal_quote": "When the Hive speaks, it's heard everywhere.",
+      "stability_tier": "beta",
+      "impact_vector": "communication reliability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "foundational": false,
+    "strategy_base": 21,
+    "tier": "none",
+    "time_pressure": 3,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 55
+  },
+  {
+    "id": "honeydrunk-assets",
+    "type": "node",
+    "name": "HoneyDrunk.Assets",
+    "short": "Unified asset storage & delivery layer",
+    "description": "Cross-Node storage and access control for digital assets, media, and documents across the Grid.",
+    "sector": "Core",
+    "signal": "Seed",
+    "cluster": "infrastructure",
+    "energy": 5,
+    "priority": 75,
+    "depends_on": [
+      "honeydrunk-vault",
+      "pulse",
+      "honeydrunk-transport",
+      "honeydrunk-standards"
+    ],
+    "tags": [
+      "storage",
+      "assets",
+      "cdn",
+      "media"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/assets"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Assets is the Hive's memory vault — a centralized storage and distribution layer for all digital artifacts: images, videos, binaries, and documents. It enforces access control, lifecycle policies, and content-addressed versioning, ensuring every asset in the Grid is traceable and immutable. Assets integrates with Vault for encryption, Pulse for usage metrics, and Transport for replication events, forming the foundation for secure and auditable media delivery.",
+      "why_it_exists": "Every system eventually needs to store and serve media securely. Assets unifies these patterns across Nodes instead of reinventing S3 wrappers and CDN hacks.",
+      "primary_audience": "Developers and services requiring consistent, compliant asset handling.",
+      "value_props": [
+        "Secure storage with Vault encryption",
+        "Signed URL delivery and CDN compatibility",
+        "Event-driven replication via Transport"
+      ],
+      "monetization_signal": "Potential open-core file service or premium storage tier.",
+      "roadmap_focus": "Add content deduplication, preview generation, and CDN integrations.",
+      "grid_relationship": "Connects with: Vault, Transport, Pulse.",
+      "integration_depth": "deep",
+      "demo_path": "Upload asset → retrieve signed URL → view metrics in Pulse.",
+      "signal_quote": "Memory made manifest.",
+      "stability_tier": "beta",
+      "impact_vector": "system reliability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "foundational": false,
+    "strategy_base": 22,
+    "tier": "internal",
+    "time_pressure": 2,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 57
   }
 ]
