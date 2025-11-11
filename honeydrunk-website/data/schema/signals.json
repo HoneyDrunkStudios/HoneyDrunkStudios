@@ -1,5 +1,21 @@
 [
   {
+    "date": "2025-11-11",
+    "title": "HoneyDrunk.Clarity Manifested — The Hive's Human Interface",
+    "desc": "HoneyDrunk.Clarity (Flow: 24) joins the Grid as the AI sector's first human-facing companion—an in-studio guide wired directly into the Hive's intelligence. Clarity is context-aware across code editors, DCC tools (Blender, Photoshop), and game engines, providing precise answers rooted in HoneyDrunk.Kernel patterns, Standards rules, and Meta.AtlasSync knowledge. Unlike generic copilots, Clarity understands your active stack—repo, scene, file, task—and surfaces guidance from AgentKit, Pulse telemetry, Vault configs, and HoneyHub workflows in real time. Built for indie devs and small studios drowning in tabs and documentation, Clarity bridges tools through a single assistant surface: ask about C# best practices, Unity pipeline issues, or deployment flows without leaving your workspace. Phase 1 targets VS Code/JetBrains/VS extensions with HoneyDrunk-native intelligence; Phase 2 adds cross-tool overlays and team memory; Phase 3 couples with Operator/VEE for automated fixes. Dependencies: AgentKit (agent lifecycle), Pulse (context/telemetry), Vault (secure config), Meta.AtlasSync (synchronized knowledge), Standards (patterns), HoneyHub (task integration). Monetization path: core experience free or bundled with HoneyHub; Pro tiers for studios with private knowledge ingestion, org policies, multi-seat management, and telemetry insights. Signal quote: 'Know what to do next, wherever you are.' Clarity transforms the Grid from infrastructure into conversation.",
+    "tags": [
+      "AI",
+      "HoneyDrunk.Clarity",
+      "HoneyDrunk.AgentKit",
+      "Pulse",
+      "HoneyDrunk.Vault",
+      "Meta.AtlasSync",
+      "HoneyDrunk.Standards",
+      "HoneyHub"
+    ],
+    "sector": "AI"
+  },
+  {
     "date": "2025-11-10",
     "title": "Infrastructure Expansion — Collector, Comms, and Assets Join the Grid",
     "desc": "Three critical infrastructure nodes added to the Grid, expanding observability, communication, and storage capabilities. HoneyDrunk.Collector (Flow: 58) establishes telemetry ingestion with OTLP support, schema enforcement, and self-healing buffers—forming the inbound nerve ending feeding Pulse. HoneyDrunk.Comms (Flow: 55) unifies outbound notifications across email, push, SMS, and webhooks with templated delivery and Pulse-tracked reliability. HoneyDrunk.Assets (Flow: 57) provides centralized storage for digital artifacts with Vault encryption, signed URL delivery, and content-addressed versioning. All three nodes integrate deeply with existing infrastructure: depending on Vault for auth, Transport for event relay, and Pulse for metrics. Collector and Assets land in Ops and Core respectively, establishing foundation for observability SaaS and secure media delivery patterns. BuildLog component deployed to node detail pages, surfacing recent signals and updates for improved discoverability. Package updates applied: Next.js 16.0.0→16.0.1, React 19.1.0→19.2.0, Tailwind 4.1.14→4.1.17, @types/node upgraded ^20→^22 for Vercel compatibility.",

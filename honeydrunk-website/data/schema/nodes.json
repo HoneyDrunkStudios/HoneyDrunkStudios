@@ -2696,5 +2696,67 @@
     "done": false,
     "cooldown_days": 14,
     "flow": 57
+  },
+  {
+    "id": "honeydrunk-clarity",
+    "type": "node",
+    "name": "HoneyDrunk.Clarity",
+    "short": "In-studio AI guide for indie devs & creators",
+    "description": "Context-aware companion that sits across tools (IDE, Blender, Photoshop, engines) to guide, explain, and unblock creators using Hive intelligence.",
+    "sector": "AI",
+    "signal": "Seed",
+    "cluster": "assistant",
+    "energy": 8,
+    "priority": 40,
+    "depends_on": [
+      "honeydrunk-agentkit",
+      "pulse",
+      "honeydrunk-vault",
+      "meta-atlassync",
+      "honeydrunk-standards",
+      "honeyhub"
+    ],
+    "tags": [
+      "assistant",
+      "ai",
+      "copilot",
+      "education",
+      "devtools",
+      "creator"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/clarity"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Clarity is the Hive-facing companion for humans — an always-on, context-aware guide for indie devs and small studios working across code editors, DCC tools, and game engines. Clarity reads environment and project context (without hoarding secrets), then routes questions through HoneyDrunk.AgentKit, Meta.AtlasSync, and internal docs to give precise, actionable help. It's how creators get answers about C#, Unity, Unreal, Blender, Photoshop, pipelines, or deployment flows without leaving their workspace.",
+      "why_it_exists": "Indie teams drown in documentation, tabs, and context switching. Cluely-style general copilots are generic; Clarity is wired directly into HoneyDrunk.OS and the creator's actual stack, turning the Grid's infrastructure, patterns, and best practices into real-time guidance.",
+      "primary_audience": "Indie developers, technical artists, designers, and small studios building with HoneyDrunk tooling or similar stacks who need an opinionated, integrated mentor instead of yet another chat box.",
+      "value_props": [
+        "Understands active context (repo, scene, file, task) and tailors responses accordingly.",
+        "Uses Meta.AtlasSync and Meta.DevPortal as canonical knowledge — answers align with real manifests and docs.",
+        "Bridges tools: code editor, DCC apps, engines, CI logs, and HoneyHub tasks through a single assistant surface.",
+        "Teaches best practices from HoneyDrunk.Kernel, Transport, Data, Vault, and Sentinel instead of ad-hoc advice.",
+        "Enables studios to plug in their own private docs and patterns with safe, scoped access."
+      ],
+      "monetization_signal": "High. Core experience free or bundled with HoneyHub; Pro tiers for studios: private knowledge ingestion, org-wide policies, multi-seat management, and deep telemetry-driven insights.",
+      "roadmap_focus": "Phase 1: VS Code/JetBrains/VS extension + browser panel that speaks HoneyDrunk-native (Nodes, Pipelines, Vault patterns). Phase 2: cross-tool overlays for Blender/engines; team-level memory; integration with HoneyDrunk.Signal for nudges and recaps. Phase 3: tight coupling with Operator/VEE to let Clarity propose or trigger automated fixes and workflows.",
+      "grid_relationship": "Clarity is the human interface to the Hive's intelligence stack. It consumes AgentKit for agent lifecycle, Pulse for telemetry and context, Vault for secure configuration, and Meta.AtlasSync for synchronized knowledge. It surfaces HoneyHub tasks, Standards rules, and Pipelines/Actions diagnostics as conversational, guided flows.",
+      "integration_depth": "deep",
+      "demo_path": "Open project in IDE → Clarity detects stack (e.g., .NET + Unity) → ask how to structure a feature or fix a build → Clarity replies using HoneyDrunk.Kernel/Standards patterns and actual repo context → optional: open-task or doc links in HoneyHub.",
+      "signal_quote": "Know what to do next, wherever you are.",
+      "stability_tier": "experimental",
+      "impact_vector": "developer experience"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "platform",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 24
   }
 ]
