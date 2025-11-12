@@ -1,11 +1,47 @@
 [
   {
+    "id": "honeydrunk-kernel-abstractions",
+    "type": "module",
+    "name": "HoneyDrunk.Kernel.Abstractions",
+    "parent": "honeydrunk-kernel",
+    "slot": "contracts",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "core",
+      "interfaces",
+      "contracts",
+      "foundation"
+    ],
+    "long_description": {
+      "overview": "Core abstractions and interfaces that define the foundational contracts for the entire HoneyDrunk ecosystem. Provides the base types, interfaces, and contracts that all other modules depend on.",
+      "why_it_exists": "A clean dependency graph requires explicit contracts at the foundation. Everything builds on these interfaces.",
+      "primary_audience": "All HoneyDrunk modules and services; this is the bedrock.",
+      "value_props": [
+        "Zero-dependency interface definitions",
+        "Explicit contracts for dependency injection",
+        "Clear boundaries between layers and modules"
+      ],
+      "monetization_signal": "Open source foundation; enterprise patterns emerge in implementations.",
+      "roadmap_focus": "Expand lifecycle hooks, add telemetry interfaces, refine hosting abstractions.",
+      "grid_relationship": "Foundation for Vault, Transport, Telemetry, Pulse, and all other Core modules.",
+      "demo_path": "Reference these interfaces when building new modules or implementing custom handlers.",
+      "signal_quote": "The contracts that connect the Grid.",
+      "stability_tier": "stable",
+      "impact_vector": "system architecture"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
     "id": "honeydrunk-transport-messaging-inmemory",
     "type": "module",
-    "name": "HoneyDrunk.Transport.Messaging.InMemory",
+    "name": "HoneyDrunk.Transport.InMemory",
     "parent": "honeydrunk-transport",
     "slot": "adapter",
-    "signal": "Seed",
+    "signal": "Live",
     "integration_depth": "shallow",
     "tags": [
       "messaging",
@@ -37,10 +73,10 @@
   {
     "id": "honeydrunk-transport-messaging-storagequeues",
     "type": "module",
-    "name": "HoneyDrunk.Transport.Messaging.StorageQueues",
+    "name": "HoneyDrunk.Transport.StorageQueues",
     "parent": "honeydrunk-transport",
     "slot": "adapter",
-    "signal": "Seed",
+    "signal": "Live",
     "integration_depth": "medium",
     "tags": [
       "azure",
@@ -72,10 +108,10 @@
   {
     "id": "honeydrunk-transport-messaging-servicebus",
     "type": "module",
-    "name": "HoneyDrunk.Transport.Messaging.ServiceBus",
+    "name": "HoneyDrunk.Transport.AzureServiceBus",
     "parent": "honeydrunk-transport",
     "slot": "adapter",
-    "signal": "Seed",
+    "signal": "Live",
     "integration_depth": "deep",
     "tags": [
       "azure",

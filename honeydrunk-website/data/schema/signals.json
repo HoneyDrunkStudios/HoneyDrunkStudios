@@ -1,5 +1,20 @@
 [
   {
+    "date": "2025-11-12",
+    "title": "Kernel.Abstractions Module & Transport Signal Promotions",
+    "desc": "Foundational module expansion: HoneyDrunk.Kernel.Abstractions added as the first Kernel module slot—defining core interfaces, contracts, and zero-dependency abstractions that underpin the entire Grid. Positioned as the 'contracts' slot with deep integration depth and stable tier, Abstractions establishes explicit boundaries between layers and provides dependency injection contracts for Vault, Transport, Telemetry, Pulse, and all Core modules. With signal=Live matching parent Kernel, this module represents the bedrock interface definitions now powering production infrastructure. Simultaneously promoted all three Transport adapter modules to Live: InMemory (shallow integration, dev/test harness), StorageQueues (medium integration, Azure queue adapter), and AzureServiceBus (deep integration, pub/sub with topics/sessions). These promotions reflect Transport's production-ready status across all supported messaging backends. Signal quote from Abstractions: 'The contracts that connect the Grid.' This work solidifies Kernel as the architectural foundation with explicit module slots while acknowledging Transport's maturity across in-memory, cloud queue, and enterprise service bus patterns.",
+    "tags": [
+      "Core",
+      "HoneyDrunk.Kernel",
+      "HoneyDrunk.Kernel.Abstractions",
+      "HoneyDrunk.Transport",
+      "HoneyDrunk.Transport.InMemory",
+      "HoneyDrunk.Transport.StorageQueues",
+      "HoneyDrunk.Transport.AzureServiceBus"
+    ],
+    "sector": "Core"
+  },
+  {
     "date": "2025-11-11",
     "title": "HoneyDrunk.Clarity Manifested — The Hive's Human Interface",
     "desc": "HoneyDrunk.Clarity (Flow: 24) joins the Grid as the AI sector's first human-facing companion—an in-studio guide wired directly into the Hive's intelligence. Clarity is context-aware across code editors, DCC tools (Blender, Photoshop), and game engines, providing precise answers rooted in HoneyDrunk.Kernel patterns, Standards rules, and Meta.AtlasSync knowledge. Unlike generic copilots, Clarity understands your active stack—repo, scene, file, task—and surfaces guidance from AgentKit, Pulse telemetry, Vault configs, and HoneyHub workflows in real time. Built for indie devs and small studios drowning in tabs and documentation, Clarity bridges tools through a single assistant surface: ask about C# best practices, Unity pipeline issues, or deployment flows without leaving your workspace. Phase 1 targets VS Code/JetBrains/VS extensions with HoneyDrunk-native intelligence; Phase 2 adds cross-tool overlays and team memory; Phase 3 couples with Operator/VEE for automated fixes. Dependencies: AgentKit (agent lifecycle), Pulse (context/telemetry), Vault (secure config), Meta.AtlasSync (synchronized knowledge), Standards (patterns), HoneyHub (task integration). Monetization path: core experience free or bundled with HoneyHub; Pro tiers for studios with private knowledge ingestion, org policies, multi-seat management, and telemetry insights. Signal quote: 'Know what to do next, wherever you are.' Clarity transforms the Grid from infrastructure into conversation.",
