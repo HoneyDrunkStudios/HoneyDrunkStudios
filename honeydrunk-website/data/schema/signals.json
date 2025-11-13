@@ -1,5 +1,19 @@
 [
   {
+    "date": "2025-11-13",
+    "title": "Transport Complete — Data & Vault Take Priority",
+    "desc": "Major milestone: HoneyDrunk.Transport marked done=true and signal upgraded Awake → Live, representing the messaging backbone now powering the entire ecosystem. Transport ships with production-ready outbox patterns, event primitives, and three complete adapter implementations (InMemory, StorageQueues, AzureServiceBus) — all at Live signal. With transport infrastructure complete, the roadmap pivots to persistence and security layers. Flow Index recomputed with new priorities: (1) HoneyDrunk.Vault (Flow: 91) now leads as top priority — zero-trust secrets and configuration management with slot architecture for pluggable providers. (2) HoneyDrunk.Data (Flow: 86) takes second position — database conventions, migrations, tenant isolation, and outbox integration. Strategy adjustments: Data boosted to priority=100, energy=85, strategy_base=30 with increased time_pressure=3; Vault elevated to priority=98, energy=82, strategy_base=18. Transport joins Kernel, Standards, and Actions in completed infrastructure (capped at Flow 45 due to done status). The shift reflects architectural reality: with messaging solved, the Hive now focuses on persistence patterns and secrets management as the next foundational layers. Signal quote from Transport: 'Every message finds its way.' Next phase targets Data's migration tooling and Vault's provider abstraction slots.",
+    "tags": [
+      "Core",
+      "HoneyDrunk.Transport",
+      "HoneyDrunk.Data",
+      "HoneyDrunk.Vault",
+      "HoneyDrunk.Kernel",
+      "HoneyDrunk.Standards"
+    ],
+    "sector": "Core"
+  },
+  {
     "date": "2025-11-12",
     "title": "Kernel.Abstractions Module & Transport Signal Promotions",
     "desc": "Foundational module expansion: HoneyDrunk.Kernel.Abstractions added as the first Kernel module slot—defining core interfaces, contracts, and zero-dependency abstractions that underpin the entire Grid. Positioned as the 'contracts' slot with deep integration depth and stable tier, Abstractions establishes explicit boundaries between layers and provides dependency injection contracts for Vault, Transport, Telemetry, Pulse, and all Core modules. With signal=Live matching parent Kernel, this module represents the bedrock interface definitions now powering production infrastructure. Simultaneously promoted all three Transport adapter modules to Live: InMemory (shallow integration, dev/test harness), StorageQueues (medium integration, Azure queue adapter), and AzureServiceBus (deep integration, pub/sub with topics/sessions). These promotions reflect Transport's production-ready status across all supported messaging backends. Signal quote from Abstractions: 'The contracts that connect the Grid.' This work solidifies Kernel as the architectural foundation with explicit module slots while acknowledging Transport's maturity across in-memory, cloud queue, and enterprise service bus patterns.",

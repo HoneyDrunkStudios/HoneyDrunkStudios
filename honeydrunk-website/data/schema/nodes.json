@@ -65,7 +65,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 31,
-    "priority": 93,
+    "priority": 90,
     "depends_on": [
       "honeydrunk-build",
       "honeydrunk-deploy",
@@ -108,7 +108,7 @@
     "time_pressure": 5,
     "done": false,
     "cooldown_days": 14,
-    "flow": 71,
+    "flow": 69,
     "ops_bootstrap": true
   },
   {
@@ -176,7 +176,7 @@
     "signal": "Seed",
     "cluster": "infrastructure",
     "energy": 31,
-    "priority": 90,
+    "priority": 87,
     "depends_on": [
       "honeydrunk-pipelines",
       "honeydrunk-actions",
@@ -219,7 +219,7 @@
     "time_pressure": 4,
     "done": false,
     "cooldown_days": 14,
-    "flow": 69,
+    "flow": 67,
     "ops_bootstrap": true
   },
   {
@@ -328,9 +328,9 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": true,
-    "strategy_base": 26,
+    "strategy_base": 30,
     "tier": "none",
-    "time_pressure": 2,
+    "time_pressure": 3,
     "done": false,
     "cooldown_days": 14,
     "flow": 86
@@ -342,10 +342,10 @@
     "short": "Outbox, messaging abstractions",
     "description": "Reliable messaging and transport layer. Outbox pattern, event primitives, and communication infrastructure.",
     "sector": "Core",
-    "signal": "Awake",
+    "signal": "Live",
     "cluster": "foundation",
-    "energy": 71,
-    "priority": 100,
+    "energy": 0,
+    "priority": 95,
     "slots": [
       "adapter"
     ],
@@ -389,9 +389,9 @@
     "strategy_base": 28,
     "tier": "none",
     "time_pressure": 2,
-    "done": false,
+    "done": true,
     "cooldown_days": 14,
-    "flow": 90
+    "flow": 45
   },
   {
     "id": "honeycore-web-rest",
@@ -458,7 +458,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 29,
-    "priority": 25,
+    "priority": 24,
     "slots": [
       "harness"
     ],
@@ -515,7 +515,7 @@
     "signal": "Seed",
     "cluster": "tooling",
     "energy": 34,
-    "priority": 100,
+    "priority": 96,
     "depends_on": [
       "honeydrunk-pipelines",
       "honeydrunk-actions",
@@ -558,7 +558,7 @@
     "time_pressure": 4,
     "done": false,
     "cooldown_days": 14,
-    "flow": 77,
+    "flow": 74,
     "ops_bootstrap": true
   },
   {
@@ -571,7 +571,7 @@
     "signal": "Awake",
     "cluster": "security",
     "energy": 75,
-    "priority": 93,
+    "priority": 100,
     "slots": [
       "provider"
     ],
@@ -614,12 +614,12 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 15,
+    "strategy_base": 18,
     "tier": "none",
-    "time_pressure": 0,
+    "time_pressure": 2,
     "done": false,
     "cooldown_days": 14,
-    "flow": 87
+    "flow": 91
   },
   {
     "id": "pulse",
@@ -693,7 +693,7 @@
     "signal": "Seed",
     "cluster": "infrastructure",
     "energy": 32,
-    "priority": 59,
+    "priority": 56,
     "depends_on": [
       "honeydrunk-vault",
       "honeycore-web-rest",
@@ -736,7 +736,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 50
+    "flow": 48
   },
   {
     "id": "honeydrunk-agentkit",
@@ -747,8 +747,8 @@
     "sector": "AI",
     "signal": "Seed",
     "cluster": "ai",
-    "energy": 31,
-    "priority": 37,
+    "energy": 32,
+    "priority": 40,
     "depends_on": [
       "honeydrunk-kernel",
       "honeydrunk-transport",
@@ -792,7 +792,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 35
+    "flow": 37
   },
   {
     "id": "honeydrunk-signal",
@@ -804,7 +804,7 @@
     "signal": "Seed",
     "cluster": "ecosystem",
     "energy": 30,
-    "priority": 36,
+    "priority": 37,
     "depends_on": [
       "honeyhub",
       "pulse",
@@ -848,7 +848,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 34
+    "flow": 35
   },
   {
     "id": "ledger",
@@ -860,7 +860,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 31,
-    "priority": 40,
+    "priority": 38,
     "depends_on": [
       "invoice",
       "pay",
@@ -900,7 +900,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 37
+    "flow": 36
   },
   {
     "id": "invoice",
@@ -912,7 +912,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 31,
-    "priority": 40,
+    "priority": 38,
     "depends_on": [
       "ledger",
       "pay",
@@ -952,7 +952,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 37
+    "flow": 36
   },
   {
     "id": "honeydrunk-clientportalos",
@@ -964,7 +964,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 29,
-    "priority": 20,
+    "priority": 18,
     "depends_on": [
       "pulse",
       "honeydrunk-vault",
@@ -1010,7 +1010,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 23
+    "flow": 22
   },
   {
     "id": "pay",
@@ -1022,7 +1022,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 31,
-    "priority": 40,
+    "priority": 38,
     "depends_on": [
       "invoice",
       "subs",
@@ -1062,7 +1062,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 37
+    "flow": 36
   },
   {
     "id": "subs",
@@ -1074,7 +1074,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 30,
-    "priority": 40,
+    "priority": 38,
     "depends_on": [
       "ledger",
       "honeydrunk-standards"
@@ -1113,7 +1113,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 37
+    "flow": 35
   },
   {
     "id": "forge",
@@ -1125,7 +1125,7 @@
     "signal": "Seed",
     "cluster": "marketplace",
     "energy": 30,
-    "priority": 36,
+    "priority": 37,
     "depends_on": [
       "honeyhub",
       "honeydrunk-standards"
@@ -1164,7 +1164,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 34
+    "flow": 35
   },
   {
     "id": "tether",
@@ -1325,8 +1325,8 @@
     "sector": "Meta",
     "signal": "Seed",
     "cluster": "ecosystem",
-    "energy": 32,
-    "priority": 36,
+    "energy": 34,
+    "priority": 37,
     "depends_on": [
       "honeydrunk-signal",
       "forge",
@@ -1366,7 +1366,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 35
+    "flow": 36
   },
   {
     "id": "honeyconnect",
@@ -1428,7 +1428,7 @@
     "signal": "Live",
     "cluster": "ecosystem",
     "energy": 100,
-    "priority": 37,
+    "priority": 35,
     "depends_on": [
       "honeydrunk-kernel",
       "pulse"
@@ -1469,7 +1469,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 59
+    "flow": 58
   },
   {
     "id": "honeymech-courier",
@@ -1481,7 +1481,7 @@
     "signal": "Seed",
     "cluster": "robotics",
     "energy": 30,
-    "priority": 32,
+    "priority": 30,
     "depends_on": [
       "honeymech-sim",
       "honeydrunk-standards"
@@ -1521,7 +1521,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 31
+    "flow": 30
   },
   {
     "id": "honeymech-sim",
@@ -1533,7 +1533,7 @@
     "signal": "Seed",
     "cluster": "robotics",
     "energy": 31,
-    "priority": 32,
+    "priority": 30,
     "depends_on": [
       "honeymech-courier",
       "honeydrunk-standards"
@@ -1573,7 +1573,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 32
+    "flow": 30
   },
   {
     "id": "honeymech-servo",
@@ -1687,7 +1687,7 @@
     "signal": "Seed",
     "cluster": "security",
     "energy": 32,
-    "priority": 36,
+    "priority": 34,
     "depends_on": [
       "honeysentinel",
       "pulse",
@@ -1731,7 +1731,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 35
+    "flow": 33
   },
   {
     "id": "honeysentinel",
@@ -1743,7 +1743,7 @@
     "signal": "Seed",
     "cluster": "security",
     "energy": 32,
-    "priority": 36,
+    "priority": 34,
     "depends_on": [
       "breachlab-exe",
       "pulse",
@@ -1787,7 +1787,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 35
+    "flow": 33
   },
   {
     "id": "review",
@@ -2025,7 +2025,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 30,
-    "priority": 42,
+    "priority": 40,
     "depends_on": [
       "vault",
       "transport",
@@ -2070,7 +2070,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 38
+    "flow": 37
   },
   {
     "id": "hivegigs",
@@ -2265,9 +2265,9 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "energy": 29,
-    "priority": 15,
-    "flow": 20
+    "energy": 30,
+    "priority": 24,
+    "flow": 26
   },
   {
     "id": "marketcore",
@@ -2312,8 +2312,8 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 31,
-    "priority": 37,
-    "flow": 35,
+    "priority": 35,
+    "flow": 34,
     "depends_on": [
       "honeydrunk-standards"
     ]
@@ -2361,8 +2361,8 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 29,
-    "priority": 20,
-    "flow": 23,
+    "priority": 18,
+    "flow": 22,
     "depends_on": [
       "honeydrunk-standards"
     ]
@@ -2410,8 +2410,8 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 29,
-    "priority": 20,
-    "flow": 23,
+    "priority": 18,
+    "flow": 22,
     "depends_on": [
       "honeydrunk-standards"
     ]
@@ -2537,8 +2537,8 @@
     "sector": "Ops",
     "signal": "Seed",
     "cluster": "observability",
-    "energy": 10,
-    "priority": 80,
+    "energy": 29,
+    "priority": 27,
     "depends_on": [
       "pulse",
       "honeydrunk-transport",
@@ -2582,7 +2582,7 @@
     "time_pressure": 3,
     "done": false,
     "cooldown_days": 14,
-    "flow": 58
+    "flow": 28
   },
   {
     "id": "honeydrunk-comms",
@@ -2593,8 +2593,8 @@
     "sector": "Ops",
     "signal": "Seed",
     "cluster": "infrastructure",
-    "energy": 6,
-    "priority": 70,
+    "energy": 29,
+    "priority": 22,
     "depends_on": [
       "honeydrunk-transport",
       "honeydrunk-vault",
@@ -2639,7 +2639,7 @@
     "time_pressure": 3,
     "done": false,
     "cooldown_days": 14,
-    "flow": 55
+    "flow": 24
   },
   {
     "id": "honeydrunk-assets",
@@ -2650,8 +2650,8 @@
     "sector": "Core",
     "signal": "Seed",
     "cluster": "infrastructure",
-    "energy": 5,
-    "priority": 75,
+    "energy": 29,
+    "priority": 34,
     "depends_on": [
       "honeydrunk-vault",
       "pulse",
@@ -2695,7 +2695,7 @@
     "time_pressure": 2,
     "done": false,
     "cooldown_days": 14,
-    "flow": 57
+    "flow": 32
   },
   {
     "id": "honeydrunk-clarity",
@@ -2706,8 +2706,8 @@
     "sector": "AI",
     "signal": "Seed",
     "cluster": "assistant",
-    "energy": 8,
-    "priority": 40,
+    "energy": 29,
+    "priority": 24,
     "depends_on": [
       "honeydrunk-agentkit",
       "pulse",
@@ -2757,6 +2757,6 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 24
+    "flow": 26
   }
 ]
