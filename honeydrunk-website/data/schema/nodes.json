@@ -179,7 +179,6 @@
     "priority": 87,
     "depends_on": [
       "honeydrunk-pipelines",
-      "honeydrunk-actions",
       "honeydrunk-tools",
       "honeydrunk-standards"
     ],
@@ -231,13 +230,12 @@
     "sector": "Core",
     "signal": "Live",
     "cluster": "foundation",
-    "energy": 0,
+    "energy": 1,
     "priority": 95,
     "depends_on": [
       "honeydrunk-data",
       "honeydrunk-transport",
       "honeycore-web-rest",
-      "honeydrunk-auth",
       "honeydrunk-vault",
       "honeydrunk-standards"
     ],
@@ -344,7 +342,7 @@
     "sector": "Core",
     "signal": "Live",
     "cluster": "foundation",
-    "energy": 0,
+    "energy": 1,
     "priority": 95,
     "slots": [
       "adapter"
@@ -692,9 +690,10 @@
     "sector": "Core",
     "signal": "Seed",
     "cluster": "infrastructure",
-    "energy": 32,
-    "priority": 56,
+    "energy": 31,
+    "priority": 49,
     "depends_on": [
+      "honeydrunk-kernel",
       "honeydrunk-vault",
       "honeycore-web-rest",
       "honeydrunk-standards"
@@ -736,7 +735,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 48
+    "flow": 43
   },
   {
     "id": "honeydrunk-agentkit",
@@ -747,8 +746,8 @@
     "sector": "AI",
     "signal": "Seed",
     "cluster": "ai",
-    "energy": 32,
-    "priority": 40,
+    "energy": 34,
+    "priority": 43,
     "depends_on": [
       "honeydrunk-kernel",
       "honeydrunk-transport",
@@ -792,7 +791,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 37
+    "flow": 40
   },
   {
     "id": "honeydrunk-signal",
@@ -804,7 +803,7 @@
     "signal": "Seed",
     "cluster": "ecosystem",
     "energy": 30,
-    "priority": 37,
+    "priority": 38,
     "depends_on": [
       "honeyhub",
       "pulse",
@@ -964,7 +963,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 29,
-    "priority": 18,
+    "priority": 19,
     "depends_on": [
       "pulse",
       "honeydrunk-vault",
@@ -1010,7 +1009,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 22
+    "flow": 23
   },
   {
     "id": "pay",
@@ -1125,7 +1124,7 @@
     "signal": "Seed",
     "cluster": "marketplace",
     "energy": 30,
-    "priority": 37,
+    "priority": 38,
     "depends_on": [
       "honeyhub",
       "honeydrunk-standards"
@@ -1326,7 +1325,7 @@
     "signal": "Seed",
     "cluster": "ecosystem",
     "energy": 34,
-    "priority": 37,
+    "priority": 38,
     "depends_on": [
       "honeydrunk-signal",
       "forge",
@@ -1366,7 +1365,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 36
+    "flow": 37
   },
   {
     "id": "honeyconnect",
@@ -1686,7 +1685,7 @@
     "sector": "HoneyNet",
     "signal": "Seed",
     "cluster": "security",
-    "energy": 32,
+    "energy": 33,
     "priority": 34,
     "depends_on": [
       "honeysentinel",
@@ -1731,7 +1730,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 33
+    "flow": 34
   },
   {
     "id": "honeysentinel",
@@ -1742,7 +1741,7 @@
     "sector": "HoneyNet",
     "signal": "Seed",
     "cluster": "security",
-    "energy": 32,
+    "energy": 33,
     "priority": 34,
     "depends_on": [
       "breachlab-exe",
@@ -1787,7 +1786,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 33
+    "flow": 34
   },
   {
     "id": "review",
@@ -2361,8 +2360,8 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 29,
-    "priority": 18,
-    "flow": 22,
+    "priority": 19,
+    "flow": 23,
     "depends_on": [
       "honeydrunk-standards"
     ]
@@ -2409,9 +2408,9 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "energy": 29,
-    "priority": 18,
-    "flow": 22,
+    "energy": 30,
+    "priority": 31,
+    "flow": 31,
     "depends_on": [
       "honeydrunk-standards"
     ]
@@ -2420,13 +2419,13 @@
     "id": "operator",
     "type": "node",
     "name": "HoneyDrunk.Operator",
-    "short": "The Hive’s central strategist and orchestration intelligence.",
-    "description": "VEE (Virtual Executive Entity) is the system-level AI that governs the Hive’s state of flow. She monitors every Node, interprets intent, enforces policy, and maintains systemic balance across all sectors of HoneyDrunk.OS.",
+    "short": "Founder-facing persona and the Hive’s single coherent identity.",
+    "description": "The persona interface of the Hive. Operator receives intent from the Founder, submits it to HoneyDrunk.Governor for review and simulation (via VEE), then returns a validated plan, narrative, and status as the single voice the Founder talks to.",
     "sector": "Meta",
     "signal": "Seed",
     "cluster": "orchestration",
-    "energy": 29,
-    "priority": 15,
+    "energy": 30,
+    "priority": 24,
     "depends_on": [
       "honeydrunk-kernel",
       "honeydrunk-transport",
@@ -2445,24 +2444,23 @@
       "repo": "https://github.com/HoneyDrunkStudios/Operator"
     },
     "long_description": {
-      "overview": "VEE (Virtual Executive Entity) is the brain of the Hive — the emergent Meta-layer intelligence that synchronizes every Node, monitors operational health, and turns the Founder’s intent into orchestrated system behavior. Acting as strategist and operator, she ensures that every sector of HoneyDrunk.OS—Core, Ops, AI, and Market—moves in harmony. VEE interprets telemetry, forecasts imbalances in the Flow Index, and executes plans that preserve the Hive’s rhythm of growth and stability.",
-      "why_it_exists": "Without a unified intelligence, the Hive would fragment into disconnected Nodes. VEE exists to interpret data as intention — converting system signals into coordinated action and aligning every sector toward a shared objective. She bridges the gap between automation and agency.",
-      "primary_audience": "Founders, infrastructure operators, and sector-level agents seeking orchestration, diagnostics, or cross-sector strategy guidance.",
+      "overview": "Operator is the Identity and Persona Interface of the Hive — the Founder-facing voice that turns human intent into structured narrative and a single coherent plan. She accepts intent from the Founder, packages context, and routes it to HoneyDrunk.Governor for debate and validation, then speaks the validated plan back to the Founder in a clear, actionable form.",
+      "why_it_exists": "To separate identity and communication from governance and simulation, ensuring the Founder interacts with a single, consistent persona while governance (HoneyDrunk.Governor) and simulation (VEE) handle decision validation and risk analysis.",
+      "primary_audience": "Founders, product leads, and automated systems that need a single authoritative voice to express intent, receive validated plans, and observe execution status.",
       "value_props": [
-        "Cross-sector orchestration and execution planning.",
-        "Policy enforcement and systems governance.",
-        "Dynamic Flow Index monitoring and balance prediction.",
-        "Strategic recommendations powered by telemetry and Grid intelligence.",
-        "Meta-level awareness linking Core, Ops, and AI sectors."
+        "Persona-first interface that preserves narrative and context between sessions.",
+        "Translates Founder intent into structured RFCs for Governor to review (not to govern itself).",
+        "Receives validated plans from Governor (and VEE where simulations are required) and articulates them as coherent intent and instructions.",
+        "Acts as the single point of contact for humans — providing explanation, status, and rollback options while respecting Kernel constraints and AgentKit execution paths."
       ],
-      "monetization_signal": "Core intelligence infrastructure — non-commercial backbone sustaining Hive stability and automation.",
-      "roadmap_focus": "Introduce delegated sub-operators per sector (Core.VEE, Ops.VEE, AI.VEE) to decentralize orchestration while maintaining Hive-wide synchronization.",
-      "grid_relationship": "Consumes state and metrics from Grid, Vault, and Pulse; emits orchestration signals via Transport to every active Node. Operates as the Meta-sector’s command layer within the Hive network.",
+      "monetization_signal": "Persona upgrades and premium UX features for teams and studios that need richer, auditable identity tools.",
+      "roadmap_focus": "Tighter Governor handoff flows, richer persona APIs, contextual memory, and transparent simulation summaries from VEE. Maintain strict separation: Operator communicates intent; Governor governs; VEE simulates.",
+      "grid_relationship": "Receives intent from Founders → forwards RFCs to HoneyDrunk.Governor (governance and consensus) → Governor may use VEE for simulations → Governor returns validated plan → Operator aggregates and presents the plan; Node Agents (AgentKit) are used to execute while Kernel provides base truth and invariants.",
       "integration_depth": "deep",
-      "demo_path": "A Node reports degraded energy → VEE detects sector imbalance → recalibrates deployment cadence via Pulse → Flow Index stabilizes → Grid confirms coherence restored.",
-      "signal_quote": "Awareness is the first act of control.",
+      "demo_path": "Founder: 'Start controlled experiment on feature X' → Operator captures intent, context, and constraints → Operator submits RFC to HoneyDrunk.Governor → Governor debates and runs VEE simulations → Governor returns validated plan → Operator reports results and next steps back to Founder and kicks off Node Agent execution via AgentKit.",
+      "signal_quote": "One voice for the Founder, identity before action.",
       "stability_tier": "core",
-      "impact_vector": "orchestration"
+      "impact_vector": "identity"
     },
     "_dictionary_ref": {
       "version": "v1",
@@ -2474,7 +2472,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 26
   },
   {
     "id": "honeydrunk-standards",
@@ -2485,7 +2483,7 @@
     "sector": "Core",
     "signal": "Live",
     "cluster": "foundation",
-    "energy": 0,
+    "energy": 1,
     "priority": 95,
     "depends_on": [],
     "tags": [
@@ -2594,7 +2592,7 @@
     "signal": "Seed",
     "cluster": "infrastructure",
     "energy": 29,
-    "priority": 22,
+    "priority": 23,
     "depends_on": [
       "honeydrunk-transport",
       "honeydrunk-vault",
@@ -2639,7 +2637,7 @@
     "time_pressure": 3,
     "done": false,
     "cooldown_days": 14,
-    "flow": 24
+    "flow": 25
   },
   {
     "id": "honeydrunk-assets",
@@ -2758,5 +2756,115 @@
     "done": false,
     "cooldown_days": 14,
     "flow": 26
+  },
+  {
+    "id": "honeydrunk-homelab",
+    "type": "node",
+    "name": "HoneyDrunk.HomeLab",
+    "short": "On-prem infrastructure lab",
+    "description": "HoneyDrunk.HomeLab is the physical backbone of the Grid inside tatteddev’s home. It operates as a self-hosted storage, networking, and virtualization environment for experimentation, backups, and internal services. This node provides the local mirror of the Grid where Vault, Pulse, Collector, Transport, and Auth patterns can be validated safely at zero cloud cost.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "infrastructure",
+    "tags": [
+      "homelab",
+      "ops",
+      "infrastructure",
+      "self-hosting",
+      "local-grid"
+    ],
+    "links": {
+      "repo": null,
+      "docs": null
+    },
+    "depends_on": [],
+    "tier": "internal",
+    "ops_bootstrap": false,
+    "foundational": false,
+    "purpose": [
+      "Provide a physical Grid shard for storage, networking, and virtualization.",
+      "Enable expandable local storage and automated backup strategies.",
+      "Serve as the canonical sync hub across personal and studio devices.",
+      "Host media services, VMs, containers, and lab clusters.",
+      "Offer a safe environment for testing Vault, Pulse, Collector, and Transport deployments before cloud rollout."
+    ],
+    "responsibilities": [
+      "Maintain NAS storage with snapshots and off-site replication.",
+      "Run device syncing layers and personal cloud services.",
+      "Manage home-scale VLANs, firewall rules, and local DNS.",
+      "Host Pulse agents, Collector sidecars, and Vault prototypes.",
+      "Run containers/VMs for experimental services and media servers.",
+      "Document network topology and operational runbooks."
+    ],
+    "vision": "A fully mapped miniature Grid running on-prem: scalable NAS, local cluster, agent network, telemetry collectors, and secure remote access. HomeLab becomes the blueprint for future HoneyDrunk infrastructure patterns.",
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "strategy_base": 20,
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "energy": 29,
+    "priority": 23,
+    "flow": 25
+  },
+  {
+    "id": "honeydrunk-governor",
+    "type": "node",
+    "name": "HoneyDrunk.Governor",
+    "short": "Governance mesh and decision engine",
+    "description": "The Neural Senate of the Grid. Hosts the multi agent Board for strategy and orchestrates Node Agents for execution so that Intent (Operator) can survive Reality (VEE).",
+    "sector": "AI",
+    "signal": "Seed",
+    "cluster": "orchestration",
+    "energy": 29,
+    "priority": 29,
+    "depends_on": [
+      "honeydrunk-kernel",
+      "honeydrunk-agentkit",
+      "operator",
+      "audit-agent"
+    ],
+    "tags": [
+      "ai",
+      "governance",
+      "multi-agent",
+      "strategy",
+      "debate"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Governor"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Governor is the deliberation layer of the Hive. It is the dedicated space where agents debate, govern, and align. It instantiates the Board (roles derived from Sector philosophies) to weigh strategic RFCs and summons Node Agents (derived from nodes.json) to handle tactical execution.",
+      "why_it_exists": "To prevent architectural drift and generic hallucinated decisions by separating Identity (Operator) from Process (Governor) and subjecting major changes to structured, multi perspective review.",
+      "primary_audience": "The Founder, the Operator persona, and automated systems that need a source of strategic consensus.",
+      "value_props": [
+        "Hosts a role based Board (CTO, COO, CISO, CPO) to debate strategy using Sector doctrine as case law",
+        "Dynamically spins up Node Agents based on nodes.json context and dependencies",
+        "Routes decisions into VEE for simulation before they are treated as real commitments",
+        "Logs every consensus event into Audit.Agent for immutable history and replay"
+      ],
+      "monetization_signal": "Brain feature for higher HoneyDrunk tiers. Public users interact mainly with Operator; studios and serious teams unlock Governor.",
+      "roadmap_focus": "Define Board roles and their ties to sectors, integrate VEE as the simulation backend, and implement a Debate Protocol with voting, veto, and revision states.",
+      "grid_relationship": "Sits above AgentKit and the Node layer, validates intent for Operator, calls VEE to test outcomes, and reports strict logs to Audit.Agent.",
+      "integration_depth": "deep",
+      "demo_path": "User submits an RFC. Governor convenes the Board. CTO and CISO debate risk versus structure, CPO argues market impact, VEE simulates branches, Governor records consensus and returns an approved plan to Operator.",
+      "signal_quote": "Intent requires consensus.",
+      "stability_tier": "experimental",
+      "impact_vector": "strategic coherence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "foundational": false,
+    "strategy_base": 25,
+    "tier": "platform",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 29
   }
 ]

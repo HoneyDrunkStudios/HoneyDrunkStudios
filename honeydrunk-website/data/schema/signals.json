@@ -1,5 +1,38 @@
 [
   {
+    "date": "2025-11-19",
+    "title": "Governor, Operator, and Flow: Persona First; Governance Next",
+    "desc": "Added HoneyDrunk.Governor (AI) as the deliberation layer and rewired the Operator node to be the Founder‑facing persona and single voice of the Hive. Operator now accepts Founder intent, submits RFCs to Governor for debate (Governor may use VEE for simulation), and returns validated plans and narrative as a coherent single voice. We corrected dependency direction: Kernel is no longer dependent on Auth (Auth depends on Kernel), and Deploy no longer depends on Actions (relationship recorded via links, not hard dependency). Recomputed Flow and ran validation — all acceptance criteria passed. This change separates identity (Operator) from governance (Governor) and simulation (VEE), clarifying responsibilities for safer agentic decision-making and clear audit trails (Audit.Agent).",
+    "tags": [
+      "AI",
+      "Meta",
+      "HoneyDrunk.Governor",
+      "HoneyDrunk.Operator",
+      "HoneyDrunk.Kernel",
+      "HoneyDrunk.Auth",
+      "HoneyDrunk.Deploy",
+      "HoneyDrunk.Actions",
+      "Audit.Agent",
+      "Flow"
+    ],
+    "sector": "AI"
+  },
+  {
+    "date": "2025-11-13",
+    "title": "HomeLab Lands — On‑Prem Grid Shard for Ops",
+    "desc": "HoneyDrunk.HomeLab joins the Grid as our on‑prem infrastructure lab inside tatteddev’s home. It’s a self‑hosted storage, networking, and virtualization environment for experimentation, backups, and internal services — a physical Grid shard where Vault, Pulse, Collector, Transport, and Auth patterns can be validated safely at zero cloud cost. HomeLab formalizes an Ops playground with NAS snapshots and off‑site replication, local DNS and VLANs, container/VM hosting, and agent sidecars for telemetry and security. This node becomes the blueprint for future hybrid patterns: iterate locally, prove reliability, then promote to cloud. Near‑term focus: document network topology/runbooks, wire Pulse collectors, and prototype Vault provider flows on‑prem. Signal quote: ‘Infra you can touch.’",
+    "tags": [
+      "Ops",
+      "HoneyDrunk.HomeLab",
+      "HoneyDrunk.Vault",
+      "Pulse",
+      "HoneyDrunk.Collector",
+      "HoneyDrunk.Transport",
+      "HoneyDrunk.Auth"
+    ],
+    "sector": "Ops"
+  },
+  {
     "date": "2025-11-13",
     "title": "Transport Complete — Data & Vault Take Priority",
     "desc": "Major milestone: HoneyDrunk.Transport marked done=true and signal upgraded Awake → Live, representing the messaging backbone now powering the entire ecosystem. Transport ships with production-ready outbox patterns, event primitives, and three complete adapter implementations (InMemory, StorageQueues, AzureServiceBus) — all at Live signal. With transport infrastructure complete, the roadmap pivots to persistence and security layers. Flow Index recomputed with new priorities: (1) HoneyDrunk.Vault (Flow: 91) now leads as top priority — zero-trust secrets and configuration management with slot architecture for pluggable providers. (2) HoneyDrunk.Data (Flow: 86) takes second position — database conventions, migrations, tenant isolation, and outbox integration. Strategy adjustments: Data boosted to priority=100, energy=85, strategy_base=30 with increased time_pressure=3; Vault elevated to priority=98, energy=82, strategy_base=18. Transport joins Kernel, Standards, and Actions in completed infrastructure (capped at Flow 45 due to done status). The shift reflects architectural reality: with messaging solved, the Hive now focuses on persistence patterns and secrets management as the next foundational layers. Signal quote from Transport: 'Every message finds its way.' Next phase targets Data's migration tooling and Vault's provider abstraction slots.",
