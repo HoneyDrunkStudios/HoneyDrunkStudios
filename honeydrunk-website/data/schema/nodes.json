@@ -288,8 +288,8 @@
     "sector": "Core",
     "signal": "Awake",
     "cluster": "foundation",
-    "energy": 67,
-    "priority": 83,
+    "energy": 65,
+    "priority": 67,
     "depends_on": [
       "honeydrunk-kernel",
       "honeydrunk-transport",
@@ -332,7 +332,7 @@
     "time_pressure": 3,
     "done": false,
     "cooldown_days": 14,
-    "flow": 77
+    "flow": 66
   },
   {
     "id": "honeydrunk-transport",
@@ -343,8 +343,8 @@
     "sector": "Core",
     "signal": "Live",
     "cluster": "foundation",
-    "energy": 0,
-    "priority": 78,
+    "energy": 1,
+    "priority": 79,
     "slots": [
       "adapter"
     ],
@@ -621,7 +621,7 @@
     "signal": "Seed",
     "cluster": "security",
     "energy": 41,
-    "priority": 73,
+    "priority": 74,
     "slots": [
       "telemetry"
     ],
