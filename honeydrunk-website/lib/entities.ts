@@ -203,10 +203,29 @@ export function getModulesBySlot(parentId: string, slot: string): Module[] {
 }
 
 /**
- * Get services that depend on a node or module
+ * Get services that depend on a specific entity (node or module)
  */
 export function getServicesByDependency(entityId: string): Service[] {
   return services.filter(s => s.depends_on.includes(entityId));
+}
+
+/**
+ * Get nodes that a specific node depends on (downstream dependencies)
+ */
+export function getNodeDependencies(nodeId: string): Node[] {
+  const node = nodes.find(n => n.id === nodeId);
+  if (!node || !node.depends_on) return [];
+  
+  return node.depends_on
+    .map(depId => nodes.find(n => n.id === depId))
+    .filter((n): n is Node => n !== undefined);
+}
+
+/**
+ * Get nodes that depend on a specific node (upstream dependents)
+ */
+export function getNodeDependents(nodeId: string): Node[] {
+  return nodes.filter(n => n.depends_on?.includes(nodeId));
 }
 
 /**

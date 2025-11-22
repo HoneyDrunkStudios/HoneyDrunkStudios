@@ -1,0 +1,622 @@
+[
+  {
+    "dependency": "audit-agent",
+    "dependent": "honeydrunk-governor",
+    "reason": "Integrates with Audit.Agent for operational support"
+  },
+  {
+    "dependency": "grid",
+    "dependent": "honeyhub",
+    "reason": "Depends on production-ready HoneyDrunk.Grid services"
+  },
+  {
+    "dependency": "grid",
+    "dependent": "operator",
+    "reason": "Depends on production-ready HoneyDrunk.Grid services"
+  },
+  {
+    "dependency": "hivexp",
+    "dependent": "hivegigs",
+    "reason": "Builds on HiveXP for core infrastructure capabilities"
+  },
+  {
+    "dependency": "honeydrunk-agentkit",
+    "dependent": "honeydrunk-clarity",
+    "reason": "Requires HoneyDrunk.AgentKit for agent contracts & lifecycle"
+  },
+  {
+    "dependency": "honeydrunk-agentkit",
+    "dependent": "honeydrunk-governor",
+    "reason": "Requires HoneyDrunk.AgentKit for agent contracts & lifecycle"
+  },
+  {
+    "dependency": "honeydrunk-agentkit",
+    "dependent": "honeydrunk-signal",
+    "reason": "Requires HoneyDrunk.AgentKit for agent contracts & lifecycle"
+  },
+  {
+    "dependency": "honeydrunk-auth",
+    "dependent": "honeycore-web-rest",
+    "reason": "Protects endpoints with Auth's JWT validation and policy enforcement"
+  },
+  {
+    "dependency": "honeydrunk-build",
+    "dependent": "honeydrunk-actions",
+    "reason": "Consumes Build conventions for MSBuild targets, versioning, and packaging"
+  },
+  {
+    "dependency": "honeydrunk-build",
+    "dependent": "honeydrunk-pipelines",
+    "reason": "Consumes Build conventions for MSBuild targets, versioning, and packaging"
+  },
+  {
+    "dependency": "honeydrunk-data",
+    "dependent": "honeydrunk-testing",
+    "reason": "Requires Data's persistence layer for storage guarantees"
+  },
+  {
+    "dependency": "honeydrunk-transport",
+    "dependent": "honeydrunk-data",
+    "reason": "Implements Transport's outbox storage for reliable message persistence"
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "honeydrunk-data",
+    "reason": "Integrates Pulse for schema and migration telemetry"
+  },
+  {
+    "dependency": "honeydrunk-deploy",
+    "dependent": "honeydrunk-pipelines",
+    "reason": "Integrates with HoneyDrunk.Deploy for operational support"
+  },
+  {
+    "dependency": "honeydrunk-kernel",
+    "dependent": "grid",
+    "reason": "Builds on HoneyDrunk.Kernel for core infrastructure capabilities"
+  },
+  {
+    "dependency": "honeydrunk-kernel",
+    "dependent": "honeycore-web-rest",
+    "reason": "Uses Kernel's middleware pipeline and dependency injection for REST controllers"
+  },
+  {
+    "dependency": "honeydrunk-kernel",
+    "dependent": "honeydrunk-agentkit",
+    "reason": "Implements Kernel's IAgent and IAgentContext for autonomous agent execution"
+  },
+  {
+    "dependency": "honeydrunk-kernel",
+    "dependent": "honeydrunk-auth",
+    "reason": "Implements Kernel's IAuthenticationProvider and IAuthorizationPolicy for identity"
+  },
+  {
+    "dependency": "honeydrunk-kernel",
+    "dependent": "honeydrunk-clientportalos",
+    "reason": "Uses Kernel's ITenantResolver and context isolation for workspace boundaries"
+  },
+  {
+    "dependency": "honeydrunk-kernel",
+    "dependent": "honeydrunk-data",
+    "reason": "Implements Kernel's IRepository<T> and IUnitOfWork for data access patterns"
+  },
+  {
+    "dependency": "honeydrunk-kernel",
+    "dependent": "honeydrunk-governor",
+    "reason": "Implements Kernel's IPolicy and IRuleEngine for governance decisions"
+  },
+  {
+    "dependency": "honeydrunk-kernel",
+    "dependent": "honeydrunk-testing",
+    "reason": "Uses Kernel's DI container and test harness patterns for fixture setup"
+  },
+  {
+    "dependency": "honeydrunk-kernel",
+    "dependent": "honeydrunk-transport",
+    "reason": "Implements Kernel's IMessageBus and IEventPublisher for messaging infrastructure"
+  },
+  {
+    "dependency": "honeydrunk-kernel",
+    "dependent": "honeydrunk-vault",
+    "reason": "Implements Kernel's ISecretStore and IConfigProvider for secure storage"
+  },
+  {
+    "dependency": "honeydrunk-kernel",
+    "dependent": "operator",
+    "reason": "Uses Kernel's context propagation and lifecycle hooks for system-wide operations"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "arcadia",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "audit-agent",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "breachlab-exe",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "draft",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "dreammarket",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "forge",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "game-prototype",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "hivegigs",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "hivexp",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeycore-web-rest",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-actions",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-agentkit",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-assets",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-auth",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-build",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-clarity",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-clientportalos",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-collector",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-comms",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-console",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-data",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-deploy",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-kernel",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-pipelines",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-signal",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-testing",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-tools",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-transport",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeydrunk-vault",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeymech-courier",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeymech-servo",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeymech-sim",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "honeysentinel",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "invoice",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "ledger",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "marketcore",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "memorybank",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "pay",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "pulse",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "review",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "subs",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-standards",
+    "dependent": "tether",
+    "reason": "Follows Standards for code style, linting, and formatting rules"
+  },
+  {
+    "dependency": "honeydrunk-tools",
+    "dependent": "honeydrunk-actions",
+    "reason": "Leverages Tools for CLI utilities and development workflows"
+  },
+  {
+    "dependency": "honeydrunk-tools",
+    "dependent": "honeydrunk-deploy",
+    "reason": "Leverages Tools for CLI utilities and development workflows"
+  },
+  {
+    "dependency": "honeydrunk-tools",
+    "dependent": "honeydrunk-pipelines",
+    "reason": "Leverages Tools for CLI utilities and development workflows"
+  },
+  {
+    "dependency": "honeydrunk-transport",
+    "dependent": "honeycore-web-rest",
+    "reason": "Relies on Transport for messaging, events, and inter-node communication"
+  },
+  {
+    "dependency": "honeydrunk-transport",
+    "dependent": "honeydrunk-agentkit",
+    "reason": "Uses Transport's event bus for inter-service communication"
+  },
+  {
+    "dependency": "honeydrunk-transport",
+    "dependent": "honeydrunk-assets",
+    "reason": "Relies on Transport for messaging, events, and inter-node communication"
+  },
+  {
+    "dependency": "honeydrunk-transport",
+    "dependent": "honeydrunk-clientportalos",
+    "reason": "Relies on Transport for messaging, events, and inter-node communication"
+  },
+  {
+    "dependency": "honeydrunk-transport",
+    "dependent": "honeydrunk-collector",
+    "reason": "Relies on Transport for messaging, events, and inter-node communication"
+  },
+  {
+    "dependency": "honeydrunk-transport",
+    "dependent": "honeydrunk-comms",
+    "reason": "Relies on Transport for messaging, events, and inter-node communication"
+  },
+  {
+    "dependency": "honeydrunk-transport",
+    "dependent": "operator",
+    "reason": "Relies on Transport for messaging, events, and inter-node communication"
+  },
+  {
+    "dependency": "honeydrunk-transport",
+    "dependent": "pulse",
+    "reason": "Relies on Transport for messaging, events, and inter-node communication"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "arcadia",
+    "reason": "Builds on HoneyDrunk.Vault for core infrastructure capabilities"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "breachlab-exe",
+    "reason": "Sandboxes experimental credentials and CTF flags"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "dreammarket",
+    "reason": "Builds on HoneyDrunk.Vault for core infrastructure capabilities"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "honeydrunk-agentkit",
+    "reason": "Manages identity certificates and API secrets for autonomous agents"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "honeydrunk-assets",
+    "reason": "Protects storage account keys and CDN credentials"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "honeydrunk-auth",
+    "reason": "Stores signing keys and client secrets for OAuth/OIDC flows"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "honeydrunk-clarity",
+    "reason": "Secures LLM API keys and user context encryption keys"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "honeydrunk-clientportalos",
+    "reason": "Isolates tenant secrets and workspace-specific configuration"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "honeydrunk-collector",
+    "reason": "Manages ingestion tokens and downstream sink credentials"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "honeydrunk-comms",
+    "reason": "Manages SMTP credentials and SMS gateway tokens"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "honeydrunk-signal",
+    "reason": "Protects social media API tokens and content analytics keys"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "honeysentinel",
+    "reason": "Builds on HoneyDrunk.Vault for core infrastructure capabilities"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "memorybank",
+    "reason": "Builds on HoneyDrunk.Vault for core infrastructure capabilities"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "operator",
+    "reason": "Secures founder credentials and system-level access tokens"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "pulse",
+    "reason": "Securely stores API keys and connection strings for telemetry ingestion endpoints"
+  },
+  {
+    "dependency": "honeydrunk-vault",
+    "dependent": "review",
+    "reason": "Builds on HoneyDrunk.Vault for core infrastructure capabilities"
+  },
+  {
+    "dependency": "honeyhub",
+    "dependent": "forge",
+    "reason": "Requires HoneyHub for ai-assisted pm/creator platform"
+  },
+  {
+    "dependency": "honeyhub",
+    "dependent": "honeyconnect",
+    "reason": "Requires HoneyHub for ai-assisted pm/creator platform"
+  },
+  {
+    "dependency": "honeyhub",
+    "dependent": "honeydrunk-clarity",
+    "reason": "Requires HoneyHub for ai-assisted pm/creator platform"
+  },
+  {
+    "dependency": "honeyhub",
+    "dependent": "honeydrunk-signal",
+    "reason": "Requires HoneyHub for ai-assisted pm/creator platform"
+  },
+  {
+    "dependency": "honeymech-sim",
+    "dependent": "honeymech-courier",
+    "reason": "Requires HoneyMech.Sim for robotics simulation platform"
+  },
+  {
+    "dependency": "honeymech-sim",
+    "dependent": "honeymech-servo",
+    "reason": "Requires HoneyMech.Sim for robotics simulation platform"
+  },
+  {
+    "dependency": "honeysentinel",
+    "dependent": "breachlab-exe",
+    "reason": "Requires HoneyDrunk.Sentinel for secure-by-default sdk"
+  },
+  {
+    "dependency": "invoice",
+    "dependent": "ledger",
+    "reason": "Integrates with Invoice for operational support"
+  },
+  {
+    "dependency": "invoice",
+    "dependent": "pay",
+    "reason": "Integrates with Invoice for operational support"
+  },
+  {
+    "dependency": "ledger",
+    "dependent": "pay",
+    "reason": "Integrates with Ledger for operational support"
+  },
+  {
+    "dependency": "ledger",
+    "dependent": "subs",
+    "reason": "Integrates with Ledger for operational support"
+  },
+  {
+    "dependency": "marketcore",
+    "dependent": "hivegigs",
+    "reason": "Requires MarketCore for shared economic logic"
+  },
+  {
+    "dependency": "marketcore",
+    "dependent": "hivexp",
+    "reason": "Requires MarketCore for shared economic logic"
+  },
+  {
+    "dependency": "meta-atlassync",
+    "dependent": "honeydrunk-clarity",
+    "reason": "Requires Meta.AtlasSync for neural synchronization layer"
+  },
+  {
+    "dependency": "operator",
+    "dependent": "honeydrunk-governor",
+    "reason": "Requires HoneyDrunk.Operator for founder-facing persona and the hive’s single coherent identity."
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "arcadia",
+    "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "breachlab-exe",
+    "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "dreammarket",
+    "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "grid",
+    "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "honeydrunk-agentkit",
+    "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "honeydrunk-assets",
+    "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "honeydrunk-clarity",
+    "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "honeydrunk-clientportalos",
+    "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "honeydrunk-collector",
+    "reason": "Uses Pulse's distributed tracing and structured logging"
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "honeydrunk-comms",
+    "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "honeydrunk-signal",
+    "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "honeysentinel",
+    "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "memorybank",
+    "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "operator",
+    "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
+  },
+  {
+    "dependency": "pulse",
+    "dependent": "review",
+    "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
+  }
+]

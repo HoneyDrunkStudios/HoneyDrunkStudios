@@ -1,5 +1,20 @@
 [
   {
+    "date": "2025-11-22",
+    "title": "Architectural Realignment: Kernel, Relationships, and the Transport Backbone",
+    "desc": "Major architectural refactor to align the Grid's structure with its semantic reality. Updated HoneyDrunk.Kernel metadata to reflect its role as the Semantic OS Layer. Introduced a new `relationships.json` schema to strictly define the 'why' behind every dependency, replacing generic links with specific contract definitions. Fixed a critical circular dependency in the Core layer: HoneyDrunk.Data now correctly depends on HoneyDrunk.Transport (consuming messaging contracts) rather than owning them, and Pulse is now a pure dependency for Data (telemetry sidecar), eliminating the observability cycle. The nodes.json structure was realigned to enforce this strict layering: Kernel → Transport → Data. Verified graph integrity with cycle detection scripts, ensuring a clean, directed acyclic graph for the Hive's foundation.",
+    "tags": [
+      "Core",
+      "HoneyDrunk.Kernel",
+      "HoneyDrunk.Data",
+      "HoneyDrunk.Transport",
+      "Pulse",
+      "Architecture",
+      "Refactor"
+    ],
+    "sector": "Core"
+  },
+  {
     "date": "2025-11-19",
     "title": "Governor, Operator, and Flow: Persona First; Governance Next",
     "desc": "Added HoneyDrunk.Governor (AI) as the deliberation layer and rewired the Operator node to be the Founder‑facing persona and single voice of the Hive. Operator now accepts Founder intent, submits RFCs to Governor for debate (Governor may use VEE for simulation), and returns validated plans and narrative as a coherent single voice. We corrected dependency direction: Kernel is no longer dependent on Auth (Auth depends on Kernel), and Deploy no longer depends on Actions (relationship recorded via links, not hard dependency). Recomputed Flow and ran validation — all acceptance criteria passed. This change separates identity (Operator) from governance (Governor) and simulation (VEE), clarifying responsibilities for safer agentic decision-making and clear audit trails (Audit.Agent).",

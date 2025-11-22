@@ -374,6 +374,50 @@ while (changed && iterations < 50) {
 console.log(`✓ Ancestor Override converged in ${iterations} iterations`);
 
 // ============================================================================
+// GUARDRAILS: TOPOLOGICAL FLOW ORDERING
+// ============================================================================
+
+console.log('\n📊 Enforcing topological flow ordering...');
+
+// Ensure dependencies always have higher priority than dependents
+// This respects the dependency graph architecture
+function enforceTopologicalOrder(nodes, nodeMap) {
+  let adjustments = 0;
+  let maxIterations = 50;
+  let iteration = 0;
+  let changed = true;
+
+  while (changed && iteration < maxIterations) {
+    changed = false;
+    iteration++;
+
+    nodes.forEach(node => {
+      if (node.depends_on && Array.isArray(node.depends_on)) {
+        node.depends_on.forEach(depId => {
+          const dependency = nodeMap.get(depId);
+          if (dependency) {
+            // Dependency must have higher priority than this node
+            // Add a 5-point minimum gap to ensure clear ordering
+            const minDependencyPriority = node.priority + 5;
+            
+            if (dependency.priority < minDependencyPriority) {
+              dependency.priority = Math.min(100, minDependencyPriority);
+              changed = true;
+              adjustments++;
+            }
+          }
+        });
+      }
+    });
+  }
+
+  return { adjustments, iterations: iteration };
+}
+
+const topoResult = enforceTopologicalOrder(nodes, nodeMap);
+console.log(`✓ Topological ordering enforced: ${topoResult.adjustments} adjustments in ${topoResult.iterations} iterations`);
+
+// ============================================================================
 // GUARDRAILS: NORMALIZE WITHIN SCCs
 // ============================================================================
 

@@ -8,6 +8,7 @@ import SectionTooltip from '@/components/SectionTooltip';
 import BuildLog from '@/components/BuildLog';
 import { colors } from '@/lib/tokens';
 import { getNodeById, getModulesByParent, getServicesByDependency, getNodesBySector, getNodes, getModules, getServices } from '@/lib/entities';
+import { getNodeRelationshipMatrix } from '@/lib/relationships';
 import { getSectorColorsMap } from '@/lib/sectors';
 import Link from 'next/link';
 import nodeManifestDictionary from '@/data/schema/node_manifest_dictionary.v1.json';
@@ -55,6 +56,11 @@ export default function NodeDetailPage({ params }: { params: Promise<{ id: strin
   const signalColor = signalColors[node.signal] || colors.slateLight;
   const modules = getModulesByParent(node.id);
   const services = getServicesByDependency(node.id);
+  
+  // Get rich relationship matrix
+  const relationshipMatrix = getNodeRelationshipMatrix(node.id);
+  const dependencies = relationshipMatrix?.upstream || [];
+  const dependents = relationshipMatrix?.downstream || [];
 
   // Build entity to sector map for signal filtering
   const allNodes = getNodes();
@@ -272,6 +278,178 @@ export default function NodeDetailPage({ params }: { params: Promise<{ id: strin
               )}
             </div>
           ) : null}
+
+          {/* Dependencies & Impact */}
+          {(dependencies.length > 0 || dependents.length > 0 || relationshipMatrix?.roleInGrid) && (
+            <section className="p-6 rounded-lg border" style={{
+              backgroundColor: `${colors.gunmetal}60`,
+              borderColor: `${sectorColor}30`,
+            }}>
+              <h2 className="text-2xl font-display font-bold" style={{ color: sectorColor, marginBottom: '24px' }}>
+                Dependencies & Impact
+              </h2>
+
+              {/* Role in Grid - Machine-generated narrative */}
+              {relationshipMatrix?.roleInGrid && (
+                <div className="mb-6 p-4 rounded-lg" style={{ 
+                  backgroundColor: `${sectorColor}10`,
+                  borderLeft: `4px solid ${sectorColor}`,
+                }}>
+                  <h3 className="text-sm font-mono font-bold uppercase mb-2" style={{ color: sectorColor }}>
+                    Role in Grid
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: colors.offWhite }}>
+                    {relationshipMatrix.roleInGrid}
+                  </p>
+                  <div className="flex gap-4 mt-3 text-xs font-mono" style={{ color: colors.slateLight }}>
+                    <span>Criticality: {relationshipMatrix.criticalityScore} dependents</span>
+                    <span>•</span>
+                    <span>Foundation Depth: {relationshipMatrix.foundationScore} core deps</span>
+                  </div>
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Dependencies (What this node needs) */}
+                <div>
+                  <h3 className="text-lg font-display font-semibold flex items-center gap-2" style={{ color: colors.offWhite, marginBottom: '16px' }}>
+                    <span style={{ color: colors.electricBlue }}>↓</span>
+                    Dependencies
+                  </h3>
+                  {dependencies.length > 0 ? (
+                    <>
+                      <p className="text-xs" style={{ color: colors.slateLight, marginBottom: '16px' }}>
+                        {node.name} requires these nodes:
+                      </p>
+                      <div className="space-y-3">
+                        {dependencies.map((rel) => {
+                          const dep = rel.targetNode;
+                          const depSectorColor = sectorColors[dep.sector] || colors.electricBlue;
+                          
+                          // Depth indicator styling
+                          const depthStyles = {
+                            deep: { borderWidth: '3px', opacity: 1 },
+                            high: { borderWidth: '3px', opacity: 1 },
+                            medium: { borderWidth: '2px', opacity: 0.9 },
+                            shallow: { borderWidth: '1px', opacity: 0.75 },
+                          };
+                          const style = depthStyles[rel.integrationDepth as keyof typeof depthStyles] || depthStyles.medium;
+                          
+                          return (
+                            <div key={dep.id} className="group">
+                              <Link
+                                href={`/nodes/${dep.id}`}
+                                className="block p-3 rounded-lg border transition-all hover:scale-102"
+                                style={{
+                                  backgroundColor: `${depSectorColor}10`,
+                                  borderColor: `${depSectorColor}${rel.isFoundational ? '80' : '40'}`,
+                                  borderWidth: style.borderWidth,
+                                  opacity: style.opacity,
+                                }}
+                              >
+                                <div className="flex items-center justify-between mb-1">
+                                  <span className="text-sm font-mono font-semibold" style={{ color: depSectorColor }}>
+                                    {dep.name}
+                                  </span>
+                                  <div className="flex gap-2 items-center">
+                                    {rel.isFoundational && (
+                                      <span className="text-xs px-2 py-0.5 rounded" style={{ 
+                                        backgroundColor: `${colors.aurumGold}20`,
+                                        color: colors.aurumGold,
+                                      }}>
+                                        foundational
+                                      </span>
+                                    )}
+                                    <span className="text-xs font-mono" style={{ color: colors.slateLight }}>
+                                      {rel.integrationDepth}
+                                    </span>
+                                  </div>
+                                </div>
+                                <p className="text-xs mb-2" style={{ color: colors.slateLight }}>
+                                  {dep.short}
+                                </p>
+                                <p className="text-xs italic" style={{ color: `${depSectorColor}CC`, marginBottom: '0' }}>
+                                  {rel.semanticReason}
+                                </p>
+                              </Link>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </>
+                  ) : (
+                    <p className="text-sm" style={{ color: colors.slateLight }}>
+                      No dependencies — foundational node
+                    </p>
+                  )}
+                </div>
+
+                {/* Dependents (What depends on this node) */}
+                <div>
+                  <h3 className="text-lg font-display font-semibold flex items-center gap-2" style={{ color: colors.offWhite, marginBottom: '16px' }}>
+                    <span style={{ color: colors.aurumGold }}>↑</span>
+                    Dependents
+                  </h3>
+                  {dependents.length > 0 ? (
+                    <>
+                      <p className="text-xs" style={{ color: colors.slateLight, marginBottom: '16px' }}>
+                        These nodes require {node.name}:
+                      </p>
+                      <div className="space-y-3">
+                        {dependents.map((rel) => {
+                          const dep = rel.targetNode;
+                          const depSectorColor = sectorColors[dep.sector] || colors.electricBlue;
+                          
+                          // Depth indicator styling
+                          const depthStyles = {
+                            deep: { borderWidth: '3px', opacity: 1 },
+                            high: { borderWidth: '3px', opacity: 1 },
+                            medium: { borderWidth: '2px', opacity: 0.9 },
+                            shallow: { borderWidth: '1px', opacity: 0.75 },
+                          };
+                          const style = depthStyles[rel.integrationDepth as keyof typeof depthStyles] || depthStyles.medium;
+                          
+                          return (
+                            <div key={dep.id} className="group">
+                              <Link
+                                href={`/nodes/${dep.id}`}
+                                className="block p-3 rounded-lg border transition-all hover:scale-102"
+                                style={{
+                                  backgroundColor: `${depSectorColor}10`,
+                                  borderColor: `${depSectorColor}40`,
+                                  borderWidth: style.borderWidth,
+                                  opacity: style.opacity,
+                                }}
+                              >
+                                <div className="flex items-center justify-between mb-1">
+                                  <span className="text-sm font-mono font-semibold" style={{ color: depSectorColor }}>
+                                    {dep.name}
+                                  </span>
+                                  <span className="text-xs font-mono" style={{ color: colors.slateLight }}>
+                                    {rel.integrationDepth}
+                                  </span>
+                                </div>
+                                <p className="text-xs mb-2" style={{ color: colors.slateLight, marginBottom: '8px' }}>
+                                  {dep.short}
+                                </p>
+                                <p className="text-xs italic" style={{ color: `${depSectorColor}CC`, marginBottom: '0' }}>
+                                  {rel.semanticReason}
+                                </p>
+                              </Link>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </>
+                  ) : (
+                    <p className="text-sm" style={{ color: colors.slateLight }}>
+                      No dependents yet
+                    </p>
+                  )}
+                </div>
+              </div>
+            </section>
+          )}
 
           {/* Modules (Slots Panel) */}
           {modules.length > 0 && (
