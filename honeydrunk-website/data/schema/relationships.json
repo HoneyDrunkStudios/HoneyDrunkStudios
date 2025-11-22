@@ -97,7 +97,7 @@
   {
     "dependency": "honeydrunk-kernel",
     "dependent": "honeydrunk-data",
-    "reason": "Implements Kernel's IRepository<T> and IUnitOfWork for data access patterns"
+    "reason": "Uses Kernel's GridContext, IStartupHook, and ActivitySource for context-aware persistence and telemetry"
   },
   {
     "dependency": "honeydrunk-kernel",
@@ -112,7 +112,7 @@
   {
     "dependency": "honeydrunk-kernel",
     "dependent": "honeydrunk-transport",
-    "reason": "Implements Kernel's IMessageBus and IEventPublisher for messaging infrastructure"
+    "reason": "Uses Kernel's IGridContext for distributed context propagation (CorrelationId, NodeId) and TimeProvider for deterministic timestamps"
   },
   {
     "dependency": "honeydrunk-kernel",
