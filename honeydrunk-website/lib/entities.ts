@@ -7,12 +7,14 @@ import nodesData from '@/data/schema/nodes.json';
 import modulesData from '@/data/schema/modules.json';
 import servicesData from '@/data/schema/services.json';
 import { getSectorColorsMap } from './sectors';
+import { getNodeDependencies as getNodeDeps, getNodeDependents as getNodeDepends } from './relationships';
 
 // Entity types
 export interface Node {
   id: string;
   type: 'node';
   name: string;
+  public_name?: string;  // Display name (product branding, may differ from name)
   short: string;
   description?: string;
   sector: string;
@@ -21,12 +23,16 @@ export interface Node {
   energy?: number;
   priority?: number;
   slots?: string[];
-  depends_on?: string[];
   tags?: string[];
   links?: {
     repo?: string;
     live?: string;
     docs?: string;
+  };
+  docs?: {
+    root?: string;              // GitHub repo root
+    file_guide?: string;        // Link to FILE_GUIDE.md
+    packages?: Record<string, string>;  // Package name -> README link
   };
   long_description?: {
     overview?: string;
@@ -211,21 +217,24 @@ export function getServicesByDependency(entityId: string): Service[] {
 
 /**
  * Get nodes that a specific node depends on (downstream dependencies)
+ * Uses relationships.json as the source of truth
  */
 export function getNodeDependencies(nodeId: string): Node[] {
-  const node = nodes.find(n => n.id === nodeId);
-  if (!node || !node.depends_on) return [];
-  
-  return node.depends_on
+  const depIds = getNodeDeps(nodeId);
+  return depIds
     .map(depId => nodes.find(n => n.id === depId))
     .filter((n): n is Node => n !== undefined);
 }
 
 /**
  * Get nodes that depend on a specific node (upstream dependents)
+ * Uses relationships.json as the source of truth
  */
 export function getNodeDependents(nodeId: string): Node[] {
-  return nodes.filter(n => n.depends_on?.includes(nodeId));
+  const depIds = getNodeDepends(nodeId);
+  return depIds
+    .map(depId => nodes.find(n => n.id === depId))
+    .filter((n): n is Node => n !== undefined);
 }
 
 /**
@@ -526,9 +535,10 @@ export function getGridData(): GridData {
 
   // Node-to-node edges (solid)
   visualNodes.forEach(node => {
-    if (!node.depends_on) return;
+    const deps = getNodeDeps(node.id);
+    if (deps.length === 0) return;
 
-    node.depends_on.forEach(targetId => {
+    deps.forEach(targetId => {
       const targetPos = nodePositions.get(targetId);
       if (!targetPos) return;
 

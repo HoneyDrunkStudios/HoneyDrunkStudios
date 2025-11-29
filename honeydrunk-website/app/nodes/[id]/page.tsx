@@ -8,7 +8,7 @@ import SectionTooltip from '@/components/SectionTooltip';
 import BuildLog from '@/components/BuildLog';
 import { colors } from '@/lib/tokens';
 import { getNodeById, getModulesByParent, getServicesByDependency, getNodesBySector, getNodes, getModules, getServices } from '@/lib/entities';
-import { getNodeRelationshipMatrix } from '@/lib/relationships';
+import { getNodeRelationshipMatrix, getNodeContractInfo } from '@/lib/relationships';
 import { getSectorColorsMap } from '@/lib/sectors';
 import Link from 'next/link';
 import nodeManifestDictionary from '@/data/schema/node_manifest_dictionary.v1.json';
@@ -61,6 +61,9 @@ export default function NodeDetailPage({ params }: { params: Promise<{ id: strin
   const relationshipMatrix = getNodeRelationshipMatrix(node.id);
   const dependencies = relationshipMatrix?.upstream || [];
   const dependents = relationshipMatrix?.downstream || [];
+
+  // Get node contract info
+  const contractInfo = getNodeContractInfo(node.id);
 
   // Build entity to sector map for signal filtering
   const allNodes = getNodes();
@@ -143,6 +146,15 @@ export default function NodeDetailPage({ params }: { params: Promise<{ id: strin
 
             <div className="flex flex-col md:flex-row items-start md:justify-between gap-6">
               <div className="flex-1 w-full min-w-0">
+                {/* Public Name (product branding) */}
+                {node.public_name && node.public_name !== node.name && (
+                  <p
+                    className="text-sm font-mono uppercase tracking-wider"
+                    style={{ color: colors.slateLight, marginBottom: '8px' }}
+                  >
+                    {node.public_name}
+                  </p>
+                )}
                 <h1
                   className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold break-words"
                   style={{
@@ -279,14 +291,14 @@ export default function NodeDetailPage({ params }: { params: Promise<{ id: strin
             </div>
           ) : null}
 
-          {/* Dependencies & Impact */}
-          {(dependencies.length > 0 || dependents.length > 0 || relationshipMatrix?.roleInGrid) && (
+          {/* Node Contract - Merged dependencies, dependents, and contract info */}
+          {contractInfo && (
             <section className="p-6 rounded-lg border" style={{
               backgroundColor: `${colors.gunmetal}60`,
               borderColor: `${sectorColor}30`,
             }}>
               <h2 className="text-2xl font-display font-bold" style={{ color: sectorColor, marginBottom: '24px' }}>
-                Dependencies & Impact
+                Node Contract
               </h2>
 
               {/* Role in Grid - Machine-generated narrative */}
@@ -295,88 +307,73 @@ export default function NodeDetailPage({ params }: { params: Promise<{ id: strin
                   backgroundColor: `${sectorColor}10`,
                   borderLeft: `4px solid ${sectorColor}`,
                 }}>
-                  <h3 className="text-sm font-mono font-bold uppercase mb-2" style={{ color: sectorColor }}>
-                    Role in Grid
-                  </h3>
                   <p className="text-sm leading-relaxed" style={{ color: colors.offWhite }}>
                     {relationshipMatrix.roleInGrid}
                   </p>
-                  <div className="flex gap-4 mt-3 text-xs font-mono" style={{ color: colors.slateLight }}>
-                    <span>Criticality: {relationshipMatrix.criticalityScore} dependents</span>
-                    <span>•</span>
-                    <span>Foundation Depth: {relationshipMatrix.foundationScore} core deps</span>
-                  </div>
                 </div>
               )}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Dependencies (What this node needs) */}
+              <div className="space-y-8">
+                {/* Dependencies (What this node consumes) */}
                 <div>
                   <h3 className="text-lg font-display font-semibold flex items-center gap-2" style={{ color: colors.offWhite, marginBottom: '16px' }}>
                     <span style={{ color: colors.electricBlue }}>↓</span>
-                    Dependencies
+                    Consumes
                   </h3>
                   {dependencies.length > 0 ? (
-                    <>
-                      <p className="text-xs" style={{ color: colors.slateLight, marginBottom: '16px' }}>
-                        {node.name} requires these nodes:
-                      </p>
-                      <div className="space-y-3">
-                        {dependencies.map((rel) => {
-                          const dep = rel.targetNode;
-                          const depSectorColor = sectorColors[dep.sector] || colors.electricBlue;
-                          
-                          // Depth indicator styling
-                          const depthStyles = {
-                            deep: { borderWidth: '3px', opacity: 1 },
-                            high: { borderWidth: '3px', opacity: 1 },
-                            medium: { borderWidth: '2px', opacity: 0.9 },
-                            shallow: { borderWidth: '1px', opacity: 0.75 },
-                          };
-                          const style = depthStyles[rel.integrationDepth as keyof typeof depthStyles] || depthStyles.medium;
-                          
-                          return (
-                            <div key={dep.id} className="group">
-                              <Link
-                                href={`/nodes/${dep.id}`}
-                                className="block p-3 rounded-lg border transition-all hover:scale-102"
-                                style={{
-                                  backgroundColor: `${depSectorColor}10`,
-                                  borderColor: `${depSectorColor}${rel.isFoundational ? '80' : '40'}`,
-                                  borderWidth: style.borderWidth,
-                                  opacity: style.opacity,
-                                }}
-                              >
-                                <div className="flex items-center justify-between mb-1">
-                                  <span className="text-sm font-mono font-semibold" style={{ color: depSectorColor }}>
-                                    {dep.name}
+                    <div className="space-y-3">
+                      {dependencies.map((rel) => {
+                        const dep = rel.targetNode;
+                        const depSectorColor = sectorColors[dep.sector] || colors.electricBlue;
+                        const consumesDetail = contractInfo.consumes_detail[dep.id] || [];
+                        
+                        return (
+                          <div key={dep.id} className="p-3 rounded-lg border" style={{
+                            backgroundColor: `${depSectorColor}08`,
+                            borderColor: `${depSectorColor}${rel.isFoundational ? '60' : '30'}`,
+                          }}>
+                            <div className="flex items-start justify-between gap-4">
+                              <div className="flex-1 min-w-0">
+                                <Link
+                                  href={`/nodes/${dep.id}`}
+                                  className="text-sm font-mono font-semibold hover:underline"
+                                  style={{ color: depSectorColor }}
+                                >
+                                  {dep.name}
+                                </Link>
+                                {rel.isFoundational && (
+                                  <span className="ml-2 text-xs px-2 py-0.5 rounded" style={{ 
+                                    backgroundColor: `${colors.aurumGold}20`,
+                                    color: colors.aurumGold,
+                                  }}>
+                                    foundational
                                   </span>
-                                  <div className="flex gap-2 items-center">
-                                    {rel.isFoundational && (
-                                      <span className="text-xs px-2 py-0.5 rounded" style={{ 
-                                        backgroundColor: `${colors.aurumGold}20`,
-                                        color: colors.aurumGold,
-                                      }}>
-                                        foundational
-                                      </span>
-                                    )}
-                                    <span className="text-xs font-mono" style={{ color: colors.slateLight }}>
-                                      {rel.integrationDepth}
-                                    </span>
-                                  </div>
-                                </div>
-                                <p className="text-xs mb-2" style={{ color: colors.slateLight }}>
-                                  {dep.short}
-                                </p>
-                                <p className="text-xs italic" style={{ color: `${depSectorColor}CC`, marginBottom: '0' }}>
+                                )}
+                                <p className="text-xs mt-1" style={{ color: colors.slateLight }}>
                                   {rel.semanticReason}
                                 </p>
-                              </Link>
+                                {consumesDetail.length > 0 && (
+                                  <div className="flex flex-wrap gap-1.5 mt-2">
+                                    {consumesDetail.map((item) => (
+                                      <span
+                                        key={item}
+                                        className="px-1.5 py-0.5 rounded text-xs font-mono"
+                                        style={{
+                                          backgroundColor: `${depSectorColor}15`,
+                                          color: `${depSectorColor}CC`,
+                                        }}
+                                      >
+                                        {item}
+                                      </span>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
                             </div>
-                          );
-                        })}
-                      </div>
-                    </>
+                          </div>
+                        );
+                      })}
+                    </div>
                   ) : (
                     <p className="text-sm" style={{ color: colors.slateLight }}>
                       No dependencies — foundational node
@@ -384,69 +381,219 @@ export default function NodeDetailPage({ params }: { params: Promise<{ id: strin
                   )}
                 </div>
 
-                {/* Dependents (What depends on this node) */}
-                <div>
-                  <h3 className="text-lg font-display font-semibold flex items-center gap-2" style={{ color: colors.offWhite, marginBottom: '16px' }}>
-                    <span style={{ color: colors.aurumGold }}>↑</span>
-                    Dependents
-                  </h3>
-                  {dependents.length > 0 ? (
-                    <>
-                      <p className="text-xs" style={{ color: colors.slateLight, marginBottom: '16px' }}>
-                        These nodes require {node.name}:
-                      </p>
-                      <div className="space-y-3">
-                        {dependents.map((rel) => {
-                          const dep = rel.targetNode;
-                          const depSectorColor = sectorColors[dep.sector] || colors.electricBlue;
-                          
-                          // Depth indicator styling
-                          const depthStyles = {
-                            deep: { borderWidth: '3px', opacity: 1 },
-                            high: { borderWidth: '3px', opacity: 1 },
-                            medium: { borderWidth: '2px', opacity: 0.9 },
-                            shallow: { borderWidth: '1px', opacity: 0.75 },
-                          };
-                          const style = depthStyles[rel.integrationDepth as keyof typeof depthStyles] || depthStyles.medium;
-                          
-                          return (
-                            <div key={dep.id} className="group">
-                              <Link
-                                href={`/nodes/${dep.id}`}
-                                className="block p-3 rounded-lg border transition-all hover:scale-102"
+                {/* Exposes (contracts and packages) */}
+                {(contractInfo.exposes.contracts.length > 0 || contractInfo.exposes.packages.length > 0) && (
+                  <div>
+                    <h3 className="text-lg font-display font-semibold flex items-center gap-2" style={{ color: colors.offWhite, marginBottom: '16px' }}>
+                      <span style={{ color: colors.aurumGold }}>⇄</span>
+                      Exposes
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {contractInfo.exposes.contracts.length > 0 && (
+                        <div>
+                          <h4 className="text-xs font-mono font-semibold uppercase" style={{ color: colors.slateLight, marginBottom: '8px' }}>
+                            Contracts
+                          </h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {contractInfo.exposes.contracts.map((contract) => (
+                              <span
+                                key={contract}
+                                className="px-2 py-1 rounded text-xs font-mono"
                                 style={{
-                                  backgroundColor: `${depSectorColor}10`,
-                                  borderColor: `${depSectorColor}40`,
-                                  borderWidth: style.borderWidth,
-                                  opacity: style.opacity,
+                                  backgroundColor: `${sectorColor}15`,
+                                  color: sectorColor,
                                 }}
                               >
-                                <div className="flex items-center justify-between mb-1">
-                                  <span className="text-sm font-mono font-semibold" style={{ color: depSectorColor }}>
-                                    {dep.name}
-                                  </span>
-                                  <span className="text-xs font-mono" style={{ color: colors.slateLight }}>
-                                    {rel.integrationDepth}
-                                  </span>
+                                {contract}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {contractInfo.exposes.packages.length > 0 && (
+                        <div>
+                          <h4 className="text-xs font-mono font-semibold uppercase" style={{ color: colors.slateLight, marginBottom: '8px' }}>
+                            Packages
+                          </h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {contractInfo.exposes.packages.map((pkg) => (
+                              <span
+                                key={pkg}
+                                className="px-2 py-1 rounded text-xs font-mono"
+                                style={{
+                                  backgroundColor: `${colors.electricBlue}15`,
+                                  color: colors.electricBlue,
+                                }}
+                              >
+                                {pkg}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Dependents (implemented + in-progress + planned) */}
+                <div>
+                  <h3 className="text-lg font-display font-semibold flex items-center gap-2" style={{ color: colors.offWhite, marginBottom: '16px' }}>
+                    <span style={{ color: colors.neonPink }}>↑</span>
+                    Consumed By
+                  </h3>
+                  
+                  {/* Implemented dependents (Live, Echo) */}
+                  {contractInfo.consumed_by_implemented.length > 0 && (
+                    <>
+                      <p className="text-xs font-mono uppercase" style={{ color: colors.signalGreen, marginBottom: '12px' }}>
+                        Implemented
+                      </p>
+                      <div className="space-y-3 mb-6">
+                        {contractInfo.consumed_by_implemented.map((nodeId) => {
+                          const depNode = allNodes.find(n => n.id === nodeId);
+                          if (!depNode) return null;
+                          const depSectorColor = sectorColors[depNode.sector] || colors.electricBlue;
+                          const rel = dependents.find(r => r.targetNode.id === nodeId);
+                          
+                          return (
+                            <div key={nodeId} className="p-3 rounded-lg border" style={{
+                              backgroundColor: `${depSectorColor}08`,
+                              borderColor: `${colors.signalGreen}40`,
+                            }}>
+                              <div className="flex items-start justify-between gap-4">
+                                <div className="flex-1 min-w-0">
+                                  <Link
+                                    href={`/nodes/${nodeId}`}
+                                    className="text-sm font-mono font-semibold hover:underline"
+                                    style={{ color: depSectorColor }}
+                                  >
+                                    {depNode.name}
+                                  </Link>
+                                  {rel && (
+                                    <p className="text-xs mt-1" style={{ color: colors.slateLight }}>
+                                      {rel.semanticReason}
+                                    </p>
+                                  )}
                                 </div>
-                                <p className="text-xs mb-2" style={{ color: colors.slateLight, marginBottom: '8px' }}>
-                                  {dep.short}
-                                </p>
-                                <p className="text-xs italic" style={{ color: `${depSectorColor}CC`, marginBottom: '0' }}>
-                                  {rel.semanticReason}
-                                </p>
-                              </Link>
+                              </div>
                             </div>
                           );
                         })}
                       </div>
                     </>
-                  ) : (
+                  )}
+                  
+                  {/* In Progress dependents (Wiring) */}
+                  {contractInfo.consumed_by_in_progress.length > 0 && (
+                    <>
+                      <p className="text-xs font-mono uppercase" style={{ color: colors.aurumGold, marginBottom: '12px' }}>
+                        In Progress
+                      </p>
+                      <div className="space-y-3 mb-6">
+                        {contractInfo.consumed_by_in_progress.map((nodeId) => {
+                          const depNode = allNodes.find(n => n.id === nodeId);
+                          if (!depNode) return null;
+                          const depSectorColor = sectorColors[depNode.sector] || colors.electricBlue;
+                          const rel = dependents.find(r => r.targetNode.id === nodeId);
+                          
+                          return (
+                            <div key={nodeId} className="p-3 rounded-lg border" style={{
+                              backgroundColor: `${depSectorColor}08`,
+                              borderColor: `${colors.aurumGold}40`,
+                            }}>
+                              <div className="flex items-start justify-between gap-4">
+                                <div className="flex-1 min-w-0">
+                                  <Link
+                                    href={`/nodes/${nodeId}`}
+                                    className="text-sm font-mono font-semibold hover:underline"
+                                    style={{ color: depSectorColor }}
+                                  >
+                                    {depNode.name}
+                                  </Link>
+                                  {rel && (
+                                    <p className="text-xs mt-1" style={{ color: colors.slateLight }}>
+                                      {rel.semanticReason}
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </>
+                  )}
+                  
+                  {/* Planned dependents (Seed, Awake) */}
+                  {contractInfo.consumed_by_planned.length > 0 && (
+                    <>
+                      <p className="text-xs font-mono uppercase" style={{ color: colors.slateLight, marginBottom: '12px' }}>
+                        Planned
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {contractInfo.consumed_by_planned.map((nodeId) => {
+                          const depNode = allNodes.find(n => n.id === nodeId);
+                          if (!depNode) return null;
+                          const depSectorColor = sectorColors[depNode.sector] || colors.electricBlue;
+                          return (
+                            <Link
+                              key={nodeId}
+                              href={`/nodes/${nodeId}`}
+                              className="px-3 py-1.5 rounded-lg border text-sm font-mono transition-all hover:scale-105"
+                              style={{
+                                backgroundColor: `${depSectorColor}08`,
+                                borderColor: `${colors.slateLight}30`,
+                                color: colors.slateLight,
+                              }}
+                            >
+                              {depNode.name}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </>
+                  )}
+                  
+                  {contractInfo.consumed_by_implemented.length === 0 && 
+                   contractInfo.consumed_by_in_progress.length === 0 && 
+                   contractInfo.consumed_by_planned.length === 0 && (
                     <p className="text-sm" style={{ color: colors.slateLight }}>
                       No dependents yet
                     </p>
                   )}
                 </div>
+
+                {/* Blocked By */}
+                {contractInfo.blocked_by.length > 0 && (
+                  <div>
+                    <h3 className="text-lg font-display font-semibold flex items-center gap-2" style={{ color: colors.offWhite, marginBottom: '12px' }}>
+                      <span style={{ color: colors.neonPink }}>⛔</span>
+                      Blocked By
+                    </h3>
+                    <p className="text-xs" style={{ color: colors.slateLight, marginBottom: '12px' }}>
+                      Progress on this node is blocked until these issues are resolved:
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {contractInfo.blocked_by.map((blockerId) => {
+                        const blockerNode = allNodes.find(n => n.id === blockerId);
+                        return (
+                          <Link
+                            key={blockerId}
+                            href={blockerNode ? `/nodes/${blockerId}` : '#'}
+                            className="px-3 py-1.5 rounded-lg border text-sm font-mono transition-all hover:scale-105"
+                            style={{
+                              backgroundColor: `${colors.neonPink}15`,
+                              borderColor: `${colors.neonPink}60`,
+                              color: colors.neonPink,
+                            }}
+                          >
+                            {blockerNode?.name || blockerId}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             </section>
           )}
@@ -568,55 +715,83 @@ export default function NodeDetailPage({ params }: { params: Promise<{ id: strin
           )}
 
           {/* Links */}
-          {node.links && (Object.keys(node.links).length > 0 || node.id) && (
+          {(node.links && Object.keys(node.links).length > 0) || node.docs ? (
             <section className="flex flex-wrap justify-center md:justify-start gap-4 pt-6 border-t" style={{ borderColor: `${colors.slateLight}30` }}>
-              {node.links.repo && (
+              {node.links?.repo && (
                 <a
                   href={node.links.repo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 rounded-lg border-2 font-mono text-sm transition-all hover:scale-105"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 font-mono text-sm transition-all hover:scale-105"
                   style={{
                     color: colors.electricBlue,
                     borderColor: `${colors.electricBlue}60`,
                     backgroundColor: `${colors.electricBlue}10`,
                   }}
                 >
-                  🔗︎ Repository
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                  Repository
                 </a>
               )}
-              {node.links.live && (
+              {node.links?.live && (
                 <a
                   href={node.links.live}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 rounded-lg border-2 font-mono text-sm transition-all hover:scale-105"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 font-mono text-sm transition-all hover:scale-105"
                   style={{
                     color: colors.signalGreen,
                     borderColor: `${colors.signalGreen}60`,
                     backgroundColor: `${colors.signalGreen}10`,
                   }}
                 >
-                  🌐︎ Live Site
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  </svg>
+                  Live Site
                 </a>
               )}
-              {(node.links.docs || node.links.repo) && (
+              {node.docs?.file_guide && (
                 <a
-                  href={node.links.docs || `${node.links.repo}/blob/main/README.md`}
+                  href={node.docs.file_guide}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 rounded-lg border-2 font-mono text-sm transition-all hover:scale-105"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 font-mono text-sm transition-all hover:scale-105"
                   style={{
                     color: colors.aurumGold,
                     borderColor: `${colors.aurumGold}60`,
                     backgroundColor: `${colors.aurumGold}10`,
                   }}
                 >
-                  📚︎ Documentation
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  File Guide
                 </a>
               )}
+              {node.docs?.packages && Object.entries(node.docs.packages).map(([pkgName, pkgUrl]) => (
+                <a
+                  key={pkgName}
+                  href={pkgUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 font-mono text-sm transition-all hover:scale-105"
+                  style={{
+                    color: colors.violetCore,
+                    borderColor: `${colors.violetCore}60`,
+                    backgroundColor: `${colors.violetCore}10`,
+                  }}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                  </svg>
+                  {pkgName}
+                </a>
+              ))}
             </section>
-          )}
+          ) : null}
 
           {/* Build Log */}
           <BuildLog

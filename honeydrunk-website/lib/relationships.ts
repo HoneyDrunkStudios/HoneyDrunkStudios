@@ -33,6 +33,102 @@ interface RelationshipOverride {
   reason: string;
 }
 
+interface RelationshipsSchema {
+  nodes: Array<{
+    id: string;
+    consumes: string[];
+    consumed_by: string[];
+    consumed_by_planned?: string[]; // Planned but not yet implemented dependents
+    blocked_by: string[];
+    consumes_detail: Record<string, string[]>; // nodeId -> [contract/package names]
+    exposes: {
+      contracts: string[];
+      packages: string[];
+    };
+  }>;
+  edges: RelationshipOverride[];
+}
+
+export interface NodeContractInfo {
+  consumes: string[];
+  consumed_by: string[];  // All dependents (for backwards compat)
+  consumed_by_implemented: string[];  // Live, Echo signals
+  consumed_by_in_progress: string[];  // Wiring signal
+  consumed_by_planned: string[];      // Seed, Awake signals
+  blocked_by: string[];
+  consumes_detail: Record<string, string[]>;
+  exposes: {
+    contracts: string[];
+    packages: string[];
+  };
+}
+
+// Signals that indicate implemented/live dependencies
+const IMPLEMENTED_SIGNALS = ['Live', 'Echo'];
+// Signals that indicate in-progress dependencies  
+const IN_PROGRESS_SIGNALS = ['Wiring'];
+// Signals that indicate planned/future dependencies
+const PLANNED_SIGNALS = ['Seed', 'Awake'];
+
+/**
+ * Get node contract information from relationships.json
+ * Categorizes dependents by their signal state (implemented/in-progress/planned)
+ */
+export function getNodeContractInfo(nodeId: string): NodeContractInfo | null {
+  const relationships = relationshipsData as unknown as RelationshipsSchema;
+  const nodeContract = relationships.nodes.find(n => n.id === nodeId);
+  
+  if (!nodeContract) return null;
+  
+  // Get all nodes to look up signals
+  const allNodes = getNodes();
+  
+  // Categorize dependents by their signal state
+  const implemented: string[] = [];
+  const inProgress: string[] = [];
+  const planned: string[] = [];
+  
+  for (const depId of nodeContract.consumed_by) {
+    const depNode = allNodes.find(n => n.id === depId);
+    if (!depNode) continue;
+    
+    if (IMPLEMENTED_SIGNALS.includes(depNode.signal)) {
+      implemented.push(depId);
+    } else if (IN_PROGRESS_SIGNALS.includes(depNode.signal)) {
+      inProgress.push(depId);
+    } else {
+      planned.push(depId);
+    }
+  }
+  
+  return {
+    consumes: nodeContract.consumes,
+    consumed_by: nodeContract.consumed_by,
+    consumed_by_implemented: implemented,
+    consumed_by_in_progress: inProgress,
+    consumed_by_planned: planned,
+    blocked_by: nodeContract.blocked_by || [],
+    consumes_detail: nodeContract.consumes_detail || {},
+    exposes: nodeContract.exposes,
+  };
+}
+
+/**
+ * Get node dependencies from relationships.json (single source of truth)
+ */
+export function getNodeDependencies(nodeId: string): string[] {
+  const contractInfo = getNodeContractInfo(nodeId);
+  return contractInfo?.consumes || [];
+}
+
+/**
+ * Get nodes that depend on this node from relationships.json
+ */
+export function getNodeDependents(nodeId: string): string[] {
+  const contractInfo = getNodeContractInfo(nodeId);
+  return contractInfo?.consumed_by || [];
+}
+
 /**
  * Generate semantic reason for why a dependency exists
  */
@@ -44,7 +140,8 @@ function generateDependencyReason(dependent: Node, dependency: Node): string {
   const dependentShort = dependent.short;
 
   // Check for explicit override in relationships.json
-  const override = (relationshipsData as RelationshipOverride[]).find(
+  const relationships = relationshipsData as unknown as RelationshipsSchema;
+  const override = relationships.edges.find(
     r => r.dependency === depId && r.dependent === dependentId
   );
   
@@ -124,10 +221,6 @@ function generateDependencyReason(dependent: Node, dependency: Node): string {
     return `Consumes Build conventions for MSBuild targets, versioning, and packaging`;
   }
   
-  if (depId === 'honeydrunk-standards') {
-    return `Follows Standards for code style, linting, and formatting rules`;
-  }
-  
   if (depId === 'honeydrunk-tools') {
     return `Leverages Tools for CLI utilities and development workflows`;
   }
@@ -154,6 +247,7 @@ function generateDependencyReason(dependent: Node, dependency: Node): string {
 
 /**
  * Generate role description based on relationships
+ * Avoids specific counts to prevent stale data - uses semantic descriptions
  */
 function generateRoleInGrid(
   node: Node,
@@ -164,36 +258,30 @@ function generateRoleInGrid(
   
   // Foundation vs Consumer
   if (upstream.length === 0) {
-    parts.push(`${node.name} is a foundational node with no dependencies`);
+    parts.push(`${node.name} is a foundational node with no internal Grid dependencies`);
   } else if (upstream.filter(u => u.isFoundational).length === upstream.length) {
     parts.push(`Builds directly on foundational infrastructure`);
   } else {
-    parts.push(`Integrates ${upstream.length} upstream ${upstream.length === 1 ? 'node' : 'nodes'}`);
+    parts.push(`Integrates multiple upstream nodes`);
   }
   
-  // Impact
+  // Impact - semantic descriptions without specific counts
   if (downstream.length === 0) {
     parts.push(`no downstream dependents yet`);
   } else if (downstream.length >= 10) {
-    parts.push(`critical hub with ${downstream.length} dependents across the Grid`);
+    parts.push(`critical hub across the Grid`);
   } else if (downstream.length >= 5) {
-    parts.push(`widely used by ${downstream.length} nodes`);
+    parts.push(`widely adopted across the Grid`);
+  } else if (downstream.length >= 2) {
+    parts.push(`multiple nodes depend on it`);
   } else {
-    parts.push(`${downstream.length} ${downstream.length === 1 ? 'node depends' : 'nodes depend'} on it`);
+    parts.push(`emerging dependency in the Grid`);
   }
   
-  // Integration depth pattern
+  // Integration depth pattern - semantic only
   const deepIntegrations = [...upstream, ...downstream].filter(r => r.integrationDepth === 'deep' || r.integrationDepth === 'high');
   if (deepIntegrations.length >= 3) {
-    parts.push(`deep integration with ${deepIntegrations.length} critical systems`);
-  }
-  
-  // Add grid_relationship if available
-  if (node.long_description?.grid_relationship) {
-    const gridRel = node.long_description.grid_relationship
-      .replace(/^Connects with:?\s*/i, '')
-      .replace(/\.$/, '');
-    return `${parts.join('; ')}. ${gridRel}.`;
+    parts.push(`deep integration with critical systems`);
   }
   
   return `${parts.join('; ')}.`;
@@ -208,8 +296,9 @@ export function getNodeRelationshipMatrix(nodeId: string): NodeRelationshipMatri
   
   if (!node) return null;
   
-  // Build upstream relationships (what this node depends on)
-  const upstreamRaw = (node.depends_on || [])
+  // Build upstream relationships (what this node depends on) from relationships.json
+  const dependencies = getNodeDependencies(nodeId);
+  const upstreamRaw = dependencies
     .map(depId => {
       const depNode = allNodes.find(n => n.id === depId);
       if (!depNode) return null;
@@ -231,10 +320,13 @@ export function getNodeRelationshipMatrix(nodeId: string): NodeRelationshipMatri
   
   const upstream = upstreamRaw.sort((a, b) => b.flowScore - a.flowScore);
   
-  // Build downstream relationships (what depends on this node)
-  const downstream: NodeRelationship[] = allNodes
-    .filter(n => n.depends_on?.includes(nodeId))
-    .map(depNode => {
+  // Build downstream relationships (what depends on this node) from relationships.json
+  const dependents = getNodeDependents(nodeId);
+  const downstreamRaw = dependents
+    .map(depNodeId => {
+      const depNode = allNodes.find(n => n.id === depNodeId);
+      if (!depNode) return null;
+      
       const rel: NodeRelationship = {
         targetNode: depNode,
         direction: 'downstream',
@@ -248,7 +340,9 @@ export function getNodeRelationshipMatrix(nodeId: string): NodeRelationshipMatri
       };
       return rel;
     })
-    .sort((a, b) => b.flowScore - a.flowScore);
+    .filter((r) => r !== null) as NodeRelationship[];
+  
+  const downstream = downstreamRaw.sort((a, b) => b.flowScore - a.flowScore);
   
   const roleInGrid = generateRoleInGrid(node, upstream, downstream);
   const criticalityScore = downstream.length;
@@ -272,7 +366,7 @@ export function getNodesByCriticality(): Array<{ node: Node; criticalityScore: n
   
   return allNodes
     .map(node => {
-      const criticalityScore = allNodes.filter(n => n.depends_on?.includes(node.id)).length;
+      const criticalityScore = getNodeDependents(node.id).length;
       return { node, criticalityScore };
     })
     .sort((a, b) => b.criticalityScore - a.criticalityScore);

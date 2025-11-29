@@ -9,10 +9,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 31,
-    "priority": 50,
-    "depends_on": [
-      "honeydrunk-standards"
-    ],
+    "priority": 46,
     "tags": [
       "msbuild",
       "versioning",
@@ -52,7 +49,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 43
+    "flow": 41,
+    "public_name": "HoneyDrunk.Build"
   },
   {
     "id": "honeydrunk-pipelines",
@@ -64,13 +62,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 29,
-    "priority": 71,
-    "depends_on": [
-      "honeydrunk-build",
-      "honeydrunk-deploy",
-      "honeydrunk-tools",
-      "honeydrunk-standards"
-    ],
+    "priority": 68,
     "tags": [
       "devops",
       "ci-cd",
@@ -107,8 +99,9 @@
     "time_pressure": 5,
     "done": false,
     "cooldown_days": 14,
-    "flow": 56,
-    "ops_bootstrap": true
+    "flow": 54,
+    "ops_bootstrap": true,
+    "public_name": "HoneyDrunk.Pipelines"
   },
   {
     "id": "honeydrunk-actions",
@@ -121,11 +114,6 @@
     "cluster": "foundation",
     "energy": 0,
     "priority": 35,
-    "depends_on": [
-      "honeydrunk-build",
-      "honeydrunk-tools",
-      "honeydrunk-standards"
-    ],
     "tags": [
       "github",
       "actions",
@@ -163,7 +151,8 @@
     "done": true,
     "cooldown_days": 14,
     "flow": 23,
-    "ops_bootstrap": true
+    "ops_bootstrap": true,
+    "public_name": "HoneyDrunk.Actions"
   },
   {
     "id": "honeydrunk-deploy",
@@ -175,11 +164,7 @@
     "signal": "Seed",
     "cluster": "infrastructure",
     "energy": 30,
-    "priority": 80,
-    "depends_on": [
-      "honeydrunk-tools",
-      "honeydrunk-standards"
-    ],
+    "priority": 77,
     "tags": [
       "deploy",
       "releases",
@@ -216,8 +201,9 @@
     "time_pressure": 4,
     "done": false,
     "cooldown_days": 14,
-    "flow": 63,
-    "ops_bootstrap": true
+    "flow": 61,
+    "ops_bootstrap": true,
+    "public_name": "HoneyDrunk.Deploy"
   },
   {
     "id": "honeydrunk-kernel",
@@ -228,11 +214,8 @@
     "sector": "Core",
     "signal": "Live",
     "cluster": "foundation",
-    "energy": 1,
+    "energy": 0,
     "priority": 100,
-    "depends_on": [
-      "honeydrunk-standards"
-    ],
     "tags": [
       "infrastructure",
       "primitives",
@@ -246,26 +229,96 @@
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Kernel"
     },
+    "docs": {
+      "root": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Kernel",
+      "file_guide": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Kernel/blob/main/HoneyDrunk.Kernel/docs/FILE_GUIDE.md",
+      "packages": {
+        "HoneyDrunk.Kernel": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Kernel/blob/main/HoneyDrunk.Kernel/HoneyDrunk.Kernel/README.md",
+        "HoneyDrunk.Kernel.Abstractions": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Kernel/blob/main/HoneyDrunk.Kernel/HoneyDrunk.Kernel.Abstractions/README.md"
+      }
+    },
     "long_description": {
-      "overview": "HoneyDrunk.Kernel is the semantic OS layer of HoneyDrunk.OS (\\\"the Hive\\\"). It's not just contracts—it's the foundational runtime that Nodes, agents, and services use to communicate, coordinate, and observe themselves across the Grid. Core responsibilities: Context Propagation (Grid/Node/Operation context flows through async boundaries), Lifecycle Orchestration (startup hooks, health/readiness monitoring, graceful shutdown), Configuration Management (hierarchical scoping, Vault integration, strongly-typed keys), Agent Interop (serialization and scoped context access for LLMs), Telemetry Integration (OpenTelemetry-ready tracing, enrichment, log correlation), Identity Primitives (validated, strongly-typed IDs like NodeId, TenantId, CorrelationId), and Health & Readiness (contributor-based aggregation for Kubernetes probes). The Kernel implements a three-tier context model: GridContext (distributed), NodeContext (static), and OperationContext (scoped), enabling coherent tracing and causation tracking across the entire ecosystem. It's the Grid's conscience—the one thing that knows what it means to be HoneyDrunk.",
-      "why_it_exists": "To provide the foundational runtime layer that makes the Grid coherent, observable, and interoperable—eliminating architectural reinvention across every Node.",
-      "primary_audience": "Node developers, service owners, and AI agents building on HoneyDrunk.OS.",
+      "overview": "HoneyDrunk.Kernel is the semantic OS layer of HoneyDrunk.OS, the Hive. It is the foundational runtime that nodes, agents and services use to communicate, coordinate and observe themselves across the Grid. Core responsibilities: Context propagation—a three tier model (GridContext, NodeContext, OperationContext) that flows across async boundaries and transports. Lifecycle orchestration—startup hooks, lifecycle stages, health and readiness aggregation, graceful shutdown. Configuration and identity primitives—strongly typed IDs at configuration time, string based identities at runtime, options for Grid and Node bootstrap. Telemetry integration—OpenTelemetry ready activity factory, trace enrichment and log correlation wired to Grid context. Health and readiness—health checks and lifecycle contributors for Kubernetes style /health and /ready endpoints. Agent interop—agent execution contexts, scoped context visibility and serializers that let higher level agent runtimes safely embed LLMs into the Grid. Kernel is the part of the Grid that defines what it means to be a node.",
+      "why_it_exists": "To give every node the same runtime skeleton for identity, context, lifecycle and observability so those concerns are not reinvented in each service.",
+      "primary_audience": "Node developers and service owners building Grid aware services. Agent runtimes and automation that need to execute with a proper Grid context.",
       "value_props": [
-        "Three-tier context propagation (Grid→Node→Operation)",
-        "Lifecycle orchestration with startup/health/shutdown hooks",
-        "OpenTelemetry-ready observability and log correlation",
-        "Strongly-typed identity primitives for Grid interop",
-        "Kubernetes-ready health and readiness probes",
-        "Agent-aware serialization and context access"
+        "Three tier context model—Grid to Node to Operation—with correlation and causation tracking",
+        "Lifecycle orchestration with startup hooks, lifecycle stages and contributor based health and readiness",
+        "OpenTelemetry ready tracing, enrichment and log scopes",
+        "Strongly typed identity at configuration time, string identity at runtime for performance",
+        "Kubernetes friendly health and readiness endpoints",
+        "Agent aware execution contexts and context serializers for LLM centric components"
       ],
-      "monetization_signal": "Internal-first; open-core where appropriate for public SDK patterns.",
-      "roadmap_focus": "Harden v0.2.0 contracts, expand agent interop patterns, deepen telemetry integration, expose reflection APIs for AI orchestration.",
-      "grid_relationship": "Foundational dependency for: honeydrunk-data, honeydrunk-transport, honeycore-web-rest, honeydrunk-auth, honeydrunk-vault, pulse, and all runtime Nodes.",
+      "monetization_signal": "Internal first. Public SDK patterns may be open core, but Kernel itself is the base runtime that all higher layers depend on.",
+      "roadmap_focus": "v0.4 is a stabilization release. Enforce the three-ID context model across all creation paths. Consolidate hosting around AddHoneyDrunkNode as the canonical API. Align lifecycle, health and readiness behavior with docs. Lock identity registries as the DNS of the Grid. Tighten error classification and telemetry tag consistency. Finalize agent execution context contracts so AgentKit can build on stable primitives. Add local node self-description via INodeDescriptor and INodeManifest—no global registry yet.",
       "integration_depth": "deep",
-      "demo_path": "Minimal Node setup with AddHoneyDrunkCoreNode → context flow across async calls → health probe validation → graceful shutdown with lifecycle hooks.",
+      "demo_path": "Minimal Node setup with AddHoneyDrunkGrid and AddHoneyDrunkNode → context flow across async calls → health probe validation → graceful shutdown with lifecycle hooks.",
       "signal_quote": "Where everything begins.",
       "stability_tier": "critical",
-      "impact_vector": "developer velocity"
+      "impact_vector": "developer velocity",
+      "node_contract": {
+        "core_abstractions": {
+          "context": [
+            "IGridContext",
+            "IGridContextFactory",
+            "IGridContextAccessor",
+            "INodeContext",
+            "IOperationContext",
+            "IOperationContextFactory",
+            "IOperationContextAccessor"
+          ],
+          "lifecycle": [
+            "IStartupHook",
+            "IShutdownHook",
+            "INodeLifecycle",
+            "IHealthContributor",
+            "IReadinessContributor",
+            "NodeLifecycleStage",
+            "NodeLifecycleManager"
+          ],
+          "health_and_diagnostics": [
+            "IHealthCheck",
+            "HealthStatus",
+            "CompositeHealthCheck",
+            "IMetricsCollector",
+            "NoOpMetricsCollector"
+          ],
+          "telemetry": [
+            "ITelemetryContext",
+            "ITelemetryActivityFactory",
+            "ITraceEnricher",
+            "ILogScopeFactory",
+            "TelemetryTags",
+            "GridActivitySource"
+          ],
+          "agents": [
+            "IAgentDescriptor",
+            "IAgentExecutionContext",
+            "IAgentExecutionContextFactory",
+            "IAgentCapability",
+            "AgentContextScope"
+          ],
+          "hosting_and_di": [
+            "AddHoneyDrunkGrid",
+            "GridOptions",
+            "AddHoneyDrunkNode",
+            "HoneyDrunkNodeOptions",
+            "UseGridContext",
+            "IModule"
+          ]
+        },
+        "extended_contracts": {
+          "configuration_and_secrets": "Configuration providers, scopes and secret sources that ship in HoneyDrunk.Kernel or HoneyDrunk.Kernel.Abstractions",
+          "identity_primitives": "Strongly typed ID primitives such as node or correlation identifiers"
+        },
+        "excluded": [
+          "ITenantResolver",
+          "IPolicy",
+          "IRuleEngine",
+          "IAuthenticationProvider",
+          "IAuthorizationPolicy"
+        ]
+      }
     },
     "_dictionary_ref": {
       "version": "v1",
@@ -277,7 +330,8 @@
     "time_pressure": 0,
     "done": true,
     "cooldown_days": 14,
-    "flow": 45
+    "flow": 45,
+    "public_name": "HoneyDrunk.Kernel"
   },
   {
     "id": "honeydrunk-data",
@@ -288,14 +342,8 @@
     "sector": "Core",
     "signal": "Awake",
     "cluster": "foundation",
-    "energy": 65,
-    "priority": 67,
-    "depends_on": [
-      "honeydrunk-kernel",
-      "honeydrunk-transport",
-      "pulse",
-      "honeydrunk-standards"
-    ],
+    "energy": 66,
+    "priority": 100,
     "tags": [
       "database",
       "migrations",
@@ -315,7 +363,7 @@
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
       "roadmap_focus": "Advance HoneyDrunk.Data capabilities and harden contracts.",
-      "grid_relationship": "Consumes Kernel for Context (Tenancy/User) and Lifecycle (Migrations); implements Transport Outbox; feeds Pulse telemetry.",
+      "grid_relationship": "Consumes Kernel for Context (Tenancy/User) and Lifecycle (Migrations); feeds Pulse telemetry; exposes persistence abstractions for outbox storage providers.",
       "integration_depth": "medium",
       "demo_path": "Show a 60-second demo of HoneyDrunk.Data: input → behavior → outcome.",
       "signal_quote": "Memory with meaning.",
@@ -332,7 +380,8 @@
     "time_pressure": 3,
     "done": false,
     "cooldown_days": 14,
-    "flow": 66
+    "flow": 88,
+    "public_name": "HoneyDrunk.Data"
   },
   {
     "id": "honeydrunk-transport",
@@ -344,13 +393,9 @@
     "signal": "Live",
     "cluster": "foundation",
     "energy": 1,
-    "priority": 79,
+    "priority": 100,
     "slots": [
       "adapter"
-    ],
-    "depends_on": [
-      "honeydrunk-kernel",
-      "honeydrunk-standards"
     ],
     "tags": [
       "messaging",
@@ -388,7 +433,8 @@
     "time_pressure": 2,
     "done": true,
     "cooldown_days": 14,
-    "flow": 45
+    "flow": 45,
+    "public_name": "HoneyDrunk.Transport"
   },
   {
     "id": "honeycore-web-rest",
@@ -400,13 +446,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 29,
-    "priority": 30,
-    "depends_on": [
-      "honeydrunk-kernel",
-      "honeydrunk-auth",
-      "honeydrunk-transport",
-      "honeydrunk-standards"
-    ],
+    "priority": 27,
     "tags": [
       "rest",
       "api",
@@ -443,7 +483,8 @@
     "time_pressure": 2,
     "done": false,
     "cooldown_days": 14,
-    "flow": 30
+    "flow": 28,
+    "public_name": "HoneyCore.Web.Rest"
   },
   {
     "id": "honeydrunk-testing",
@@ -455,14 +496,9 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 29,
-    "priority": 25,
+    "priority": 23,
     "slots": [
       "harness"
-    ],
-    "depends_on": [
-      "honeydrunk-kernel",
-      "honeydrunk-data",
-      "honeydrunk-standards"
     ],
     "tags": [
       "testing",
@@ -500,7 +536,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 26
+    "flow": 25,
+    "public_name": "HoneyDrunk.Testing"
   },
   {
     "id": "honeydrunk-tools",
@@ -512,10 +549,7 @@
     "signal": "Seed",
     "cluster": "tooling",
     "energy": 33,
-    "priority": 93,
-    "depends_on": [
-      "honeydrunk-standards"
-    ],
+    "priority": 88,
     "tags": [
       "cli",
       "tools",
@@ -552,8 +586,9 @@
     "time_pressure": 4,
     "done": false,
     "cooldown_days": 14,
-    "flow": 72,
-    "ops_bootstrap": true
+    "flow": 69,
+    "ops_bootstrap": true,
+    "public_name": "HoneyDrunk.Tools"
   },
   {
     "id": "honeydrunk-vault",
@@ -568,10 +603,6 @@
     "priority": 100,
     "slots": [
       "provider"
-    ],
-    "depends_on": [
-      "honeydrunk-kernel",
-      "honeydrunk-standards"
     ],
     "tags": [
       "security",
@@ -609,7 +640,8 @@
     "time_pressure": 2,
     "done": false,
     "cooldown_days": 14,
-    "flow": 91
+    "flow": 91,
+    "public_name": "HoneyDrunk.Vault"
   },
   {
     "id": "pulse",
@@ -621,14 +653,9 @@
     "signal": "Seed",
     "cluster": "security",
     "energy": 41,
-    "priority": 74,
+    "priority": 100,
     "slots": [
       "telemetry"
-    ],
-    "depends_on": [
-      "honeydrunk-vault",
-      "honeydrunk-transport",
-      "honeydrunk-standards"
     ],
     "tags": [
       "observability",
@@ -667,7 +694,8 @@
     "time_pressure": 2,
     "done": false,
     "cooldown_days": 14,
-    "flow": 62
+    "flow": 79,
+    "public_name": "Pulse"
   },
   {
     "id": "honeydrunk-auth",
@@ -678,13 +706,8 @@
     "sector": "Core",
     "signal": "Seed",
     "cluster": "infrastructure",
-    "energy": 30,
-    "priority": 41,
-    "depends_on": [
-      "honeydrunk-kernel",
-      "honeydrunk-vault",
-      "honeydrunk-standards"
-    ],
+    "energy": 33,
+    "priority": 52,
     "tags": [
       "auth",
       "security",
@@ -722,7 +745,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 37
+    "flow": 45,
+    "public_name": "HoneyDrunk.Auth"
   },
   {
     "id": "honeydrunk-agentkit",
@@ -734,14 +758,7 @@
     "signal": "Seed",
     "cluster": "ai",
     "energy": 33,
-    "priority": 40,
-    "depends_on": [
-      "honeydrunk-kernel",
-      "honeydrunk-transport",
-      "pulse",
-      "honeydrunk-vault",
-      "honeydrunk-standards"
-    ],
+    "priority": 37,
     "tags": [
       "agents",
       "runtime",
@@ -778,7 +795,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 38
+    "flow": 36,
+    "public_name": "HoneyDrunk.AgentKit"
   },
   {
     "id": "honeydrunk-signal",
@@ -790,14 +808,7 @@
     "signal": "Seed",
     "cluster": "ecosystem",
     "energy": 29,
-    "priority": 15,
-    "depends_on": [
-      "honeyhub",
-      "pulse",
-      "honeydrunk-agentkit",
-      "honeydrunk-vault",
-      "honeydrunk-standards"
-    ],
+    "priority": 14,
     "tags": [
       "creator",
       "marketing",
@@ -834,7 +845,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 19,
+    "public_name": "HoneyDrunk.Signal"
   },
   {
     "id": "ledger",
@@ -846,11 +858,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 31,
-    "priority": 39,
-    "depends_on": [
-      "invoice",
-      "honeydrunk-standards"
-    ],
+    "priority": 36,
     "tags": [
       "finance",
       "accounting",
@@ -885,7 +893,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 36
+    "flow": 34,
+    "public_name": "Ledger"
   },
   {
     "id": "invoice",
@@ -897,10 +906,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 31,
-    "priority": 44,
-    "depends_on": [
-      "honeydrunk-standards"
-    ],
+    "priority": 41,
     "tags": [
       "invoicing",
       "payments",
@@ -935,7 +941,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 39
+    "flow": 38,
+    "public_name": "Invoice"
   },
   {
     "id": "honeydrunk-clientportalos",
@@ -947,14 +954,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 29,
-    "priority": 19,
-    "depends_on": [
-      "pulse",
-      "honeydrunk-vault",
-      "honeydrunk-transport",
-      "honeydrunk-kernel",
-      "honeydrunk-standards"
-    ],
+    "priority": 18,
     "tags": [
       "saas",
       "crm",
@@ -993,7 +993,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 23
+    "flow": 22,
+    "public_name": "HoneyDrunk.ClientPortalOS"
   },
   {
     "id": "pay",
@@ -1005,12 +1006,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 29,
-    "priority": 19,
-    "depends_on": [
-      "invoice",
-      "honeydrunk-standards",
-      "ledger"
-    ],
+    "priority": 18,
     "tags": [
       "payments",
       "portal",
@@ -1045,7 +1041,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 23
+    "flow": 22,
+    "public_name": "Pay"
   },
   {
     "id": "subs",
@@ -1057,11 +1054,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 29,
-    "priority": 19,
-    "depends_on": [
-      "ledger",
-      "honeydrunk-standards"
-    ],
+    "priority": 18,
     "tags": [
       "subscriptions",
       "expenses",
@@ -1096,7 +1089,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 23
+    "flow": 22,
+    "public_name": "Subs"
   },
   {
     "id": "forge",
@@ -1108,11 +1102,7 @@
     "signal": "Seed",
     "cluster": "marketplace",
     "energy": 29,
-    "priority": 15,
-    "depends_on": [
-      "honeyhub",
-      "honeydrunk-standards"
-    ],
+    "priority": 14,
     "tags": [
       "marketplace",
       "assets",
@@ -1147,7 +1137,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 19,
+    "public_name": "Forge"
   },
   {
     "id": "tether",
@@ -1159,10 +1150,7 @@
     "signal": "Seed",
     "cluster": "personal",
     "energy": 29,
-    "priority": 15,
-    "depends_on": [
-      "honeydrunk-standards"
-    ],
+    "priority": 14,
     "tags": [
       "relationships",
       "personal",
@@ -1197,7 +1185,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 19,
+    "public_name": "Tether"
   },
   {
     "id": "draft",
@@ -1209,10 +1198,7 @@
     "signal": "Seed",
     "cluster": "gaming",
     "energy": 29,
-    "priority": 15,
-    "depends_on": [
-      "honeydrunk-standards"
-    ],
+    "priority": 14,
     "tags": [
       "fantasy",
       "media",
@@ -1247,7 +1233,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 19,
+    "public_name": "Draft"
   },
   {
     "id": "game-prototype",
@@ -1259,10 +1246,7 @@
     "signal": "Seed",
     "cluster": "gaming",
     "energy": 29,
-    "priority": 15,
-    "depends_on": [
-      "honeydrunk-standards"
-    ],
+    "priority": 14,
     "tags": [
       "game",
       "prototype",
@@ -1297,7 +1281,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 19,
+    "public_name": "Game #1 (TBD)"
   },
   {
     "id": "honeyhub",
@@ -1309,10 +1294,7 @@
     "signal": "Seed",
     "cluster": "ecosystem",
     "energy": 34,
-    "priority": 38,
-    "depends_on": [
-      "grid"
-    ],
+    "priority": 35,
     "tags": [
       "ai",
       "pm",
@@ -1347,7 +1329,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 37
+    "flow": 35,
+    "public_name": "HoneyHub"
   },
   {
     "id": "honeyconnect",
@@ -1359,10 +1342,7 @@
     "signal": "Seed",
     "cluster": "ecosystem",
     "energy": 29,
-    "priority": 15,
-    "depends_on": [
-      "honeyhub"
-    ],
+    "priority": 14,
     "tags": [
       "networking",
       "collaboration",
@@ -1397,7 +1377,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 19,
+    "public_name": "HoneyConnect"
   },
   {
     "id": "grid",
@@ -1409,11 +1390,7 @@
     "signal": "Live",
     "cluster": "ecosystem",
     "energy": 100,
-    "priority": 43,
-    "depends_on": [
-      "honeydrunk-kernel",
-      "pulse"
-    ],
+    "priority": 40,
     "tags": [
       "registry",
       "orchestration",
@@ -1450,7 +1427,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 63
+    "flow": 61,
+    "public_name": "HoneyDrunk.Grid"
   },
   {
     "id": "honeymech-courier",
@@ -1462,11 +1440,7 @@
     "signal": "Seed",
     "cluster": "robotics",
     "energy": 29,
-    "priority": 15,
-    "depends_on": [
-      "honeymech-sim",
-      "honeydrunk-standards"
-    ],
+    "priority": 14,
     "tags": [
       "robotics",
       "ai",
@@ -1502,7 +1476,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 19,
+    "public_name": "HoneyMech.Courier"
   },
   {
     "id": "honeymech-sim",
@@ -1514,10 +1489,7 @@
     "signal": "Seed",
     "cluster": "robotics",
     "energy": 31,
-    "priority": 31,
-    "depends_on": [
-      "honeydrunk-standards"
-    ],
+    "priority": 28,
     "tags": [
       "simulation",
       "physics",
@@ -1553,7 +1525,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 31
+    "flow": 29,
+    "public_name": "HoneyMech.Sim"
   },
   {
     "id": "honeymech-servo",
@@ -1565,11 +1538,7 @@
     "signal": "Seed",
     "cluster": "robotics",
     "energy": 29,
-    "priority": 15,
-    "depends_on": [
-      "honeymech-sim",
-      "honeydrunk-standards"
-    ],
+    "priority": 14,
     "tags": [
       "hardware",
       "control",
@@ -1605,7 +1574,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 19,
+    "public_name": "HoneyMech.Servo"
   },
   {
     "id": "archive-legacy",
@@ -1617,8 +1587,7 @@
     "signal": "Seed",
     "cluster": "history",
     "energy": 29,
-    "priority": 15,
-    "depends_on": [],
+    "priority": 14,
     "tags": [
       "archive",
       "legacy",
@@ -1655,7 +1624,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 19,
+    "public_name": "Archive.Legacy"
   },
   {
     "id": "breachlab-exe",
@@ -1667,13 +1637,7 @@
     "signal": "Seed",
     "cluster": "security",
     "energy": 29,
-    "priority": 15,
-    "depends_on": [
-      "honeysentinel",
-      "pulse",
-      "honeydrunk-vault",
-      "honeydrunk-standards"
-    ],
+    "priority": 14,
     "tags": [
       "ctf",
       "learning",
@@ -1711,7 +1675,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 19,
+    "public_name": "BreachLab.exe"
   },
   {
     "id": "honeysentinel",
@@ -1723,12 +1688,7 @@
     "signal": "Seed",
     "cluster": "security",
     "energy": 30,
-    "priority": 25,
-    "depends_on": [
-      "pulse",
-      "honeydrunk-vault",
-      "honeydrunk-standards"
-    ],
+    "priority": 23,
     "tags": [
       "sdk",
       "security",
@@ -1766,7 +1726,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 27
+    "flow": 25,
+    "public_name": "HoneyDrunk.Sentinel"
   },
   {
     "id": "review",
@@ -1778,12 +1739,7 @@
     "signal": "Seed",
     "cluster": "social",
     "energy": 29,
-    "priority": 15,
-    "depends_on": [
-      "pulse",
-      "honeydrunk-vault",
-      "honeydrunk-standards"
-    ],
+    "priority": 14,
     "tags": [
       "social",
       "entertainment",
@@ -1822,7 +1778,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 19,
+    "public_name": "Re:View"
   },
   {
     "id": "memorybank",
@@ -1834,12 +1791,7 @@
     "signal": "Seed",
     "cluster": "self",
     "energy": 29,
-    "priority": 15,
-    "depends_on": [
-      "pulse",
-      "honeydrunk-vault",
-      "honeydrunk-standards"
-    ],
+    "priority": 14,
     "tags": [
       "journaling",
       "wellness",
@@ -1877,7 +1829,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 19,
+    "public_name": "MemoryBank"
   },
   {
     "id": "dreammarket",
@@ -1889,12 +1842,7 @@
     "signal": "Seed",
     "cluster": "creativity",
     "energy": 29,
-    "priority": 15,
-    "depends_on": [
-      "pulse",
-      "honeydrunk-vault",
-      "honeydrunk-standards"
-    ],
+    "priority": 14,
     "tags": [
       "creativity",
       "social",
@@ -1933,7 +1881,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 19,
+    "public_name": "DreamMarket"
   },
   {
     "id": "arcadia",
@@ -1945,12 +1894,7 @@
     "signal": "Seed",
     "cluster": "fandom",
     "energy": 29,
-    "priority": 15,
-    "depends_on": [
-      "pulse",
-      "honeydrunk-vault",
-      "honeydrunk-standards"
-    ],
+    "priority": 14,
     "tags": [
       "games",
       "anime",
@@ -1992,7 +1936,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 19,
+    "public_name": "Arcadia"
   },
   {
     "id": "hivexp",
@@ -2000,17 +1945,11 @@
     "name": "HiveXP",
     "short": "Unified XP and progression framework for the Hive.",
     "description": "Centralized service defining XP, level curves, and growth logic for all Nodes across HoneyDrunk.OS. Tracks player, creator, and system progression as structured, auditable data.",
-    "sector": "Core",
+    "sector": "Market",
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 30,
-    "priority": 41,
-    "depends_on": [
-      "vault",
-      "transport",
-      "marketcore",
-      "honeydrunk-standards"
-    ],
+    "priority": 23,
     "tags": [
       "xp",
       "progression",
@@ -2049,7 +1988,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 37
+    "flow": 25,
+    "public_name": "HiveXP"
   },
   {
     "id": "hivegigs",
@@ -2061,14 +2001,7 @@
     "signal": "Seed",
     "cluster": "application",
     "energy": 29,
-    "priority": 15,
-    "depends_on": [
-      "hivexp",
-      "vault",
-      "transport",
-      "marketcore",
-      "honeydrunk-standards"
-    ],
+    "priority": 14,
     "tags": [
       "market",
       "missions",
@@ -2107,7 +2040,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 20
+    "flow": 19,
+    "public_name": "HiveGigs"
   },
   {
     "id": "meta-devportal",
@@ -2153,8 +2087,9 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 29,
-    "priority": 15,
-    "flow": 20
+    "priority": 14,
+    "flow": 19,
+    "public_name": "Meta.DevPortal"
   },
   {
     "id": "meta-packagepublisher",
@@ -2199,8 +2134,9 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 29,
-    "priority": 15,
-    "flow": 20
+    "priority": 14,
+    "flow": 19,
+    "public_name": "Meta.PackagePublisher"
   },
   {
     "id": "meta-atlassync",
@@ -2245,8 +2181,9 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 30,
-    "priority": 30,
-    "flow": 30
+    "priority": 28,
+    "flow": 29,
+    "public_name": "Meta.AtlasSync"
   },
   {
     "id": "marketcore",
@@ -2291,11 +2228,9 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 31,
-    "priority": 46,
-    "flow": 41,
-    "depends_on": [
-      "honeydrunk-standards"
-    ]
+    "priority": 28,
+    "flow": 29,
+    "public_name": "MarketCore"
   },
   {
     "id": "honeydrunk-console",
@@ -2340,11 +2275,9 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 29,
-    "priority": 19,
-    "flow": 23,
-    "depends_on": [
-      "honeydrunk-standards"
-    ]
+    "priority": 18,
+    "flow": 22,
+    "public_name": "HoneyDrunk.Console"
   },
   {
     "id": "audit-agent",
@@ -2389,11 +2322,9 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 30,
-    "priority": 34,
-    "flow": 33,
-    "depends_on": [
-      "honeydrunk-standards"
-    ]
+    "priority": 32,
+    "flow": 31,
+    "public_name": "Audit.Agent"
   },
   {
     "id": "operator",
@@ -2405,14 +2336,7 @@
     "signal": "Seed",
     "cluster": "orchestration",
     "energy": 30,
-    "priority": 34,
-    "depends_on": [
-      "honeydrunk-kernel",
-      "honeydrunk-transport",
-      "pulse",
-      "honeydrunk-vault",
-      "grid"
-    ],
+    "priority": 32,
     "tags": [
       "ai",
       "meta",
@@ -2452,7 +2376,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 33
+    "flow": 31,
+    "public_name": "HoneyDrunk.Operator"
   },
   {
     "id": "honeydrunk-standards",
@@ -2463,9 +2388,8 @@
     "sector": "Core",
     "signal": "Live",
     "cluster": "foundation",
-    "energy": 1,
-    "priority": 100,
-    "depends_on": [],
+    "energy": 0,
+    "priority": 0,
     "tags": [
       "standards",
       "editorconfig",
@@ -2504,7 +2428,8 @@
     "time_pressure": 0,
     "done": true,
     "cooldown_days": 14,
-    "flow": 45
+    "flow": 0,
+    "public_name": "HoneyDrunk.Standards"
   },
   {
     "id": "honeydrunk-collector",
@@ -2516,13 +2441,7 @@
     "signal": "Seed",
     "cluster": "observability",
     "energy": 29,
-    "priority": 28,
-    "depends_on": [
-      "pulse",
-      "honeydrunk-transport",
-      "honeydrunk-vault",
-      "honeydrunk-standards"
-    ],
+    "priority": 26,
     "tags": [
       "telemetry",
       "collector",
@@ -2560,7 +2479,8 @@
     "time_pressure": 3,
     "done": false,
     "cooldown_days": 14,
-    "flow": 28
+    "flow": 27,
+    "public_name": "HoneyDrunk.Collector"
   },
   {
     "id": "honeydrunk-comms",
@@ -2572,13 +2492,7 @@
     "signal": "Seed",
     "cluster": "infrastructure",
     "energy": 29,
-    "priority": 23,
-    "depends_on": [
-      "honeydrunk-transport",
-      "honeydrunk-vault",
-      "pulse",
-      "honeydrunk-standards"
-    ],
+    "priority": 21,
     "tags": [
       "notifications",
       "comms",
@@ -2617,7 +2531,8 @@
     "time_pressure": 3,
     "done": false,
     "cooldown_days": 14,
-    "flow": 25
+    "flow": 24,
+    "public_name": "HoneyDrunk.Comms"
   },
   {
     "id": "honeydrunk-assets",
@@ -2629,13 +2544,7 @@
     "signal": "Seed",
     "cluster": "infrastructure",
     "energy": 29,
-    "priority": 35,
-    "depends_on": [
-      "honeydrunk-vault",
-      "pulse",
-      "honeydrunk-transport",
-      "honeydrunk-standards"
-    ],
+    "priority": 32,
     "tags": [
       "storage",
       "assets",
@@ -2673,7 +2582,8 @@
     "time_pressure": 2,
     "done": false,
     "cooldown_days": 14,
-    "flow": 33
+    "flow": 31,
+    "public_name": "HoneyDrunk.Assets"
   },
   {
     "id": "honeydrunk-clarity",
@@ -2685,15 +2595,7 @@
     "signal": "Seed",
     "cluster": "assistant",
     "energy": 29,
-    "priority": 25,
-    "depends_on": [
-      "honeydrunk-agentkit",
-      "pulse",
-      "honeydrunk-vault",
-      "meta-atlassync",
-      "honeydrunk-standards",
-      "honeyhub"
-    ],
+    "priority": 23,
     "tags": [
       "assistant",
       "ai",
@@ -2735,7 +2637,8 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 26
+    "flow": 25,
+    "public_name": "HoneyDrunk.Clarity"
   },
   {
     "id": "honeydrunk-homelab",
@@ -2757,7 +2660,6 @@
       "repo": null,
       "docs": null
     },
-    "depends_on": [],
     "tier": "internal",
     "ops_bootstrap": false,
     "foundational": false,
@@ -2786,8 +2688,9 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 29,
-    "priority": 23,
-    "flow": 25
+    "priority": 21,
+    "flow": 24,
+    "public_name": "HoneyDrunk.HomeLab"
   },
   {
     "id": "honeydrunk-governor",
@@ -2799,13 +2702,7 @@
     "signal": "Seed",
     "cluster": "orchestration",
     "energy": 29,
-    "priority": 29,
-    "depends_on": [
-      "honeydrunk-kernel",
-      "honeydrunk-agentkit",
-      "operator",
-      "audit-agent"
-    ],
+    "priority": 27,
     "tags": [
       "ai",
       "governance",
@@ -2845,6 +2742,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 29
+    "flow": 28,
+    "public_name": "HoneyDrunk.Governor"
   }
 ]

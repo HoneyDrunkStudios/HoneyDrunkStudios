@@ -3,7 +3,12 @@
  * Flow Computation Engine
  *
  * Recomputes Energy, Priority, and Flow for all Nodes in nodes.json
- * based on the rulebook in flow_config.json.
+ * based on the rulebook in flow_config.json and relationships from relationships.json.
+ *
+ * Flow answers: "What should we focus on next?"
+ * - High flow = needs attention now
+ * - Live nodes have lower flow unless they're blocking other nodes
+ * - Criticality (consumed_by count) matters for prioritizing foundations
  *
  * Usage: node compute-flow.js
  */
@@ -17,6 +22,7 @@ const path = require('path');
 
 const DATA_DIR = path.join(__dirname, '..', 'data', 'schema');
 const NODES_PATH = path.join(DATA_DIR, 'nodes.json');
+const RELATIONSHIPS_PATH = path.join(DATA_DIR, 'relationships.json');
 const CONFIG_PATH = path.join(DATA_DIR, 'flow_config.json');
 
 console.log('🔧 Loading configuration and data...');
@@ -28,6 +34,11 @@ console.log('✓ Loaded flow_config.json');
 // Load nodes
 const nodes = JSON.parse(fs.readFileSync(NODES_PATH, 'utf8'));
 console.log(`✓ Loaded ${nodes.length} nodes from nodes.json`);
+
+// Load relationships (single source of truth for dependencies)
+const relationships = JSON.parse(fs.readFileSync(RELATIONSHIPS_PATH, 'utf8'));
+const relMap = new Map(relationships.nodes.map(r => [r.id, r]));
+console.log(`✓ Loaded ${relationships.nodes.length} relationship entries from relationships.json`);
 
 // ============================================================================
 // GOVERNANCE FIELD INITIALIZATION
@@ -76,40 +87,71 @@ nodes.forEach(node => {
 console.log(`✓ Added governance fields to ${addedFieldsCount} nodes`);
 
 // ============================================================================
-// GRAPH CONSTRUCTION
+// GRAPH CONSTRUCTION (from relationships.json)
 // ============================================================================
 
-console.log('\n🕸️  Building dependency graph...');
+console.log('\n🕸️  Building dependency graph from relationships.json...');
 
 // Create a map of node ID to node
 const nodeMap = new Map();
 nodes.forEach(node => nodeMap.set(node.id, node));
 
-// Build graph: track direct dependents (reverse edges)
-const directDependents = new Map();
+// Get dependencies and dependents from relationships.json
+function getNodeDependencies(nodeId) {
+  const rel = relMap.get(nodeId);
+  return rel?.consumes || [];
+}
+
+function getNodeDependents(nodeId) {
+  const rel = relMap.get(nodeId);
+  return rel?.consumed_by || [];
+}
+
+// Store counts on each node for calculations
 nodes.forEach(node => {
-  if (!directDependents.has(node.id)) {
-    directDependents.set(node.id, []);
-  }
+  const rel = relMap.get(node.id);
+  node._dependencyCount = rel?.consumes?.length || 0;
+  node._dependentCount = rel?.consumed_by?.length || 0;
 });
 
-nodes.forEach(node => {
-  if (node.depends_on && Array.isArray(node.depends_on)) {
-    node.depends_on.forEach(depId => {
-      if (!directDependents.has(depId)) {
-        directDependents.set(depId, []);
+console.log('✓ Dependency graph built from relationships.json');
+
+// ============================================================================
+// BLOCKED_BY ANALYSIS: Read from relationships.json (manually curated)
+// ============================================================================
+
+console.log('\n🚧 Loading blocked_by relationships...');
+
+// blocked_by is now manually curated in relationships.json
+// When a node has blocked_by entries, the blocking nodes get a flow boost
+const blockingMap = new Map(); // nodeId -> [list of nodes it's blocking]
+
+relationships.nodes.forEach(rel => {
+  if (rel.blocked_by && rel.blocked_by.length > 0) {
+    rel.blocked_by.forEach(blockerId => {
+      if (!blockingMap.has(blockerId)) {
+        blockingMap.set(blockerId, []);
       }
-      directDependents.get(depId).push(node.id);
+      blockingMap.get(blockerId).push(rel.id);
     });
   }
 });
 
-// Store direct dependent count on each node
+// Apply blocking info to nodes
 nodes.forEach(node => {
-  node._directDependentCount = directDependents.get(node.id).length;
+  const blockedNodes = blockingMap.get(node.id) || [];
+  node._blockingScore = blockedNodes.length;
+  node._blockedNodes = blockedNodes;
 });
 
-console.log('✓ Dependency graph built');
+const blockingNodes = nodes.filter(n => n._blockingScore > 0);
+console.log(`✓ Found ${blockingNodes.length} nodes that are blocking other nodes (from blocked_by)`);
+
+if (blockingNodes.length > 0) {
+  blockingNodes.forEach(n => {
+    console.log(`  ${n.name || n.id} blocks: ${n._blockedNodes.join(', ')}`);
+  });
+}
 
 // ============================================================================
 // ENERGY COMPUTATION
@@ -123,8 +165,9 @@ nodes.forEach(node => {
   const signal = node.signal || 'Seed';
   const baseline = flowConfig.signal_to_energy[signal] || 30;
 
-  // Usage bump
-  const usageBump = Math.min(10, node._directDependentCount);
+  // Usage bump based on how many nodes depend on this one (criticality)
+  // More dependents = more critical = needs to stay healthy
+  const usageBump = Math.min(10, node._dependentCount);
 
   // Calculate raw energy
   let energy = baseline + usageBump;
@@ -163,9 +206,10 @@ nodes.forEach(node => {
   const sector = node.sector || 'Default';
   const sectorWeight = flowConfig.weights.sector[sector] || flowConfig.weights.sector.Default;
 
-  // Centrality
+  // Centrality: how many nodes depend on this one?
+  // Uses relationships.json consumed_by count
   const centralityK = flowConfig.weights.centrality_k;
-  const centrality = centralityK * Math.log(1 + node._directDependentCount);
+  const centrality = centralityK * Math.log(1 + node._dependentCount);
 
   // Stage score
   const signal = node.signal || 'Seed';
@@ -177,19 +221,26 @@ nodes.forEach(node => {
   // Time pressure
   const timePressure = Math.min(10, Math.max(0, node.time_pressure || 0));
 
+  // Blocking boost: if this node is blocking other nodes (from blocked_by)
+  // Each blocked node adds significant priority with a multiplier effect
+  // First blocked node: +15, second: +12, third: +10, etc. (diminishing returns)
+  let blockingBoost = 0;
+  for (let i = 0; i < node._blockingScore; i++) {
+    blockingBoost += Math.max(5, 15 - (i * 3));
+  }
+
   // Calculate PriorityPrime
   let priority = sectorWeight * (
     node.strategy_base +
     centrality +
     stageScore +
     tierScore +
-    timePressure
+    timePressure +
+    blockingBoost
   );
 
-  // NOTE: ops_bootstrap boost applied AFTER SCC normalization to avoid equalizing
-
-  // Apply cooldown dampener if done or Echo
-  if (node.done === true || signal === 'Echo') {
+  // Apply cooldown dampener if done or Echo (but NOT if blocking others)
+  if ((node.done === true || signal === 'Echo') && node._blockingScore === 0) {
     priority *= (flowConfig.cooldown.priority_multiplier || 0.6);
   }
 
@@ -224,7 +275,7 @@ let floorAdjustments = 0;
 nodes.forEach(node => {
   if (node.foundational === true) {
     // Check if any dependent has PriorityPrime > 60
-    const dependents = directDependents.get(node.id) || [];
+    const dependents = getNodeDependents(node.id);
     const hotDependent = dependents.some(depId => {
       const depNode = nodeMap.get(depId);
       return depNode && depNode._priorityPrime > 60;
@@ -250,7 +301,7 @@ nodes.forEach(node => {
   node.priority = node._priorityPrime;
 });
 
-// Tarjan's algorithm for finding SCCs
+// Tarjan's algorithm for finding SCCs (using relationships.json)
 function findSCCs(nodes, nodeMap) {
   const sccs = [];
   const index = new Map();
@@ -266,16 +317,15 @@ function findSCCs(nodes, nodeMap) {
     stack.push(nodeId);
     onStack.set(nodeId, true);
 
-    const node = nodeMap.get(nodeId);
-    if (node && node.depends_on && Array.isArray(node.depends_on)) {
-      for (const depId of node.depends_on) {
-        if (nodeMap.has(depId)) {
-          if (!index.has(depId)) {
-            strongConnect(depId);
-            lowlink.set(nodeId, Math.min(lowlink.get(nodeId), lowlink.get(depId)));
-          } else if (onStack.get(depId)) {
-            lowlink.set(nodeId, Math.min(lowlink.get(nodeId), index.get(depId)));
-          }
+    // Use relationships.json for dependencies
+    const dependencies = getNodeDependencies(nodeId);
+    for (const depId of dependencies) {
+      if (nodeMap.has(depId)) {
+        if (!index.has(depId)) {
+          strongConnect(depId);
+          lowlink.set(nodeId, Math.min(lowlink.get(nodeId), lowlink.get(depId)));
+        } else if (onStack.get(depId)) {
+          lowlink.set(nodeId, Math.min(lowlink.get(nodeId), index.get(depId)));
         }
       }
     }
@@ -305,28 +355,17 @@ const sccs = findSCCs(nodes, nodeMap);
 const cyclicSCCs = sccs.filter(scc => scc.length > 1);
 console.log(`✓ Found ${sccs.length} SCCs (${cyclicSCCs.length} with cycles)`);
 
+if (cyclicSCCs.length > 0) {
+  console.log('  ⚠️  Circular dependencies detected:');
+  cyclicSCCs.forEach(scc => {
+    console.log(`     ${scc.join(' ↔ ')}`);
+  });
+}
+
 // Create SCC index map (nodeId -> sccIndex)
 const nodeToSCC = new Map();
 sccs.forEach((scc, idx) => {
   scc.forEach(nodeId => nodeToSCC.set(nodeId, idx));
-});
-
-// Build SCC DAG (edges between different SCCs)
-const sccEdges = new Map();
-sccs.forEach((scc, idx) => {
-  sccEdges.set(idx, new Set());
-});
-
-nodes.forEach(node => {
-  const srcSCC = nodeToSCC.get(node.id);
-  if (node.depends_on && Array.isArray(node.depends_on)) {
-    node.depends_on.forEach(depId => {
-      const dstSCC = nodeToSCC.get(depId);
-      if (dstSCC !== undefined && srcSCC !== dstSCC) {
-        sccEdges.get(srcSCC).add(dstSCC);
-      }
-    });
-  }
 });
 
 // ============================================================================
@@ -337,7 +376,7 @@ console.log('\n🔗 Applying SCC-aware Ancestor Override...');
 
 const ancestorGap = flowConfig.ancestor_override_gap;
 
-// Apply ancestor override on the SCC DAG
+// Apply ancestor override: dependencies should have >= priority as dependents
 let iterations = 0;
 let changed = true;
 
@@ -345,27 +384,23 @@ while (changed && iterations < 50) {
   changed = false;
   iterations++;
 
-  sccs.forEach((scc, sccIdx) => {
-    // For each node in this SCC
-    scc.forEach(nodeId => {
-      const node = nodeMap.get(nodeId);
-      if (!node) return;
-
-      // Check dependencies that are in OTHER SCCs
-      if (node.depends_on && Array.isArray(node.depends_on)) {
-        node.depends_on.forEach(depId => {
-          const depSCC = nodeToSCC.get(depId);
-          if (depSCC !== undefined && depSCC !== sccIdx) {
-            const ancestor = nodeMap.get(depId);
-            if (ancestor) {
-              const minAncestorPriority = node.priority - ancestorGap;
-              if (ancestor.priority < minAncestorPriority) {
-                ancestor.priority = Math.min(100, minAncestorPriority);
-                changed = true;
-              }
-            }
+  nodes.forEach(node => {
+    const dependencies = getNodeDependencies(node.id);
+    
+    dependencies.forEach(depId => {
+      const depSCC = nodeToSCC.get(depId);
+      const nodeSCC = nodeToSCC.get(node.id);
+      
+      // Only apply across different SCCs (not within cycles)
+      if (depSCC !== undefined && depSCC !== nodeSCC) {
+        const ancestor = nodeMap.get(depId);
+        if (ancestor) {
+          const minAncestorPriority = node.priority - ancestorGap;
+          if (ancestor.priority < minAncestorPriority) {
+            ancestor.priority = Math.min(100, minAncestorPriority);
+            changed = true;
           }
-        });
+        }
       }
     });
   });
@@ -379,8 +414,7 @@ console.log(`✓ Ancestor Override converged in ${iterations} iterations`);
 
 console.log('\n📊 Enforcing topological flow ordering...');
 
-// Ensure dependencies always have higher priority than dependents
-// This respects the dependency graph architecture
+// Ensure dependencies always have higher or equal priority than dependents
 function enforceTopologicalOrder(nodes, nodeMap) {
   let adjustments = 0;
   let maxIterations = 50;
@@ -392,22 +426,22 @@ function enforceTopologicalOrder(nodes, nodeMap) {
     iteration++;
 
     nodes.forEach(node => {
-      if (node.depends_on && Array.isArray(node.depends_on)) {
-        node.depends_on.forEach(depId => {
-          const dependency = nodeMap.get(depId);
-          if (dependency) {
-            // Dependency must have higher priority than this node
-            // Add a 5-point minimum gap to ensure clear ordering
-            const minDependencyPriority = node.priority + 5;
-            
-            if (dependency.priority < minDependencyPriority) {
-              dependency.priority = Math.min(100, minDependencyPriority);
-              changed = true;
-              adjustments++;
-            }
+      const dependencies = getNodeDependencies(node.id);
+      
+      dependencies.forEach(depId => {
+        const dependency = nodeMap.get(depId);
+        if (dependency) {
+          // Dependency must have higher priority than this node
+          // Add a 5-point minimum gap to ensure clear ordering
+          const minDependencyPriority = node.priority + 5;
+          
+          if (dependency.priority < minDependencyPriority) {
+            dependency.priority = Math.min(100, minDependencyPriority);
+            changed = true;
+            adjustments++;
           }
-        });
-      }
+        }
+      });
     });
   }
 
@@ -531,13 +565,13 @@ nodes.forEach(node => {
   node.flow = Math.round(flow);
 });
 
-// Apply hard cap to done nodes
+// Apply hard cap to done nodes (unless they're blocking)
 console.log('\n🔒 Applying hard cap to done nodes...');
 let cappedCount = 0;
 const doneNodeCap = 45; // Hard maximum flow for done nodes
 
 nodes.forEach(node => {
-  if (node.done === true && node.flow > doneNodeCap) {
+  if (node.done === true && node._blockingScore === 0 && node.flow > doneNodeCap) {
     node.flow = doneNodeCap;
     cappedCount++;
   }
@@ -548,7 +582,10 @@ console.log(`✓ Capped ${cappedCount} done nodes to max flow of ${doneNodeCap}`
 // Clean up temporary fields
 nodes.forEach(node => {
   delete node._priorityPrime;
-  delete node._directDependentCount;
+  delete node._dependencyCount;
+  delete node._dependentCount;
+  delete node._blockingScore;
+  delete node._blockedNodes;
 });
 
 console.log('✓ Flow computed for all nodes');
@@ -589,18 +626,34 @@ const flowStats = {
 };
 
 console.log(`Energy:   min=${energyStats.min}, max=${energyStats.max}, avg=${energyStats.avg.toFixed(2)}`);
-console.log(`Priority: min=${priorityStats.min.toFixed(2)}, max=${priorityStats.max.toFixed(2)}, avg=${priorityStats.avg.toFixed(2)}`);
-console.log(`Flow:     min=${flowStats.min.toFixed(2)}, max=${flowStats.max.toFixed(2)}, avg=${flowStats.avg.toFixed(2)}`);
+console.log(`Priority: min=${priorityStats.min}, max=${priorityStats.max}, avg=${priorityStats.avg.toFixed(2)}`);
+console.log(`Flow:     min=${flowStats.min}, max=${flowStats.max}, avg=${flowStats.avg.toFixed(2)}`);
 
 // Top 10 by Flow
-console.log('\n🔥 Top 10 Nodes by Flow:');
+console.log('\n🔥 Top 10 Nodes by Flow (What to focus on next):');
 const topNodes = [...nodes]
   .sort((a, b) => b.flow - a.flow)
   .slice(0, 10);
 
 topNodes.forEach((node, i) => {
-  console.log(`  ${i + 1}. ${node.name || node.id} (Flow: ${node.flow})`);
+  const signal = node.signal || '?';
+  console.log(`  ${i + 1}. ${node.name || node.id} (Flow: ${node.flow}, Signal: ${signal})`);
 });
+
+// Show blocking analysis (from blocked_by in relationships.json)
+console.log('\n🚧 Nodes blocking progression (from blocked_by):');
+const blockersWithInfo = nodes
+  .filter(n => n._blockingScore > 0)
+  .sort((a, b) => b._blockingScore - a._blockingScore);
+
+if (blockersWithInfo.length > 0) {
+  blockersWithInfo.forEach(node => {
+    const blockedList = blockingMap.get(node.id) || [];
+    console.log(`  ${node.name || node.id} (${node.signal}) → blocking: ${blockedList.join(', ')}`);
+  });
+} else {
+  console.log('  No blocked_by entries found. Add blocked_by arrays in relationships.json to track blockers.');
+}
 
 console.log('\n✅ Flow computation complete!');
 console.log('═'.repeat(60));

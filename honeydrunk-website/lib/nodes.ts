@@ -8,6 +8,7 @@ import type { Node, VisualNode, SignalVisuals, SectorVisuals, NodePosition, Sign
 import { colors } from './tokens';
 import { getSectorColor, getAllSectors as getSectorsFromConfig, getSectorColorsMap } from './sectors';
 import { getFlowTierFromScore, getAllFlowTiers, formatFlowTierRange } from './flow';
+import { getNodeDependencies } from './relationships';
 
 // Type assertion for imported JSON
 const nodes = nodesData as Node[];
@@ -200,8 +201,8 @@ export function getNodes(): VisualNode[] {
     .sort((a, b) => (b.priority || 0) - (a.priority || 0))
     .map((node, index) => ({
       ...node,
-      // Map depends_on to connections for backward compatibility
-      connections: node.depends_on?.map(connId => resolveNodeId(connId)),
+      // Get connections from relationships.json (single source of truth)
+      connections: getNodeDependencies(node.id).map(connId => resolveNodeId(connId)),
       position: generateNodePosition(node, index),
       signalVisuals: signalVisualsMap[node.signal],
       sectorVisuals: sectorVisualsMap[node.sector],
