@@ -671,8 +671,7 @@
         "pulse"
       ],
       "consumed_by": [
-        "honeydrunk-testing",
-        "honeydrunk-transport"
+        "honeydrunk-testing"
       ],
       "exposes": {
         "contracts": [],
@@ -982,8 +981,7 @@
     {
       "id": "honeydrunk-transport",
       "consumes": [
-        "honeydrunk-kernel",
-        "honeydrunk-data"
+        "honeydrunk-kernel"
       ],
       "consumed_by": [
         "honeycore-web-rest",
