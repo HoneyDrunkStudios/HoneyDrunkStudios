@@ -9,7 +9,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 31,
-    "priority": 46,
+    "priority": 63,
     "tags": [
       "msbuild",
       "versioning",
@@ -49,7 +49,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 41,
+    "flow": 52,
     "public_name": "HoneyDrunk.Build"
   },
   {
@@ -62,7 +62,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 29,
-    "priority": 68,
+    "priority": 81,
     "tags": [
       "devops",
       "ci-cd",
@@ -99,7 +99,7 @@
     "time_pressure": 5,
     "done": false,
     "cooldown_days": 14,
-    "flow": 54,
+    "flow": 63,
     "ops_bootstrap": true,
     "public_name": "HoneyDrunk.Pipelines"
   },
@@ -113,7 +113,7 @@
     "signal": "Live",
     "cluster": "foundation",
     "energy": 0,
-    "priority": 35,
+    "priority": 36,
     "tags": [
       "github",
       "actions",
@@ -164,7 +164,7 @@
     "signal": "Seed",
     "cluster": "infrastructure",
     "energy": 30,
-    "priority": 77,
+    "priority": 93,
     "tags": [
       "deploy",
       "releases",
@@ -201,7 +201,7 @@
     "time_pressure": 4,
     "done": false,
     "cooldown_days": 14,
-    "flow": 61,
+    "flow": 71,
     "ops_bootstrap": true,
     "public_name": "HoneyDrunk.Deploy"
   },
@@ -214,7 +214,7 @@
     "sector": "Core",
     "signal": "Live",
     "cluster": "foundation",
-    "energy": 0,
+    "energy": 1,
     "priority": 100,
     "tags": [
       "infrastructure",
@@ -337,13 +337,13 @@
     "id": "honeydrunk-data",
     "type": "node",
     "name": "HoneyDrunk.Data",
-    "short": "Persistence conventions & migrations",
-    "description": "Database conventions, migrations/versioning, tenant isolation, outbox integration, and telemetry hooks.",
+    "short": "Persistence contracts & migrations",
+    "description": "Persistence contracts, provider implementations, migrations discipline, tenant isolation, and outbox storage support.",
     "sector": "Core",
-    "signal": "Awake",
+    "signal": "Live",
     "cluster": "foundation",
-    "energy": 66,
-    "priority": 100,
+    "energy": 0,
+    "priority": 36,
     "tags": [
       "database",
       "migrations",
@@ -353,7 +353,7 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Data"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Data gives the Grid memory and continuity. It defines how persistence works across every tenant, every node, and every environment — cleanly, predictably, and securely. This Node standardizes migrations, schema versioning, tenant isolation, and outbox patterns to prevent corruption and drift. It's the difference between projects that degrade with time and systems that age gracefully. Data acts as both archivist and guardrail: it ensures that what happened yesterday is reproducible tomorrow, no matter which service you look at. As it matures, Data will integrate with Pulse for real-time schema health and with Vault for transparent secrets and credential management. It will gain auto-generated entity documentation and drift detection between staging and production environments. Over the long term, it evolves toward declarative storage definitions where schemas generate themselves from manifests. HoneyDrunk.Data earns its keep by giving every part of the Hive perfect recall — a shared memory that never lies, never drifts, and never forgets.",
+      "overview": "HoneyDrunk.Data gives the Grid memory and continuity. It defines persistence contracts and provider conventions across every tenant, every node, and every environment, so storage stays predictable and auditable. This Node standardizes migrations, schema versioning, tenant isolation, and persistence telemetry. It is a guardrail against drift: the same operation should produce the same durable result, regardless of where it runs. Scope boundaries: Data persists facts. It does not contain business logic, and it does not publish messages. If an outbox is used, Data owns the storage schema and access patterns, while Transport owns dispatch and delivery behavior. As it matures, Data can expose optional hooks for Pulse to report schema health, migration status, and drift signals. Secrets and credentials are provided through the application's configuration pipeline, typically backed by Vault, without Data taking a direct dependency on Vault.",
       "why_it_exists": "HoneyDrunk.Data exists to prevent inconsistency and reinvention across the Grid.",
       "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
       "value_props": [
@@ -363,7 +363,7 @@
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
       "roadmap_focus": "Advance HoneyDrunk.Data capabilities and harden contracts.",
-      "grid_relationship": "Consumes Kernel for Context (Tenancy/User) and Lifecycle (Migrations); feeds Pulse telemetry; exposes persistence abstractions for outbox storage providers.",
+      "grid_relationship": "Consumes Kernel (required) for GridContext, OperationContext, lifecycle hooks, and telemetry primitives. Pulse integration is optional for schema health and migration telemetry. Does not consume Vault directly (configuration provided at app layer). Does not consume Transport or Auth. Exposes outbox storage contracts that Transport consumes for dispatch.",
       "integration_depth": "medium",
       "demo_path": "Show a 60-second demo of HoneyDrunk.Data: input → behavior → outcome.",
       "signal_quote": "Memory with meaning.",
@@ -378,9 +378,9 @@
     "strategy_base": 30,
     "tier": "none",
     "time_pressure": 3,
-    "done": false,
+    "done": true,
     "cooldown_days": 14,
-    "flow": 88,
+    "flow": 23,
     "public_name": "HoneyDrunk.Data"
   },
   {
@@ -446,7 +446,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 29,
-    "priority": 27,
+    "priority": 38,
     "tags": [
       "rest",
       "api",
@@ -483,7 +483,7 @@
     "time_pressure": 2,
     "done": false,
     "cooldown_days": 14,
-    "flow": 28,
+    "flow": 35,
     "public_name": "HoneyCore.Web.Rest"
   },
   {
@@ -496,7 +496,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 29,
-    "priority": 23,
+    "priority": 31,
     "slots": [
       "harness"
     ],
@@ -536,7 +536,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 25,
+    "flow": 30,
     "public_name": "HoneyDrunk.Testing"
   },
   {
@@ -549,7 +549,7 @@
     "signal": "Seed",
     "cluster": "tooling",
     "energy": 33,
-    "priority": 88,
+    "priority": 100,
     "tags": [
       "cli",
       "tools",
@@ -586,7 +586,7 @@
     "time_pressure": 4,
     "done": false,
     "cooldown_days": 14,
-    "flow": 69,
+    "flow": 77,
     "ops_bootstrap": true,
     "public_name": "HoneyDrunk.Tools"
   },
@@ -597,9 +597,9 @@
     "short": "Secrets & config manager",
     "description": "Secure secrets and configuration management. Zero-trust vault for sensitive data across environments.",
     "sector": "Core",
-    "signal": "Awake",
+    "signal": "Live",
     "cluster": "security",
-    "energy": 75,
+    "energy": 1,
     "priority": 100,
     "slots": [
       "provider"
@@ -613,17 +613,17 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Vault"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Vault is the trust kernel of the Hive — the invisible system that keeps every secret, credential, and configuration alive yet contained. It exists to make safety a default, not a discipline: developers never touch raw keys, yet their services always have exactly what they need. Vault encrypts, scopes, and distributes configuration at runtime, replacing guesswork with deliberate policy. It centralizes authority without centralizing failure, ensuring that a compromise in one Node never spreads contagion through the Grid. Every request, token, and certificate becomes traceable — not to restrict freedom, but to cultivate accountability. Over time, Vault will integrate directly with Pulse, correlating anomalies in authentication patterns to detect and isolate risk before it spreads. It will expand into secrets-as-code: declarative manifests that describe not just values, but intended lifecycles. Eventually, Vault evolves into a self-auditing trust network — rotating credentials autonomously, adapting policies to observed behavior, and communicating security posture to the rest of the Grid. Vault earns its keep by doing its work in silence: the less it's noticed, the more it's doing its job.",
+      "overview": "HoneyDrunk.Vault is the trust kernel of the Hive — the invisible system that keeps every secret, credential, and configuration alive yet contained. It exists to make safety a default, not a discipline: developers never touch raw keys, yet their services always have exactly what they need. Vault defines and exposes ISecretStore and IConfigProvider for secure storage, encrypting, scoping, and distributing configuration at runtime. It centralizes authority without centralizing failure, ensuring that a compromise in one Node never spreads contagion through the Grid. Vault stores signing keys and auth configuration for token validation and identity workflows. Every request, token, and certificate becomes traceable — not to restrict freedom, but to cultivate accountability. Vault earns its keep by doing its work in silence: the less it's noticed, the more it's doing its job.",
       "why_it_exists": "HoneyDrunk.Vault exists to prevent inconsistency and reinvention across the Grid.",
       "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
       "value_props": [
-        "Standardizes security, secrets",
-        "Reduces operational risk with opinionated defaults",
-        "Improves developer velocity and interoperability"
+        "Defines ISecretStore and IConfigProvider for secure storage",
+        "Centralizes secrets without centralizing failure",
+        "Provider model enables local, cloud, or hybrid deployments"
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
-      "roadmap_focus": "Advance HoneyDrunk.Vault capabilities and harden contracts.",
-      "grid_relationship": "Connects with: honeydrunk-kernel, pulse, honeydrunk-auth, honeysentinel, breachlab-exe.",
+      "roadmap_focus": "Pulse integration for anomaly detection, secrets-as-code manifests, autonomous credential rotation.",
+      "grid_relationship": "Connects with: honeydrunk-kernel, honeydrunk-auth, honeysentinel, breachlab-exe.",
       "integration_depth": "deep",
       "demo_path": "Show a 60-second demo of HoneyDrunk.Vault: input → behavior → outcome.",
       "signal_quote": "Trust, by design.",
@@ -638,9 +638,9 @@
     "strategy_base": 18,
     "tier": "none",
     "time_pressure": 2,
-    "done": false,
+    "done": true,
     "cooldown_days": 14,
-    "flow": 91,
+    "flow": 45,
     "public_name": "HoneyDrunk.Vault"
   },
   {
@@ -701,34 +701,34 @@
     "id": "honeydrunk-auth",
     "type": "node",
     "name": "HoneyDrunk.Auth",
-    "short": "Passkeys/JWT + policy",
-    "description": "Unified authentication & authorization with passkeys, JWT, MFA, and policy-based access.",
+    "short": "JWT validation + policy enforcement",
+    "description": "Standardized authentication and authorization contracts. JWT bearer validation, policy evaluation, and signing key seams via Vault.",
     "sector": "Core",
-    "signal": "Seed",
+    "signal": "Live",
     "cluster": "infrastructure",
-    "energy": 33,
-    "priority": 52,
+    "energy": 0,
+    "priority": 43,
     "tags": [
       "auth",
       "security",
       "jwt",
-      "passkeys"
+      "policy"
     ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Auth"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Auth is the digital passport system of the Hive — a unified identity and access framework built around passkeys, JWTs, MFA, and fine-grained policy enforcement. It standardizes authentication across consumer apps, internal tools, and AI agents so every interaction inside the Grid is verifiable and secure. Auth unifies identity for humans, machines, and services, supporting federated sign-ins, device trust, and temporary tokens for automation flows. It integrates with Vault for secret rotation, Pulse for session observability, and Sentinel for anomaly detection. Over time, it will evolve into a context-aware authorization mesh — policies that adjust dynamically based on Node relationships, behavior patterns, and risk posture. Auth will become a critical enabler of cross-Node orchestration, allowing agents and services to operate securely without human bottlenecks. Its long-term goal is frictionless trust — where security feels like gravity: always there, invisible, and unbreakable.",
-      "why_it_exists": "HoneyDrunk.Auth exists to prevent inconsistency and reinvention across the Grid.",
-      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "overview": "HoneyDrunk.Auth standardizes authentication and authorization decisions across nodes and entrypoints. It provides JWT bearer validation, policy evaluation contracts, and signing key seams backed by Vault. Auth ensures consistent identity checks and authorization patterns so every request entering the Grid follows the same security discipline. Scope boundaries: Auth validates requests and evaluates policies. It does not own user identity storage (that's app-specific), and it does not perform OAuth/OIDC flows today. Signing keys and auth configuration are provided through Vault. Over time, Auth can evolve to support passkeys, MFA, federated sign-ins, device trust, and context-aware authorization meshes. Future integration with Pulse for session observability and Sentinel for anomaly detection will enable dynamic policy adjustments based on behavior patterns and risk posture.",
+      "why_it_exists": "Prevents inconsistent authentication and authorization patterns across nodes, ensuring security discipline is uniform regardless of entrypoint.",
+      "primary_audience": "Service owners building HTTP APIs, gateways, and any node requiring request authentication.",
       "value_props": [
-        "Standardizes auth, security",
-        "Reduces operational risk with opinionated defaults",
-        "Improves developer velocity and interoperability"
+        "Consistent JWT validation and policy enforcement",
+        "Signing key management via Vault",
+        "Clean separation between auth contracts and implementations"
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
-      "roadmap_focus": "Advance HoneyDrunk.Auth capabilities and harden contracts.",
-      "grid_relationship": "Connects with: honeydrunk-vault, honeycore-web-rest.",
+      "roadmap_focus": "Passkeys and MFA support. Federated sign-ins and device trust. Pulse integration for session observability. Sentinel integration for anomaly detection. Context-aware authorization mesh.",
+      "grid_relationship": "Consumes Kernel (required) for GridContext, OperationContext, and telemetry. Consumes Vault for signing keys and auth configuration. Exposes auth contracts consumed by Web.Rest and service nodes.",
       "integration_depth": "medium",
       "demo_path": "Show a 60-second demo of HoneyDrunk.Auth: input → behavior → outcome.",
       "signal_quote": "Trust without friction.",
@@ -743,9 +743,9 @@
     "strategy_base": 20,
     "tier": "none",
     "time_pressure": 0,
-    "done": false,
+    "done": true,
     "cooldown_days": 14,
-    "flow": 45,
+    "flow": 28,
     "public_name": "HoneyDrunk.Auth"
   },
   {
@@ -758,7 +758,7 @@
     "signal": "Seed",
     "cluster": "ai",
     "energy": 33,
-    "priority": 37,
+    "priority": 51,
     "tags": [
       "agents",
       "runtime",
@@ -795,7 +795,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 36,
+    "flow": 45,
     "public_name": "HoneyDrunk.AgentKit"
   },
   {
@@ -808,7 +808,7 @@
     "signal": "Seed",
     "cluster": "ecosystem",
     "energy": 29,
-    "priority": 14,
+    "priority": 19,
     "tags": [
       "creator",
       "marketing",
@@ -845,7 +845,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 19,
+    "flow": 23,
     "public_name": "HoneyDrunk.Signal"
   },
   {
@@ -858,7 +858,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 31,
-    "priority": 36,
+    "priority": 49,
     "tags": [
       "finance",
       "accounting",
@@ -893,7 +893,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 34,
+    "flow": 43,
     "public_name": "Ledger"
   },
   {
@@ -906,7 +906,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 31,
-    "priority": 41,
+    "priority": 54,
     "tags": [
       "invoicing",
       "payments",
@@ -941,7 +941,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 38,
+    "flow": 46,
     "public_name": "Invoice"
   },
   {
@@ -954,7 +954,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 29,
-    "priority": 18,
+    "priority": 24,
     "tags": [
       "saas",
       "crm",
@@ -993,7 +993,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 22,
+    "flow": 26,
     "public_name": "HoneyDrunk.ClientPortalOS"
   },
   {
@@ -1006,7 +1006,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 29,
-    "priority": 18,
+    "priority": 24,
     "tags": [
       "payments",
       "portal",
@@ -1041,7 +1041,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 22,
+    "flow": 26,
     "public_name": "Pay"
   },
   {
@@ -1054,7 +1054,7 @@
     "signal": "Seed",
     "cluster": "business",
     "energy": 29,
-    "priority": 18,
+    "priority": 24,
     "tags": [
       "subscriptions",
       "expenses",
@@ -1089,7 +1089,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 22,
+    "flow": 26,
     "public_name": "Subs"
   },
   {
@@ -1102,7 +1102,7 @@
     "signal": "Seed",
     "cluster": "marketplace",
     "energy": 29,
-    "priority": 14,
+    "priority": 19,
     "tags": [
       "marketplace",
       "assets",
@@ -1137,7 +1137,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 19,
+    "flow": 23,
     "public_name": "Forge"
   },
   {
@@ -1150,7 +1150,7 @@
     "signal": "Seed",
     "cluster": "personal",
     "energy": 29,
-    "priority": 14,
+    "priority": 19,
     "tags": [
       "relationships",
       "personal",
@@ -1185,7 +1185,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 19,
+    "flow": 23,
     "public_name": "Tether"
   },
   {
@@ -1198,7 +1198,7 @@
     "signal": "Seed",
     "cluster": "gaming",
     "energy": 29,
-    "priority": 14,
+    "priority": 19,
     "tags": [
       "fantasy",
       "media",
@@ -1233,7 +1233,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 19,
+    "flow": 23,
     "public_name": "Draft"
   },
   {
@@ -1246,7 +1246,7 @@
     "signal": "Seed",
     "cluster": "gaming",
     "energy": 29,
-    "priority": 14,
+    "priority": 19,
     "tags": [
       "game",
       "prototype",
@@ -1281,7 +1281,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 19,
+    "flow": 23,
     "public_name": "Game #1 (TBD)"
   },
   {
@@ -1294,7 +1294,7 @@
     "signal": "Seed",
     "cluster": "ecosystem",
     "energy": 34,
-    "priority": 35,
+    "priority": 48,
     "tags": [
       "ai",
       "pm",
@@ -1329,7 +1329,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 35,
+    "flow": 43,
     "public_name": "HoneyHub"
   },
   {
@@ -1342,7 +1342,7 @@
     "signal": "Seed",
     "cluster": "ecosystem",
     "energy": 29,
-    "priority": 14,
+    "priority": 19,
     "tags": [
       "networking",
       "collaboration",
@@ -1377,7 +1377,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 19,
+    "flow": 23,
     "public_name": "HoneyConnect"
   },
   {
@@ -1390,7 +1390,7 @@
     "signal": "Live",
     "cluster": "ecosystem",
     "energy": 100,
-    "priority": 40,
+    "priority": 53,
     "tags": [
       "registry",
       "orchestration",
@@ -1427,7 +1427,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 61,
+    "flow": 69,
     "public_name": "HoneyDrunk.Grid"
   },
   {
@@ -1440,7 +1440,7 @@
     "signal": "Seed",
     "cluster": "robotics",
     "energy": 29,
-    "priority": 14,
+    "priority": 19,
     "tags": [
       "robotics",
       "ai",
@@ -1476,7 +1476,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 19,
+    "flow": 23,
     "public_name": "HoneyMech.Courier"
   },
   {
@@ -1489,7 +1489,7 @@
     "signal": "Seed",
     "cluster": "robotics",
     "energy": 31,
-    "priority": 28,
+    "priority": 39,
     "tags": [
       "simulation",
       "physics",
@@ -1525,7 +1525,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 29,
+    "flow": 36,
     "public_name": "HoneyMech.Sim"
   },
   {
@@ -1538,7 +1538,7 @@
     "signal": "Seed",
     "cluster": "robotics",
     "energy": 29,
-    "priority": 14,
+    "priority": 19,
     "tags": [
       "hardware",
       "control",
@@ -1574,7 +1574,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 19,
+    "flow": 23,
     "public_name": "HoneyMech.Servo"
   },
   {
@@ -1587,7 +1587,7 @@
     "signal": "Seed",
     "cluster": "history",
     "energy": 29,
-    "priority": 14,
+    "priority": 19,
     "tags": [
       "archive",
       "legacy",
@@ -1624,7 +1624,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 19,
+    "flow": 23,
     "public_name": "Archive.Legacy"
   },
   {
@@ -1637,7 +1637,7 @@
     "signal": "Seed",
     "cluster": "security",
     "energy": 29,
-    "priority": 14,
+    "priority": 19,
     "tags": [
       "ctf",
       "learning",
@@ -1675,7 +1675,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 19,
+    "flow": 23,
     "public_name": "BreachLab.exe"
   },
   {
@@ -1688,7 +1688,7 @@
     "signal": "Seed",
     "cluster": "security",
     "energy": 30,
-    "priority": 23,
+    "priority": 32,
     "tags": [
       "sdk",
       "security",
@@ -1726,7 +1726,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 25,
+    "flow": 31,
     "public_name": "HoneyDrunk.Sentinel"
   },
   {
@@ -1739,7 +1739,7 @@
     "signal": "Seed",
     "cluster": "social",
     "energy": 29,
-    "priority": 14,
+    "priority": 19,
     "tags": [
       "social",
       "entertainment",
@@ -1778,7 +1778,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 19,
+    "flow": 23,
     "public_name": "Re:View"
   },
   {
@@ -1791,7 +1791,7 @@
     "signal": "Seed",
     "cluster": "self",
     "energy": 29,
-    "priority": 14,
+    "priority": 19,
     "tags": [
       "journaling",
       "wellness",
@@ -1829,7 +1829,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 19,
+    "flow": 23,
     "public_name": "MemoryBank"
   },
   {
@@ -1842,7 +1842,7 @@
     "signal": "Seed",
     "cluster": "creativity",
     "energy": 29,
-    "priority": 14,
+    "priority": 19,
     "tags": [
       "creativity",
       "social",
@@ -1881,7 +1881,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 19,
+    "flow": 23,
     "public_name": "DreamMarket"
   },
   {
@@ -1894,7 +1894,7 @@
     "signal": "Seed",
     "cluster": "fandom",
     "energy": 29,
-    "priority": 14,
+    "priority": 19,
     "tags": [
       "games",
       "anime",
@@ -1936,7 +1936,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 19,
+    "flow": 23,
     "public_name": "Arcadia"
   },
   {
@@ -1949,7 +1949,7 @@
     "signal": "Seed",
     "cluster": "foundation",
     "energy": 30,
-    "priority": 23,
+    "priority": 32,
     "tags": [
       "xp",
       "progression",
@@ -1988,7 +1988,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 25,
+    "flow": 31,
     "public_name": "HiveXP"
   },
   {
@@ -2001,7 +2001,7 @@
     "signal": "Seed",
     "cluster": "application",
     "energy": 29,
-    "priority": 14,
+    "priority": 19,
     "tags": [
       "market",
       "missions",
@@ -2040,7 +2040,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 19,
+    "flow": 23,
     "public_name": "HiveGigs"
   },
   {
@@ -2087,8 +2087,8 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 29,
-    "priority": 14,
-    "flow": 19,
+    "priority": 19,
+    "flow": 23,
     "public_name": "Meta.DevPortal"
   },
   {
@@ -2134,8 +2134,8 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 29,
-    "priority": 14,
-    "flow": 19,
+    "priority": 19,
+    "flow": 23,
     "public_name": "Meta.PackagePublisher"
   },
   {
@@ -2181,8 +2181,8 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 30,
-    "priority": 28,
-    "flow": 29,
+    "priority": 37,
+    "flow": 35,
     "public_name": "Meta.AtlasSync"
   },
   {
@@ -2228,8 +2228,8 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 31,
-    "priority": 28,
-    "flow": 29,
+    "priority": 39,
+    "flow": 36,
     "public_name": "MarketCore"
   },
   {
@@ -2275,8 +2275,8 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 29,
-    "priority": 18,
-    "flow": 22,
+    "priority": 24,
+    "flow": 26,
     "public_name": "HoneyDrunk.Console"
   },
   {
@@ -2322,8 +2322,8 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 30,
-    "priority": 32,
-    "flow": 31,
+    "priority": 42,
+    "flow": 38,
     "public_name": "Audit.Agent"
   },
   {
@@ -2336,7 +2336,7 @@
     "signal": "Seed",
     "cluster": "orchestration",
     "energy": 30,
-    "priority": 32,
+    "priority": 42,
     "tags": [
       "ai",
       "meta",
@@ -2376,7 +2376,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 31,
+    "flow": 38,
     "public_name": "HoneyDrunk.Operator"
   },
   {
@@ -2441,7 +2441,7 @@
     "signal": "Seed",
     "cluster": "observability",
     "energy": 29,
-    "priority": 26,
+    "priority": 36,
     "tags": [
       "telemetry",
       "collector",
@@ -2479,7 +2479,7 @@
     "time_pressure": 3,
     "done": false,
     "cooldown_days": 14,
-    "flow": 27,
+    "flow": 34,
     "public_name": "HoneyDrunk.Collector"
   },
   {
@@ -2492,7 +2492,7 @@
     "signal": "Seed",
     "cluster": "infrastructure",
     "energy": 29,
-    "priority": 21,
+    "priority": 29,
     "tags": [
       "notifications",
       "comms",
@@ -2531,7 +2531,7 @@
     "time_pressure": 3,
     "done": false,
     "cooldown_days": 14,
-    "flow": 24,
+    "flow": 29,
     "public_name": "HoneyDrunk.Comms"
   },
   {
@@ -2544,7 +2544,7 @@
     "signal": "Seed",
     "cluster": "infrastructure",
     "energy": 29,
-    "priority": 32,
+    "priority": 44,
     "tags": [
       "storage",
       "assets",
@@ -2582,7 +2582,7 @@
     "time_pressure": 2,
     "done": false,
     "cooldown_days": 14,
-    "flow": 31,
+    "flow": 39,
     "public_name": "HoneyDrunk.Assets"
   },
   {
@@ -2595,7 +2595,7 @@
     "signal": "Seed",
     "cluster": "assistant",
     "energy": 29,
-    "priority": 23,
+    "priority": 32,
     "tags": [
       "assistant",
       "ai",
@@ -2637,7 +2637,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 25,
+    "flow": 31,
     "public_name": "HoneyDrunk.Clarity"
   },
   {
@@ -2688,8 +2688,8 @@
     "done": false,
     "cooldown_days": 14,
     "energy": 29,
-    "priority": 21,
-    "flow": 24,
+    "priority": 29,
+    "flow": 29,
     "public_name": "HoneyDrunk.HomeLab"
   },
   {
@@ -2702,7 +2702,7 @@
     "signal": "Seed",
     "cluster": "orchestration",
     "energy": 29,
-    "priority": 27,
+    "priority": 37,
     "tags": [
       "ai",
       "governance",
@@ -2742,7 +2742,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 28,
+    "flow": 34,
     "public_name": "HoneyDrunk.Governor"
   }
 ]

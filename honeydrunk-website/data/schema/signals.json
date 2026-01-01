@@ -1,5 +1,20 @@
 [
   {
+    "date": "2026-01-01",
+    "title": "Vault Authority Correction & Data Scope Refinement",
+    "desc": "Major accuracy pass on Vault and Data nodes. Fixed a critical authority inversion in Vault: Vault defines and exposes ISecretStore and IConfigProvider—Kernel consumes these contracts, not the other way around. Secrets ownership lives in Vault, not Kernel. De-specified OAuth/OIDC wording to 'auth configuration for token validation and identity workflows' since the exact protocol shape is still evolving. Moved Pulse integration from current state to roadmap_focus—Vault doesn't depend on Pulse today. Trimmed Vault's Kernel consumes_detail from 31 contracts to 12 (IGridContext, IOperationContext, lifecycle hooks, health/readiness, and telemetry primitives). Rewrote all Vault provider modules with correct definitions and promoted all five to Live signal: AzureKeyVault (managed identity, versioned secrets), Aws (Secrets Manager caching), Configuration (bootstrap from config sources), InMemory (deterministic test secrets), and File (local file-based secrets for dev). On the Data side: refined scope boundaries to emphasize provider-agnostic persistence contracts, tenant-aware storage, and schema evolution—without leaking EF Core or SQL Server concerns. Shrunk Data's Kernel contracts to minimal surface and marked Pulse as optional sidecar. Signal quote from Vault: 'Secrets have a home.' Build-in-public: cleaner boundaries, accurate authority, production-ready providers.",
+    "tags": [
+      "Core",
+      "HoneyDrunk.Vault",
+      "HoneyDrunk.Data",
+      "HoneyDrunk.Kernel",
+      "Architecture",
+      "Contracts",
+      "Providers"
+    ],
+    "sector": "Core"
+  },
+  {
     "date": "2025-11-29",
     "title": "Kernel v0.4 Roadmap, Signal-Based Dependents, and Documentation Links",
     "desc": "Major improvements to the node detail pages and Kernel metadata. Updated Kernel's roadmap_focus to reflect the v0.4 stabilization theme: enforcing the three-ID context model, consolidating hosting around AddHoneyDrunkNode, aligning lifecycle/health/readiness with docs, locking identity registries, and finalizing agent execution contracts. Refactored the roleInGrid generator to use semantic descriptions without specific counts—no more stale '12 dependents' text that needs manual updates. Implemented signal-based dependent categorization: nodes in consumed_by are now automatically sorted into Implemented (Live/Echo), In Progress (Wiring), or Planned (Seed/Awake) based on their signal state. Added a new `docs` field to nodes for linking to GitHub READMEs and file guides—Kernel now links to its repository, FILE_GUIDE.md, and package READMEs for HoneyDrunk.Kernel and HoneyDrunk.Kernel.Abstractions. Replaced all emoji icons with cross-platform SVG icons for consistent rendering. Merged the Dependencies & Impact section with Node Contract into a single unified section. Build-in-public: every node page now tells a richer, more accurate story.",

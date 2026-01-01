@@ -446,47 +446,26 @@
           "IAuthenticationProvider",
           "IAuthorizationPolicy"
         ],
-        "packages": []
+        "packages": [
+          "HoneyDrunk.Auth.Abstractions",
+          "HoneyDrunk.Auth.AspNetCore"
+        ]
       },
       "blocked_by": [],
       "consumes_detail": {
         "honeydrunk-kernel": [
           "IGridContext",
-          "IGridContextFactory",
           "IGridContextAccessor",
-          "INodeContext",
           "IOperationContext",
-          "IOperationContextFactory",
           "IOperationContextAccessor",
-          "IStartupHook",
-          "IShutdownHook",
-          "INodeLifecycle",
-          "IHealthContributor",
-          "IReadinessContributor",
-          "NodeLifecycleStage",
-          "NodeLifecycleManager",
-          "IHealthCheck",
-          "HealthStatus",
-          "CompositeHealthCheck",
-          "IMetricsCollector",
-          "NoOpMetricsCollector",
-          "ITelemetryContext",
           "ITelemetryActivityFactory",
           "ITraceEnricher",
-          "ILogScopeFactory",
-          "TelemetryTags",
-          "GridActivitySource",
-          "IAgentDescriptor",
-          "IAgentExecutionContext",
-          "IAgentExecutionContextFactory",
-          "IAgentCapability",
-          "AgentContextScope",
-          "HoneyDrunk.Kernel",
           "HoneyDrunk.Kernel.Abstractions"
         ],
         "honeydrunk-vault": [
           "ISecretStore",
-          "HoneyDrunk.Vault"
+          "signing keys",
+          "auth configuration"
         ]
       }
     },
@@ -667,52 +646,61 @@
     {
       "id": "honeydrunk-data",
       "consumes": [
-        "honeydrunk-kernel",
+        "honeydrunk-kernel"
+      ],
+      "consumes_optional": [
         "pulse"
       ],
       "consumed_by": [
-        "honeydrunk-testing"
+        "honeydrunk-testing",
+        "honeycore-web-rest"
       ],
       "exposes": {
-        "contracts": [],
-        "packages": []
+        "contracts": [
+          "IRepository<T>",
+          "IUnitOfWork",
+          "ITenantScope",
+          "ITenantConnectionResolver",
+          "IDataHealthContributor",
+          "IDataReadinessContributor",
+          "ISchemaVersionProvider"
+        ],
+        "packages": [
+          "HoneyDrunk.Data.Abstractions",
+          "HoneyDrunk.Data.EntityFramework",
+          "HoneyDrunk.Data.Migrations",
+          "HoneyDrunk.Data.SqlServer"
+        ]
       },
+      "does_not_consume": [
+        "honeydrunk-vault",
+        "honeydrunk-transport",
+        "honeydrunk-auth"
+      ],
       "blocked_by": [],
       "consumes_detail": {
         "honeydrunk-kernel": [
           "IGridContext",
-          "IGridContextFactory",
           "IGridContextAccessor",
-          "INodeContext",
           "IOperationContext",
-          "IOperationContextFactory",
           "IOperationContextAccessor",
           "IStartupHook",
           "IShutdownHook",
-          "INodeLifecycle",
           "IHealthContributor",
           "IReadinessContributor",
-          "NodeLifecycleStage",
-          "NodeLifecycleManager",
-          "IHealthCheck",
-          "HealthStatus",
-          "CompositeHealthCheck",
-          "IMetricsCollector",
-          "NoOpMetricsCollector",
-          "ITelemetryContext",
           "ITelemetryActivityFactory",
           "ITraceEnricher",
-          "ILogScopeFactory",
-          "TelemetryTags",
           "GridActivitySource",
-          "IAgentDescriptor",
-          "IAgentExecutionContext",
-          "IAgentExecutionContextFactory",
-          "IAgentCapability",
-          "AgentContextScope",
           "HoneyDrunk.Kernel",
           "HoneyDrunk.Kernel.Abstractions"
-        ]
+        ],
+        "pulse": {
+          "optional": true,
+          "contracts": [
+            "schema health signals",
+            "persistence telemetry hooks"
+          ]
+        }
       }
     },
     {
@@ -1061,36 +1049,16 @@
       "consumes_detail": {
         "honeydrunk-kernel": [
           "IGridContext",
-          "IGridContextFactory",
           "IGridContextAccessor",
-          "INodeContext",
           "IOperationContext",
-          "IOperationContextFactory",
           "IOperationContextAccessor",
           "IStartupHook",
           "IShutdownHook",
-          "INodeLifecycle",
           "IHealthContributor",
           "IReadinessContributor",
-          "NodeLifecycleStage",
-          "NodeLifecycleManager",
-          "IHealthCheck",
-          "HealthStatus",
-          "CompositeHealthCheck",
-          "IMetricsCollector",
-          "NoOpMetricsCollector",
-          "ITelemetryContext",
           "ITelemetryActivityFactory",
           "ITraceEnricher",
-          "ILogScopeFactory",
-          "TelemetryTags",
           "GridActivitySource",
-          "IAgentDescriptor",
-          "IAgentExecutionContext",
-          "IAgentExecutionContextFactory",
-          "IAgentCapability",
-          "AgentContextScope",
-          "HoneyDrunk.Kernel",
           "HoneyDrunk.Kernel.Abstractions"
         ]
       }

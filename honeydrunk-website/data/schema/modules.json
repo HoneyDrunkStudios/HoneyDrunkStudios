@@ -36,6 +36,225 @@
     }
   },
   {
+    "id": "honeydrunk-data-abstractions",
+    "type": "module",
+    "name": "HoneyDrunk.Data.Abstractions",
+    "parent": "honeydrunk-data",
+    "slot": "contracts",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "data",
+      "contracts",
+      "persistence",
+      "tenancy",
+      "foundation"
+    ],
+    "long_description": {
+      "overview": "Provider-agnostic persistence contracts defining how nodes interact with durable storage without coupling to databases or ORMs.",
+      "why_it_exists": "Prevents provider leakage and inconsistent persistence patterns across the Grid.",
+      "primary_audience": "Service and node developers consuming persistence capabilities.",
+      "value_props": [
+        "Stable persistence contract surface",
+        "Tenant-aware storage boundaries",
+        "Clean separation between contracts and implementations"
+      ],
+      "monetization_signal": "Open source foundation.",
+      "roadmap_focus": "Harden tenancy and schema version contracts.",
+      "grid_relationship": "Defines contracts implemented by Data providers and consumed by service nodes.",
+      "demo_path": "Reference abstractions from a service and swap providers without code changes.",
+      "signal_quote": "Truth has an interface.",
+      "stability_tier": "stable",
+      "impact_vector": "system architecture"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-data-entityframework",
+    "type": "module",
+    "name": "HoneyDrunk.Data.EntityFramework",
+    "parent": "honeydrunk-data",
+    "slot": "adapter",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "data",
+      "entityframework",
+      "orm",
+      "persistence"
+    ],
+    "long_description": {
+      "overview": "Entity Framework Core implementation of HoneyDrunk.Data persistence contracts.",
+      "why_it_exists": "Provides a production-ready ORM provider while keeping EF Core isolated behind Data contracts.",
+      "primary_audience": "Service developers using EF Core–backed persistence.",
+      "value_props": [
+        "EF Core isolated from consuming nodes",
+        "Tenant-aware DbContext patterns",
+        "Telemetry-friendly persistence operations"
+      ],
+      "monetization_signal": "Open core adapter.",
+      "roadmap_focus": "Refine DbContext base patterns and modeling conventions.",
+      "grid_relationship": "Implements HoneyDrunk.Data contracts using Entity Framework Core.",
+      "demo_path": "Persist entities through repositories without exposing DbContext.",
+      "signal_quote": "Structure without leakage.",
+      "stability_tier": "stable",
+      "impact_vector": "reliability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-data-sqlserver",
+    "type": "module",
+    "name": "HoneyDrunk.Data.SqlServer",
+    "parent": "honeydrunk-data",
+    "slot": "adapter",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "data",
+      "sqlserver",
+      "provider",
+      "migrations"
+    ],
+    "long_description": {
+      "overview": "SQL Server–specific persistence adapter implementing HoneyDrunk.Data contracts with standardized schema and migration conventions.",
+      "why_it_exists": "Most Grid deployments target SQL Server initially and need consistent, auditable persistence behavior.",
+      "primary_audience": "Service owners deploying on SQL Server.",
+      "value_props": [
+        "Standardized SQL Server conventions",
+        "Tenant isolation patterns",
+        "Safe schema evolution support"
+      ],
+      "monetization_signal": "Internal-first adapter.",
+      "roadmap_focus": "Drift detection and schema safety rails.",
+      "grid_relationship": "Implements the Data adapter slot for SQL Server deployments.",
+      "demo_path": "Apply migrations and persist data using SQL Server-backed providers.",
+      "signal_quote": "Memory that does not drift.",
+      "stability_tier": "stable",
+      "impact_vector": "integrity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-data-migrations",
+    "type": "module",
+    "name": "HoneyDrunk.Data.Migrations",
+    "parent": "honeydrunk-data",
+    "slot": "tooling",
+    "signal": "Live",
+    "integration_depth": "shallow",
+    "tags": [
+      "data",
+      "migrations",
+      "schema",
+      "tooling"
+    ],
+    "long_description": {
+      "overview": "Migrations and schema evolution tooling for HoneyDrunk.Data providers.",
+      "why_it_exists": "Separates schema evolution concerns from runtime persistence to keep deployments safe and auditable.",
+      "primary_audience": "Infrastructure maintainers and CI/CD pipelines.",
+      "value_props": [
+        "Clear ownership of schema evolution",
+        "Repeatable and auditable migrations",
+        "No runtime dependency leakage"
+      ],
+      "monetization_signal": "Internal tooling.",
+      "roadmap_focus": "Migration safety checks and drift reporting.",
+      "grid_relationship": "Supports Data providers by managing schema lifecycle without being consumed at runtime.",
+      "demo_path": "Generate and apply migrations as part of deployment pipelines.",
+      "signal_quote": "Change, recorded.",
+      "stability_tier": "stable",
+      "impact_vector": "operational safety"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-auth-abstractions",
+    "type": "module",
+    "name": "HoneyDrunk.Auth.Abstractions",
+    "parent": "honeydrunk-auth",
+    "slot": "contracts",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "auth",
+      "contracts",
+      "identity",
+      "authorization",
+      "foundation"
+    ],
+    "long_description": {
+      "overview": "Provider-agnostic authentication and authorization contracts for the Grid. Defines identity primitives and policy boundaries without coupling to any specific web framework.",
+      "why_it_exists": "Prevents framework lock-in and keeps identity policy consistent across nodes, runtimes, and entrypoints.",
+      "primary_audience": "Node and service developers consuming Auth contracts, plus maintainers implementing auth providers.",
+      "value_props": [
+        "Stable auth contract surface across the Grid",
+        "Clear policy boundaries and decision modeling",
+        "Enables multiple implementations without consumer changes"
+      ],
+      "monetization_signal": "Open source foundation.",
+      "roadmap_focus": "Harden policy evaluation and decision auditing shapes.",
+      "grid_relationship": "Defines the contracts consumed by Web.Rest and implemented by Auth providers.",
+      "demo_path": "Use contracts to validate an identity and evaluate a policy without any ASP.NET runtime dependency.",
+      "signal_quote": "Identity has rules.",
+      "stability_tier": "stable",
+      "impact_vector": "security posture"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-auth-aspnetcore",
+    "type": "module",
+    "name": "HoneyDrunk.Auth.AspNetCore",
+    "parent": "honeydrunk-auth",
+    "slot": "adapter",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "auth",
+      "aspnetcore",
+      "jwt",
+      "middleware",
+      "policy"
+    ],
+    "long_description": {
+      "overview": "ASP.NET Core adapter that integrates HoneyDrunk.Auth contracts into the web pipeline for request authentication and policy enforcement.",
+      "why_it_exists": "Most nodes expose HTTP surfaces early. This module provides first-class integration with ASP.NET Core so services can adopt Auth with minimal wiring.",
+      "primary_audience": "Service owners building HTTP APIs and gateways.",
+      "value_props": [
+        "Plugs Auth contracts into ASP.NET Core middleware and DI",
+        "Standardized policy enforcement patterns across services",
+        "Consistent identity evaluation and failure shaping"
+      ],
+      "monetization_signal": "Open core adapter.",
+      "roadmap_focus": "Expanded scheme support and richer audit hooks for policy decisions.",
+      "grid_relationship": "Implements the Auth adapter slot for ASP.NET Core entrypoints; consumed by Web.Rest and service nodes.",
+      "demo_path": "Protect an endpoint, evaluate a policy, and emit a consistent authorization decision result.",
+      "signal_quote": "Gatekeepers, standardized.",
+      "stability_tier": "stable",
+      "impact_vector": "security posture"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
     "id": "honeydrunk-transport-messaging-inmemory",
     "type": "module",
     "name": "HoneyDrunk.Transport.InMemory",
@@ -282,214 +501,144 @@
     }
   },
   {
-    "id": "honeydrunk-vault-provider-file",
+    "id": "honeydrunk-vault-providers-azurekeyvault",
     "type": "module",
-    "name": "HoneyDrunk.Vault.Provider.File",
+    "name": "HoneyDrunk.Vault.Providers.AzureKeyVault",
     "parent": "honeydrunk-vault",
     "slot": "provider",
-    "signal": "Seed",
-    "integration_depth": "shallow",
-    "tags": [
-      "filesystem",
-      "dev"
-    ],
-    "long_description": {
-      "overview": "File-based secret provider for local/dev scenarios. Reads secrets from encrypted files with audit-friendly structure.",
-      "why_it_exists": "Local parity with production vaults prevents secret sprawl and ‘works on my machine’.",
-      "primary_audience": "Developers and CI running in ephemeral environments.",
-      "value_props": [
-        "Zero external dependencies for local/dev",
-        "Encrypted at rest with simple rotation",
-        "Consistent key shapes for easy swap to cloud providers"
-      ],
-      "monetization_signal": "Open source provider.",
-      "roadmap_focus": "Editor tooling and rotate-in-place utilities.",
-      "grid_relationship": "Implements Vault’s provider slot; used by most services locally.",
-      "demo_path": "Switch from File to AzureKeyVault without code changes.",
-      "signal_quote": "Secrets without servers.",
-      "stability_tier": "stable",
-      "impact_vector": "developer experience"
-    },
-    "_dictionary_ref": {
-      "version": "v1",
-      "path": "/schema/node_manifest_dictionary.v1.json"
-    }
-  },
-  {
-    "id": "honeydrunk-vault-provider-azurekeyvault",
-    "type": "module",
-    "name": "HoneyDrunk.Vault.Provider.AzureKeyVault",
-    "parent": "honeydrunk-vault",
-    "slot": "provider",
-    "signal": "Seed",
+    "signal": "Live",
     "integration_depth": "medium",
-    "tags": [
-      "azure",
-      "keyvault",
-      "secrets"
-    ],
+    "tags": ["vault", "azure", "keyvault", "secrets", "config"],
     "long_description": {
-      "overview": "Azure Key Vault provider with MSI support, versioned secrets, and policy-based access for services on Azure.",
-      "why_it_exists": "Production services require managed identities and audited retrieval at scale.",
-      "primary_audience": "Ops and service owners running in Azure.",
+      "overview": "Azure Key Vault provider with managed identity support and versioned secret retrieval aligned to Vault contracts.",
+      "why_it_exists": "Production-grade secret management for Azure-hosted nodes.",
+      "primary_audience": "Service owners deploying on Azure.",
       "value_props": [
-        "MSI-first authentication and RBAC alignment",
-        "Versioned secrets with easy rotation",
-        "Backoff and caching for reliability"
+        "Managed identity friendly",
+        "Version-aware secret retrieval",
+        "Policy aligned access patterns"
       ],
-      "monetization_signal": "Open core provider.",
-      "roadmap_focus": "Bulk rotation helpers and secret scanning integration.",
-      "grid_relationship": "Implements Vault’s provider slot; integrates with Pulse for secret errors.",
-      "demo_path": "Migrate secrets from File provider to Key Vault in minutes.",
-      "signal_quote": "Cloud keys, clean hands.",
-      "stability_tier": "beta",
+      "monetization_signal": "Internal-first adapter.",
+      "roadmap_focus": "Add richer caching/refresh controls and operational diagnostics.",
+      "grid_relationship": "Implements the Vault provider slot for Azure deployments.",
+      "demo_path": "Deploy a node to Azure and resolve secrets via Key Vault.",
+      "signal_quote": "Keys where the cloud keeps them.",
+      "stability_tier": "experimental",
       "impact_vector": "security posture"
     },
-    "_dictionary_ref": {
-      "version": "v1",
-      "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    "_dictionary_ref": { "version": "v1", "path": "/schema/node_manifest_dictionary.v1.json" }
   },
   {
-    "id": "honeydrunk-vault-provider-awssecretsmanager",
+    "id": "honeydrunk-vault-providers-aws",
     "type": "module",
-    "name": "HoneyDrunk.Vault.Provider.AWSSecretsManager",
+    "name": "HoneyDrunk.Vault.Providers.Aws",
     "parent": "honeydrunk-vault",
     "slot": "provider",
-    "signal": "Seed",
+    "signal": "Live",
     "integration_depth": "shallow",
-    "tags": [
-      "aws",
-      "secretsmanager",
-      "secrets"
-    ],
+    "tags": ["vault", "aws", "secrets", "config"],
     "long_description": {
-      "overview": "AWS Secrets Manager provider offering basic retrieval and caching aligned to Vault contracts.",
-      "why_it_exists": "Cross-cloud teams need first-class AWS support without forking patterns.",
-      "primary_audience": "Services deployed on AWS or hybrid footprints.",
+      "overview": "AWS Secrets Manager provider offering retrieval and caching aligned to Vault contracts.",
+      "why_it_exists": "First-class Vault provider support for AWS-hosted nodes.",
+      "primary_audience": "Service owners deploying on AWS.",
       "value_props": [
-        "Simple swap-in for AWS environments",
-        "Aligned key shapes with other providers",
-        "Initial cache and backoff strategies"
+        "Standard Vault contract integration",
+        "Caching-friendly retrieval patterns",
+        "Keeps AWS concerns isolated to the provider"
       ],
-      "monetization_signal": "Open core provider; community-driven.",
-      "roadmap_focus": "Rotation hooks and IAM policy templates.",
-      "grid_relationship": "Implements Vault’s provider slot; forwards failures to Pulse.",
-      "demo_path": "Switch from AzureKeyVault to AWSSecretsManager via config only.",
-      "signal_quote": "Keys across the clouds.",
+      "monetization_signal": "Internal-first adapter.",
+      "roadmap_focus": "Expand diagnostics and rotation-friendly refresh patterns.",
+      "grid_relationship": "Implements the Vault provider slot for AWS deployments.",
+      "demo_path": "Resolve secrets from AWS Secrets Manager through Vault contracts.",
+      "signal_quote": "Cloud secrets, contract clean.",
       "stability_tier": "experimental",
-      "impact_vector": "portability"
+      "impact_vector": "security posture"
     },
-    "_dictionary_ref": {
-      "version": "v1",
-      "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    "_dictionary_ref": { "version": "v1", "path": "/schema/node_manifest_dictionary.v1.json" }
   },
   {
-    "id": "honeydrunk-testing-harness",
+    "id": "honeydrunk-vault-providers-configuration",
     "type": "module",
-    "name": "HoneyDrunk.Testing.Harness",
-    "parent": "honeydrunk-testing",
-    "slot": "harness",
-    "signal": "Seed",
+    "name": "HoneyDrunk.Vault.Providers.Configuration",
+    "parent": "honeydrunk-vault",
+    "slot": "provider",
+    "signal": "Live",
     "integration_depth": "shallow",
-    "tags": [
-      "testing",
-      "fixtures",
-      "harness"
-    ],
+    "tags": ["vault", "configuration", "dev", "bootstrap"],
     "long_description": {
-      "overview": "Test harness library for spinning up deterministic environments, faking time/randomness, and wiring Transport/Vault locally.",
-      "why_it_exists": "Flaky tests and slow setup kill momentum; batteries-included harnesses fix that.",
-      "primary_audience": "Developers writing unit and integration tests.",
+      "overview": "Provider that sources secrets and configuration from the application configuration pipeline for bootstrap and controlled environments.",
+      "why_it_exists": "Enables clean bootstrap and integration with existing configuration sources without bypassing Vault contracts.",
+      "primary_audience": "Infrastructure maintainers and developers wiring node configuration.",
       "value_props": [
-        "Deterministic test clocks and RNG",
-        "One-liners to start Transport/Vault locally",
-        "Trace snapshots for regressions"
+        "Bootstrap-friendly",
+        "Plugs into standard configuration sources",
+        "Keeps contract surface consistent"
       ],
-      "monetization_signal": "Internal-first; examples open-sourced.",
-      "roadmap_focus": "Golden-path templates for common service types.",
-      "grid_relationship": "Docks to Testing node; integrates with Pulse for trace snapshots.",
-      "demo_path": "Run a sample test suite that emits stable traces across runs.",
-      "signal_quote": "Tests that stay true.",
+      "monetization_signal": "Open source utility.",
+      "roadmap_focus": "Clarify best practices for production vs dev usage.",
+      "grid_relationship": "Implements the Vault provider slot via configuration sources.",
+      "demo_path": "Run a node using config-backed secrets for controlled dev environments.",
+      "signal_quote": "Bootstrap without bypass.",
+      "stability_tier": "experimental",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": { "version": "v1", "path": "/schema/node_manifest_dictionary.v1.json" }
+  },
+  {
+    "id": "honeydrunk-vault-providers-inmemory",
+    "type": "module",
+    "name": "HoneyDrunk.Vault.Providers.InMemory",
+    "parent": "honeydrunk-vault",
+    "slot": "provider",
+    "signal": "Live",
+    "integration_depth": "shallow",
+    "tags": ["vault", "inmemory", "test", "dev"],
+    "long_description": {
+      "overview": "In-memory provider for tests and local development. Provides deterministic secrets/config without external infrastructure.",
+      "why_it_exists": "Fast, reliable test and dev loops without cloud services or files.",
+      "primary_audience": "Test harnesses and developers running locally.",
+      "value_props": [
+        "Deterministic secrets for tests",
+        "Zero-setup dev experience",
+        "No external dependencies"
+      ],
+      "monetization_signal": "Open source utility for dev/test only.",
+      "roadmap_focus": "Add fault injection and validation helpers for test realism.",
+      "grid_relationship": "Implements the Vault provider slot for testing and local development.",
+      "demo_path": "Run integration tests with Vault-backed secrets entirely in memory.",
+      "signal_quote": "Secrets, simulated.",
       "stability_tier": "stable",
-      "impact_vector": "quality"
+      "impact_vector": "developer velocity"
     },
-    "_dictionary_ref": {
-      "version": "v1",
-      "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    "_dictionary_ref": { "version": "v1", "path": "/schema/node_manifest_dictionary.v1.json" }
   },
   {
-    "id": "honeydrunk-testing-tracesnapshots",
+    "id": "honeydrunk-vault-providers-file",
     "type": "module",
-    "name": "HoneyDrunk.Testing.TraceSnapshots",
-    "parent": "honeydrunk-testing",
-    "slot": "harness",
-    "signal": "Seed",
+    "name": "HoneyDrunk.Vault.Providers.File",
+    "parent": "honeydrunk-vault",
+    "slot": "provider",
+    "signal": "Live",
     "integration_depth": "shallow",
-    "tags": [
-      "testing",
-      "traces",
-      "snapshots"
-    ],
+    "tags": ["vault", "secrets", "config", "local", "dev"],
     "long_description": {
-      "overview": "Snapshotting utilities that record canonical traces for flows and compare them across runs to catch regressions.",
-      "why_it_exists": "Behavior drift is hard to spot; trace diffs make it obvious.",
-      "primary_audience": "Teams hardening critical event paths.",
+      "overview": "File-based provider for local and dev scenarios. Loads secrets and configuration from files in a predictable structure for easy rotation and auditing.",
+      "why_it_exists": "Fast local workflows without cloud dependencies.",
+      "primary_audience": "Developers running nodes locally.",
       "value_props": [
-        "Golden trace fixtures stored alongside tests",
-        "Human-diffable outputs",
-        "Tight hooks into Transport and Pulse"
+        "Zero-cloud local secrets",
+        "Predictable file structure for auditing",
+        "Works well for dev and small deployments"
       ],
-      "monetization_signal": "Internal-first module.",
-      "roadmap_focus": "Better diff visualizations and flaky-span detection.",
-      "grid_relationship": "Docks to Testing; reads from Pulse for reference spans.",
-      "demo_path": "Record a baseline trace, change code, and watch the diff highlight risky changes.",
-      "signal_quote": "If it changed, you’ll see it.",
-      "stability_tier": "beta",
-      "impact_vector": "regression visibility"
+      "monetization_signal": "Open source utility.",
+      "roadmap_focus": "Improve ergonomics and validation of secret/config layouts.",
+      "grid_relationship": "Implements the Vault provider slot for local/dev usage.",
+      "demo_path": "Run a node locally with Vault reading secrets from files.",
+      "signal_quote": "Local secrets, clean boundaries.",
+      "stability_tier": "experimental",
+      "impact_vector": "developer velocity"
     },
-    "_dictionary_ref": {
-      "version": "v1",
-      "path": "/schema/node_manifest_dictionary.v1.json"
-    }
-  },
-  {
-    "id": "hivegigs-agents-writer",
-    "type": "module",
-    "name": "HiveGigs.Agents.Writer",
-    "parent": "hivegigs",
-    "slot": "agent-writer",
-    "signal": "Seed",
-    "integration_depth": "deep",
-    "tags": [
-      "ai",
-      "agents",
-      "generation",
-      "templates"
-    ],
-    "long_description": {
-      "overview": "Region-scoped agent that procedurally authors Gigs using POI data, seasonal events, and house style guides.",
-      "why_it_exists": "Bootstraps and refreshes local content without a centralized editorial team.",
-      "primary_audience": "Market ops, city curators, and auto-maintained catalogs.",
-      "value_props": [
-        "High coverage with low manual effort",
-        "Style-consistent copy",
-        "Auto-rotation of stale Gigs"
-      ],
-      "monetization_signal": "Enables sponsored/location-partnered Gig packs.",
-      "roadmap_focus": "Context memory, event-awareness, partner templates.",
-      "grid_relationship": "Consumes POI adapters; publishes to HiveGigs via Transport; secrets via Vault; telemetry to Meta.",
-      "demo_path": "Seed a city → generate 20 Gigs → publish preview.",
-      "signal_quote": "Writers that never sleep.",
-      "stability_tier": "alpha",
-      "impact_vector": "content velocity"
-    },
-    "_dictionary_ref": {
-      "version": "v1",
-      "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    "_dictionary_ref": { "version": "v1", "path": "/schema/node_manifest_dictionary.v1.json" }
   },
   {
     "id": "hivegigs-verifier-geo",
