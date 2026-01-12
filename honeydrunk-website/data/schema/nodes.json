@@ -49,7 +49,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 52,
+    "flow": 75,
     "public_name": "HoneyDrunk.Build"
   },
   {
@@ -99,7 +99,7 @@
     "time_pressure": 5,
     "done": false,
     "cooldown_days": 14,
-    "flow": 63,
+    "flow": 70,
     "ops_bootstrap": true,
     "public_name": "HoneyDrunk.Pipelines"
   },
@@ -201,7 +201,7 @@
     "time_pressure": 4,
     "done": false,
     "cooldown_days": 14,
-    "flow": 71,
+    "flow": 45,
     "ops_bootstrap": true,
     "public_name": "HoneyDrunk.Deploy"
   },
@@ -440,35 +440,39 @@
     "id": "honeycore-web-rest",
     "type": "node",
     "name": "HoneyCore.Web.Rest",
-    "short": "REST scaffolding & conventions",
-    "description": "Opinionated REST API conventions and scaffolding. Clean, consistent HTTP interfaces across services.",
+    "short": "REST conventions & response standardization",
+    "description": "Standardized REST API response envelopes, middleware for correlation/exception handling, and conventions for consistent API behavior across services.",
     "sector": "Core",
-    "signal": "Seed",
+    "signal": "Live",
     "cluster": "foundation",
     "energy": 29,
     "priority": 38,
     "tags": [
       "rest",
       "api",
+      "middleware",
+      "conventions",
       "web"
     ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyCore.Web.Rest"
     },
     "long_description": {
-      "overview": "Web.Rest defines how the Grid exposes itself to the outside world — consistent, readable, and safe. It is the contract between the HoneyDrunk ecosystem and every external consumer, SDK, and integration. The Node sets standards for routing, status codes, error shapes, and API documentation so that everything built on HoneyDrunk feels familiar and predictable to work with. It embodies \"boring consistency\" — every service speaks the same dialect of REST, making integration effortless and elegant. Over time, Web.Rest will generate typed clients and SDKs automatically, enforcing end-to-end contract validation between producer and consumer. It will expand to support GraphQL and WebSocket interfaces while maintaining the same rigor of design. Eventually, it will integrate with Vault and Pulse to track performance, authentication, and usage at the edge. Web.Rest earns its keep by turning interface chaos into clarity — it's how the Hive talks to the world without ever shouting.",
-      "why_it_exists": "HoneyCore.Web.Rest exists to prevent inconsistency and reinvention across the Grid.",
-      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "overview": "Web.Rest provides two packages: Abstractions (zero-dependency contracts for ApiResult, ApiErrorResponse, pagination, error codes) and AspNetCore (middleware for correlation ID propagation, exception-to-error mapping, auth failure shaping, and MVC/minimal API conventions). Together they ensure every REST API in the Grid returns consistent response envelopes with proper correlation tracking.",
+      "why_it_exists": "Prevents inconsistent error shapes, missing correlation IDs, and divergent response formats across services. One AddRest()/UseRest() call configures everything.",
+      "primary_audience": "ASP.NET Core service developers building REST APIs in the HoneyDrunk ecosystem.",
       "value_props": [
-        "Standardizes rest, api",
-        "Reduces operational risk with opinionated defaults",
-        "Improves developer velocity and interoperability"
+        "Standardized response envelopes (ApiResult<T>, ApiErrorResponse)",
+        "Automatic correlation ID propagation across requests",
+        "Exception-to-structured-error mapping middleware",
+        "Auth failure shaping (401/403 as JSON, not redirects)",
+        "Zero-dependency Abstractions package for shared contracts"
       ],
-      "monetization_signal": "Internal-first; open-core where appropriate.",
-      "roadmap_focus": "Advance HoneyCore.Web.Rest capabilities and harden contracts.",
-      "grid_relationship": "Connects with: honeydrunk-kernel, honeydrunk-auth, honeydrunk-transport.",
+      "monetization_signal": "Open source foundation for REST consistency.",
+      "roadmap_focus": "OpenAPI enrichment, typed client generation, WebSocket conventions.",
+      "grid_relationship": "Consumes Kernel.Abstractions (IOperationContextAccessor for correlation), Auth.AspNetCore (auth shaping), Transport.Abstractions (envelope mapping only).",
       "integration_depth": "medium",
-      "demo_path": "Show a 60-second demo of HoneyCore.Web.Rest: input → behavior → outcome.",
+      "demo_path": "Call AddRest() → UseRest() → all responses automatically include correlation IDs and structured errors.",
       "signal_quote": "Speak cleanly to be understood.",
       "stability_tier": "beta",
       "impact_vector": "developer velocity"
@@ -481,7 +485,7 @@
     "strategy_base": 22,
     "tier": "none",
     "time_pressure": 2,
-    "done": false,
+    "done": true,
     "cooldown_days": 14,
     "flow": 35,
     "public_name": "HoneyCore.Web.Rest"
@@ -586,7 +590,7 @@
     "time_pressure": 4,
     "done": false,
     "cooldown_days": 14,
-    "flow": 77,
+    "flow": 65,
     "ops_bootstrap": true,
     "public_name": "HoneyDrunk.Tools"
   },
@@ -694,7 +698,7 @@
     "time_pressure": 2,
     "done": false,
     "cooldown_days": 14,
-    "flow": 79,
+    "flow": 100,
     "public_name": "Pulse"
   },
   {
@@ -795,7 +799,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 45,
+    "flow": 95,
     "public_name": "HoneyDrunk.AgentKit"
   },
   {
@@ -2330,41 +2334,49 @@
     "id": "operator",
     "type": "node",
     "name": "HoneyDrunk.Operator",
-    "short": "Founder-facing persona and the Hive’s single coherent identity.",
-    "description": "The persona interface of the Hive. Operator receives intent from the Founder, submits it to HoneyDrunk.Governor for review and simulation (via VEE), then returns a validated plan, narrative, and status as the single voice the Founder talks to.",
+    "short": "Internal control plane for operating the Hive.",
+    "description": "Human-operated control plane for observing system health, managing operational intent, and applying controlled interventions across all HoneyDrunk nodes and environments. Operator does not participate in governance, deliberation, or simulation-it defines and enforces operational policy, not decisions.",
     "sector": "Meta",
     "signal": "Seed",
     "cluster": "orchestration",
     "energy": 30,
     "priority": 42,
     "tags": [
-      "ai",
+      "operations",
       "meta",
-      "orchestration",
-      "strategy",
-      "governance"
+      "control-plane",
+      "safety",
+      "infrastructure"
     ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/Operator"
     },
     "long_description": {
-      "overview": "Operator is the Identity and Persona Interface of the Hive — the Founder-facing voice that turns human intent into structured narrative and a single coherent plan. She accepts intent from the Founder, packages context, and routes it to HoneyDrunk.Governor for debate and validation, then speaks the validated plan back to the Founder in a clear, actionable form.",
-      "why_it_exists": "To separate identity and communication from governance and simulation, ensuring the Founder interacts with a single, consistent persona while governance (HoneyDrunk.Governor) and simulation (VEE) handle decision validation and risk analysis.",
-      "primary_audience": "Founders, product leads, and automated systems that need a single authoritative voice to express intent, receive validated plans, and observe execution status.",
+      "overview": "Operator is the internal control plane for HoneyDrunk Studios. It provides a single, secure interface for observing system health, managing operational intent, and applying controlled interventions across all HoneyDrunk nodes and environments. Operator does not participate in governance, deliberation, or simulation. It defines and enforces operational policy, not decisions. Its purpose is to give humans a safe, auditable way to operate a growing multi-node system without embedding privileged controls into product nodes.",
+      "why_it_exists": "To separate system operation from system behavior. As HoneyDrunk grows beyond a single node, operational concerns like safety controls, rollouts, cost limits, and incident response must be centralized. Operator exists so these concerns do not leak into Governor, Draft, or other market nodes-preserving clean boundaries, tenant isolation, and trust.",
+      "primary_audience": "HoneyDrunk founders and operators, internal platform maintainers, and on-call engineers and incident responders. Operator is not customer-facing.",
       "value_props": [
-        "Persona-first interface that preserves narrative and context between sessions.",
-        "Translates Founder intent into structured RFCs for Governor to review (not to govern itself).",
-        "Receives validated plans from Governor (and VEE where simulations are required) and articulates them as coherent intent and instructions.",
-        "Acts as the single point of contact for humans — providing explanation, status, and rollback options while respecting Kernel constraints and AgentKit execution paths."
+        "Provides unified visibility across nodes, environments, and deployments.",
+        "Owns authoritative operational intent: agent role enablement, model and provider allowlists, cost ceilings and rate limits, safety modes (normal, degraded, read-only), per-environment and per-tenant circuit breakers.",
+        "Enables safe, audited human intervention during incidents.",
+        "Coordinates operational changes without redeploys or ad-hoc scripts.",
+        "Records who changed what, when, why, and with what scope."
       ],
-      "monetization_signal": "Persona upgrades and premium UX features for teams and studios that need richer, auditable identity tools.",
-      "roadmap_focus": "Tighter Governor handoff flows, richer persona APIs, contextual memory, and transparent simulation summaries from VEE. Maintain strict separation: Operator communicates intent; Governor governs; VEE simulates.",
-      "grid_relationship": "Receives intent from Founders → forwards RFCs to HoneyDrunk.Governor (governance and consensus) → Governor may use VEE for simulations → Governor returns validated plan → Operator aggregates and presents the plan; Node Agents (AgentKit) are used to execute while Kernel provides base truth and invariants.",
+      "monetization_signal": "None. Operator is internal platform infrastructure. Its value is measured in reduced incidents, faster recovery, lower cognitive load, and safer scaling-not revenue.",
+      "roadmap_focus": "Minimal, hardened control state schemas. Strong RBAC and audit trails. Safe change workflows with explicit scope and blast radius. Tight Pulse integration for cause-effect visibility. Deliberate resistance to feature creep or advisor behavior. Principle: boring, predictable, and trustworthy.",
+      "grid_relationship": "Governor consumes operational intent defined by Operator-Operator never influences Governor's reasoning or outcomes. AgentKit enforces restrictions and permissions derived from Operator-defined control state. Operator consumes Pulse telemetry to inform human decision-making and validate impact of operational changes. Operator relies on Kernel for lifecycle, context propagation, and health aggregation. Operator observes and constrains the system-it does not steer content or strategy.",
       "integration_depth": "deep",
-      "demo_path": "Founder: 'Start controlled experiment on feature X' → Operator captures intent, context, and constraints → Operator submits RFC to HoneyDrunk.Governor → Governor debates and runs VEE simulations → Governor returns validated plan → Operator reports results and next steps back to Founder and kicks off Node Agent execution via AgentKit.",
-      "signal_quote": "One voice for the Founder, identity before action.",
+      "demo_path": "Incident detected via Pulse -> On-call engineer opens Operator console -> Reviews system state and blast radius -> Applies circuit breaker to affected tenant via audited control change -> Monitors recovery metrics -> Documents resolution with full audit trail.",
+      "signal_quote": "Control without opinion. Authority without authorship.",
       "stability_tier": "core",
-      "impact_vector": "identity"
+      "impact_vector": "operational safety",
+      "does_not_do": [
+        "Does not make decisions.",
+        "Does not deliberate.",
+        "Does not generate plans or proposals.",
+        "Does not act as a persona or advisor.",
+        "Does not access customer governance content by default."
+      ]
     },
     "_dictionary_ref": {
       "version": "v1",
@@ -2376,7 +2388,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 38,
+    "flow": 55,
     "public_name": "HoneyDrunk.Operator"
   },
   {
@@ -2479,7 +2491,7 @@
     "time_pressure": 3,
     "done": false,
     "cooldown_days": 14,
-    "flow": 34,
+    "flow": 50,
     "public_name": "HoneyDrunk.Collector"
   },
   {
@@ -2589,8 +2601,8 @@
     "id": "honeydrunk-clarity",
     "type": "node",
     "name": "HoneyDrunk.Clarity",
-    "short": "In-studio AI guide for indie devs & creators",
-    "description": "Context-aware companion that sits across tools (IDE, Blender, Photoshop, engines) to guide, explain, and unblock creators using Hive intelligence.",
+    "short": "Context-aware intelligence assistant for creators and studios.",
+    "description": "Advisory intelligence assistant for developers, creators, and small studios. Clarity helps humans understand systems, architecture, tools, and next steps by translating HoneyDrunk-native knowledge into clear, actionable guidance. Clarity explains, teaches, and proposes-it does not execute, govern, simulate, or operate systems.",
     "sector": "AI",
     "signal": "Seed",
     "cluster": "assistant",
@@ -2599,7 +2611,7 @@
     "tags": [
       "assistant",
       "ai",
-      "copilot",
+      "advisory",
       "education",
       "devtools",
       "creator"
@@ -2608,24 +2620,41 @@
       "repo": "https://github.com/HoneyDrunkStudios/clarity"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Clarity is the Hive-facing companion for humans — an always-on, context-aware guide for indie devs and small studios working across code editors, DCC tools, and game engines. Clarity reads environment and project context (without hoarding secrets), then routes questions through HoneyDrunk.AgentKit, Meta.AtlasSync, and internal docs to give precise, actionable help. It's how creators get answers about C#, Unity, Unreal, Blender, Photoshop, pipelines, or deployment flows without leaving their workspace.",
-      "why_it_exists": "Indie teams drown in documentation, tabs, and context switching. Cluely-style general copilots are generic; Clarity is wired directly into HoneyDrunk.OS and the creator's actual stack, turning the Grid's infrastructure, patterns, and best practices into real-time guidance.",
-      "primary_audience": "Indie developers, technical artists, designers, and small studios building with HoneyDrunk tooling or similar stacks who need an opinionated, integrated mentor instead of yet another chat box.",
+      "overview": "HoneyDrunk.Clarity is an advisory intelligence assistant for developers, creators, and small studios. It helps humans understand systems, architecture, tools, and next steps by translating HoneyDrunk-native knowledge, manifests, and best practices into clear, actionable guidance. Clarity explains, teaches, and proposes. It does not execute, govern, simulate, or operate systems.",
+      "why_it_exists": "Modern creators are overwhelmed by fragmented documentation, generic copilots, and constant context switching. Clarity exists to provide situated understanding: answers that are grounded in the actual stack, patterns, and constraints the user is working within. Unlike general-purpose copilots, Clarity is opinionated toward HoneyDrunk's architecture and workflows while remaining advisory-only.",
+      "primary_audience": "Indie developers, technical artists, designers, small studios, and product-focused creators using HoneyDrunk or compatible stacks.",
       "value_props": [
-        "Understands active context (repo, scene, file, task) and tailors responses accordingly.",
-        "Uses Meta.AtlasSync and Meta.DevPortal as canonical knowledge — answers align with real manifests and docs.",
-        "Bridges tools: code editor, DCC apps, engines, CI logs, and HoneyHub tasks through a single assistant surface.",
-        "Teaches best practices from HoneyDrunk.Kernel, Transport, Data, Vault, and Sentinel instead of ad-hoc advice.",
-        "Enables studios to plug in their own private docs and patterns with safe, scoped access."
+        "Explains HoneyDrunk concepts such as Nodes, Flows, Vault, Transport, and Pipelines.",
+        "Answers 'why' and 'how' questions about architecture and tradeoffs.",
+        "Drafts artifacts such as ADRs, RFCs, proposals, migration plans, and implementation outlines.",
+        "Provides contextual guidance based on explicitly granted user context (repo, file, task, doc).",
+        "Summarizes telemetry and system behavior in human-readable terms.",
+        "Recommends when governance (Governor) or simulation (Sim) should be involved.",
+        "Always operates as a thinking partner, not a decision-maker."
       ],
-      "monetization_signal": "High. Core experience free or bundled with HoneyHub; Pro tiers for studios: private knowledge ingestion, org-wide policies, multi-seat management, and deep telemetry-driven insights.",
-      "roadmap_focus": "Phase 1: VS Code/JetBrains/VS extension + browser panel that speaks HoneyDrunk-native (Nodes, Pipelines, Vault patterns). Phase 2: cross-tool overlays for Blender/engines; team-level memory; integration with HoneyDrunk.Signal for nudges and recaps. Phase 3: tight coupling with Operator/VEE to let Clarity propose or trigger automated fixes and workflows.",
-      "grid_relationship": "Clarity is the human interface to the Hive's intelligence stack. It consumes AgentKit for agent lifecycle, Pulse for telemetry and context, Vault for secure configuration, and Meta.AtlasSync for synchronized knowledge. It surfaces HoneyHub tasks, Standards rules, and Pipelines/Actions diagnostics as conversational, guided flows.",
+      "monetization_signal": "High. Free or bundled tier for individual creators. Pro tiers for studios: private knowledge ingestion, team-level memory, organization-wide patterns, multi-seat management, and richer context tooling. Clarity is a product. It earns trust by never overstepping.",
+      "roadmap_focus": "Phase 1: Editor and browser surfaces (VS Code, JetBrains, web) with HoneyDrunk-native language and concepts. Phase 2: Cross-tool context (engines, DCC tools), team memory, and doc-grounded reasoning. Phase 3: Assisted workflows-draft Operator requests, prepare Governor submissions, explain Sim simulation results. All actions remain human-approved and auditable.",
+      "grid_relationship": "AgentKit: Clarity uses AgentKit to route advisory tasks to specialized agents (language, domain expertise, drafting), without granting execution authority. Governor: Clarity may suggest that a question or proposal be submitted to Governor for multi-agent deliberation-Governor owns decisions. Sim: Clarity may request simulations and explain their outcomes once Sim exists-Sim produces evidence, Clarity narrates it. Operator: Clarity may draft or propose operational changes, but Operator is the only surface through which real operational intent is applied. Pulse: Clarity may summarize Pulse telemetry for humans but does not interpret telemetry as authority.",
       "integration_depth": "deep",
-      "demo_path": "Open project in IDE → Clarity detects stack (e.g., .NET + Unity) → ask how to structure a feature or fix a build → Clarity replies using HoneyDrunk.Kernel/Standards patterns and actual repo context → optional: open-task or doc links in HoneyHub.",
-      "signal_quote": "Know what to do next, wherever you are.",
+      "demo_path": "Open project in IDE -> Clarity detects stack and context -> Ask how to structure a feature or understand a tradeoff -> Clarity explains using HoneyDrunk patterns and actual repo context -> Optionally draft an RFC or ADR for human review -> Never applies changes directly.",
+      "signal_quote": "Explain everything. Change nothing.",
       "stability_tier": "experimental",
-      "impact_vector": "developer experience"
+      "impact_vector": "developer experience",
+      "does_not_do": [
+        "Does not apply changes.",
+        "Does not deploy code.",
+        "Does not modify configuration.",
+        "Does not disable agents or nodes.",
+        "Does not operate production systems.",
+        "Does not override governance or policy.",
+        "Clarity may propose. Clarity may draft. Clarity may explain. Clarity may request action. Clarity never acts."
+      ],
+      "context_safety": [
+        "All context access is explicit and user-scoped.",
+        "No implicit access to secrets, production state, or privileged controls.",
+        "Vault is used only for securing API keys and encrypted user context.",
+        "Tenant and environment boundaries are strictly enforced."
+      ]
     },
     "_dictionary_ref": {
       "version": "v1",
@@ -2697,7 +2726,7 @@
     "type": "node",
     "name": "HoneyDrunk.Governor",
     "short": "Governance mesh and decision engine",
-    "description": "The Neural Senate of the Grid. Hosts the multi agent Board for strategy and orchestrates Node Agents for execution so that Intent (Operator) can survive Reality (VEE).",
+    "description": "The Neural Senate of the Grid. Hosts the multi-agent Board for strategy and orchestrates Node Agents for execution so that Intent can survive Reality (Sim).",
     "sector": "AI",
     "signal": "Seed",
     "cluster": "orchestration",
@@ -2715,19 +2744,19 @@
     },
     "long_description": {
       "overview": "HoneyDrunk.Governor is the deliberation layer of the Hive. It is the dedicated space where agents debate, govern, and align. It instantiates the Board (roles derived from Sector philosophies) to weigh strategic RFCs and summons Node Agents (derived from nodes.json) to handle tactical execution.",
-      "why_it_exists": "To prevent architectural drift and generic hallucinated decisions by separating Identity (Operator) from Process (Governor) and subjecting major changes to structured, multi perspective review.",
-      "primary_audience": "The Founder, the Operator persona, and automated systems that need a source of strategic consensus.",
+      "why_it_exists": "To prevent architectural drift and generic hallucinated decisions by subjecting major changes to structured, multi-perspective review and deliberation.",
+      "primary_audience": "The Founder, internal systems, and automated orchestration layers that need a source of strategic consensus.",
       "value_props": [
         "Hosts a role based Board (CTO, COO, CISO, CPO) to debate strategy using Sector doctrine as case law",
         "Dynamically spins up Node Agents based on nodes.json context and dependencies",
-        "Routes decisions into VEE for simulation before they are treated as real commitments",
+        "Routes decisions into Sim for simulation before they are treated as real commitments",
         "Logs every consensus event into Audit.Agent for immutable history and replay"
       ],
-      "monetization_signal": "Brain feature for higher HoneyDrunk tiers. Public users interact mainly with Operator; studios and serious teams unlock Governor.",
-      "roadmap_focus": "Define Board roles and their ties to sectors, integrate VEE as the simulation backend, and implement a Debate Protocol with voting, veto, and revision states.",
-      "grid_relationship": "Sits above AgentKit and the Node layer, validates intent for Operator, calls VEE to test outcomes, and reports strict logs to Audit.Agent.",
+      "monetization_signal": "Brain feature for higher HoneyDrunk tiers. Studios and serious teams unlock Governor for structured deliberation and strategic consensus.",
+      "roadmap_focus": "Define Board roles and their ties to sectors, integrate Sim as the simulation backend, and implement a Debate Protocol with voting, veto, and revision states.",
+      "grid_relationship": "Sits above AgentKit and the Node layer, validates strategic intent, calls Sim to test outcomes, and reports strict logs to Audit.Agent. Consumes operational constraints defined by Operator.",
       "integration_depth": "deep",
-      "demo_path": "User submits an RFC. Governor convenes the Board. CTO and CISO debate risk versus structure, CPO argues market impact, VEE simulates branches, Governor records consensus and returns an approved plan to Operator.",
+      "demo_path": "User submits an RFC. Governor convenes the Board. CTO and CISO debate risk versus structure, CPO argues market impact, Sim simulates branches, Governor records consensus and returns an approved plan for execution.",
       "signal_quote": "Intent requires consensus.",
       "stability_tier": "experimental",
       "impact_vector": "strategic coherence"
@@ -2742,7 +2771,75 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 34,
+    "flow": 90,
     "public_name": "HoneyDrunk.Governor"
+  },
+  {
+    "id": "honeydrunk-sim",
+    "type": "node",
+    "name": "HoneyDrunk.Sim",
+    "short": "Virtual Execution Environment for simulation and impact forecasting.",
+    "description": "HoneyDrunk.Sim is the Grid's simulation layer: a sandboxed Virtual Execution Environment that models the impact of proposed decisions before they touch reality. Sim runs deterministic what-if evaluations across nodes, dependencies, policies, and environments, producing structured evidence like blast radius, risk posture, cost projections, and failure-mode forecasts. It does not govern, advise, or execute. It generates evidence for Governor to weigh and for Clarity to explain.",
+    "sector": "Meta",
+    "signal": "Seed",
+    "cluster": "simulation",
+    "energy": 29,
+    "priority": 32,
+    "tags": [
+      "simulation",
+      "forecasting",
+      "what-if",
+      "risk",
+      "blast-radius",
+      "validation",
+      "safety"
+    ],
+    "links": {
+      "repo": null,
+      "docs": null
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Sim is the Grid's simulation layer: a sandboxed Virtual Execution Environment that models the impact of proposed decisions before they touch reality. Sim runs deterministic what-if evaluations across nodes, dependencies, policies, and environments, producing structured evidence like blast radius, risk posture, cost projections, and failure-mode forecasts.",
+      "why_it_exists": "Provide a safe, sandboxed environment to evaluate proposed changes without impacting production. Generate structured evidence that supports governance decisions and operational approvals. Standardize how the Hive models risk, blast radius, and cost before execution. Enable repeatable simulations that can be compared over time and across environments. Reduce incident risk by catching unsafe or high-impact changes before they are applied.",
+      "primary_audience": "Governor (for deliberation evidence), Operator (for operational confidence), Clarity (for human explanation), and internal systems requiring impact validation before execution.",
+      "value_props": [
+        "Accept simulation requests describing a proposed change, policy, rollout, or configuration shift.",
+        "Resolve relevant dependency graphs and environmental constraints from Grid manifests and registry state.",
+        "Run deterministic evaluation passes to estimate impact vectors (latency, error rate risk, cost, capacity, dependency health).",
+        "Produce a versioned Simulation Report with explicit assumptions, confidence, and identified failure modes.",
+        "Emit telemetry to Pulse for simulation runs, durations, and outcomes without leaking customer content.",
+        "Support replay and comparison of prior simulations for trend-aware forecasting."
+      ],
+      "does_not_do": [
+        "Does not govern or make decisions.",
+        "Does not advise or explain outcomes to humans directly.",
+        "Does not execute, deploy, or apply changes.",
+        "Does not flip flags or modify production state.",
+        "Sim produces evidence. Governor decides. Clarity explains. Operator acts."
+      ],
+      "monetization_signal": "Internal infrastructure. Value measured in reduced incident risk, faster governance cycles, and confident operational decisions-not direct revenue.",
+      "roadmap_focus": "Phase 1: Core simulation engine with dependency graph resolution and deterministic impact scoring. Phase 2: Scenario libraries, environment drift modeling, and historical Pulse integration. Phase 3: Resilience forecasting, multi-branch comparison, and Governor-integrated deliberation workflows.",
+      "grid_relationship": "Governor: Sim provides evidence for Governor deliberation-blast radius, risk scores, and failure modes. Governor weighs this evidence to make decisions. Clarity: Sim produces raw simulation data; Clarity narrates it for humans. Operator: Sim validates proposed operational changes before Operator applies them. Pulse: Sim emits telemetry and consumes historical signals for trend-aware modeling.",
+      "integration_depth": "deep",
+      "demo_path": "RFC submitted -> Governor requests Sim simulation -> Sim resolves dependency graph -> Runs deterministic impact evaluation -> Produces Simulation Report with blast radius, risk posture, cost projection -> Governor weighs evidence -> Clarity explains results to human -> Operator applies approved change with confidence.",
+      "signal_quote": "Model reality before you touch it.",
+      "stability_tier": "experimental",
+      "impact_vector": "risk reduction",
+      "vision": "A modeling lab for the Hive: every meaningful change can be simulated, scored, and compared before execution. Sim becomes the standard source of evidence for blast radius and risk, enabling Governor to deliberate with receipts and Operator to act with confidence."
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "foundational": false,
+    "strategy_base": 20,
+    "tier": "internal",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "flow": 35,
+    "public_name": "HoneyDrunk.Sim"
   }
 ]
+
+

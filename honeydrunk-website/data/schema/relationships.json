@@ -276,52 +276,24 @@
       ],
       "consumed_by": [],
       "exposes": {
-        "contracts": [],
-        "packages": []
+        "contracts": [
+          "HoneyDrunk.Web.Rest.Abstractions"
+        ],
+        "packages": [
+          "HoneyDrunk.Web.Rest.Abstractions",
+          "HoneyDrunk.Web.Rest.AspNetCore"
+        ]
       },
       "blocked_by": [],
       "consumes_detail": {
         "honeydrunk-auth": [
-          "IAuthenticationProvider",
-          "IAuthorizationPolicy"
+          "IAuthenticatedIdentityAccessor (optional, for auth shaping)"
         ],
         "honeydrunk-kernel": [
-          "IGridContext",
-          "IGridContextFactory",
-          "IGridContextAccessor",
-          "INodeContext",
-          "IOperationContext",
-          "IOperationContextFactory",
-          "IOperationContextAccessor",
-          "IStartupHook",
-          "IShutdownHook",
-          "INodeLifecycle",
-          "IHealthContributor",
-          "IReadinessContributor",
-          "NodeLifecycleStage",
-          "NodeLifecycleManager",
-          "IHealthCheck",
-          "HealthStatus",
-          "CompositeHealthCheck",
-          "IMetricsCollector",
-          "NoOpMetricsCollector",
-          "ITelemetryContext",
-          "ITelemetryActivityFactory",
-          "ITraceEnricher",
-          "ILogScopeFactory",
-          "TelemetryTags",
-          "GridActivitySource",
-          "IAgentDescriptor",
-          "IAgentExecutionContext",
-          "IAgentExecutionContextFactory",
-          "IAgentCapability",
-          "AgentContextScope",
-          "HoneyDrunk.Kernel",
-          "HoneyDrunk.Kernel.Abstractions"
+          "IOperationContextAccessor (optional, for correlation ID priority)"
         ],
         "honeydrunk-transport": [
-          "ITransportEnvelope",
-          "HoneyDrunk.Transport"
+          "ITransportEnvelope (mapping only, no runtime transport)"
         ]
       }
     },
@@ -1475,7 +1447,7 @@
     {
       "dependency": "honeydrunk-auth",
       "dependent": "honeycore-web-rest",
-      "reason": "Protects endpoints with Auth's JWT validation and policy enforcement"
+      "reason": "Shapes auth failure responses (401/403) as ApiErrorResponse via IAuthorizationMiddlewareResultHandler"
     },
     {
       "dependency": "honeydrunk-build",
@@ -1510,7 +1482,7 @@
     {
       "dependency": "honeydrunk-kernel",
       "dependent": "honeycore-web-rest",
-      "reason": "Uses Kernel's middleware pipeline and dependency injection for REST controllers"
+      "reason": "Uses Kernel.Abstractions IOperationContextAccessor for correlation ID priority in middleware"
     },
     {
       "dependency": "honeydrunk-kernel",
@@ -1575,7 +1547,7 @@
     {
       "dependency": "honeydrunk-transport",
       "dependent": "honeycore-web-rest",
-      "reason": "Relies on Transport for messaging, events, and inter-node communication"
+      "reason": "Uses Transport.Abstractions ITransportEnvelope for mapping transport outcomes to ApiResult (no runtime transport)"
     },
     {
       "dependency": "honeydrunk-transport",

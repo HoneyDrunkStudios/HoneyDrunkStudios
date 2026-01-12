@@ -1059,5 +1059,81 @@
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
     }
+  },
+  {
+    "id": "honeycore-web-rest-abstractions",
+    "type": "module",
+    "name": "HoneyDrunk.Web.Rest.Abstractions",
+    "parent": "honeycore-web-rest",
+    "slot": "contracts",
+    "signal": "Seed",
+    "integration_depth": "deep",
+    "tags": [
+      "rest",
+      "contracts",
+      "api",
+      "response",
+      "foundation"
+    ],
+    "long_description": {
+      "overview": "Pure contracts and constants for HoneyDrunk REST services. Provides standardized response envelopes (ApiResult, ApiErrorResponse), pagination contracts (PageRequest, PageResult), error codes, header constants, and telemetry tags.",
+      "why_it_exists": "Enables consistent API responses across all services without coupling to ASP.NET Core or any runtime framework. Zero NuGet dependencies.",
+      "primary_audience": "All REST service developers and consumers needing type-safe API contracts.",
+      "value_props": [
+        "Zero runtime dependencies - usable anywhere",
+        "Standardized response envelope contracts",
+        "Consistent error codes and header constants",
+        "Framework-agnostic pagination types"
+      ],
+      "monetization_signal": "Open source foundation for REST consistency.",
+      "roadmap_focus": "Expand response metadata, add batch result contracts.",
+      "grid_relationship": "Foundation for HoneyDrunk.Web.Rest.AspNetCore; consumed by any service returning REST responses.",
+      "demo_path": "Reference Abstractions → return ApiResult<T> from any .NET project.",
+      "signal_quote": "Contracts that compile across boundaries.",
+      "stability_tier": "stable",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeycore-web-rest-aspnetcore",
+    "type": "module",
+    "name": "HoneyDrunk.Web.Rest.AspNetCore",
+    "parent": "honeycore-web-rest",
+    "slot": "integration",
+    "signal": "Seed",
+    "integration_depth": "deep",
+    "tags": [
+      "rest",
+      "aspnetcore",
+      "middleware",
+      "integration"
+    ],
+    "long_description": {
+      "overview": "ASP.NET Core integration for HoneyDrunk REST conventions. Provides middleware for correlation propagation, exception mapping, and request logging. Includes MVC filters for model validation, minimal API endpoint conventions, and JSON serialization defaults.",
+      "why_it_exists": "Ensures consistent API behavior (correlation IDs, error responses, structured logging) across all ASP.NET Core services with minimal configuration.",
+      "primary_audience": "ASP.NET Core service developers building REST APIs.",
+      "value_props": [
+        "One-call registration via AddRest()/UseRest()",
+        "Automatic correlation ID propagation",
+        "Exception-to-ApiErrorResponse mapping",
+        "Auth failure shaping (401/403 as JSON)",
+        "Model validation filter for MVC"
+      ],
+      "monetization_signal": "Open source integration layer.",
+      "roadmap_focus": "OpenAPI enrichment, rate limiting hooks, response compression conventions.",
+      "grid_relationship": "Consumes Kernel.Abstractions for correlation context and Auth.AspNetCore for auth shaping. References Transport.Abstractions for envelope mapping only.",
+      "demo_path": "Call AddRest() → UseRest() → all responses follow conventions automatically.",
+      "signal_quote": "Middleware that remembers.",
+      "stability_tier": "beta",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
   }
 ]

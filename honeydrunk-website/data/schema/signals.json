@@ -1,5 +1,22 @@
 [
   {
+    "date": "2026-01-12",
+    "title": "Operator, Clarity, Sim: Authority Boundaries Locked",
+    "desc": "Major architectural clarity pass on three critical nodes. Rewrote HoneyDrunk.Operator from a 'persona interface' to what it actually is: an internal control plane for operating the Hive. Operator is human-operated, provides unified visibility across nodes and environments, owns operational intent (safety modes, circuit breakers, cost limits), and enables audited intervention during incidents. Operator does not make decisions, does not deliberate, does not act as a persona or advisor. Signal quote: 'Control without opinion. Authority without authorship.' Updated HoneyDrunk.Clarity to be explicitly advisory-only. Clarity explains, teaches, proposes, and drafts artifacts (ADRs, RFCs, migration plans)—but never acts. Added explicit does_not_do and context_safety properties. Clarity may propose; Clarity never acts. Signal quote: 'Explain everything. Change nothing.' Replaced HoneyDrunk.VEE with HoneyDrunk.Sim as the Grid's simulation layer. Sim is the Virtual Execution Environment that models impact of proposed decisions before they touch reality—producing blast radius, risk posture, cost projections, and failure-mode forecasts. Sim produces evidence; Governor decides; Clarity explains; Operator acts. Signal quote: 'Model reality before you touch it.' Updated all cross-references across Governor, Clarity, and related nodes to use Sim instead of VEE. Finally, realigned Flow values to reflect the conceptual spine: Pulse (100), AgentKit (95), Governor (90) as the foundational layer; Build/Pipelines/Tools as operational stabilizers (75/70/65); Operator/Collector/Deploy as safety and scale (55/50/45). Build-in-public: cleaner authority boundaries, no more persona confusion, explicit separation between advisory, governance, simulation, and control.",
+    "tags": [
+      "Meta",
+      "AI",
+      "HoneyDrunk.Operator",
+      "HoneyDrunk.Clarity",
+      "HoneyDrunk.Sim",
+      "HoneyDrunk.Governor",
+      "Architecture",
+      "Safety",
+      "Flow"
+    ],
+    "sector": "Meta"
+  },
+  {
     "date": "2026-01-01",
     "title": "Vault Authority Correction & Data Scope Refinement",
     "desc": "Major accuracy pass on Vault and Data nodes. Fixed a critical authority inversion in Vault: Vault defines and exposes ISecretStore and IConfigProvider—Kernel consumes these contracts, not the other way around. Secrets ownership lives in Vault, not Kernel. De-specified OAuth/OIDC wording to 'auth configuration for token validation and identity workflows' since the exact protocol shape is still evolving. Moved Pulse integration from current state to roadmap_focus—Vault doesn't depend on Pulse today. Trimmed Vault's Kernel consumes_detail from 31 contracts to 12 (IGridContext, IOperationContext, lifecycle hooks, health/readiness, and telemetry primitives). Rewrote all Vault provider modules with correct definitions and promoted all five to Live signal: AzureKeyVault (managed identity, versioned secrets), Aws (Secrets Manager caching), Configuration (bootstrap from config sources), InMemory (deterministic test secrets), and File (local file-based secrets for dev). On the Data side: refined scope boundaries to emphasize provider-agnostic persistence contracts, tenant-aware storage, and schema evolution—without leaking EF Core or SQL Server concerns. Shrunk Data's Kernel contracts to minimal surface and marked Pulse as optional sidecar. Signal quote from Vault: 'Secrets have a home.' Build-in-public: cleaner boundaries, accurate authority, production-ready providers.",
