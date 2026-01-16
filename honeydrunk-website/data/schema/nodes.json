@@ -257,7 +257,19 @@
       "stability_tier": "critical",
       "impact_vector": "developer velocity",
       "node_contract": {
-        "core_abstractions": {
+        "abstractions": {
+          "identity": [
+            "NodeId",
+            "CorrelationId",
+            "CausationId",
+            "TenantId",
+            "ProjectId",
+            "RunId",
+            "OperationId",
+            "SectorId",
+            "EnvironmentId",
+            "ErrorCode"
+          ],
           "context": [
             "IGridContext",
             "IGridContextFactory",
@@ -265,31 +277,43 @@
             "INodeContext",
             "IOperationContext",
             "IOperationContextFactory",
-            "IOperationContextAccessor"
+            "IOperationContextAccessor",
+            "NodeLifecycleStage",
+            "GridHeaderNames"
           ],
           "lifecycle": [
             "IStartupHook",
             "IShutdownHook",
             "INodeLifecycle",
             "IHealthContributor",
-            "IReadinessContributor",
-            "NodeLifecycleStage",
-            "NodeLifecycleManager"
+            "IReadinessContributor"
           ],
-          "health_and_diagnostics": [
+          "health": [
             "IHealthCheck",
-            "HealthStatus",
-            "CompositeHealthCheck",
-            "IMetricsCollector",
-            "NoOpMetricsCollector"
+            "HealthStatus"
+          ],
+          "diagnostics": [
+            "IMetricsCollector"
           ],
           "telemetry": [
             "ITelemetryContext",
             "ITelemetryActivityFactory",
             "ITraceEnricher",
             "ILogScopeFactory",
-            "TelemetryTags",
-            "GridActivitySource"
+            "TelemetryTags"
+          ],
+          "errors": [
+            "HoneyDrunkException",
+            "IErrorClassifier",
+            "ErrorClassification",
+            "ValidationException",
+            "NotFoundException",
+            "ConcurrencyException",
+            "DependencyFailureException",
+            "SecurityException"
+          ],
+          "transport": [
+            "ITransportEnvelopeBinder"
           ],
           "agents": [
             "IAgentDescriptor",
@@ -298,18 +322,83 @@
             "IAgentCapability",
             "AgentContextScope"
           ],
-          "hosting_and_di": [
-            "AddHoneyDrunkGrid",
+          "hosting": [
             "GridOptions",
-            "AddHoneyDrunkNode",
             "HoneyDrunkNodeOptions",
-            "UseGridContext",
+            "HoneyDrunkTelemetryOptions",
+            "IHoneyDrunkBuilder",
+            "INodeDescriptor",
+            "INodeCapability",
+            "INodeManifest",
+            "INodeManifestSource",
+            "IStudioConfiguration",
+            "MultiTenancyMode"
+          ],
+          "configuration": [
+            "HoneyDrunkGridOptions",
+            "NodeRuntimeOptions",
+            "ConfigKey",
+            "ConfigPath",
+            "ConfigScopeType",
+            "IConfigScope",
+            "ISecretsSource"
+          ],
+          "di": [
             "IModule"
           ]
         },
-        "extended_contracts": {
-          "configuration_and_secrets": "Configuration providers, scopes and secret sources that ship in HoneyDrunk.Kernel or HoneyDrunk.Kernel.Abstractions",
-          "identity_primitives": "Strongly typed ID primitives such as node or correlation identifiers"
+        "implementations": {
+          "context": [
+            "GridContext",
+            "GridContextAccessor",
+            "GridContextFactory",
+            "NodeContext",
+            "OperationContext",
+            "OperationContextAccessor",
+            "OperationContextFactory"
+          ],
+          "context_mappers": [
+            "HttpContextMapper",
+            "MessagingContextMapper",
+            "JobContextMapper"
+          ],
+          "transport_binders": [
+            "HttpResponseBinder",
+            "MessagePropertiesBinder",
+            "JobMetadataBinder"
+          ],
+          "lifecycle": [
+            "NodeLifecycleManager"
+          ],
+          "health_and_diagnostics": [
+            "CompositeHealthCheck",
+            "NoOpMetricsCollector",
+            "NodeContextReadinessContributor",
+            "NodeLifecycleHealthContributor",
+            "ConfigurationValidator"
+          ],
+          "telemetry": [
+            "GridActivitySource"
+          ],
+          "errors": [
+            "DefaultErrorClassifier"
+          ],
+          "configuration": [
+            "StudioConfiguration"
+          ],
+          "agents_interop": [
+            "AgentContextProjection",
+            "AgentExecutionContextFactory",
+            "AgentExecutionResult",
+            "AgentResultSerializer",
+            "GridContextSerializer"
+          ],
+          "hosting_and_di": [
+            "AddHoneyDrunkGrid",
+            "AddHoneyDrunkNode",
+            "UseGridContext",
+            "ValidateHoneyDrunkServices"
+          ]
         },
         "excluded": [
           "ITenantResolver",
@@ -337,8 +426,8 @@
     "id": "honeydrunk-data",
     "type": "node",
     "name": "HoneyDrunk.Data",
-    "short": "Persistence contracts & migrations",
-    "description": "Persistence contracts, provider implementations, migrations discipline, tenant isolation, and outbox storage support.",
+    "short": "Persistence contracts & provider implementations",
+    "description": "Persistence contracts, EF Core and SQL Server provider implementations, migrations discipline, tenant isolation, and diagnostics.",
     "sector": "Core",
     "signal": "Live",
     "cluster": "foundation",
@@ -346,14 +435,19 @@
     "priority": 36,
     "tags": [
       "database",
+      "persistence",
       "migrations",
-      "multi-tenant"
+      "multi-tenant",
+      "entityframework",
+      "sqlserver",
+      "contracts",
+      "testing"
     ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Data"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Data gives the Grid memory and continuity. It defines persistence contracts and provider conventions across every tenant, every node, and every environment, so storage stays predictable and auditable. This Node standardizes migrations, schema versioning, tenant isolation, and persistence telemetry. It is a guardrail against drift: the same operation should produce the same durable result, regardless of where it runs. Scope boundaries: Data persists facts. It does not contain business logic, and it does not publish messages. If an outbox is used, Data owns the storage schema and access patterns, while Transport owns dispatch and delivery behavior. As it matures, Data can expose optional hooks for Pulse to report schema health, migration status, and drift signals. Secrets and credentials are provided through the application's configuration pipeline, typically backed by Vault, without Data taking a direct dependency on Vault.",
+      "overview": "HoneyDrunk.Data gives the Grid memory and continuity. It defines persistence contracts and provider conventions across every tenant, every node, and every environment, so storage stays predictable and auditable. This Node standardizes migrations, schema versioning, tenant isolation, and persistence telemetry. It is a guardrail against drift: the same operation should produce the same durable result, regardless of where it runs. Scope boundaries: Data persists facts. It does not contain business logic, and it does not publish messages. If an outbox is needed in the future, Data would own the storage schema and access patterns, while Transport owns dispatch and delivery behavior. As it matures, Data can expose optional hooks for Pulse to report schema health, migration status, and drift signals. Secrets and credentials are provided through the application's configuration pipeline, typically backed by Vault, without Data taking a direct dependency on Vault.",
       "why_it_exists": "HoneyDrunk.Data exists to prevent inconsistency and reinvention across the Grid.",
       "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
       "value_props": [
@@ -363,11 +457,11 @@
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
       "roadmap_focus": "Advance HoneyDrunk.Data capabilities and harden contracts.",
-      "grid_relationship": "Consumes Kernel (required) for GridContext, OperationContext, lifecycle hooks, and telemetry primitives. Pulse integration is optional for schema health and migration telemetry. Does not consume Vault directly (configuration provided at app layer). Does not consume Transport or Auth. Exposes outbox storage contracts that Transport consumes for dispatch.",
+      "grid_relationship": "Consumes Kernel (required) for GridContext, OperationContext, lifecycle hooks, and telemetry primitives. Pulse integration is optional for schema health and migration telemetry. Does not consume Vault directly (configuration provided at app layer). Does not consume Transport or Auth.",
       "integration_depth": "medium",
       "demo_path": "Show a 60-second demo of HoneyDrunk.Data: input → behavior → outcome.",
       "signal_quote": "Memory with meaning.",
-      "stability_tier": "experimental",
+      "stability_tier": "stable",
       "impact_vector": "developer velocity"
     },
     "_dictionary_ref": {
@@ -387,8 +481,8 @@
     "id": "honeydrunk-transport",
     "type": "node",
     "name": "HoneyDrunk.Transport",
-    "short": "Outbox, messaging abstractions",
-    "description": "Reliable messaging and transport layer. Outbox pattern, event primitives, and communication infrastructure.",
+    "short": "Transport-agnostic messaging with middleware pipeline",
+    "description": "Unified messaging abstraction over Azure Service Bus, Storage Queue, and in-memory brokers. Features middleware pipeline pattern, retry strategies, transactional outbox, and Grid context propagation.",
     "sector": "Core",
     "signal": "Live",
     "cluster": "foundation",
@@ -400,27 +494,34 @@
     "tags": [
       "messaging",
       "outbox",
-      "events"
+      "pipeline",
+      "middleware",
+      "transport-agnostic",
+      "retry",
+      "grid-context"
     ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Transport"
     },
     "long_description": {
-      "overview": "Transport is the voice of the Grid — the infrastructure that allows Nodes to speak and understand one another. It abstracts message queues, brokers, and event buses into a unified contract that guarantees delivery, order, and idempotence. Every communication between systems — from analytics pings to AI orchestration events — moves through its arteries. It exists to remove uncertainty from distributed systems, ensuring that no message is ever lost, duplicated, or misinterpreted. Over time, Transport evolves into a self-tuning mesh that can reroute or throttle based on traffic behavior and performance patterns surfaced by Pulse. It becomes topology-aware, understanding dependencies and critical paths between services. It will eventually integrate predictive scaling, fault isolation, and recovery mechanisms driven by AI. Transport earns its keep by transforming chaos into conversation — allowing the Hive to coordinate across thousands of moving parts without collapse.",
-      "why_it_exists": "HoneyDrunk.Transport exists to prevent inconsistency and reinvention across the Grid.",
-      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "overview": "Transport is the messaging backbone for HoneyDrunk.OS applications. It provides transport-agnostic abstractions (ITransportPublisher, ITransportConsumer, IMessageHandler<T>) that enable broker-independent messaging. Built on an onion-style middleware pipeline similar to ASP.NET Core, it supports GridContext propagation, OpenTelemetry tracing, structured logging, and configurable retry strategies (Fixed, Linear, Exponential). The transactional outbox pattern ensures exactly-once delivery by storing messages within database transactions. Transport adapters for Azure Service Bus, Azure Storage Queue, and InMemory are available as separate packages.",
+      "why_it_exists": "HoneyDrunk.Transport exists to decouple application logic from specific message broker implementations while providing enterprise-grade reliability patterns.",
+      "primary_audience": "HoneyDrunk service developers building distributed, event-driven applications.",
       "value_props": [
-        "Standardizes messaging, outbox",
-        "Reduces operational risk with opinionated defaults",
-        "Improves developer velocity and interoperability"
+        "Transport-agnostic messaging via ITransportPublisher/ITransportConsumer",
+        "Middleware pipeline for cross-cutting concerns (telemetry, logging, correlation)",
+        "Configurable retry strategies with backoff (Fixed, Linear, Exponential)",
+        "Transactional outbox pattern for exactly-once delivery",
+        "Grid context propagation with correlation and causation tracking",
+        "Health contributors for Kubernetes readiness/liveness probes"
       ],
-      "monetization_signal": "Internal-first; open-core where appropriate.",
-      "roadmap_focus": "Advance HoneyDrunk.Transport capabilities and harden contracts.",
-      "grid_relationship": "Uses Kernel's IGridContext and TimeProvider; provides Outbox contracts for Data; emits telemetry to Pulse.",
-      "integration_depth": "medium",
-      "demo_path": "Show a 60-second demo of HoneyDrunk.Transport: input → behavior → outcome.",
-      "signal_quote": "Every message finds its way.",
-      "stability_tier": "beta",
+      "monetization_signal": "Open source foundation; enterprise patterns emerge in implementations.",
+      "roadmap_focus": "Advanced dead-letter strategies, per-subscription filters, and fault injection for testing.",
+      "grid_relationship": "Uses Kernel's IGridContext, IOperationContext, and ITelemetryActivityFactory for correlation and telemetry. Provides Outbox contracts that Data bridges can implement.",
+      "integration_depth": "deep",
+      "demo_path": "Publish a message via IMessagePublisher, observe middleware pipeline execution, verify handler invocation with Grid context.",
+      "signal_quote": "Send messages, not worries.",
+      "stability_tier": "stable",
       "impact_vector": "developer velocity"
     },
     "_dictionary_ref": {
@@ -609,21 +710,33 @@
       "provider"
     ],
     "tags": [
-      "security",
+      "vault",
       "secrets",
-      "config"
+      "configuration",
+      "provider",
+      "cache",
+      "resilience",
+      "circuit-breaker",
+      "retry",
+      "lifecycle",
+      "health",
+      "distributed-tracing"
     ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Vault"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Vault is the trust kernel of the Hive — the invisible system that keeps every secret, credential, and configuration alive yet contained. It exists to make safety a default, not a discipline: developers never touch raw keys, yet their services always have exactly what they need. Vault defines and exposes ISecretStore and IConfigProvider for secure storage, encrypting, scoping, and distributing configuration at runtime. It centralizes authority without centralizing failure, ensuring that a compromise in one Node never spreads contagion through the Grid. Vault stores signing keys and auth configuration for token validation and identity workflows. Every request, token, and certificate becomes traceable — not to restrict freedom, but to cultivate accountability. Vault earns its keep by doing its work in silence: the less it's noticed, the more it's doing its job.",
-      "why_it_exists": "HoneyDrunk.Vault exists to prevent inconsistency and reinvention across the Grid.",
-      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "overview": "HoneyDrunk.Vault is the core secrets and configuration management library for HoneyDrunk.OS. This package provides the abstractions (ISecretStore, IConfigProvider, IVaultClient, ISecretProvider, IConfigSource), caching with TTL and sliding expiration, resilience policies (retry, circuit breaker), Kernel lifecycle integration, and distributed telemetry that all Vault providers plug into. Vault itself contains no provider implementations—it defines the contract, runtime behavior, and orchestration. Providers (File, Azure Key Vault, AWS, InMemory, Configuration) supply the actual secrets while Vault handles resilience, caching, and tracing.",
+      "why_it_exists": "A unified, Kernel-aware interface for secrets and configuration—no matter where those values live. Prevents inconsistent secret handling and reinvention across the Grid.",
+      "primary_audience": "HoneyDrunk service developers and node owners who need secure, traceable access to secrets and configuration.",
       "value_props": [
-        "Defines ISecretStore and IConfigProvider for secure storage",
-        "Centralizes secrets without centralizing failure",
-        "Provider model enables local, cloud, or hybrid deployments"
+        "Defines ISecretStore, IConfigProvider, IVaultClient for unified secret/config access",
+        "In-memory caching with TTL and optional sliding expiration",
+        "Retry and circuit breaker resilience policies",
+        "Grid context propagation for tracing and correlation",
+        "Kernel lifecycle integration (startup warmup, health, readiness)",
+        "Secure telemetry (never logs secret values)",
+        "Pluggable provider model (File, Azure, AWS, InMemory, Configuration)"
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
       "roadmap_focus": "Pulse integration for anomaly detection, secrets-as-code manifests, autonomous credential rotation.",
@@ -638,7 +751,7 @@
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
-    "foundational": false,
+    "foundational": true,
     "strategy_base": 18,
     "tier": "none",
     "time_pressure": 2,
@@ -706,7 +819,7 @@
     "type": "node",
     "name": "HoneyDrunk.Auth",
     "short": "JWT validation + policy enforcement",
-    "description": "Standardized authentication and authorization contracts. JWT bearer validation, policy evaluation, and signing key seams via Vault.",
+    "description": "Grid node component for authentication and authorization. Provides JWT bearer token validation with Vault-backed signing keys, deterministic policy evaluation, and deep Kernel integration for lifecycle and telemetry. Requires Kernel as host runtime.",
     "sector": "Core",
     "signal": "Live",
     "cluster": "infrastructure",
@@ -716,28 +829,32 @@
       "auth",
       "security",
       "jwt",
-      "policy"
+      "policy",
+      "identity",
+      "vault"
     ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Auth"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Auth standardizes authentication and authorization decisions across nodes and entrypoints. It provides JWT bearer validation, policy evaluation contracts, and signing key seams backed by Vault. Auth ensures consistent identity checks and authorization patterns so every request entering the Grid follows the same security discipline. Scope boundaries: Auth validates requests and evaluates policies. It does not own user identity storage (that's app-specific), and it does not perform OAuth/OIDC flows today. Signing keys and auth configuration are provided through Vault. Over time, Auth can evolve to support passkeys, MFA, federated sign-ins, device trust, and context-aware authorization meshes. Future integration with Pulse for session observability and Sentinel for anomaly detection will enable dynamic policy adjustments based on behavior patterns and risk posture.",
+      "overview": "HoneyDrunk.Auth is a Grid node component—not a standalone library—that standardizes authentication and authorization decisions across nodes and entrypoints. It requires Kernel as its host runtime and provides JWT bearer token validation with Vault-backed signing keys, deterministic policy evaluation, and fail-fast startup validation. Auth ensures consistent identity checks and authorization patterns so every request entering the Grid follows the same security discipline. Key design constraints: authorization evaluation is local, deterministic, and side-effect free. Scope boundaries: Auth validates tokens and evaluates policies. It does not issue tokens, own user identity storage (that's app-specific), or perform OAuth/OIDC flows. Signing keys and auth configuration are provided through Vault. Over time, Auth can evolve to support passkeys, MFA, federated sign-ins, device trust, and context-aware authorization meshes. Future integration with Pulse for session observability and Sentinel for anomaly detection will enable dynamic policy adjustments based on behavior patterns and risk posture.",
       "why_it_exists": "Prevents inconsistent authentication and authorization patterns across nodes, ensuring security discipline is uniform regardless of entrypoint.",
-      "primary_audience": "Service owners building HTTP APIs, gateways, and any node requiring request authentication.",
+      "primary_audience": "Service owners building HTTP APIs, gateways, and any Grid node requiring request authentication.",
       "value_props": [
-        "Consistent JWT validation and policy enforcement",
-        "Signing key management via Vault",
-        "Clean separation between auth contracts and implementations"
+        "JWT bearer token validation with Vault-backed signing keys",
+        "Deterministic policy evaluation (local, side-effect free, auditable)",
+        "Fail-fast startup validation of required secrets",
+        "Deep Kernel integration for lifecycle hooks, telemetry, and context propagation",
+        "Clean separation between auth contracts (Abstractions) and implementations"
       ],
-      "monetization_signal": "Internal-first; open-core where appropriate.",
+      "monetization_signal": "Open source foundation; enterprise patterns in implementations.",
       "roadmap_focus": "Passkeys and MFA support. Federated sign-ins and device trust. Pulse integration for session observability. Sentinel integration for anomaly detection. Context-aware authorization mesh.",
-      "grid_relationship": "Consumes Kernel (required) for GridContext, OperationContext, and telemetry. Consumes Vault for signing keys and auth configuration. Exposes auth contracts consumed by Web.Rest and service nodes.",
-      "integration_depth": "medium",
-      "demo_path": "Show a 60-second demo of HoneyDrunk.Auth: input → behavior → outcome.",
+      "grid_relationship": "Consumes Kernel (required) for GridContext, OperationContext, lifecycle hooks, and telemetry. Consumes Vault (required) for signing keys and auth configuration. Exposes auth contracts consumed by Web.Rest and service nodes via three packages: HoneyDrunk.Auth.Abstractions (pure contracts), HoneyDrunk.Auth (runtime), and HoneyDrunk.Auth.AspNetCore (ASP.NET Core integration).",
+      "integration_depth": "deep",
+      "demo_path": "Validate a JWT bearer token and evaluate an authorization policy with full telemetry tracing.",
       "signal_quote": "Trust without friction.",
-      "stability_tier": "experimental",
-      "impact_vector": "developer velocity"
+      "stability_tier": "stable",
+      "impact_vector": "security posture"
     },
     "_dictionary_ref": {
       "version": "v1",

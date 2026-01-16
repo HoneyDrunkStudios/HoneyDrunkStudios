@@ -11,24 +11,126 @@
       "core",
       "interfaces",
       "contracts",
-      "foundation"
+      "foundation",
+      "identity",
+      "context",
+      "lifecycle",
+      "telemetry",
+      "errors",
+      "transport",
+      "agents"
     ],
     "long_description": {
-      "overview": "Core abstractions and interfaces that define the foundational contracts for the entire HoneyDrunk ecosystem. Provides the base types, interfaces, and contracts that all other modules depend on.",
-      "why_it_exists": "A clean dependency graph requires explicit contracts at the foundation. Everything builds on these interfaces.",
-      "primary_audience": "All HoneyDrunk modules and services; this is the bedrock.",
+      "overview": "Pure semantic contracts for HoneyDrunk.OS Grid. Provides zero-dependency abstractions for Grid context (three-tier model: GridContext, NodeContext, OperationContext), Node lifecycle orchestration, strongly-typed identity primitives (CorrelationId, CausationId, NodeId, TenantId, etc.), telemetry interfaces, transport binder contracts, structured error handling (HoneyDrunkException, ErrorCode, IErrorClassifier), agent execution contracts, and hosting abstractions (INodeDescriptor, GridOptions, IModule).",
+      "why_it_exists": "A clean dependency graph requires explicit contracts at the foundation. Everything builds on these interfaces. Safe for libraries and SDKs—no runtime weight.",
+      "primary_audience": "All HoneyDrunk modules and services; library authors building Grid-aware components without pulling in implementations.",
       "value_props": [
-        "Zero-dependency interface definitions",
-        "Explicit contracts for dependency injection",
-        "Clear boundaries between layers and modules"
+        "Zero-dependency interface definitions (only .NET BCL + Microsoft.Extensions.* abstractions)",
+        "Strongly-typed identity primitives with validation at construction time",
+        "Three-tier context model (Grid → Node → Operation) with correlation and causation tracking",
+        "Lifecycle hooks, health/readiness contributors, and lifecycle stage contracts",
+        "OpenTelemetry-ready telemetry interfaces and tag conventions",
+        "Structured error handling with classification and well-known error codes",
+        "Transport binder contracts for context propagation across boundaries",
+        "Agent execution context contracts for LLM-centric components"
       ],
       "monetization_signal": "Open source foundation; enterprise patterns emerge in implementations.",
-      "roadmap_focus": "Expand lifecycle hooks, add telemetry interfaces, refine hosting abstractions.",
-      "grid_relationship": "Foundation for Vault, Transport, Telemetry, Pulse, and all other Core modules.",
-      "demo_path": "Reference these interfaces when building new modules or implementing custom handlers.",
+      "roadmap_focus": "Stabilize identity registries as the DNS of the Grid. Finalize agent execution context contracts for AgentKit integration.",
+      "grid_relationship": "Foundation for Vault, Transport, Data, Auth, Pulse, AgentKit, and all other Core modules. Every node depends on these contracts.",
+      "demo_path": "Reference these interfaces when building new modules, implementing custom handlers, or creating Grid-aware libraries.",
       "signal_quote": "The contracts that connect the Grid.",
       "stability_tier": "stable",
       "impact_vector": "system architecture"
+    },
+    "contracts": {
+      "identity": [
+        "NodeId",
+        "CorrelationId",
+        "CausationId",
+        "TenantId",
+        "ProjectId",
+        "RunId",
+        "OperationId",
+        "SectorId",
+        "EnvironmentId",
+        "ErrorCode"
+      ],
+      "context": [
+        "IGridContext",
+        "IGridContextFactory",
+        "IGridContextAccessor",
+        "INodeContext",
+        "IOperationContext",
+        "IOperationContextFactory",
+        "IOperationContextAccessor",
+        "NodeLifecycleStage",
+        "GridHeaderNames"
+      ],
+      "lifecycle": [
+        "IStartupHook",
+        "IShutdownHook",
+        "INodeLifecycle",
+        "IHealthContributor",
+        "IReadinessContributor"
+      ],
+      "health": [
+        "IHealthCheck",
+        "HealthStatus"
+      ],
+      "diagnostics": [
+        "IMetricsCollector"
+      ],
+      "telemetry": [
+        "ITelemetryContext",
+        "ITelemetryActivityFactory",
+        "ITraceEnricher",
+        "ILogScopeFactory",
+        "TelemetryTags"
+      ],
+      "errors": [
+        "HoneyDrunkException",
+        "IErrorClassifier",
+        "ErrorClassification",
+        "ValidationException",
+        "NotFoundException",
+        "ConcurrencyException",
+        "DependencyFailureException",
+        "SecurityException"
+      ],
+      "transport": [
+        "ITransportEnvelopeBinder"
+      ],
+      "agents": [
+        "IAgentDescriptor",
+        "IAgentExecutionContext",
+        "IAgentExecutionContextFactory",
+        "IAgentCapability",
+        "AgentContextScope"
+      ],
+      "hosting": [
+        "GridOptions",
+        "HoneyDrunkNodeOptions",
+        "HoneyDrunkTelemetryOptions",
+        "IHoneyDrunkBuilder",
+        "INodeDescriptor",
+        "INodeCapability",
+        "INodeManifest",
+        "INodeManifestSource",
+        "IStudioConfiguration",
+        "MultiTenancyMode"
+      ],
+      "configuration": [
+        "HoneyDrunkGridOptions",
+        "NodeRuntimeOptions",
+        "ConfigKey",
+        "ConfigPath",
+        "ConfigScopeType",
+        "IConfigScope",
+        "ISecretsSource"
+      ],
+      "di": [
+        "IModule"
+      ]
     },
     "_dictionary_ref": {
       "version": "v1",
@@ -181,6 +283,81 @@
     }
   },
   {
+    "id": "honeydrunk-data-testing",
+    "type": "module",
+    "name": "HoneyDrunk.Data.Testing",
+    "parent": "honeydrunk-data",
+    "slot": "harness",
+    "signal": "Live",
+    "integration_depth": "shallow",
+    "tags": [
+      "data",
+      "testing",
+      "fixtures",
+      "integration"
+    ],
+    "long_description": {
+      "overview": "Testing utilities, fixtures, and helpers for HoneyDrunk.Data integration testing.",
+      "why_it_exists": "Provides reusable test infrastructure for integration tests against data providers without duplicating setup logic.",
+      "primary_audience": "Developers writing integration tests for Data-backed services.",
+      "value_props": [
+        "Consistent test database setup and teardown",
+        "Factory methods for common test scenarios",
+        "SQLite and in-memory provider support for fast tests"
+      ],
+      "monetization_signal": "Dev-only internal tooling.",
+      "roadmap_focus": "Expand fixture factories and deterministic seeding.",
+      "grid_relationship": "Supports Data providers by providing test harnesses without runtime dependencies.",
+      "demo_path": "Use fixtures to spin up test databases for integration tests.",
+      "signal_quote": "Test with confidence.",
+      "stability_tier": "stable",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-auth",
+    "type": "module",
+    "name": "HoneyDrunk.Auth",
+    "parent": null,
+    "slot": "runtime",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "auth",
+      "security",
+      "jwt",
+      "policy",
+      "identity",
+      "vault"
+    ],
+    "long_description": {
+      "overview": "Core authentication and authorization runtime for HoneyDrunk Grid nodes. Provides JWT Bearer token validation via Vault-backed signing keys, policy-based authorization evaluation, and lifecycle integration with Kernel. This is a Grid node component—not a standalone library—requiring Kernel as its host runtime.",
+      "why_it_exists": "Ensures consistent authentication and authorization discipline across all Grid nodes. Prevents scattered auth implementations and guarantees uniform identity checks regardless of entrypoint.",
+      "primary_audience": "Service owners building HTTP APIs, gateways, and any Grid node requiring request authentication.",
+      "value_props": [
+        "JWT Bearer token validation with Vault-backed signing keys",
+        "Deterministic policy evaluation (local, side-effect free, auditable)",
+        "Fail-fast startup validation of required secrets",
+        "Deep Kernel integration for telemetry, lifecycle, and context propagation"
+      ],
+      "monetization_signal": "Open source foundation.",
+      "roadmap_focus": "Passkeys and MFA support. Federated sign-ins and device trust. Pulse integration for session observability.",
+      "grid_relationship": "Consumes Kernel (required) for GridContext, telemetry, and lifecycle. Consumes Vault (required) for signing keys and configuration. Exposes auth contracts consumed by Web.Rest and service nodes.",
+      "demo_path": "Validate a JWT token and evaluate a policy with full telemetry tracing.",
+      "signal_quote": "Trust without friction.",
+      "stability_tier": "stable",
+      "impact_vector": "security posture"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
     "id": "honeydrunk-auth-abstractions",
     "type": "module",
     "name": "HoneyDrunk.Auth.Abstractions",
@@ -211,6 +388,24 @@
       "signal_quote": "Identity has rules.",
       "stability_tier": "stable",
       "impact_vector": "security posture"
+    },
+    "contracts": {
+      "authentication": [
+        "IAuthenticationProvider",
+        "AuthCredential",
+        "AuthenticatedIdentity",
+        "AuthenticationResult",
+        "AuthenticationFailureCode",
+        "AuthScheme",
+        "AuthClaimTypes"
+      ],
+      "authorization": [
+        "IAuthorizationPolicy",
+        "AuthorizationRequest",
+        "AuthorizationDecision",
+        "AuthorizationDenyCode",
+        "DenyReason"
+      ]
     },
     "_dictionary_ref": {
       "version": "v1",
@@ -264,23 +459,26 @@
     "integration_depth": "shallow",
     "tags": [
       "messaging",
-      "dev",
-      "test"
+      "testing",
+      "integration-tests",
+      "channel-based"
     ],
     "long_description": {
-      "overview": "An in-process transport adapter for rapid local development and tests. It simulates broker behavior without external infrastructure so handlers and outbox flows can be exercised fast.",
-      "why_it_exists": "Developers need instant feedback loops without provisioning real brokers.",
-      "primary_audience": "Service developers writing handlers and tests.",
+      "overview": "In-process message broker for testing Transport applications. Implements the full Transport abstraction (ITransportPublisher, ITransportConsumer) with Channel-based observable queues. Runs the exact same middleware pipeline, handler resolution, and context propagation logic as production transports—not a mock, but a real transport implementation.",
+      "why_it_exists": "Developers need deterministic, fast integration tests that exercise the complete pipeline without external infrastructure.",
+      "primary_audience": "Service developers writing integration tests for handlers and middleware.",
       "value_props": [
-        "Zero-setup event publishing and consumption",
-        "Deterministic, fast test runs for handlers",
-        "Parity with production envelopes without network costs"
+        "Zero infrastructure—no Azure, no Docker, no external services",
+        "Full pipeline execution with middleware and handler invocation",
+        "Observable Channel-based queues for test verification",
+        "Multi-observer support for test assertions",
+        "Deterministic execution with no timing issues or flaky tests"
       ],
       "monetization_signal": "Open source utility for dev/test only.",
       "roadmap_focus": "Fault injection toggles (delay, drop, duplicate) to harden handlers.",
       "grid_relationship": "Implements the Transport adapter slot; used by Testing harnesses.",
-      "demo_path": "Publish an event in-memory and assert handler outcomes within a single process.",
-      "signal_quote": "Speed without servers.",
+      "demo_path": "Publish a message in-memory, observe full pipeline execution, assert handler outcomes.",
+      "signal_quote": "Test like production, fail like development.",
       "stability_tier": "stable",
       "impact_vector": "developer velocity"
     },
@@ -290,9 +488,9 @@
     }
   },
   {
-    "id": "honeydrunk-transport-messaging-storagequeues",
+    "id": "honeydrunk-transport-messaging-storagequeue",
     "type": "module",
-    "name": "HoneyDrunk.Transport.StorageQueues",
+    "name": "HoneyDrunk.Transport.StorageQueue",
     "parent": "honeydrunk-transport",
     "slot": "adapter",
     "signal": "Live",
@@ -300,22 +498,24 @@
     "tags": [
       "azure",
       "queues",
-      "messaging"
+      "messaging",
+      "cost-effective"
     ],
     "long_description": {
-      "overview": "Azure Storage Queues adapter for HoneyDrunk.Transport. A lightweight, cost-friendly broker for simple queue semantics and background processing.",
-      "why_it_exists": "Some workloads need durable queues without the complexity of full-fledged brokers.",
-      "primary_audience": "Teams deploying on Azure with simple FIFO/background jobs.",
+      "overview": "Azure Storage Queue adapter for HoneyDrunk.Transport. A cost-effective (~10x cheaper than Service Bus), high-volume messaging solution for simple point-to-point queue scenarios. Features automatic poison queue handling, exponential backoff polling, and two-level concurrency control.",
+      "why_it_exists": "High-volume workloads need durable queues at low cost without the complexity of full-fledged brokers.",
+      "primary_audience": "Teams deploying on Azure with simple FIFO/background jobs requiring millions of messages per day.",
       "value_props": [
-        "Low-cost, serverless-friendly queues",
-        "Outbox → queue publishing with retries",
-        "Poison handling and DLQ conventions"
+        "Cost-effective at ~$0.0004 per 10,000 transactions",
+        "Automatic poison queue (dead-letter) handling",
+        "Exponential backoff for empty queue polling optimization",
+        "Two-level concurrency: MaxConcurrency × BatchProcessingConcurrency"
       ],
       "monetization_signal": "Open source adapter.",
-      "roadmap_focus": "Batch receive and visibility timeout tuning templates.",
+      "roadmap_focus": "Batch receive optimization and visibility timeout tuning.",
       "grid_relationship": "Implements the Transport adapter slot; emits telemetry into Pulse.",
-      "demo_path": "Emit outbox events → observe dequeue/handle lifecycle via Pulse traces.",
-      "signal_quote": "Simple queues, serious work.",
+      "demo_path": "Publish messages to Storage Queue, observe dequeue/handle lifecycle via Pulse traces.",
+      "signal_quote": "High volume, low cost, simple semantics.",
       "stability_tier": "beta",
       "impact_vector": "operational simplicity"
     },
@@ -336,22 +536,28 @@
       "azure",
       "servicebus",
       "topics",
-      "queues"
+      "subscriptions",
+      "sessions",
+      "transactions",
+      "enterprise"
     ],
     "long_description": {
-      "overview": "Azure Service Bus adapter with topics/subscriptions support, sessions, and exactly-once-ish handling aligned to the Transport envelopes.",
-      "why_it_exists": "Event-driven services on Azure need high-throughput pub/sub with robust delivery semantics.",
-      "primary_audience": "Production services that require topics, sessions, and partitioning.",
+      "overview": "Azure Service Bus adapter for enterprise messaging scenarios. Supports topics/subscriptions (pub/sub), sessions (ordered processing), transactional receive (PeekLock), duplicate detection, and blob storage fallback for publish failures. Ideal for high-throughput, high-correctness workloads where ordering, transactions, and DLQ behavior matter.",
+      "why_it_exists": "Mission-critical, event-driven services on Azure need high-throughput pub/sub with robust delivery semantics, ordering guarantees, and transactional behavior.",
+      "primary_audience": "Production services requiring topics, sessions, transactions, and enterprise-grade message size support (up to 100MB).",
       "value_props": [
-        "Pub/sub via topics and subscriptions",
-        "Idempotent handler patterns with sessions",
-        "Tracing and correlation baked in"
+        "Topics & subscriptions for pub/sub messaging patterns",
+        "Sessions for ordered message processing per session",
+        "Transactional receive with PeekLock mode",
+        "Duplicate detection for message deduplication",
+        "Built-in dead-letter queue support",
+        "Blob storage fallback for failed publishes"
       ],
       "monetization_signal": "Open core adapter; enterprise tuning guides later.",
       "roadmap_focus": "Advanced dead-letter strategies and per-subscription filters.",
       "grid_relationship": "Implements the Transport adapter slot; integrates with Vault for secrets and Pulse for telemetry.",
-      "demo_path": "Publish to a topic, handle via subscription, trace causality across services.",
-      "signal_quote": "Highways for high signal.",
+      "demo_path": "Publish to a topic, handle via subscription, trace causality across services with Grid context.",
+      "signal_quote": "Enterprise messaging with all the bells and whistles.",
       "stability_tier": "beta",
       "impact_vector": "system resiliency"
     },
@@ -494,6 +700,72 @@
       "signal_quote": "Know what clicks.",
       "stability_tier": "beta",
       "impact_vector": "creator insight"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-vault-core",
+    "type": "module",
+    "name": "HoneyDrunk.Vault",
+    "parent": "honeydrunk-vault",
+    "slot": "core",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "vault",
+      "secrets",
+      "configuration",
+      "cache",
+      "resilience",
+      "lifecycle",
+      "telemetry",
+      "contracts"
+    ],
+    "long_description": {
+      "overview": "Core secrets and configuration management library providing abstractions, caching, orchestration, telemetry, and Kernel lifecycle integration. This package contains no provider implementations—it defines the Vault contract, runtime behavior, and coordination layer. Providers supply the values; this core handles resilience, caching, and distributed tracing.",
+      "why_it_exists": "A unified, Kernel-aware interface for secrets and configuration that all provider packages plug into.",
+      "primary_audience": "Service developers and infrastructure maintainers needing consistent secret/config access patterns.",
+      "value_props": [
+        "Defines ISecretStore, IConfigProvider, IVaultClient, ISecretProvider, IConfigSource",
+        "In-memory caching with TTL and sliding expiration",
+        "Retry and circuit breaker resilience policies",
+        "Grid context propagation for tracing and correlation",
+        "Kernel lifecycle integration (startup hooks, health, readiness)",
+        "Secure telemetry that never logs secret values"
+      ],
+      "monetization_signal": "Open source foundation.",
+      "roadmap_focus": "Pulse integration for anomaly detection, autonomous credential rotation.",
+      "grid_relationship": "Foundation for all Vault providers and consumed by Auth, AgentKit, and most service nodes.",
+      "demo_path": "Inject ISecretStore and retrieve a secret with full tracing and caching.",
+      "signal_quote": "The contract that keeps secrets safe.",
+      "stability_tier": "stable",
+      "impact_vector": "security posture"
+    },
+    "contracts": {
+      "primary": [
+        "ISecretStore",
+        "IConfigProvider",
+        "IVaultClient"
+      ],
+      "provider": [
+        "ISecretProvider",
+        "IConfigSource"
+      ],
+      "models": [
+        "SecretIdentifier",
+        "SecretValue",
+        "SecretVersion",
+        "VaultResult",
+        "VaultScope"
+      ],
+      "options": [
+        "VaultOptions",
+        "VaultCacheOptions",
+        "VaultResilienceOptions"
+      ]
     },
     "_dictionary_ref": {
       "version": "v1",
