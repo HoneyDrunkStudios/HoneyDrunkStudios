@@ -268,7 +268,7 @@
       "dev"
     ],
     "depends_on": [
-      "honeycore-web-rest",
+      "honeydrunk-web-rest",
       "honeydrunk-auth",
       "honeydrunk-vault",
       "honeydrunk-transport",
@@ -454,7 +454,7 @@
       "dev"
     ],
     "depends_on": [
-      "honeycore-web-rest",
+      "honeydrunk-web-rest",
       "honeydrunk-transport",
       "honeydrunk-vault",
       "pulse"
@@ -517,7 +517,7 @@
       "dev"
     ],
     "depends_on": [
-      "honeycore-web-rest",
+      "honeydrunk-web-rest",
       "honeydrunk-transport",
       "pulse",
       "honeydrunk-vault"

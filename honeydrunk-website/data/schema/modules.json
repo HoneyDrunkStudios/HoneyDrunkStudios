@@ -319,6 +319,117 @@
     }
   },
   {
+    "id": "honeydrunk-data-outbox-abstractions",
+    "type": "module",
+    "name": "HoneyDrunk.Data.Outbox.Abstractions",
+    "parent": "honeydrunk-data",
+    "slot": "contracts",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "data",
+      "outbox",
+      "contracts",
+      "messaging",
+      "exactly-once"
+    ],
+    "long_description": {
+      "overview": "Provider-agnostic outbox contracts defining the storage and dispatch interfaces for transactional outbox pattern. Separates outbox concerns from both Data providers and Transport dispatch.",
+      "why_it_exists": "Enables exactly-once message delivery by storing outbox entries within database transactions, while keeping outbox contracts independent of any specific persistence or transport provider.",
+      "primary_audience": "Service developers implementing transactional messaging patterns.",
+      "value_props": [
+        "Clean separation between outbox storage and dispatch",
+        "Provider-agnostic contracts",
+        "Lease-based concurrency for multi-instance safety"
+      ],
+      "monetization_signal": "Open source foundation.",
+      "roadmap_focus": "Expand outbox metadata and diagnostics contracts.",
+      "grid_relationship": "Defines contracts implemented by Data.Outbox and consumed by Data.Outbox.Dispatcher.",
+      "demo_path": "Reference outbox abstractions to store messages within a UnitOfWork transaction.",
+      "signal_quote": "Messages that survive transactions.",
+      "stability_tier": "stable",
+      "impact_vector": "reliability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-data-outbox",
+    "type": "module",
+    "name": "HoneyDrunk.Data.Outbox",
+    "parent": "honeydrunk-data",
+    "slot": "core",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "data",
+      "outbox",
+      "persistence",
+      "transactions"
+    ],
+    "long_description": {
+      "overview": "Outbox storage implementation using EF Core. Stores outbox entries within the same database transaction as business operations, ensuring atomicity between state changes and message publication.",
+      "why_it_exists": "Provides the persistence side of the transactional outbox pattern, keeping message storage atomic with business state changes.",
+      "primary_audience": "Service developers using EF Core who need exactly-once messaging.",
+      "value_props": [
+        "Atomic message storage within EF Core transactions",
+        "Lease-based concurrency for safe multi-instance dispatch",
+        "Correlation tagging for traceability"
+      ],
+      "monetization_signal": "Open core adapter.",
+      "roadmap_focus": "Batch optimization and diagnostics hooks.",
+      "grid_relationship": "Implements Outbox.Abstractions contracts. Consumed by Outbox.Dispatcher for message delivery.",
+      "demo_path": "Save a domain event within a UnitOfWork and observe it persisted in the outbox table.",
+      "signal_quote": "Persist the intent, deliver the fact.",
+      "stability_tier": "stable",
+      "impact_vector": "reliability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-data-outbox-dispatcher",
+    "type": "module",
+    "name": "HoneyDrunk.Data.Outbox.Dispatcher",
+    "parent": "honeydrunk-data",
+    "slot": "adapter",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "data",
+      "outbox",
+      "dispatcher",
+      "transport",
+      "background"
+    ],
+    "long_description": {
+      "overview": "Background dispatcher that polls the outbox table and publishes pending messages via HoneyDrunk.Transport. Uses lease-based concurrency control for safe multi-instance operation with configurable retry and backoff.",
+      "why_it_exists": "Completes the outbox pattern by bridging persisted outbox entries to Transport for reliable delivery, decoupling dispatch timing from business transactions.",
+      "primary_audience": "Service developers deploying transactional outbox with background processing.",
+      "value_props": [
+        "Background polling with configurable intervals",
+        "Lease-based concurrency for multi-instance safety",
+        "Retry with backoff for failed dispatches",
+        "Transport-agnostic — works with any registered Transport provider"
+      ],
+      "monetization_signal": "Open core adapter.",
+      "roadmap_focus": "Batch dispatch optimization and Pulse telemetry hooks.",
+      "grid_relationship": "Consumes Outbox.Abstractions for storage access and HoneyDrunk.Transport for message publishing.",
+      "demo_path": "Enable outbox dispatcher → observe background publishing of transactional messages via Transport.",
+      "signal_quote": "Eventually consistent, always reliable.",
+      "stability_tier": "stable",
+      "impact_vector": "reliability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
     "id": "honeydrunk-auth",
     "type": "module",
     "name": "HoneyDrunk.Auth",
@@ -700,6 +811,224 @@
       "signal_quote": "Know what clicks.",
       "stability_tier": "beta",
       "impact_vector": "creator insight"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-pulse-contracts",
+    "type": "module",
+    "name": "HoneyDrunk.Pulse.Contracts",
+    "parent": "pulse",
+    "slot": "contracts",
+    "signal": "Seed",
+    "integration_depth": "deep",
+    "tags": [
+      "pulse",
+      "contracts",
+      "telemetry",
+      "events"
+    ],
+    "long_description": {
+      "overview": "Shared event contracts for the Pulse telemetry pipeline including PulseIngested and version definitions. Multi-targets netstandard2.0 and net10.0 for broad compatibility.",
+      "why_it_exists": "Provides the canonical event schema that Pulse producers and consumers agree on, enabling decoupled telemetry ingestion.",
+      "primary_audience": "Services emitting or consuming Pulse telemetry events.",
+      "value_props": [
+        "Canonical event contracts for telemetry pipeline",
+        "Multi-target for broad ecosystem compatibility",
+        "Version-tracked contract evolution"
+      ],
+      "monetization_signal": "Open source contracts.",
+      "roadmap_focus": "Expand event schema for new telemetry signals.",
+      "grid_relationship": "Shared contracts consumed by Pulse Collector and downstream analytics services.",
+      "demo_path": "Reference Pulse.Contracts to emit PulseIngested events.",
+      "signal_quote": "The language of observability.",
+      "stability_tier": "beta",
+      "impact_vector": "interoperability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-telemetry-sink-loki",
+    "type": "module",
+    "name": "HoneyDrunk.Telemetry.Sink.Loki",
+    "parent": "pulse",
+    "slot": "telemetry",
+    "signal": "Seed",
+    "integration_depth": "shallow",
+    "tags": [
+      "loki",
+      "logs",
+      "grafana",
+      "sink"
+    ],
+    "long_description": {
+      "overview": "Loki sink for structured log forwarding via the shared telemetry ILogSink contract.",
+      "why_it_exists": "Routes structured logs to Grafana Loki for centralized log aggregation without coupling services to a specific logging backend.",
+      "primary_audience": "Teams using Grafana stack for log aggregation.",
+      "value_props": [
+        "Clean ILogSink implementation for Loki",
+        "Label-based log routing",
+        "Works alongside OTLP exporters"
+      ],
+      "monetization_signal": "Open source sink.",
+      "roadmap_focus": "Batch optimization and tenant label injection.",
+      "grid_relationship": "Optional Pulse sink for log aggregation.",
+      "demo_path": "Register Loki sink and observe structured logs in Grafana.",
+      "signal_quote": "Logs that find their home.",
+      "stability_tier": "beta",
+      "impact_vector": "observability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-telemetry-sink-tempo",
+    "type": "module",
+    "name": "HoneyDrunk.Telemetry.Sink.Tempo",
+    "parent": "pulse",
+    "slot": "telemetry",
+    "signal": "Seed",
+    "integration_depth": "shallow",
+    "tags": [
+      "tempo",
+      "traces",
+      "grafana",
+      "sink"
+    ],
+    "long_description": {
+      "overview": "Tempo sink for distributed trace forwarding via the shared telemetry ITraceSink contract.",
+      "why_it_exists": "Routes distributed traces to Grafana Tempo for trace storage and querying without coupling to a specific tracing backend.",
+      "primary_audience": "Teams using Grafana stack for distributed tracing.",
+      "value_props": [
+        "Clean ITraceSink implementation for Tempo",
+        "OTLP-compatible trace export",
+        "Correlation-aware trace forwarding"
+      ],
+      "monetization_signal": "Open source sink.",
+      "roadmap_focus": "Sampling configuration and trace-to-log correlation.",
+      "grid_relationship": "Optional Pulse sink for distributed trace storage.",
+      "demo_path": "Register Tempo sink and visualize traces in Grafana.",
+      "signal_quote": "Traces that tell the full story.",
+      "stability_tier": "beta",
+      "impact_vector": "observability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-telemetry-sink-mimir",
+    "type": "module",
+    "name": "HoneyDrunk.Telemetry.Sink.Mimir",
+    "parent": "pulse",
+    "slot": "telemetry",
+    "signal": "Seed",
+    "integration_depth": "shallow",
+    "tags": [
+      "mimir",
+      "metrics",
+      "grafana",
+      "sink"
+    ],
+    "long_description": {
+      "overview": "Mimir sink for metrics forwarding via the shared telemetry IMetricsSink contract.",
+      "why_it_exists": "Routes application metrics to Grafana Mimir for long-term metrics storage and querying without coupling to a specific metrics backend.",
+      "primary_audience": "Teams using Grafana stack for metrics aggregation.",
+      "value_props": [
+        "Clean IMetricsSink implementation for Mimir",
+        "Prometheus-compatible metric export",
+        "Tenant-aware metric routing"
+      ],
+      "monetization_signal": "Open source sink.",
+      "roadmap_focus": "Custom metric dimensions and cardinality controls.",
+      "grid_relationship": "Optional Pulse sink for metrics aggregation.",
+      "demo_path": "Register Mimir sink and query metrics in Grafana.",
+      "signal_quote": "Metrics with memory.",
+      "stability_tier": "beta",
+      "impact_vector": "observability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-telemetry-sink-azuremonitor",
+    "type": "module",
+    "name": "HoneyDrunk.Telemetry.Sink.AzureMonitor",
+    "parent": "pulse",
+    "slot": "telemetry",
+    "signal": "Seed",
+    "integration_depth": "shallow",
+    "tags": [
+      "azure",
+      "monitor",
+      "application-insights",
+      "sink"
+    ],
+    "long_description": {
+      "overview": "Azure Monitor sink for full-stack telemetry forwarding (traces, metrics, logs) via Azure Application Insights and the shared telemetry sink contracts.",
+      "why_it_exists": "Provides Azure-native observability for teams deploying to Azure, routing all telemetry signals through Application Insights without custom plumbing.",
+      "primary_audience": "Teams deploying to Azure who want native monitoring integration.",
+      "value_props": [
+        "Full-stack Azure Monitor integration (traces, metrics, logs)",
+        "Connection string and managed identity support",
+        "Works alongside other sinks without interference"
+      ],
+      "monetization_signal": "Open source sink.",
+      "roadmap_focus": "Live metrics stream and profiler integration.",
+      "grid_relationship": "Optional Pulse sink for Azure-native observability.",
+      "demo_path": "Register Azure Monitor sink and observe telemetry in Application Insights.",
+      "signal_quote": "Azure-native observability, Grid-native contracts.",
+      "stability_tier": "beta",
+      "impact_vector": "observability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-pulse-collector",
+    "type": "module",
+    "name": "HoneyDrunk.Pulse.Collector",
+    "parent": "pulse",
+    "slot": "service",
+    "signal": "Seed",
+    "integration_depth": "deep",
+    "tags": [
+      "pulse",
+      "collector",
+      "otlp",
+      "ingestion",
+      "analytics"
+    ],
+    "long_description": {
+      "overview": "Deployable collector service that receives OTLP traces, metrics, and logs plus custom analytics and error events. Acts as the central ingestion point for all Pulse telemetry in the Grid.",
+      "why_it_exists": "Centralizes telemetry ingestion with Grid-aware context enrichment, providing a single entry point for all observability data before routing to configured sinks.",
+      "primary_audience": "Platform operators deploying the Pulse telemetry pipeline.",
+      "value_props": [
+        "OTLP-native trace, metric, and log ingestion",
+        "Custom analytics and error event endpoints",
+        "Grid context enrichment at ingestion",
+        "Sink-agnostic routing to downstream backends"
+      ],
+      "monetization_signal": "Open core service.",
+      "roadmap_focus": "Sampling policies, rate limiting, and multi-tenant routing.",
+      "grid_relationship": "Consumes Transport for event delivery. Consumes Vault for secrets. Routes to configured sinks (Loki, Tempo, Mimir, Sentry, PostHog, Azure Monitor).",
+      "demo_path": "Deploy Collector, point OTLP exporters at it, observe telemetry flowing to backends.",
+      "signal_quote": "The heartbeat listener.",
+      "stability_tier": "beta",
+      "impact_vector": "observability"
     },
     "_dictionary_ref": {
       "version": "v1",
@@ -1333,10 +1662,10 @@
     }
   },
   {
-    "id": "honeycore-web-rest-abstractions",
+    "id": "honeydrunk-web-rest-abstractions",
     "type": "module",
     "name": "HoneyDrunk.Web.Rest.Abstractions",
-    "parent": "honeycore-web-rest",
+    "parent": "honeydrunk-web-rest",
     "slot": "contracts",
     "signal": "Seed",
     "integration_depth": "deep",
@@ -1371,10 +1700,10 @@
     }
   },
   {
-    "id": "honeycore-web-rest-aspnetcore",
+    "id": "honeydrunk-web-rest-aspnetcore",
     "type": "module",
     "name": "HoneyDrunk.Web.Rest.AspNetCore",
-    "parent": "honeycore-web-rest",
+    "parent": "honeydrunk-web-rest",
     "slot": "integration",
     "signal": "Seed",
     "integration_depth": "deep",
@@ -1402,6 +1731,339 @@
       "signal_quote": "Middleware that remembers.",
       "stability_tier": "beta",
       "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-notify-abstractions",
+    "type": "module",
+    "name": "HoneyDrunk.Notify.Abstractions",
+    "parent": "honeydrunk-notify",
+    "slot": "contracts",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "notify",
+      "contracts",
+      "notifications",
+      "email",
+      "sms"
+    ],
+    "long_description": {
+      "overview": "Contracts-only package defining the notification abstractions: INotificationSender, INotificationGateway, INotificationPolicy, ITemplateRenderer, and all envelope/outcome types. Zero runtime dependencies.",
+      "why_it_exists": "Separates notification contracts from implementation, enabling provider packages and consumers to depend only on abstractions.",
+      "primary_audience": "Service developers sending notifications and notification provider implementors.",
+      "value_props": [
+        "Zero-dependency contracts for notification dispatch",
+        "Channel-agnostic envelope model (Email, SMS, extensible)",
+        "Policy pipeline for rate limiting and routing",
+        "Template rendering contracts for rich content"
+      ],
+      "monetization_signal": "Open source contracts.",
+      "roadmap_focus": "Push notification channel, webhook delivery contracts.",
+      "grid_relationship": "Consumed by all Notify provider packages and by services that send notifications.",
+      "demo_path": "Reference Notify.Abstractions to build a notification request without coupling to a provider.",
+      "signal_quote": "The contract, not the courier.",
+      "stability_tier": "beta",
+      "impact_vector": "interoperability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-notify-core",
+    "type": "module",
+    "name": "HoneyDrunk.Notify",
+    "parent": "honeydrunk-notify",
+    "slot": "core",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "notify",
+      "gateway",
+      "dispatcher",
+      "templates",
+      "idempotency",
+      "backoff"
+    ],
+    "long_description": {
+      "overview": "Core runtime implementing NotificationGateway, NotificationDispatcher, sender resolution, template rendering (file-based with token replacement), idempotency, and retry with exponential backoff.",
+      "why_it_exists": "Provides the orchestration layer that routes notification requests through policies, resolves senders by channel, renders templates, and handles retries with idempotency.",
+      "primary_audience": "Service developers integrating notification dispatch into applications.",
+      "value_props": [
+        "Gateway pattern with policy pipeline",
+        "Automatic sender resolution by channel",
+        "File-based template rendering with model flattening",
+        "Idempotency store for deduplication",
+        "Exponential backoff retry strategy"
+      ],
+      "monetization_signal": "Open core runtime.",
+      "roadmap_focus": "Batch dispatch, priority queuing, and Pulse telemetry hooks.",
+      "grid_relationship": "Implements Notify.Abstractions contracts. Extends Kernel for GridContext and lifecycle hooks.",
+      "demo_path": "Wire up NotificationGateway → send an email → observe dispatch with retry and idempotency.",
+      "signal_quote": "Dispatch with confidence.",
+      "stability_tier": "beta",
+      "impact_vector": "reliability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-notify-hosting-aspnetcore",
+    "type": "module",
+    "name": "HoneyDrunk.Notify.Hosting.AspNetCore",
+    "parent": "honeydrunk-notify",
+    "slot": "hosting",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "notify",
+      "hosting",
+      "aspnetcore",
+      "health",
+      "di"
+    ],
+    "long_description": {
+      "overview": "ASP.NET Core hosting integration providing AddHoneyDrunkNotify() service registration, health contributors, and configuration binding for retry, policy, and template options.",
+      "why_it_exists": "Provides the DI wiring and health monitoring for Notify in ASP.NET Core hosts, following the same AddHoneyDrunk*() pattern as other Grid nodes.",
+      "primary_audience": "ASP.NET Core service developers adding notification capabilities.",
+      "value_props": [
+        "One-call service registration with AddHoneyDrunkNotify()",
+        "Health contributor for notification system status",
+        "Configuration binding for retry, policy, and template options"
+      ],
+      "monetization_signal": "Open source hosting.",
+      "roadmap_focus": "Management endpoints for notification queue inspection.",
+      "grid_relationship": "Wires Notify core and providers into ASP.NET Core DI. Integrates with Kernel health checks.",
+      "demo_path": "Call AddHoneyDrunkNotify() → health endpoint reports notification system status.",
+      "signal_quote": "Notifications, wired in.",
+      "stability_tier": "beta",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-notify-provider-email-smtp",
+    "type": "module",
+    "name": "HoneyDrunk.Notify.Providers.Email.Smtp",
+    "parent": "honeydrunk-notify",
+    "slot": "provider",
+    "signal": "Live",
+    "integration_depth": "shallow",
+    "tags": [
+      "notify",
+      "email",
+      "smtp",
+      "provider"
+    ],
+    "long_description": {
+      "overview": "SMTP email provider implementing INotificationSender for the Email channel. Configurable via SmtpOptions for host, port, credentials, and TLS.",
+      "why_it_exists": "Provides SMTP-based email delivery for environments using traditional mail servers or SMTP relay services.",
+      "primary_audience": "Services sending email via SMTP.",
+      "value_props": [
+        "Standard SMTP delivery with TLS support",
+        "Configurable via SmtpOptions",
+        "Plug-and-play with AddSmtpNotifySender()"
+      ],
+      "monetization_signal": "Open source provider.",
+      "roadmap_focus": "Connection pooling and health monitoring.",
+      "grid_relationship": "Implements Notify.Abstractions INotificationSender for Email channel.",
+      "demo_path": "Register SMTP provider → send an email notification.",
+      "signal_quote": "Mail, delivered.",
+      "stability_tier": "beta",
+      "impact_vector": "reach"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-notify-provider-email-resend",
+    "type": "module",
+    "name": "HoneyDrunk.Notify.Providers.Email.Resend",
+    "parent": "honeydrunk-notify",
+    "slot": "provider",
+    "signal": "Live",
+    "integration_depth": "shallow",
+    "tags": [
+      "notify",
+      "email",
+      "resend",
+      "provider",
+      "api"
+    ],
+    "long_description": {
+      "overview": "Resend email provider implementing INotificationSender for the Email channel using the Resend API for modern transactional email delivery.",
+      "why_it_exists": "Provides API-based email delivery via Resend for teams preferring a developer-friendly transactional email service over traditional SMTP.",
+      "primary_audience": "Services sending transactional email via Resend.",
+      "value_props": [
+        "API-based email delivery via Resend",
+        "Simple configuration with ResendOptions",
+        "Plug-and-play with AddResendNotifySender()"
+      ],
+      "monetization_signal": "Open source provider.",
+      "roadmap_focus": "Delivery webhooks and bounce tracking integration.",
+      "grid_relationship": "Implements Notify.Abstractions INotificationSender for Email channel.",
+      "demo_path": "Register Resend provider → send a transactional email.",
+      "signal_quote": "Emails that arrive.",
+      "stability_tier": "beta",
+      "impact_vector": "reach"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-notify-provider-sms-twilio",
+    "type": "module",
+    "name": "HoneyDrunk.Notify.Providers.Sms.Twilio",
+    "parent": "honeydrunk-notify",
+    "slot": "provider",
+    "signal": "Live",
+    "integration_depth": "shallow",
+    "tags": [
+      "notify",
+      "sms",
+      "twilio",
+      "provider"
+    ],
+    "long_description": {
+      "overview": "Twilio SMS provider implementing INotificationSender for the SMS channel. Configurable via TwilioOptions for account SID, auth token, and sender number.",
+      "why_it_exists": "Provides SMS delivery via Twilio for transactional notifications like verification codes, alerts, and status updates.",
+      "primary_audience": "Services sending SMS notifications via Twilio.",
+      "value_props": [
+        "Twilio SMS delivery with TwilioOptions configuration",
+        "Plug-and-play with AddTwilioNotifySender()",
+        "Supports all Twilio messaging features"
+      ],
+      "monetization_signal": "Open source provider.",
+      "roadmap_focus": "Delivery status webhooks and number verification.",
+      "grid_relationship": "Implements Notify.Abstractions INotificationSender for SMS channel.",
+      "demo_path": "Register Twilio provider → send an SMS notification.",
+      "signal_quote": "Text, delivered.",
+      "stability_tier": "beta",
+      "impact_vector": "reach"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-notify-queue-abstractions",
+    "type": "module",
+    "name": "HoneyDrunk.Notify.Queue.Abstractions",
+    "parent": "honeydrunk-notify",
+    "slot": "contracts",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "notify",
+      "queue",
+      "contracts",
+      "dead-letter"
+    ],
+    "long_description": {
+      "overview": "Queue abstractions defining INotificationQueue and IDeadLetterInspector for async notification processing with dead-letter inspection support.",
+      "why_it_exists": "Separates queue contracts from implementation, enabling InMemory and Azure Storage queue providers to be swapped without changing consumer code.",
+      "primary_audience": "Notification queue provider implementors and services using async dispatch.",
+      "value_props": [
+        "Provider-agnostic queue contracts",
+        "Dead-letter inspection for failed notifications",
+        "Configurable queue options"
+      ],
+      "monetization_signal": "Open source contracts.",
+      "roadmap_focus": "Priority queuing and delay scheduling contracts.",
+      "grid_relationship": "Consumed by queue provider packages (InMemory, AzureStorage) and by Notify.Worker.",
+      "demo_path": "Reference Queue.Abstractions to enqueue notifications for background processing.",
+      "signal_quote": "Queue the intent, dispatch at will.",
+      "stability_tier": "beta",
+      "impact_vector": "reliability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-notify-queue-inmemory",
+    "type": "module",
+    "name": "HoneyDrunk.Notify.Queue.InMemory",
+    "parent": "honeydrunk-notify",
+    "slot": "queue-provider",
+    "signal": "Live",
+    "integration_depth": "shallow",
+    "tags": [
+      "notify",
+      "queue",
+      "inmemory",
+      "testing"
+    ],
+    "long_description": {
+      "overview": "In-memory queue implementation for development and testing scenarios. Implements INotificationQueue with channel-based async processing.",
+      "why_it_exists": "Enables fast local development and integration testing of notification workflows without external queue infrastructure.",
+      "primary_audience": "Developers testing notification flows locally.",
+      "value_props": [
+        "Zero-infrastructure queue for development",
+        "Fast iteration on notification workflows",
+        "Plug-and-play with AddInMemoryNotifyQueue()"
+      ],
+      "monetization_signal": "Open source testing utility.",
+      "roadmap_focus": "Test assertion helpers for queue inspection.",
+      "grid_relationship": "Implements Queue.Abstractions for local development and testing.",
+      "demo_path": "Register InMemory queue → enqueue and process notifications locally.",
+      "signal_quote": "Queue without the cloud.",
+      "stability_tier": "stable",
+      "impact_vector": "developer velocity"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-notify-queue-azure-storage",
+    "type": "module",
+    "name": "HoneyDrunk.Notify.Queue.AzureStorage",
+    "parent": "honeydrunk-notify",
+    "slot": "queue-provider",
+    "signal": "Live",
+    "integration_depth": "shallow",
+    "tags": [
+      "notify",
+      "queue",
+      "azure",
+      "storage-queue"
+    ],
+    "long_description": {
+      "overview": "Azure Storage Queue implementation for production notification queuing. Implements INotificationQueue with configurable visibility timeout and dead-letter support.",
+      "why_it_exists": "Provides durable, low-cost queue infrastructure for production notification processing using Azure Storage Queues.",
+      "primary_audience": "Services deploying notification processing on Azure.",
+      "value_props": [
+        "Durable Azure Storage Queue backend",
+        "Configurable visibility timeout and polling",
+        "Dead-letter inspection via IDeadLetterInspector",
+        "Plug-and-play with AddAzureStorageNotifyQueue()"
+      ],
+      "monetization_signal": "Open source provider.",
+      "roadmap_focus": "Batch dequeue optimization and managed identity support.",
+      "grid_relationship": "Implements Queue.Abstractions for production queue scenarios on Azure.",
+      "demo_path": "Register Azure Storage queue → deploy notification processing with durable queuing.",
+      "signal_quote": "Notifications that survive restarts.",
+      "stability_tier": "beta",
+      "impact_vector": "reliability"
     },
     "_dictionary_ref": {
       "version": "v1",

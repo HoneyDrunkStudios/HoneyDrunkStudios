@@ -137,7 +137,7 @@
       "integration_depth": "medium",
       "demo_path": "Show a 60-second demo of HoneyDrunk.Actions: input → behavior → outcome.",
       "signal_quote": "Automation with personality.",
-      "stability_tier": "experimental",
+      "stability_tier": "stable",
       "impact_vector": "developer velocity"
     },
     "_dictionary_ref": {
@@ -427,7 +427,7 @@
     "type": "node",
     "name": "HoneyDrunk.Data",
     "short": "Persistence contracts & provider implementations",
-    "description": "Persistence contracts, EF Core and SQL Server provider implementations, migrations discipline, tenant isolation, and diagnostics.",
+    "description": "Persistence contracts, EF Core and SQL Server provider implementations, transactional outbox with lease-based dispatch, migrations discipline, tenant isolation, and diagnostics.",
     "sector": "Core",
     "signal": "Live",
     "cluster": "foundation",
@@ -440,6 +440,7 @@
       "multi-tenant",
       "entityframework",
       "sqlserver",
+      "outbox",
       "contracts",
       "testing"
     ],
@@ -447,17 +448,18 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Data"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Data gives the Grid memory and continuity. It defines persistence contracts and provider conventions across every tenant, every node, and every environment, so storage stays predictable and auditable. This Node standardizes migrations, schema versioning, tenant isolation, and persistence telemetry. It is a guardrail against drift: the same operation should produce the same durable result, regardless of where it runs. Scope boundaries: Data persists facts. It does not contain business logic, and it does not publish messages. If an outbox is needed in the future, Data would own the storage schema and access patterns, while Transport owns dispatch and delivery behavior. As it matures, Data can expose optional hooks for Pulse to report schema health, migration status, and drift signals. Secrets and credentials are provided through the application's configuration pipeline, typically backed by Vault, without Data taking a direct dependency on Vault.",
+      "overview": "HoneyDrunk.Data gives the Grid memory and continuity. It defines persistence contracts and provider conventions across every tenant, every node, and every environment, so storage stays predictable and auditable. This Node standardizes migrations, schema versioning, tenant isolation, and persistence telemetry. It includes a transactional outbox pattern with lease-based concurrency for exactly-once message delivery — outbox entries are stored atomically within database transactions and dispatched via a background worker through HoneyDrunk.Transport. It is a guardrail against drift: the same operation should produce the same durable result, regardless of where it runs. As it matures, Data can expose optional hooks for Pulse to report schema health, migration status, and drift signals. Secrets and credentials are provided through the application's configuration pipeline, typically backed by Vault, without Data taking a direct dependency on Vault.",
       "why_it_exists": "HoneyDrunk.Data exists to prevent inconsistency and reinvention across the Grid.",
       "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
       "value_props": [
-        "Standardizes database, migrations",
+        "Standardizes database, migrations, and persistence patterns",
+        "Transactional outbox with lease-based concurrency for exactly-once delivery",
         "Reduces operational risk with opinionated defaults",
         "Improves developer velocity and interoperability"
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
       "roadmap_focus": "Advance HoneyDrunk.Data capabilities and harden contracts.",
-      "grid_relationship": "Consumes Kernel (required) for GridContext, OperationContext, lifecycle hooks, and telemetry primitives. Pulse integration is optional for schema health and migration telemetry. Does not consume Vault directly (configuration provided at app layer). Does not consume Transport or Auth.",
+      "grid_relationship": "Consumes Kernel (required) for GridContext, OperationContext, lifecycle hooks, and telemetry primitives. Consumes Transport (via Outbox.Dispatcher) for message publishing. Pulse integration is optional for schema health and migration telemetry. Does not consume Vault directly (configuration provided at app layer). Does not consume Auth.",
       "integration_depth": "medium",
       "demo_path": "Show a 60-second demo of HoneyDrunk.Data: input → behavior → outcome.",
       "signal_quote": "Memory with meaning.",
@@ -538,9 +540,9 @@
     "public_name": "HoneyDrunk.Transport"
   },
   {
-    "id": "honeycore-web-rest",
+    "id": "honeydrunk-web-rest",
     "type": "node",
-    "name": "HoneyCore.Web.Rest",
+    "name": "HoneyDrunk.Web.Rest",
     "short": "REST conventions & response standardization",
     "description": "Standardized REST API response envelopes, middleware for correlation/exception handling, and conventions for consistent API behavior across services.",
     "sector": "Core",
@@ -556,7 +558,7 @@
       "web"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/HoneyCore.Web.Rest"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Web.Rest"
     },
     "long_description": {
       "overview": "Web.Rest provides two packages: Abstractions (zero-dependency contracts for ApiResult, ApiErrorResponse, pagination, error codes) and AspNetCore (middleware for correlation ID propagation, exception-to-error mapping, auth failure shaping, and MVC/minimal API conventions). Together they ensure every REST API in the Grid returns consistent response envelopes with proper correlation tracking.",
@@ -589,7 +591,7 @@
     "done": true,
     "cooldown_days": 14,
     "flow": 35,
-    "public_name": "HoneyCore.Web.Rest"
+    "public_name": "HoneyDrunk.Web.Rest"
   },
   {
     "id": "honeydrunk-testing",
@@ -744,7 +746,7 @@
       "integration_depth": "deep",
       "demo_path": "Show a 60-second demo of HoneyDrunk.Vault: input → behavior → outcome.",
       "signal_quote": "Trust, by design.",
-      "stability_tier": "beta",
+      "stability_tier": "stable",
       "impact_vector": "security posture"
     },
     "_dictionary_ref": {
@@ -822,7 +824,7 @@
     "description": "Grid node component for authentication and authorization. Provides JWT bearer token validation with Vault-backed signing keys, deterministic policy evaluation, and deep Kernel integration for lifecycle and telemetry. Requires Kernel as host runtime.",
     "sector": "Core",
     "signal": "Live",
-    "cluster": "infrastructure",
+    "cluster": "security",
     "energy": 0,
     "priority": 43,
     "tags": [
@@ -2612,40 +2614,43 @@
     "public_name": "HoneyDrunk.Collector"
   },
   {
-    "id": "honeydrunk-comms",
+    "id": "honeydrunk-notify",
     "type": "node",
-    "name": "HoneyDrunk.Comms",
-    "short": "Outbound notifications & communication bridge",
-    "description": "Unified outbound communication system for email, push, SMS, and webhooks across the Hive.",
+    "name": "HoneyDrunk.Notify",
+    "short": "Unified notifications across communication channels",
+    "description": "Channel-agnostic notification dispatch system with multi-provider email (SMTP, Resend), SMS (Twilio), template rendering, and queue-based async delivery.",
     "sector": "Ops",
-    "signal": "Seed",
+    "signal": "Live",
     "cluster": "infrastructure",
-    "energy": 29,
+    "energy": 0,
     "priority": 29,
     "tags": [
       "notifications",
-      "comms",
       "email",
-      "push",
-      "webhooks"
+      "sms",
+      "templates",
+      "queues"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/comms"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Notify"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Comms (Notify) is the Grid's voice to the outside world — the outbound layer that handles all communication across channels: email, push, SMS, and webhook events. It provides standardized templates, rate-limiting, and delivery tracking for both internal and user-facing notifications. Comms guarantees that every signal sent by the Hive — from release alerts to agent updates — follows the same secure and aesthetic conventions.",
-      "why_it_exists": "Without unified comms infrastructure, user notifications and internal alerts drift in tone, reliability, and security.",
-      "primary_audience": "Developers and maintainers needing safe, branded, auditable outbound communication.",
+      "overview": "HoneyDrunk.Notify is the Grid's outbound notification layer — a channel-agnostic system for dispatching messages across email, SMS, and future channels. It provides a unified contract surface (INotificationSender, INotificationGateway, INotificationPolicy) with pluggable providers: SMTP and Resend for email, Twilio for SMS. Template rendering, idempotency keys, delivery tracking, and queue-based async dispatch (Azure Storage Queue, InMemory) ensure reliable, auditable delivery. A background worker processes queued notifications with retry and backoff. Notify integrates with Kernel for Grid context propagation and lifecycle hooks, and with Vault for provider credential management.",
+      "why_it_exists": "Without unified notification infrastructure, outbound communication drifts in reliability, security, and delivery patterns across nodes.",
+      "primary_audience": "Service developers and node owners needing reliable, multi-channel outbound notifications with consistent delivery semantics.",
       "value_props": [
-        "Unified templating for all outbound channels",
-        "Secure delivery with Vault-managed credentials",
-        "Pulse-linked tracking and retries for reliability"
+        "Channel-agnostic dispatch via INotificationSender and INotificationGateway",
+        "Multi-provider email (SMTP, Resend) and SMS (Twilio) with pluggable architecture",
+        "Template rendering with ITemplateRenderer and IEmailTemplateRenderer",
+        "Queue-based async delivery with background worker processing",
+        "Idempotency keys and delivery status tracking",
+        "Secure credential management via Vault integration"
       ],
-      "monetization_signal": "Future SaaS or partner notification integrations (SendGrid, Twilio, FCM).",
-      "roadmap_focus": "Introduce webhook orchestration and adaptive send policies based on Pulse metrics.",
-      "grid_relationship": "Consumes events from Transport; integrates with Vault and Pulse for delivery audit.",
+      "monetization_signal": "Internal-first; provider ecosystem may expand to push notifications, webhooks, and partner integrations.",
+      "roadmap_focus": "Push notification channel, webhook dispatch, adaptive send policies based on Pulse metrics, and notification preferences.",
+      "grid_relationship": "Consumes Kernel for Grid context, lifecycle hooks, and telemetry. Consumes Vault for provider credentials and configuration. Consumes Transport for event-driven delivery triggers. Integrates with Pulse for delivery audit and trace correlation.",
       "integration_depth": "medium",
-      "demo_path": "Trigger workflow → Comms sends templated message → view telemetry in Pulse.",
+      "demo_path": "Send a notification via INotificationSender → provider dispatches email/SMS → track delivery status → view telemetry in Pulse.",
       "signal_quote": "When the Hive speaks, it's heard everywhere.",
       "stability_tier": "beta",
       "impact_vector": "communication reliability"
@@ -2658,10 +2663,10 @@
     "strategy_base": 21,
     "tier": "none",
     "time_pressure": 3,
-    "done": false,
+    "done": true,
     "cooldown_days": 14,
     "flow": 29,
-    "public_name": "HoneyDrunk.Comms"
+    "public_name": "HoneyDrunk.Notify"
   },
   {
     "id": "honeydrunk-assets",

@@ -158,13 +158,13 @@
   },
   {
     "date": "2025-11-10",
-    "title": "Infrastructure Expansion — Collector, Comms, and Assets Join the Grid",
-    "desc": "Three critical infrastructure nodes added to the Grid, expanding observability, communication, and storage capabilities. HoneyDrunk.Collector (Flow: 58) establishes telemetry ingestion with OTLP support, schema enforcement, and self-healing buffers—forming the inbound nerve ending feeding Pulse. HoneyDrunk.Comms (Flow: 55) unifies outbound notifications across email, push, SMS, and webhooks with templated delivery and Pulse-tracked reliability. HoneyDrunk.Assets (Flow: 57) provides centralized storage for digital artifacts with Vault encryption, signed URL delivery, and content-addressed versioning. All three nodes integrate deeply with existing infrastructure: depending on Vault for auth, Transport for event relay, and Pulse for metrics. Collector and Assets land in Ops and Core respectively, establishing foundation for observability SaaS and secure media delivery patterns. BuildLog component deployed to node detail pages, surfacing recent signals and updates for improved discoverability. Package updates applied: Next.js 16.0.0→16.0.1, React 19.1.0→19.2.0, Tailwind 4.1.14→4.1.17, @types/node upgraded ^20→^22 for Vercel compatibility.",
+    "title": "Infrastructure Expansion — Collector, Notify, and Assets Join the Grid",
+    "desc": "Three critical infrastructure nodes added to the Grid, expanding observability, communication, and storage capabilities. HoneyDrunk.Collector (Flow: 58) establishes telemetry ingestion with OTLP support, schema enforcement, and self-healing buffers—forming the inbound nerve ending feeding Pulse. HoneyDrunk.Notify (Flow: 55) unifies outbound notifications across email, push, SMS, and webhooks with templated delivery and Pulse-tracked reliability. HoneyDrunk.Assets (Flow: 57) provides centralized storage for digital artifacts with Vault encryption, signed URL delivery, and content-addressed versioning. All three nodes integrate deeply with existing infrastructure: depending on Vault for auth, Transport for event relay, and Pulse for metrics. Collector and Assets land in Ops and Core respectively, establishing foundation for observability SaaS and secure media delivery patterns. BuildLog component deployed to node detail pages, surfacing recent signals and updates for improved discoverability. Package updates applied: Next.js 16.0.0→16.0.1, React 19.1.0→19.2.0, Tailwind 4.1.14→4.1.17, @types/node upgraded ^20→^22 for Vercel compatibility.",
     "tags": [
       "Ops",
       "Core",
       "HoneyDrunk.Collector",
-      "HoneyDrunk.Comms",
+      "HoneyDrunk.Notify",
       "HoneyDrunk.Assets",
       "Pulse",
       "HoneyDrunk.Vault",
@@ -235,7 +235,7 @@
       "Ops",
       "HoneyDrunk.Kernel",
       "HoneyDrunk.Transport",
-      "HoneyCore.Web.Rest",
+      "HoneyDrunk.Web.Rest",
       "HoneyDrunk.Data",
       "HoneyDrunk.Pipelines"
     ],

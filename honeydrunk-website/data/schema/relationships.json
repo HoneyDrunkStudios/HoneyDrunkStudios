@@ -249,7 +249,7 @@
       "consumes_detail": {}
     },
     {
-      "id": "honeycore-web-rest",
+      "id": "honeydrunk-web-rest",
       "consumes": [
         "honeydrunk-auth",
         "honeydrunk-kernel",
@@ -371,7 +371,7 @@
         "honeydrunk-vault"
       ],
       "consumed_by": [
-        "honeycore-web-rest",
+        "honeydrunk-web-rest",
         "hivegigs",
         "hivexp"
       ],
@@ -528,19 +528,55 @@
       }
     },
     {
-      "id": "honeydrunk-comms",
+      "id": "honeydrunk-notify",
       "consumes": [
+        "honeydrunk-kernel",
         "honeydrunk-transport",
         "honeydrunk-vault",
         "pulse"
       ],
       "consumed_by": [],
       "exposes": {
-        "contracts": [],
-        "packages": []
+        "contracts": [
+          "INotificationSender",
+          "INotificationGateway",
+          "INotificationPolicy",
+          "INotificationSenderResolver",
+          "ITemplateRenderer",
+          "IEmailTemplateRenderer",
+          "NotificationRequest",
+          "NotificationEnvelope",
+          "NotificationOutcome",
+          "DeliveryOutcome",
+          "NotificationId",
+          "AttemptId",
+          "IdempotencyKey",
+          "TemplateKey",
+          "INotificationQueue",
+          "IDeadLetterInspector"
+        ],
+        "packages": [
+          "HoneyDrunk.Notify.Abstractions",
+          "HoneyDrunk.Notify",
+          "HoneyDrunk.Notify.Hosting.AspNetCore",
+          "HoneyDrunk.Notify.Providers.Email.Smtp",
+          "HoneyDrunk.Notify.Providers.Email.Resend",
+          "HoneyDrunk.Notify.Providers.Sms.Twilio",
+          "HoneyDrunk.Notify.Queue.Abstractions",
+          "HoneyDrunk.Notify.Queue.AzureStorage",
+          "HoneyDrunk.Notify.Queue.InMemory"
+        ]
       },
       "blocked_by": [],
       "consumes_detail": {
+        "honeydrunk-kernel": [
+          "IGridContext",
+          "IGridContextAccessor",
+          "IOperationContext",
+          "IStartupHook",
+          "IHealthContributor",
+          "HoneyDrunk.Kernel.Abstractions"
+        ],
         "honeydrunk-transport": [
           "ITransportEnvelope",
           "HoneyDrunk.Transport"
@@ -579,14 +615,15 @@
     {
       "id": "honeydrunk-data",
       "consumes": [
-        "honeydrunk-kernel"
+        "honeydrunk-kernel",
+        "honeydrunk-transport"
       ],
       "consumes_optional": [
         "pulse"
       ],
       "consumed_by": [
         "honeydrunk-testing",
-        "honeycore-web-rest"
+        "honeydrunk-web-rest"
       ],
       "exposes": {
         "contracts": [
@@ -602,19 +639,24 @@
           "IDataHealthContributor",
           "IDataDiagnosticsContext",
           "DataHealthResult",
-          "DataHealthStatus"
+          "DataHealthStatus",
+          "IOutboxStore",
+          "IOutboxDispatcher"
         ],
         "packages": [
           "HoneyDrunk.Data.Abstractions",
+          "HoneyDrunk.Data",
           "HoneyDrunk.Data.EntityFramework",
           "HoneyDrunk.Data.Migrations",
           "HoneyDrunk.Data.SqlServer",
-          "HoneyDrunk.Data.Testing"
+          "HoneyDrunk.Data.Testing",
+          "HoneyDrunk.Data.Outbox.Abstractions",
+          "HoneyDrunk.Data.Outbox",
+          "HoneyDrunk.Data.Outbox.Dispatcher"
         ]
       },
       "does_not_consume": [
         "honeydrunk-vault",
-        "honeydrunk-transport",
         "honeydrunk-auth"
       ],
       "blocked_by": [],
@@ -633,6 +675,11 @@
           "GridActivitySource",
           "HoneyDrunk.Kernel",
           "HoneyDrunk.Kernel.Abstractions"
+        ],
+        "honeydrunk-transport": [
+          "ITransportPublisher",
+          "IMessagePublisher",
+          "HoneyDrunk.Transport"
         ],
         "pulse": {
           "optional": true,
@@ -713,12 +760,13 @@
       "consumed_by": [
         "honeydrunk-transport",
         "grid",
-        "honeycore-web-rest",
+        "honeydrunk-web-rest",
         "honeydrunk-agentkit",
         "honeydrunk-auth",
         "honeydrunk-clientportalos",
         "honeydrunk-data",
         "honeydrunk-governor",
+        "honeydrunk-notify",
         "honeydrunk-testing",
         "honeydrunk-vault",
         "operator",
@@ -905,12 +953,13 @@
         "honeydrunk-kernel"
       ],
       "consumed_by": [
-        "honeycore-web-rest",
+        "honeydrunk-data",
+        "honeydrunk-web-rest",
         "honeydrunk-agentkit",
         "honeydrunk-assets",
         "honeydrunk-clientportalos",
         "honeydrunk-collector",
-        "honeydrunk-comms",
+        "honeydrunk-notify",
         "operator",
         "pulse",
         "hivexp",
@@ -977,7 +1026,7 @@
         "honeydrunk-clarity",
         "honeydrunk-clientportalos",
         "honeydrunk-collector",
-        "honeydrunk-comms",
+        "honeydrunk-notify",
         "honeydrunk-signal",
         "honeysentinel",
         "memorybank",
@@ -1283,6 +1332,7 @@
     {
       "id": "pulse",
       "consumes": [
+        "honeydrunk-kernel",
         "honeydrunk-transport",
         "honeydrunk-vault"
       ],
@@ -1296,7 +1346,7 @@
         "honeydrunk-clarity",
         "honeydrunk-clientportalos",
         "honeydrunk-collector",
-        "honeydrunk-comms",
+        "honeydrunk-notify",
         "honeydrunk-data",
         "honeydrunk-signal",
         "honeysentinel",
@@ -1311,8 +1361,30 @@
         "honeymech-sim"
       ],
       "exposes": {
-        "contracts": [],
-        "packages": []
+        "contracts": [
+          "ITraceSink",
+          "ILogSink",
+          "IMetricsSink",
+          "IAnalyticsSink",
+          "IErrorSink",
+          "IAnalyticsEmitter",
+          "TelemetryEvent",
+          "ErrorEvent",
+          "PulseIngested",
+          "PulseContractVersions"
+        ],
+        "packages": [
+          "HoneyDrunk.Pulse.Contracts",
+          "HoneyDrunk.Telemetry.Abstractions",
+          "HoneyDrunk.Telemetry.OpenTelemetry",
+          "HoneyDrunk.Telemetry.Sink.Sentry",
+          "HoneyDrunk.Telemetry.Sink.PostHog",
+          "HoneyDrunk.Telemetry.Sink.Loki",
+          "HoneyDrunk.Telemetry.Sink.Tempo",
+          "HoneyDrunk.Telemetry.Sink.Mimir",
+          "HoneyDrunk.Telemetry.Sink.AzureMonitor",
+          "HoneyDrunk.Pulse.Collector"
+        ]
       },
       "blocked_by": [],
       "consumes_detail": {
@@ -1418,7 +1490,7 @@
     },
     {
       "dependency": "honeydrunk-auth",
-      "dependent": "honeycore-web-rest",
+      "dependent": "honeydrunk-web-rest",
       "reason": "Shapes auth failure responses (401/403) as ApiErrorResponse via IAuthorizationMiddlewareResultHandler"
     },
     {
@@ -1453,7 +1525,7 @@
     },
     {
       "dependency": "honeydrunk-kernel",
-      "dependent": "honeycore-web-rest",
+      "dependent": "honeydrunk-web-rest",
       "reason": "Uses Kernel.Abstractions IOperationContextAccessor for correlation ID priority in middleware"
     },
     {
@@ -1477,6 +1549,16 @@
       "reason": "Uses Kernel's GridContext, IStartupHook, and ActivitySource for context-aware persistence and telemetry"
     },
     {
+      "dependency": "honeydrunk-transport",
+      "dependent": "honeydrunk-data",
+      "reason": "Outbox.Dispatcher uses Transport's ITransportPublisher to dispatch persisted outbox messages"
+    },
+    {
+      "dependency": "honeydrunk-kernel",
+      "dependent": "honeydrunk-notify",
+      "reason": "Uses Kernel's GridContext, lifecycle hooks, and telemetry for notification context propagation"
+    },
+    {
       "dependency": "honeydrunk-kernel",
       "dependent": "honeydrunk-governor",
       "reason": "Implements Kernel's IPolicy and IRuleEngine for governance decisions"
@@ -1490,6 +1572,11 @@
       "dependency": "honeydrunk-kernel",
       "dependent": "honeydrunk-transport",
       "reason": "Uses Kernel's IGridContext for distributed context propagation (CorrelationId, NodeId) and TimeProvider for deterministic timestamps"
+    },
+    {
+      "dependency": "honeydrunk-kernel",
+      "dependent": "pulse",
+      "reason": "Uses Kernel Abstractions for GridContext, telemetry primitives, and lifecycle hooks in OpenTelemetry wiring"
     },
     {
       "dependency": "honeydrunk-kernel",
@@ -1518,7 +1605,7 @@
     },
     {
       "dependency": "honeydrunk-transport",
-      "dependent": "honeycore-web-rest",
+      "dependent": "honeydrunk-web-rest",
       "reason": "Uses Transport.Abstractions ITransportEnvelope for mapping transport outcomes to ApiResult (no runtime transport)"
     },
     {
@@ -1543,8 +1630,8 @@
     },
     {
       "dependency": "honeydrunk-transport",
-      "dependent": "honeydrunk-comms",
-      "reason": "Relies on Transport for messaging, events, and inter-node communication"
+      "dependent": "honeydrunk-notify",
+      "reason": "Relies on Transport for event-driven notification delivery triggers"
     },
     {
       "dependency": "honeydrunk-transport",
@@ -1603,8 +1690,8 @@
     },
     {
       "dependency": "honeydrunk-vault",
-      "dependent": "honeydrunk-comms",
-      "reason": "Manages SMTP credentials and SMS gateway tokens"
+      "dependent": "honeydrunk-notify",
+      "reason": "Manages SMTP credentials, Resend API keys, and Twilio SMS gateway tokens"
     },
     {
       "dependency": "honeydrunk-vault",
@@ -1758,8 +1845,8 @@
     },
     {
       "dependency": "pulse",
-      "dependent": "honeydrunk-comms",
-      "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
+      "dependent": "honeydrunk-notify",
+      "reason": "Integrates Pulse for delivery audit, trace correlation, and notification telemetry"
     },
     {
       "dependency": "pulse",
