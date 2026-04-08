@@ -124,6 +124,68 @@
     }
   },
   {
+    "id": "svc-studios-website",
+    "type": "web-app",
+    "name": "honeydrunk-website",
+    "owner": "Meta",
+    "tier": "prod-critical",
+    "runtime": {
+      "language": "typescript",
+      "target": "nextjs"
+    },
+    "region": "global",
+    "envs": [
+      "prod"
+    ],
+    "depends_on": [
+      "honeydrunk-studios"
+    ],
+    "interfaces": {
+      "http": [
+        "/",
+        "/about",
+        "/nodes",
+        "/signals",
+        "/timeline"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://studios-website",
+      "alerts": [
+        "build-failure",
+        "vercel-deployment-error"
+      ]
+    },
+    "release_channel": {
+      "ring": "prod",
+      "flags": []
+    },
+    "signal": "Live",
+    "long_description": {
+      "overview": "HoneyDrunk Studios public website. Next.js 16 app deployed on Vercel. Primary public interface for the ecosystem, showcasing Nodes, Services, ADRs, PDRs, build-in-public timeline, and Grid visualization.",
+      "why_it_exists": "Public-facing presence for HoneyDrunk ecosystem. Transparency layer for build-in-public philosophy.",
+      "primary_audience": "Developers, potential contributors, community following the build-in-public journey.",
+      "value_props": [
+        "Static-first architecture with zero backend dependencies",
+        "Real-time Grid visualization consuming canonical Architecture data",
+        "Build-in-public timeline with signal-based updates",
+        "Mobile-responsive, accessible, fast (Vercel Edge)"
+      ],
+      "monetization_signal": "Marketing and community engagement; potential platform for Creator products.",
+      "roadmap_focus": "Interactive code samples, API documentation, integration guides, live demos.",
+      "grid_relationship": "Consumes static JSON exports from Architecture catalogs (nodes, modules, services, relationships, sectors). No runtime dependencies on other Grid Nodes.",
+      "integration_depth": "shallow",
+      "demo_path": "Visit honeydrunkstudios.com → explore Nodes, view timeline, interact with Grid visualization.",
+      "signal_quote": "Where the Hive shows itself.",
+      "stability_tier": "critical",
+      "impact_vector": "brand visibility"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
     "id": "svc-deploy-webhookrelay",
     "type": "service",
     "name": "Deploy.WebhookRelay",
@@ -247,6 +309,132 @@
       "signal_quote": "Where signals converge.",
       "stability_tier": "stable",
       "impact_vector": "observability throughput"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-notify-worker",
+    "type": "worker",
+    "name": "HoneyDrunk.Notify.Worker",
+    "owner": "Ops",
+    "tier": "prod-critical",
+    "runtime": {
+      "language": "dotnet",
+      "target": "container"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev",
+      "prod"
+    ],
+    "depends_on": [
+      "honeydrunk-notify",
+      "honeydrunk-transport",
+      "honeydrunk-vault",
+      "pulse"
+    ],
+    "interfaces": {
+      "events_in": [
+        "Notification.Queued"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://notify-worker",
+      "alerts": [
+        "dispatch-failure-rate",
+        "queue-depth-high"
+      ]
+    },
+    "release_channel": {
+      "ring": "prod",
+      "flags": []
+    },
+    "signal": "Live",
+    "long_description": {
+      "overview": "Background worker that dequeues and dispatches notifications across multiple channels (email, SMS, push). Processes notification templates and handles delivery failures with retry logic.",
+      "why_it_exists": "Decouples notification dispatch from business logic, enabling reliable async delivery with observability.",
+      "primary_audience": "All Nodes requiring notification capabilities.",
+      "value_props": [
+        "Multi-channel notification dispatch",
+        "Template processing and personalization",
+        "Retry logic and dead-letter handling",
+        "Provider abstraction (SMTP, Resend, Twilio)"
+      ],
+      "monetization_signal": "Infrastructure service supporting paid notification features.",
+      "roadmap_focus": "Add batching, rate limiting, and delivery analytics.",
+      "grid_relationship": "Consumes messages from Transport, uses Vault for provider credentials, emits telemetry to Pulse.",
+      "integration_depth": "deep",
+      "demo_path": "Queue a notification → observe worker processing and delivery confirmation.",
+      "signal_quote": "Messages, delivered.",
+      "stability_tier": "stable",
+      "impact_vector": "user engagement"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "svc-notify-functions",
+    "type": "function-app",
+    "name": "HoneyDrunk.Notify.Functions",
+    "owner": "Ops",
+    "tier": "prod",
+    "runtime": {
+      "language": "dotnet",
+      "target": "azure-functions"
+    },
+    "region": "eastus",
+    "envs": [
+      "dev",
+      "prod"
+    ],
+    "depends_on": [
+      "honeydrunk-notify",
+      "honeydrunk-vault",
+      "pulse"
+    ],
+    "interfaces": {
+      "http": [
+        "/api/send",
+        "/api/webhooks/delivery"
+      ],
+      "events_in": [
+        "Notification.Requested"
+      ]
+    },
+    "observability": {
+      "pulse_dash": "dash://notify-functions",
+      "alerts": [
+        "function-errors"
+      ]
+    },
+    "release_channel": {
+      "ring": "prod",
+      "flags": []
+    },
+    "signal": "Live",
+    "long_description": {
+      "overview": "Azure Functions for notification processing. Provides HTTP endpoints for immediate send operations and webhook handlers for delivery status callbacks from providers.",
+      "why_it_exists": "Serverless alternative to worker for lightweight, event-driven notification scenarios.",
+      "primary_audience": "Services requiring immediate notification dispatch without queue latency.",
+      "value_props": [
+        "HTTP-triggered immediate send",
+        "Webhook handlers for delivery status",
+        "Cost-effective for sporadic workloads",
+        "Auto-scaling with Azure Functions"
+      ],
+      "monetization_signal": "Supports transactional notifications in Market products.",
+      "roadmap_focus": "Add Durable Functions orchestration for complex multi-step workflows.",
+      "grid_relationship": "Complements Notify.Worker with serverless dispatch; shares Notify abstractions.",
+      "integration_depth": "medium",
+      "demo_path": "POST /api/send → receive immediate delivery response.",
+      "signal_quote": "Serverless signals.",
+      "stability_tier": "stable",
+      "impact_vector": "operational flexibility"
     },
     "_dictionary_ref": {
       "version": "v1",
