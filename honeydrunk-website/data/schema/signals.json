@@ -1,5 +1,19 @@
 [
   {
+    "date": "2026-04-12",
+    "title": "Site Sync: Vault.Rotation Node Added, Notify Corrected",
+    "desc": "Synced website schema with Architecture catalogs. Added HoneyDrunk.Vault.Rotation as a new Seed node in the Core sector — an Azure Function App for ADR-0006 Tier-2 third-party secret rotation into per-Node Key Vaults. Added corresponding relationship entries (consumes Kernel and Vault, exposes IRotator and RotationResult) and two dependency edges. Corrected HoneyDrunk.Notify metadata to match Architecture source of truth: Notify uses deploy-time Azure Key Vault injection for provider credentials, not the HoneyDrunk.Vault package. Updated overview, value_props, roadmap_focus, and grid_relationship fields accordingly. Signal quote: 'Rotate once, protect everywhere.'",
+    "tags": [
+      "Core",
+      "Ops",
+      "HoneyDrunk.Vault",
+      "HoneyDrunk.Vault.Rotation",
+      "HoneyDrunk.Notify",
+      "HoneyDrunk.Architecture"
+    ],
+    "sector": "Core"
+  },
+  {
     "date": "2026-04-08",
     "title": "Architecture Catalog Sync: Services Schema Updated",
     "desc": "Synchronized website data schemas with Architecture canonical catalogs. Added three missing canonical services to website services.json: svc-notify-worker (background worker for notification dispatch, container-based .NET 10, consumes Transport and Vault, Live status), svc-notify-functions (serverless Azure Functions for immediate notification send and webhook handlers, Live status), and svc-studios-website (the honeydrunk-website Next.js app itself, deployed on Vercel, consumes static JSON from Architecture catalogs, Live status). All four canonical Architecture services (pulse-collector, notify-worker, notify-functions, studios-website) are now present in website schema with enriched metadata matching website display requirements. Verified nodes.json, modules.json, relationships.json, and sectors.json remain in sync with Architecture source of truth—website contains all canonical entries plus website-specific enrichments for display and operational metadata. Signal quote: 'Architecture is the map. Website is the territory.' Build-in-public: tighter sync, complete service catalog, canonical data verified.",
@@ -9,9 +23,7 @@
       "HoneyDrunk.Studios",
       "HoneyDrunk.Notify",
       "Pulse",
-      "Sync",
-      "Architecture",
-      "Services"
+      "HoneyDrunk.Architecture"
     ],
     "sector": "Meta"
   },
@@ -26,9 +38,7 @@
       "HoneyDrunk.Transport",
       "HoneyDrunk.Vault",
       "HoneyDrunk.Data",
-      "Contracts",
-      "Architecture",
-      "Stability"
+      "HoneyDrunk.Architecture"
     ],
     "sector": "Core"
   },
@@ -40,12 +50,8 @@
       "Meta",
       "AI",
       "HoneyDrunk.Operator",
-      "HoneyDrunk.Clarity",
       "HoneyDrunk.Sim",
-      "HoneyDrunk.Governor",
-      "Architecture",
-      "Safety",
-      "Flow"
+      "HoneyDrunk.Architecture"
     ],
     "sector": "Meta"
   },
@@ -58,9 +64,7 @@
       "HoneyDrunk.Vault",
       "HoneyDrunk.Data",
       "HoneyDrunk.Kernel",
-      "Architecture",
-      "Contracts",
-      "Providers"
+      "HoneyDrunk.Architecture"
     ],
     "sector": "Core"
   },
@@ -71,11 +75,8 @@
     "tags": [
       "Core",
       "HoneyDrunk.Kernel",
-      "Website",
-      "Documentation",
-      "Roadmap",
-      "Architecture",
-      "DX"
+      "HoneyDrunk.Studios",
+      "HoneyDrunk.Architecture"
     ],
     "sector": "Core"
   },
@@ -89,8 +90,7 @@
       "HoneyDrunk.Data",
       "HoneyDrunk.Transport",
       "Pulse",
-      "Architecture",
-      "Refactor"
+      "HoneyDrunk.Architecture"
     ],
     "sector": "Core"
   },
@@ -101,14 +101,12 @@
     "tags": [
       "AI",
       "Meta",
-      "HoneyDrunk.Governor",
       "HoneyDrunk.Operator",
       "HoneyDrunk.Kernel",
       "HoneyDrunk.Auth",
       "HoneyDrunk.Deploy",
       "HoneyDrunk.Actions",
-      "Audit.Agent",
-      "Flow"
+      "Audit.Agent"
     ],
     "sector": "AI"
   },
@@ -151,7 +149,7 @@
       "HoneyDrunk.Kernel.Abstractions",
       "HoneyDrunk.Transport",
       "HoneyDrunk.Transport.InMemory",
-      "HoneyDrunk.Transport.StorageQueues",
+      "HoneyDrunk.Transport.StorageQueue",
       "HoneyDrunk.Transport.AzureServiceBus"
     ],
     "sector": "Core"
@@ -162,8 +160,7 @@
     "desc": "HoneyDrunk.Clarity (Flow: 24) joins the Grid as the AI sector's first human-facing companion—an in-studio guide wired directly into the Hive's intelligence. Clarity is context-aware across code editors, DCC tools (Blender, Photoshop), and game engines, providing precise answers rooted in HoneyDrunk.Kernel patterns, Standards rules, and Meta.AtlasSync knowledge. Unlike generic copilots, Clarity understands your active stack—repo, scene, file, task—and surfaces guidance from AgentKit, Pulse telemetry, Vault configs, and HoneyHub workflows in real time. Built for indie devs and small studios drowning in tabs and documentation, Clarity bridges tools through a single assistant surface: ask about C# best practices, Unity pipeline issues, or deployment flows without leaving your workspace. Phase 1 targets VS Code/JetBrains/VS extensions with HoneyDrunk-native intelligence; Phase 2 adds cross-tool overlays and team memory; Phase 3 couples with Operator/VEE for automated fixes. Dependencies: AgentKit (agent lifecycle), Pulse (context/telemetry), Vault (secure config), Meta.AtlasSync (synchronized knowledge), Standards (patterns), HoneyHub (task integration). Monetization path: core experience free or bundled with HoneyHub; Pro tiers for studios with private knowledge ingestion, org policies, multi-seat management, and telemetry insights. Signal quote: 'Know what to do next, wherever you are.' Clarity transforms the Grid from infrastructure into conversation.",
     "tags": [
       "AI",
-      "HoneyDrunk.Clarity",
-      "HoneyDrunk.AgentKit",
+      "HoneyDrunk.Agents",
       "Pulse",
       "HoneyDrunk.Vault",
       "Meta.AtlasSync",
@@ -293,8 +290,7 @@
     "desc": "Major grid performance overhaul: removed all 19 services from grid visualization (now nodes + modules only), implemented React.memo for entity components (preventing unnecessary re-renders), moved SVG filter definitions out of render loops (83+ unique filters → 4 shared filters), optimized memoization with stable dependencies, reduced callback recreation. Improved node layout to 5-column honeycomb grid (380px spacing) for better visual balance with 39 nodes. Updated stats UI and shape legend to reflect nodes and modules only. Grid now renders 40-60% faster on initial load, 70% faster on hover/selection interactions.",
     "tags": [
       "Meta",
-      "HoneyDrunk.Grid",
-      "Performance"
+      "HoneyDrunk.Grid"
     ],
     "sector": "Meta"
   },
@@ -305,7 +301,7 @@
     "tags": [
       "Meta",
       "HoneyDrunk.Grid",
-      "Architecture"
+      "HoneyDrunk.Architecture"
     ],
     "sector": "Meta"
   },
@@ -325,8 +321,7 @@
     "desc": "Systematic mobile optimization across 8+ pages: toast notifications (wider/shorter), responsive button text (\"VIEW SECTORS\" mobile, \"VIEW THE GRID\" desktop), centered headers with text-center md:text-left pattern, Flow cards compact styling, filter pills size reduction (4px/12px padding, 11px font), modules accordion compact design, footer tagline addition, HiveConsole [X] button on mobile. Inline styles for pixel-perfect control over Tailwind limitations.",
     "tags": [
       "Meta",
-      "Website",
-      "UX"
+      "HoneyDrunk.Studios"
     ],
     "sector": "Meta"
   },
@@ -336,8 +331,7 @@
     "desc": "Enhanced navigation logic: mobile users land on /sectors (sector hub), desktop users on /grid (interactive visualization). Footer console helper text hidden on mobile, tagline \"Boot. Build. Refactor. Evolve.\" added. Systematic spacing with inline marginBottom styles across About Flow page headings. Improved readability and mobile-first experience across The Grid.",
     "tags": [
       "Meta",
-      "Website",
-      "Navigation"
+      "HoneyDrunk.Studios"
     ],
     "sector": "Meta"
   },
@@ -360,8 +354,7 @@
     "desc": "Implemented complete Flow Index system: Flow = (Energy × 0.4) + (Priority × 0.6). Five-tier classification (Critical/Active/Stable/Dormant/Archived). Flow-based visual mode in Grid with dynamic glow intensity. New /flow page with sortable rankings, /about/flow documentation, Flow Tier filtering in /nodes, and global header navigation. The Hive now breathes—showing what needs attention next.",
     "tags": [
       "Meta",
-      "HoneyDrunk.Grid",
-      "Flow"
+      "HoneyDrunk.Grid"
     ],
     "sector": "Meta"
   },
@@ -371,8 +364,7 @@
     "desc": "Sector color expansion (Chrome Teal for Mech, Synth Magenta for AI). Copy refinement across landing pages—cyberpunk minimalism, em-dash rhythm. Expanded to 43 Nodes across 8 sectors (AgentKit, Signal, Data, Grid orchestration).",
     "tags": [
       "Meta",
-      "HoneyDrunk.Grid",
-      "Design"
+      "HoneyDrunk.Grid"
     ],
     "sector": "Meta"
   },
@@ -382,8 +374,7 @@
     "desc": "Launched The Grid: interactive node visualization with neon cyberpunk aesthetics. Featured nodes across Core, Ops, Creator, Life, Play, Mech, and Meta sectors.",
     "tags": [
       "Meta",
-      "HoneyDrunk.Grid",
-      "Launch"
+      "HoneyDrunk.Grid"
     ],
     "sector": "Meta"
   },
@@ -393,8 +384,8 @@
     "desc": "Implemented the Signal state system for tracking node lifecycle: Seed → Awake → Wiring → Live → Echo → Archive. Each state has distinct visual characteristics.",
     "tags": [
       "Meta",
-      "Signal",
-      "Architecture"
+      "HoneyDrunk.Signal",
+      "HoneyDrunk.Architecture"
     ],
     "sector": "Meta"
   },
@@ -403,9 +394,7 @@
     "title": "Brand System Finalized",
     "desc": "Locked in the cyberpunk realism color palette: Aurum Gold, Electric Blue, Violet Flux against Deep Space. Zero-bloat typography with Space Grotesk, Inter, and JetBrains Mono.",
     "tags": [
-      "Meta",
-      "Design",
-      "Branding"
+      "Meta"
     ],
     "sector": "Meta"
   }

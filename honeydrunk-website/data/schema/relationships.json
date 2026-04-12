@@ -1450,6 +1450,29 @@
           "HoneyDrunk.Vault"
         ]
       }
+    },
+    {
+      "id": "honeydrunk-vault-rotation",
+      "consumes": [
+        "honeydrunk-kernel",
+        "honeydrunk-vault"
+      ],
+      "consumed_by": [],
+      "exposes": {
+        "contracts": ["IRotator", "RotationResult"],
+        "packages": ["HoneyDrunk.Vault.Rotation"]
+      },
+      "blocked_by": [],
+      "consumes_detail": {
+        "honeydrunk-kernel": [
+          "IGridContext",
+          "HoneyDrunk.Kernel"
+        ],
+        "honeydrunk-vault": [
+          "ISecretStore",
+          "HoneyDrunk.Vault"
+        ]
+      }
     }
   ],
   "edges": [
@@ -1977,6 +2000,16 @@
       "dependency": "honeydrunk-data",
       "dependent": "honeydrunk-transport",
       "reason": "Uses Data persistence layer for outbox table storage and message durability"
+    },
+    {
+      "dependency": "honeydrunk-kernel",
+      "dependent": "honeydrunk-vault-rotation",
+      "reason": "Grid context and lifecycle primitives for the rotation Function runtime"
+    },
+    {
+      "dependency": "honeydrunk-vault",
+      "dependent": "honeydrunk-vault-rotation",
+      "reason": "ISecretStore for reading existing secrets and writing rotated versions"
     }
   ]
 }

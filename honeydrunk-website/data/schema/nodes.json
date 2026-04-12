@@ -3022,7 +3022,7 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Notify"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Notify is the Grid's outbound notification layer — a channel-agnostic system for dispatching messages across email, SMS, and future channels. It provides a unified contract surface (INotificationSender, INotificationGateway, INotificationPolicy) with pluggable providers: SMTP and Resend for email, Twilio for SMS. Template rendering, idempotency keys, delivery tracking, and queue-based async dispatch (Azure Storage Queue, InMemory) ensure reliable, auditable delivery. A background worker processes queued notifications with retry and backoff. Notify integrates with Kernel for Grid context propagation and lifecycle hooks, and with Vault for provider credential management.",
+      "overview": "HoneyDrunk.Notify is the Grid's outbound notification layer — a channel-agnostic system for dispatching messages across email, SMS, and future channels. It provides a unified contract surface (INotificationSender, INotificationGateway, INotificationPolicy) with pluggable providers: SMTP and Resend for email, Twilio for SMS. Template rendering, idempotency keys, delivery tracking, and queue-based async dispatch ensure reliable, auditable delivery.",
       "why_it_exists": "Without unified notification infrastructure, outbound communication drifts in reliability, security, and delivery patterns across nodes.",
       "primary_audience": "Service developers and node owners needing reliable, multi-channel outbound notifications with consistent delivery semantics.",
       "value_props": [
@@ -3031,11 +3031,11 @@
         "Template rendering with ITemplateRenderer and IEmailTemplateRenderer",
         "Queue-based async delivery with background worker processing",
         "Idempotency keys and delivery status tracking",
-        "Secure credential management via Vault integration"
+        "Secure credential management via deploy-time Key Vault injection"
       ],
       "monetization_signal": "Internal-first; provider ecosystem may expand to push notifications, webhooks, and partner integrations.",
-      "roadmap_focus": "Push notification channel, webhook dispatch, adaptive send policies based on Pulse metrics, and notification preferences.",
-      "grid_relationship": "Consumes Kernel for Grid context, lifecycle hooks, and telemetry. Consumes Vault for provider credentials and configuration. Consumes Transport for event-driven delivery triggers. Integrates with Pulse for delivery audit and trace correlation.",
+      "roadmap_focus": "Push notification channel, webhook dispatch, adaptive send policies based on Pulse metrics.",
+      "grid_relationship": "Consumes Kernel for Grid context, lifecycle hooks, and telemetry. Provider credentials are injected at deploy time via Azure Key Vault (not the HoneyDrunk.Vault package).",
       "integration_depth": "medium",
       "demo_path": "Send a notification via INotificationSender → provider dispatches email/SMS → track delivery status → view telemetry in Pulse.",
       "signal_quote": "When the Hive speaks, it's heard everywhere.",
@@ -3291,6 +3291,52 @@
       "signal_quote": "The Hive remembers everything.",
       "stability_tier": "planned",
       "impact_vector": "knowledge"
+    },
+    "foundational": false,
+    "strategy_base": 10,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-vault-rotation",
+    "type": "node",
+    "name": "HoneyDrunk.Vault.Rotation",
+    "public_name": "HoneyDrunk.Vault.Rotation",
+    "short": "Tier-2 third-party secret rotation Function",
+    "description": "Azure Function App that rotates third-party provider secrets (Resend, Twilio, OpenAI, ...) into per-Node Key Vaults on schedule. Sibling to HoneyDrunk.Vault; separate deployable.",
+    "sector": "Core",
+    "signal": "Seed",
+    "cluster": "security",
+    "energy": 0,
+    "priority": 0,
+    "flow": 0,
+    "tags": ["infrastructure", "rotation", "secrets", "functions", "azure"],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Vault.Rotation"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Vault.Rotation is a deployable Azure Function Node for ADR-0006 Tier-2 secret rotation. It rotates third-party provider credentials on schedule and writes new versions into per-Node Key Vaults.",
+      "why_it_exists": "Centralize third-party key rotation and SLA enforcement without duplicating rotator infrastructure in every Node.",
+      "primary_audience": "Platform maintainers operating HoneyDrunk secret lifecycle automation.",
+      "value_props": [
+        "Automated Tier-2 provider secret rotation",
+        "Per-vault write model aligned with Key Vault RBAC",
+        "Shared telemetry/alerting hooks for SLA monitoring"
+      ],
+      "monetization_signal": "Internal platform capability.",
+      "roadmap_focus": "Scaffold baseline Function runtime, then integrate provider adapters and observability.",
+      "grid_relationship": "Depends on Kernel and Vault, writes rotated values into deployable Node vaults.",
+      "integration_depth": "medium",
+      "demo_path": "Trigger rotation run \u2192 write new secret version \u2192 observe downstream refresh event path.",
+      "signal_quote": "Rotate once, protect everywhere.",
+      "stability_tier": "seed",
+      "impact_vector": "security posture"
     },
     "foundational": false,
     "strategy_base": 10,
