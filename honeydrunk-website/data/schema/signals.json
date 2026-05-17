@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-05-17",
+    "title": "Site Sync: Communications Node Added, Notify Boundary Corrected",
+    "desc": "Synced website schema with Architecture catalogs for the ADR-0019 Notify/Communications policy-boundary split. Added HoneyDrunk.Communications as a new Live node in the Ops sector — the outbound message decision and orchestration substrate that maps business events to message intents, resolves recipients, evaluates tenant-scoped preferences and cadence, records every send-or-suppress decision, and delegates approved delivery to Notify through INotificationSender. Added the corresponding relationships entry (consumes Kernel and Notify; exposes ICommunicationOrchestrator, IMessageIntent, IRecipientResolver, IPreferenceStore, ICadencePolicy, ICommunicationDecisionLog, MessageDecision, and related types) and two Communications module entries (Abstractions contracts and core runtime, both v0.1.0). Corrected HoneyDrunk.Notify to its post-ADR-0019 boundary: Notify now receives structurally valid requests and owns template/render/provider/queue/retry mechanics only — recipient preference, cadence, suppression, and lifecycle workflow policy moved to Communications. Updated Notify description, overview, roadmap_focus, and dependency edges (consumes reduced to Kernel; consumed_by now lists Communications). Signal quote: 'The reason behind every message.' Note: ADR-0030/0031 (HoneyDrunk.Audit Node) are Proposed-only and explicitly defer catalog registration until acceptance — honeydrunk-audit is not yet in the Architecture catalogs and was deliberately not added to the website.",
+    "tags": [
+      "Ops",
+      "HoneyDrunk.Communications",
+      "HoneyDrunk.Notify",
+      "HoneyDrunk.Architecture"
+    ],
+    "sector": "Ops"
+  },
+  {
     "date": "2026-04-12",
     "title": "Site Sync: Vault.Rotation Node Added, Notify Corrected",
     "desc": "Synced website schema with Architecture catalogs. Added HoneyDrunk.Vault.Rotation as a new Seed node in the Core sector — an Azure Function App for ADR-0006 Tier-2 third-party secret rotation into per-Node Key Vaults. Added corresponding relationship entries (consumes Kernel and Vault, exposes IRotator and RotationResult) and two dependency edges. Corrected HoneyDrunk.Notify metadata to match Architecture source of truth: Notify uses deploy-time Azure Key Vault injection for provider credentials, not the HoneyDrunk.Vault package. Updated overview, value_props, roadmap_focus, and grid_relationship fields accordingly. Signal quote: 'Rotate once, protect everywhere.'",

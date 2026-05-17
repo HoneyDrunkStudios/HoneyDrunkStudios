@@ -530,12 +530,11 @@
     {
       "id": "honeydrunk-notify",
       "consumes": [
-        "honeydrunk-kernel",
-        "honeydrunk-transport",
-        "honeydrunk-vault",
-        "pulse"
+        "honeydrunk-kernel"
       ],
-      "consumed_by": [],
+      "consumed_by": [
+        "honeydrunk-communications"
+      ],
       "exposes": {
         "contracts": [
           "INotificationSender",
@@ -576,14 +575,45 @@
           "IStartupHook",
           "IHealthContributor",
           "HoneyDrunk.Kernel.Abstractions"
+        ]
+      }
+    },
+    {
+      "id": "honeydrunk-communications",
+      "consumes": [
+        "honeydrunk-kernel",
+        "honeydrunk-notify"
+      ],
+      "consumed_by": [],
+      "exposes": {
+        "contracts": [
+          "ICommunicationOrchestrator",
+          "IMessageIntent",
+          "MessageIntent",
+          "IRecipientResolver",
+          "IPreferenceStore",
+          "ICadencePolicy",
+          "ICommunicationDecisionLog",
+          "CommunicationDecisionLogEntry",
+          "MessageDecision",
+          "RecipientHandle",
+          "RecipientPreferences",
+          "CadenceVerdict"
         ],
-        "honeydrunk-transport": [
-          "ITransportEnvelope",
-          "HoneyDrunk.Transport"
+        "packages": [
+          "HoneyDrunk.Communications.Abstractions",
+          "HoneyDrunk.Communications"
+        ]
+      },
+      "blocked_by": [],
+      "consumes_detail": {
+        "honeydrunk-kernel": [
+          "IGridContext",
+          "HoneyDrunk.Kernel.Abstractions"
         ],
-        "honeydrunk-vault": [
-          "ISecretStore",
-          "HoneyDrunk.Vault"
+        "honeydrunk-notify": [
+          "INotificationSender",
+          "HoneyDrunk.Notify.Abstractions"
         ]
       }
     },

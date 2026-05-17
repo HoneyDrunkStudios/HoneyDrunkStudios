@@ -2069,5 +2069,81 @@
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
     }
+  },
+  {
+    "id": "honeydrunk-communications-abstractions",
+    "type": "module",
+    "name": "HoneyDrunk.Communications.Abstractions",
+    "parent": "honeydrunk-communications",
+    "slot": "contracts",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "communications",
+      "contracts",
+      "orchestration",
+      "preferences",
+      "cadence"
+    ],
+    "long_description": {
+      "overview": "Contracts-only package defining the communication orchestration surface: ICommunicationOrchestrator, IMessageIntent/MessageIntent, IRecipientResolver, IPreferenceStore, ICadencePolicy, ICommunicationDecisionLog, and the decision/recipient/cadence value types. Zero runtime dependencies beyond Kernel abstractions.",
+      "why_it_exists": "Separates the message-decision contract from the orchestration runtime so business-event producers and downstream Nodes depend only on abstractions, not on delivery or store mechanics.",
+      "primary_audience": "Node developers triggering user-facing communications from business events, and decision-store/cadence implementors.",
+      "value_props": [
+        "Zero-dependency contracts for outbound message decisioning",
+        "Business-event-to-message-intent mapping surface",
+        "Preference, suppression, and cadence evaluation contracts",
+        "Auditable decision-log contract for send-or-suppress reasoning"
+      ],
+      "monetization_signal": "Open source contracts.",
+      "roadmap_focus": "Durable preference/cadence/decision-log store contracts and lifecycle/campaign workflow surfaces.",
+      "grid_relationship": "Consumed by Communications runtime and by Nodes that declare business events. Depends only on Kernel abstractions.",
+      "demo_path": "Reference Communications.Abstractions to declare a UserSignedUp intent without coupling to delivery mechanics.",
+      "signal_quote": "Decide what to say, not how to send it.",
+      "stability_tier": "beta",
+      "impact_vector": "interoperability"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-communications-core",
+    "type": "module",
+    "name": "HoneyDrunk.Communications",
+    "parent": "honeydrunk-communications",
+    "slot": "core",
+    "signal": "Live",
+    "integration_depth": "deep",
+    "tags": [
+      "communications",
+      "orchestration",
+      "workflows",
+      "decision-log",
+      "delegation"
+    ],
+    "long_description": {
+      "overview": "Core runtime implementing the communication orchestrator: business-event-to-intent mapping, recipient resolution, preference and cadence evaluation, decision logging, and delegation of approved deliveries to Notify through INotificationSender. v0.1.0 ships the public contract surface and a welcome-email runtime slice.",
+      "why_it_exists": "Provides the single place to reason about a user's full communication lifecycle so preference checks and cadence enforcement are not duplicated across every Node that needs to message users.",
+      "primary_audience": "Service developers wiring user-facing communications and product/growth messaging sequences.",
+      "value_props": [
+        "Event-to-intent mapping with recipient resolution",
+        "Tenant-scoped preference and cadence enforcement",
+        "Auditable send-or-suppress decision log",
+        "Clean delegation to Notify — never touches SMTP or Twilio"
+      ],
+      "monetization_signal": "Open core runtime; campaign/lifecycle capabilities may surface in product offerings.",
+      "roadmap_focus": "Durable preference/cadence/decision-log stores and deeper lifecycle/campaign workflows once Flow/Data integration is ready.",
+      "grid_relationship": "Implements Communications.Abstractions. Consumes Kernel for context/lifecycle/telemetry and Notify.Abstractions for delivery delegation.",
+      "demo_path": "Receive a UserSignedUp intent → check preferences and cadence → record MessageDecision → delegate the welcome email to Notify.",
+      "signal_quote": "The reason behind every message.",
+      "stability_tier": "beta",
+      "impact_vector": "communication intelligence"
+    },
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
   }
 ]
