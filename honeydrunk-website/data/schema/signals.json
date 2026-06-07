@@ -1,5 +1,30 @@
 [
   {
+    "date": "2026-06-07",
+    "title": "Site Sync: Audit and Observe Nodes Published",
+    "desc": "Followed up the ADR-0077 Infrastructure sync by publishing two more canonical Architecture nodes to the site (verified against main, 2026-06-07). Added HoneyDrunk.Audit as a new Seed node in the Core sector (security cluster) — the Grid's durable, attributable system of record for security and privileged-action events (login attempts, authorization grants and denials, privileged-action execution). Append-only by interface (IAuditLog exposes no update or delete), Data-backed, with audit-class retention distinct from observability; Phase 1 is append-only-by-interface, not yet tamper-evident. Audit consumes Kernel and Data, emits its own operational telemetry to Pulse with no runtime dependency on Pulse, and is consumed by Auth (first emitter) and Operator (reconciled consumer/emitter); downstream Nodes compile only against HoneyDrunk.Audit.Abstractions. Signal quote: 'Who did what, when, against what, and was it allowed.' Also added HoneyDrunk.Observe as a new Seed node in the Ops sector (observability cluster) — the Grid's inbound observation layer for watching external projects the Hive does not own, owning observation contracts, connector composition, event normalization, and provider-slot connector packages (GitHub, Azure, HTTP). Observe consumes Kernel for context/lifecycle and Vault for connector credential resolution; it does not route outbound telemetry to sinks — that is Pulse's opposite-direction boundary. Signal quote: 'See what the Hive does not own.' Added both relationship entries and the matching dependency edges (Kernel→Audit, Data→Audit, Pulse→Audit telemetry-only, Audit→Auth, Audit→Operator, Kernel→Observe, Vault→Observe) and updated the consumed_by/consumes lists on Kernel, Data, Vault, Auth, and Operator accordingly. Append-only add — no renames or deletions.",
+    "tags": [
+      "Core",
+      "Ops",
+      "HoneyDrunk.Audit",
+      "HoneyDrunk.Observe",
+      "HoneyDrunk.Architecture"
+    ],
+    "sector": "Core"
+  },
+  {
+    "date": "2026-06-07",
+    "title": "Site Sync: Infrastructure Node Added (ADR-0077 IaC Consolidation)",
+    "desc": "Synced website schema with Architecture catalogs for ADR-0077 (Accepted 2026-06-06). Added HoneyDrunk.Infrastructure as a new Seed node in the Ops sector — the single home for the Grid's Bicep infrastructure-as-code content: per-concern reusable modules/ (networking, compute, identity, data, secrets, messaging, observability), a shared platform/ layer (Container Apps Environment, image ACR, Log Analytics, Service Bus namespace, networking), and per-Node nodes/{node}/ leaf templates. Modules are referenced by local relative path — there is no module registry. Added the corresponding relationships entry (consumes honeydrunk-actions for the deploy + lint reusable workflows job-deploy-bicep.yml and job-bicep-lint.yml; exposes modules/, platform/, nodes/) and the matching dependency edge. Signal quote: 'One repo, the whole topology.' Note: two further canonical Ops/Core nodes (HoneyDrunk.Audit, HoneyDrunk.Observe) and the catalog's honeydrunk-pulse id rename were detected as drift during this pass and are held for operator review rather than auto-applied — one sync, one logical change.",
+    "tags": [
+      "Ops",
+      "HoneyDrunk.Infrastructure",
+      "HoneyDrunk.Actions",
+      "HoneyDrunk.Architecture"
+    ],
+    "sector": "Ops"
+  },
+  {
     "date": "2026-05-17",
     "title": "Site Sync: Communications Node Added, Notify Boundary Corrected",
     "desc": "Synced website schema with Architecture catalogs for the ADR-0019 Notify/Communications policy-boundary split. Added HoneyDrunk.Communications as a new Live node in the Ops sector — the outbound message decision and orchestration substrate that maps business events to message intents, resolves recipients, evaluates tenant-scoped preferences and cadence, records every send-or-suppress decision, and delegates approved delivery to Notify through INotificationSender. Added the corresponding relationships entry (consumes Kernel and Notify; exposes ICommunicationOrchestrator, IMessageIntent, IRecipientResolver, IPreferenceStore, ICadencePolicy, ICommunicationDecisionLog, MessageDecision, and related types) and two Communications module entries (Abstractions contracts and core runtime, both v0.1.0). Corrected HoneyDrunk.Notify to its post-ADR-0019 boundary: Notify now receives structurally valid requests and owns template/render/provider/queue/retry mechanics only — recipient preference, cadence, suppression, and lifecycle workflow policy moved to Communications. Updated Notify description, overview, roadmap_focus, and dependency edges (consumes reduced to Kernel; consumed_by now lists Communications). Signal quote: 'The reason behind every message.' Note: ADR-0030/0031 (HoneyDrunk.Audit Node) are Proposed-only and explicitly defer catalog registration until acceptance — honeydrunk-audit is not yet in the Architecture catalogs and was deliberately not added to the website.",

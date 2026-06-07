@@ -184,7 +184,7 @@ function generateDependencyReason(dependent: Node, dependency: Node): string {
   }
   
   // Pulse-specific relationships
-  if (depId === 'pulse') {
+  if (depId === 'honeydrunk-pulse') {
     if (dependentShort.toLowerCase().includes('monitor') || dependentShort.toLowerCase().includes('observ')) {
       return `Integrates Pulse for monitoring, metrics, and alerting`;
     }

@@ -16,7 +16,7 @@
     "depends_on": [
       "grid",
       "honeydrunk-transport",
-      "pulse",
+      "honeydrunk-pulse",
       "honeydrunk-vault"
     ],
     "interfaces": {
@@ -75,7 +75,7 @@
       "grid",
       "honeydrunk-transport",
       "honeydrunk-vault",
-      "pulse"
+      "honeydrunk-pulse"
     ],
     "interfaces": {
       "http": [
@@ -264,7 +264,7 @@
       "prod"
     ],
     "depends_on": [
-      "pulse",
+      "honeydrunk-pulse",
       "honeydrunk-telemetry-abstractions",
       "honeydrunk-telemetry-opentelemetry",
       "honeydrunk-telemetry-sink-sentry",
@@ -334,7 +334,7 @@
       "honeydrunk-notify",
       "honeydrunk-transport",
       "honeydrunk-vault",
-      "pulse"
+      "honeydrunk-pulse"
     ],
     "interfaces": {
       "events_in": [
@@ -395,7 +395,7 @@
     "depends_on": [
       "honeydrunk-notify",
       "honeydrunk-vault",
-      "pulse"
+      "honeydrunk-pulse"
     ],
     "interfaces": {
       "http": [
@@ -460,7 +460,7 @@
       "honeydrunk-auth",
       "honeydrunk-vault",
       "honeydrunk-transport",
-      "pulse",
+      "honeydrunk-pulse",
       "honeydrunk-data"
     ],
     "interfaces": {
@@ -526,7 +526,7 @@
     "depends_on": [
       "honeydrunk-agentkit",
       "honeydrunk-transport",
-      "pulse",
+      "honeydrunk-pulse",
       "honeydrunk-vault"
     ],
     "interfaces": {
@@ -588,7 +588,7 @@
     ],
     "depends_on": [
       "honeydrunk-vault",
-      "pulse"
+      "honeydrunk-pulse"
     ],
     "interfaces": {
       "http": [
@@ -645,7 +645,7 @@
       "honeydrunk-web-rest",
       "honeydrunk-transport",
       "honeydrunk-vault",
-      "pulse"
+      "honeydrunk-pulse"
     ],
     "interfaces": {
       "http": [
@@ -707,7 +707,7 @@
     "depends_on": [
       "honeydrunk-web-rest",
       "honeydrunk-transport",
-      "pulse",
+      "honeydrunk-pulse",
       "honeydrunk-vault"
     ],
     "interfaces": {
@@ -770,7 +770,7 @@
     ],
     "depends_on": [
       "honeydrunk-transport",
-      "pulse",
+      "honeydrunk-pulse",
       "honeydrunk-vault"
     ],
     "interfaces": {
@@ -831,7 +831,7 @@
     ],
     "depends_on": [
       "honeydrunk-vault",
-      "pulse"
+      "honeydrunk-pulse"
     ],
     "interfaces": {
       "http": [
@@ -886,7 +886,7 @@
     ],
     "depends_on": [
       "honeydrunk-transport",
-      "pulse",
+      "honeydrunk-pulse",
       "honeydrunk-vault"
     ],
     "interfaces": {
@@ -951,7 +951,7 @@
       "hivexp",
       "honeydrunk-transport",
       "honeydrunk-vault",
-      "pulse",
+      "honeydrunk-pulse",
       "marketcore"
     ],
     "interfaces": {
@@ -1031,7 +1031,7 @@
       "hivegigs",
       "honeydrunk-transport",
       "honeydrunk-vault",
-      "pulse"
+      "honeydrunk-pulse"
     ],
     "interfaces": {
       "http": [
@@ -1102,7 +1102,7 @@
       "hivegigs",
       "honeydrunk-transport",
       "honeydrunk-vault",
-      "pulse"
+      "honeydrunk-pulse"
     ],
     "interfaces": {
       "http": [
@@ -1171,7 +1171,7 @@
       "hivegigs",
       "honeydrunk-transport",
       "honeydrunk-vault",
-      "pulse"
+      "honeydrunk-pulse"
     ],
     "interfaces": {
       "http": [
@@ -1242,7 +1242,7 @@
       "hivexp",
       "honeydrunk-transport",
       "honeydrunk-vault",
-      "pulse"
+      "honeydrunk-pulse"
     ],
     "interfaces": {
       "http": [
@@ -1314,7 +1314,7 @@
       "hivexp",
       "honeydrunk-transport",
       "honeydrunk-vault",
-      "pulse"
+      "honeydrunk-pulse"
     ],
     "interfaces": {
       "http": [
@@ -1382,7 +1382,7 @@
       "hivexp",
       "honeydrunk-transport",
       "honeydrunk-vault",
-      "pulse"
+      "honeydrunk-pulse"
     ],
     "interfaces": {
       "http": [

@@ -763,7 +763,7 @@
     "public_name": "HoneyDrunk.Vault"
   },
   {
-    "id": "pulse",
+    "id": "honeydrunk-pulse",
     "type": "node",
     "name": "Pulse",
     "short": "Observability suite (logs/traces/metrics)",
@@ -1338,7 +1338,7 @@
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
       "roadmap_focus": "Advance HoneyDrunk.Signal capabilities and harden contracts.",
-      "grid_relationship": "Connects with: honeyhub, pulse, honeydrunk-agentkit, honeydrunk-vault.",
+      "grid_relationship": "Connects with: honeyhub, honeydrunk-pulse, honeydrunk-agentkit, honeydrunk-vault.",
       "integration_depth": "medium",
       "demo_path": "Show a 60-second demo of HoneyDrunk.Signal: input → behavior → outcome.",
       "signal_quote": "Creativity has an echo.",
@@ -1486,7 +1486,7 @@
       ],
       "monetization_signal": "SaaS subscription based on active portals and module count.",
       "roadmap_focus": "Launch a minimal hosted SaaS, then expand to white-label licensing.",
-      "grid_relationship": "Connects with: pulse, honeydrunk-vault, honeydrunk-transport, honeydrunk-kernel.",
+      "grid_relationship": "Connects with: honeydrunk-pulse, honeydrunk-vault, honeydrunk-transport, honeydrunk-kernel.",
       "integration_depth": "high",
       "demo_path": "Show portal creation → client login → project workflow → billing summary.",
       "signal_quote": "Clarity is the new control.",
@@ -1920,7 +1920,7 @@
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
       "roadmap_focus": "Advance HoneyDrunk.Grid capabilities and harden contracts.",
-      "grid_relationship": "Connects with: honeydrunk-kernel, pulse.",
+      "grid_relationship": "Connects with: honeydrunk-kernel, honeydrunk-pulse.",
       "integration_depth": "medium",
       "demo_path": "Show a 60-second demo of HoneyDrunk.Grid: input → behavior → outcome.",
       "signal_quote": "The map is alive.",
@@ -2168,7 +2168,7 @@
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
       "roadmap_focus": "Advance BreachLab.exe capabilities and harden contracts.",
-      "grid_relationship": "Connects with: honeysentinel, pulse, honeydrunk-vault.",
+      "grid_relationship": "Connects with: honeysentinel, honeydrunk-pulse, honeydrunk-vault.",
       "integration_depth": "medium",
       "demo_path": "Show a 60-second demo of BreachLab.exe: input → behavior → outcome.",
       "signal_quote": "Break safely, learn deeply.",
@@ -2219,7 +2219,7 @@
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
       "roadmap_focus": "Advance HoneyDrunk.Sentinel capabilities and harden contracts.",
-      "grid_relationship": "Connects with: breachlab-exe, pulse, honeydrunk-vault.",
+      "grid_relationship": "Connects with: breachlab-exe, honeydrunk-pulse, honeydrunk-vault.",
       "integration_depth": "deep",
       "demo_path": "Show a 60-second demo of HoneyDrunk.Sentinel: input → behavior → outcome.",
       "signal_quote": "Defend the dream.",
@@ -2271,7 +2271,7 @@
       ],
       "monetization_signal": "Premium group features, affiliate links, and sponsorships.",
       "roadmap_focus": "Ship MVP with group creation, feed, and affiliate integrations.",
-      "grid_relationship": "Connects with: pulse, honeydrunk-vault.",
+      "grid_relationship": "Connects with: honeydrunk-pulse, honeydrunk-vault.",
       "integration_depth": "low",
       "demo_path": "User joins group → rates movie → group feed updates → share poster.",
       "signal_quote": "Your taste is your tribe.",
@@ -2322,7 +2322,7 @@
       ],
       "monetization_signal": "Subscription for backup, cloud sync, and recap styles.",
       "roadmap_focus": "Deliver iOS/Android MVP with recap generator and offline mode.",
-      "grid_relationship": "Connects with: pulse, honeydrunk-vault.",
+      "grid_relationship": "Connects with: honeydrunk-pulse, honeydrunk-vault.",
       "integration_depth": "low",
       "demo_path": "User adds entry → daily view updates → weekly recap summary.",
       "signal_quote": "Small moments, vast meaning.",
@@ -2374,7 +2374,7 @@
       ],
       "monetization_signal": "Premium creator tiers, sponsored showcases, and virtual currency.",
       "roadmap_focus": "Prototype web app for posting, voting, and remixing items.",
-      "grid_relationship": "Connects with: pulse, honeydrunk-vault.",
+      "grid_relationship": "Connects with: honeydrunk-pulse, honeydrunk-vault.",
       "integration_depth": "low",
       "demo_path": "User creates dream product → posts to market → receives votes and remix requests.",
       "signal_quote": "Reality is optional.",
@@ -2429,7 +2429,7 @@
       ],
       "monetization_signal": "Premium for cloud sync, advanced filters/exports, vanity usernames, and profile themes; affiliate links for storefronts/streaming where applicable.",
       "roadmap_focus": "Ship MVP with lists, progress states, ratings, and shareable profiles; add importers (CSV/MAL/RAWG) and recap generator.",
-      "grid_relationship": "Connects with: pulse (usage analytics, recap), honeydrunk-vault (local-first data, optional sync).",
+      "grid_relationship": "Connects with: honeydrunk-pulse (usage analytics, recap), honeydrunk-vault (local-first data, optional sync).",
       "integration_depth": "low",
       "demo_path": "Add title → set state → rate → add to list → share profile card.",
       "signal_quote": "Track your worlds.",
@@ -2835,67 +2835,6 @@
     "priority": 42,
     "flow": 38,
     "public_name": "Audit.Agent"
-  },
-  {
-    "id": "operator",
-    "type": "node",
-    "name": "HoneyDrunk.Operator",
-    "short": "Internal control plane for operating the Hive.",
-    "description": "Human-operated control plane for observing system health, managing operational intent, and applying controlled interventions across all HoneyDrunk nodes and environments. Operator does not participate in governance, deliberation, or simulation-it defines and enforces operational policy, not decisions.",
-    "sector": "Meta",
-    "signal": "Seed",
-    "cluster": "orchestration",
-    "energy": 30,
-    "priority": 42,
-    "tags": [
-      "operations",
-      "meta",
-      "control-plane",
-      "safety",
-      "infrastructure"
-    ],
-    "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/Operator"
-    },
-    "long_description": {
-      "overview": "Operator is the internal control plane for HoneyDrunk Studios. It provides a single, secure interface for observing system health, managing operational intent, and applying controlled interventions across all HoneyDrunk nodes and environments. Operator does not participate in governance, deliberation, or simulation. It defines and enforces operational policy, not decisions. Its purpose is to give humans a safe, auditable way to operate a growing multi-node system without embedding privileged controls into product nodes.",
-      "why_it_exists": "To separate system operation from system behavior. As HoneyDrunk grows beyond a single node, operational concerns like safety controls, rollouts, cost limits, and incident response must be centralized. Operator exists so these concerns do not leak into Governor, Draft, or other market nodes-preserving clean boundaries, tenant isolation, and trust.",
-      "primary_audience": "HoneyDrunk founders and operators, internal platform maintainers, and on-call engineers and incident responders. Operator is not customer-facing.",
-      "value_props": [
-        "Provides unified visibility across nodes, environments, and deployments.",
-        "Owns authoritative operational intent: agent role enablement, model and provider allowlists, cost ceilings and rate limits, safety modes (normal, degraded, read-only), per-environment and per-tenant circuit breakers.",
-        "Enables safe, audited human intervention during incidents.",
-        "Coordinates operational changes without redeploys or ad-hoc scripts.",
-        "Records who changed what, when, why, and with what scope."
-      ],
-      "monetization_signal": "None. Operator is internal platform infrastructure. Its value is measured in reduced incidents, faster recovery, lower cognitive load, and safer scaling-not revenue.",
-      "roadmap_focus": "Minimal, hardened control state schemas. Strong RBAC and audit trails. Safe change workflows with explicit scope and blast radius. Tight Pulse integration for cause-effect visibility. Deliberate resistance to feature creep or advisor behavior. Principle: boring, predictable, and trustworthy.",
-      "grid_relationship": "Governor consumes operational intent defined by Operator-Operator never influences Governor's reasoning or outcomes. AgentKit enforces restrictions and permissions derived from Operator-defined control state. Operator consumes Pulse telemetry to inform human decision-making and validate impact of operational changes. Operator relies on Kernel for lifecycle, context propagation, and health aggregation. Operator observes and constrains the system-it does not steer content or strategy.",
-      "integration_depth": "deep",
-      "demo_path": "Incident detected via Pulse -> On-call engineer opens Operator console -> Reviews system state and blast radius -> Applies circuit breaker to affected tenant via audited control change -> Monitors recovery metrics -> Documents resolution with full audit trail.",
-      "signal_quote": "Control without opinion. Authority without authorship.",
-      "stability_tier": "core",
-      "impact_vector": "operational safety",
-      "does_not_do": [
-        "Does not make decisions.",
-        "Does not deliberate.",
-        "Does not generate plans or proposals.",
-        "Does not act as a persona or advisor.",
-        "Does not access customer governance content by default."
-      ]
-    },
-    "_dictionary_ref": {
-      "version": "v1",
-      "path": "/schema/node_manifest_dictionary.v1.json"
-    },
-    "foundational": false,
-    "strategy_base": 20,
-    "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 55,
-    "public_name": "HoneyDrunk.Operator"
   },
   {
     "id": "honeydrunk-standards",
@@ -3389,6 +3328,169 @@
     },
     "foundational": false,
     "strategy_base": 15,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-infrastructure",
+    "type": "node",
+    "name": "HoneyDrunk.Infrastructure",
+    "public_name": "HoneyDrunk.Infrastructure",
+    "short": "Bicep IaC content for the Grid",
+    "description": "Bicep IaC content for the Grid — per-concern modules, the shared platform layer, and per-Node leaf templates. Consumes the deploy + lint pipeline from Actions per ADR-0012; no registry (local-path module refs).",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "foundation",
+    "energy": 0,
+    "priority": 20,
+    "flow": 0,
+    "tags": [
+      "bicep",
+      "iac",
+      "infrastructure"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Infrastructure"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Infrastructure is the single home for the Grid's Bicep infrastructure-as-code content: per-concern reusable modules/ (networking, compute, identity, data, secrets, messaging, observability), a shared platform/ layer (shared Container Apps Environment, image ACR, Log Analytics, Service Bus namespace, networking), and per-Node nodes/{node}/ leaf templates (main.bicep + parameters.{env}.bicepparam). Modules are referenced by local relative path — there is no module registry.",
+      "why_it_exists": "Consolidating all Bicep content into one repo (ADR-0077 amendment 2026-06-02) gives whole-topology visibility, a single home for the shared platform layer, and one PR per cross-Node infrastructure change instead of a fan-out across Node repos.",
+      "primary_audience": "HoneyDrunk operators and Node owners provisioning or evolving Grid infrastructure.",
+      "value_props": [
+        "Whole-topology visibility — the entire Grid's infrastructure is described in one place",
+        "A single home for the shared platform/ foundation layer that every Node's leaf template references",
+        "One PR per cross-Node infrastructure change; modules referenced by local relative path, no registry overhead"
+      ],
+      "monetization_signal": "Internal-first; reproducibility and bus-factor reduction.",
+      "roadmap_focus": "Land the per-concern module bodies and the shared platform scaffold (ADR-0077 packets 13/14), then the per-Node leaf-template pattern (packet 15).",
+      "grid_relationship": "Consumes: honeydrunk-actions (deploy + lint reusable workflows).",
+      "integration_depth": "low",
+      "demo_path": "Edit a module under modules/ → a Node leaf template under nodes/{node}/ references it by local relative path → the Actions deploy + lint workflows validate and apply it.",
+      "signal_quote": "One repo, the whole topology.",
+      "stability_tier": "seed",
+      "impact_vector": "bus-factor / reproducibility"
+    },
+    "foundational": false,
+    "strategy_base": 0,
+    "tier": "platform",
+    "time_pressure": 3,
+    "done": false,
+    "cooldown_days": 14,
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-audit",
+    "type": "node",
+    "name": "HoneyDrunk.Audit",
+    "public_name": "HoneyDrunk.Audit",
+    "short": "Grid-wide durable, attributable security and action record",
+    "description": "The Grid's durable, attributable system of record for security and privileged-action events — login attempts, authorization grants and denials, privileged-action execution. Append-only by interface; Data-backed; audit-class retention distinct from observability. Phase 1 is append-only-by-interface, NOT tamper-evident.",
+    "sector": "Core",
+    "signal": "Seed",
+    "cluster": "security",
+    "energy": 0,
+    "priority": 20,
+    "flow": 0,
+    "tags": [
+      "audit",
+      "security",
+      "forensics",
+      "append-only",
+      "attributable",
+      "record",
+      "retention"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Audit"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Audit is the Core sector's single Node that owns the Grid's durable, attributable security-and-action record. It durably records 'actor X attempted or executed action Y' — login attempts, authorization grants and denials, privileged-action execution — and serves that record back for incident reconstruction and forensics. It is a record substrate, not a control plane (that is Auth and Operator) and not an observability pipeline (that is Pulse). It owns the durable write, the append-only guarantee enforced at the interface surface, the audit-class retention, and the forensic read surface.",
+      "why_it_exists": "The Grid had no durable, attributable system of record for security and privileged-action events. Pulse is OTel-only and disclaims being a system of record; Auth keeps identity out of traces by design; no Node owned Grid-wide audit. Login attempts, authz denials, and privileged actions evaporated into sampled telemetry and lossy logs — exactly the events a security review or incident reconstruction needs.",
+      "primary_audience": "Security reviewers and incident responders reconstructing what happened; Nodes (Auth first, Operator next) that need to record durable attributable security or privileged-action events; a future tenant-facing forensics surface.",
+      "value_props": [
+        "Durable, attributable record of security and privileged-action events",
+        "Append-only enforced at the interface surface — IAuditLog exposes no update or delete",
+        "Audit-class retention distinct from Pulse/observability retention",
+        "Forensic read surface (IAuditQuery) for incident reconstruction",
+        "Boundary-correct: the recorder is not the actor (separate from Operator)",
+        "Phase-1 honest limitation: append-only-by-interface, NOT tamper-evident"
+      ],
+      "monetization_signal": "Internal-first Core primitive. A future tenant-facing forensics Service is a deferred capability behind the now-existing boundary.",
+      "roadmap_focus": "Stand up the Node, Abstractions package, and Data-backed append-only store (ADR-0031). Auth wired as first emitter and Operator reconciled as consumer/emitter follow as separate packets. Hash-chain/WORM tamper-evidence and the tenant-facing forensics Service are deferred behind the boundary, each gated on a stated trigger.",
+      "grid_relationship": "Consumes Kernel (IGridContext, lifecycle, health, telemetry) and Data (IRepository, IUnitOfWork for the append-only store). Emits its own operational telemetry consumed by Pulse — no runtime dependency on Pulse. Consumed by Auth (first emitter) and Operator (reconciled consumer/emitter). Downstream Nodes compile only against HoneyDrunk.Audit.Abstractions.",
+      "integration_depth": "medium",
+      "demo_path": "Write an AuditEntry through IAuditLog → read it back through IAuditQuery against the in-memory fixture → observe append-only (no update/delete on the IAuditLog surface).",
+      "signal_quote": "Who did what, when, against what, and was it allowed.",
+      "stability_tier": "seed",
+      "impact_vector": "security posture"
+    },
+    "foundational": false,
+    "strategy_base": 0,
+    "tier": "none",
+    "time_pressure": 0,
+    "done": false,
+    "cooldown_days": 14,
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    }
+  },
+  {
+    "id": "honeydrunk-observe",
+    "type": "node",
+    "name": "HoneyDrunk.Observe",
+    "public_name": "HoneyDrunk.Observe",
+    "short": "External project observation layer",
+    "description": "Inbound observation contracts and provider-slot connector packages for monitoring external projects and services the Grid does not own.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "observability",
+    "energy": 0,
+    "priority": 20,
+    "flow": 0,
+    "tags": [
+      "observation",
+      "external",
+      "github",
+      "azure",
+      "http",
+      "connectors",
+      "events",
+      "webhooks"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Observe"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Observe is the inbound observation layer of the Grid. It lets the Hive watch external projects — any codebase or service outside HoneyDrunk — with the same operational visibility that Pulse gives internal Nodes. The repo owns observation contracts, connector composition, event normalization, and provider-slot connector packages such as GitHub, Azure, and HTTP.",
+      "why_it_exists": "Pulse handles outbound telemetry from Grid Nodes to sinks. Observe handles inbound observation from external systems into the Grid. Without it, the Hive cannot see projects it does not own, which blocks future HoneyHub planning inputs.",
+      "primary_audience": "Grid operators wiring external systems into the Hive; future HoneyHub planning surfaces consuming external-project signals.",
+      "value_props": [
+        "Canonical observation event model across heterogeneous external sources",
+        "Provider-slot connector packages shipped from one repo",
+        "Vault-backed credential resolution for every connector",
+        "Independent from HoneyHub so intake can ship before planning"
+      ],
+      "monetization_signal": "Internal-first.",
+      "roadmap_focus": "Phase 1: contracts and repo scaffolding. Phase 2: GitHub connector as the first useful increment. Phase 3: HoneyHub integration after the planning surface is live.",
+      "grid_relationship": "Consumes Kernel for context and lifecycle. Consumes Vault for connector credential resolution. Does not route outbound telemetry to sinks — that is Pulse's opposite-direction boundary.",
+      "integration_depth": "medium",
+      "demo_path": "Register an observation target → connector intakes external event → runtime normalizes to IObservationEvent → event visible in observation state.",
+      "signal_quote": "See what the Hive does not own.",
+      "stability_tier": "seed",
+      "impact_vector": "external visibility"
+    },
+    "foundational": false,
+    "strategy_base": 0,
     "tier": "none",
     "time_pressure": 0,
     "done": false,

@@ -4,7 +4,7 @@
       "id": "arcadia",
       "consumes": [
         "honeydrunk-vault",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [],
       "exposes": {
@@ -34,7 +34,7 @@
     {
       "id": "audit-agent",
       "consumes": [
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [
         "honeydrunk-governor"
@@ -51,7 +51,7 @@
       "consumes": [
         "honeydrunk-vault",
         "honeysentinel",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [],
       "exposes": {
@@ -70,7 +70,7 @@
       "id": "draft",
       "consumes": [
         "honeydrunk-vault",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [],
       "exposes": {
@@ -90,7 +90,7 @@
       "id": "dreammarket",
       "consumes": [
         "honeydrunk-vault",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [],
       "exposes": {
@@ -123,7 +123,7 @@
       "id": "game-prototype",
       "consumes": [
         "honeydrunk-vault",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [],
       "exposes": {
@@ -143,11 +143,11 @@
       "id": "grid",
       "consumes": [
         "honeydrunk-kernel",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [
         "honeyhub",
-        "operator"
+        "honeydrunk-operator"
       ],
       "exposes": {
         "contracts": [],
@@ -298,7 +298,7 @@
         "honeydrunk-kernel",
         "honeydrunk-transport",
         "honeydrunk-vault",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [
         "honeydrunk-clarity",
@@ -345,7 +345,7 @@
       "consumes": [
         "honeydrunk-transport",
         "honeydrunk-vault",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [],
       "exposes": {
@@ -368,7 +368,8 @@
       "id": "honeydrunk-auth",
       "consumes": [
         "honeydrunk-kernel",
-        "honeydrunk-vault"
+        "honeydrunk-vault",
+        "honeydrunk-audit"
       ],
       "consumed_by": [
         "honeydrunk-web-rest",
@@ -420,6 +421,10 @@
           "auth configuration",
           "HoneyDrunk.Vault",
           "HoneyDrunk.Vault.Abstractions"
+        ],
+        "honeydrunk-audit": [
+          "IAuditLog",
+          "HoneyDrunk.Audit.Abstractions"
         ]
       }
     },
@@ -444,7 +449,7 @@
         "honeydrunk-vault",
         "honeyhub",
         "meta-atlassync",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [],
       "exposes": {
@@ -470,7 +475,7 @@
         "honeydrunk-kernel",
         "honeydrunk-transport",
         "honeydrunk-vault",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [],
       "exposes": {
@@ -508,7 +513,7 @@
       "consumes": [
         "honeydrunk-transport",
         "honeydrunk-vault",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [],
       "exposes": {
@@ -620,7 +625,7 @@
     {
       "id": "honeydrunk-console",
       "consumes": [
-        "pulse",
+        "honeydrunk-pulse",
         "honeydrunk-vault",
         "honeydrunk-transport"
       ],
@@ -649,11 +654,12 @@
         "honeydrunk-transport"
       ],
       "consumes_optional": [
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [
         "honeydrunk-testing",
-        "honeydrunk-web-rest"
+        "honeydrunk-web-rest",
+        "honeydrunk-audit"
       ],
       "exposes": {
         "contracts": [
@@ -711,7 +717,7 @@
           "IMessagePublisher",
           "HoneyDrunk.Transport"
         ],
-        "pulse": {
+        "honeydrunk-pulse": {
           "optional": true,
           "contracts": [
             "schema health signals",
@@ -741,7 +747,7 @@
         "audit-agent",
         "honeydrunk-agentkit",
         "honeydrunk-kernel",
-        "operator",
+        "honeydrunk-operator",
         "honeydrunk-vault"
       ],
       "consumed_by": [],
@@ -799,8 +805,10 @@
         "honeydrunk-notify",
         "honeydrunk-testing",
         "honeydrunk-vault",
-        "operator",
-        "pulse"
+        "honeydrunk-operator",
+        "honeydrunk-pulse",
+        "honeydrunk-audit",
+        "honeydrunk-observe"
       ],
       "exposes": {
         "contracts": [
@@ -902,7 +910,7 @@
         "honeydrunk-agentkit",
         "honeydrunk-vault",
         "honeyhub",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [],
       "exposes": {
@@ -990,8 +998,8 @@
         "honeydrunk-clientportalos",
         "honeydrunk-collector",
         "honeydrunk-notify",
-        "operator",
-        "pulse",
+        "honeydrunk-operator",
+        "honeydrunk-pulse",
         "hivexp",
         "hivegigs",
         "honeydrunk-console"
@@ -1060,8 +1068,8 @@
         "honeydrunk-signal",
         "honeysentinel",
         "memorybank",
-        "operator",
-        "pulse",
+        "honeydrunk-operator",
+        "honeydrunk-pulse",
         "review",
         "hivexp",
         "hivegigs",
@@ -1071,7 +1079,8 @@
         "game-prototype",
         "tether",
         "invoice",
-        "marketcore"
+        "marketcore",
+        "honeydrunk-observe"
       ],
       "exposes": {
         "contracts": [
@@ -1153,7 +1162,7 @@
     {
       "id": "honeymech-sim",
       "consumes": [
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [
         "honeymech-courier",
@@ -1170,7 +1179,7 @@
       "id": "honeysentinel",
       "consumes": [
         "honeydrunk-vault",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [
         "breachlab-exe"
@@ -1250,7 +1259,7 @@
       "id": "memorybank",
       "consumes": [
         "honeydrunk-vault",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [],
       "exposes": {
@@ -1302,13 +1311,14 @@
       "consumes_detail": {}
     },
     {
-      "id": "operator",
+      "id": "honeydrunk-operator",
       "consumes": [
         "grid",
         "honeydrunk-kernel",
         "honeydrunk-transport",
         "honeydrunk-vault",
-        "pulse"
+        "honeydrunk-pulse",
+        "honeydrunk-audit"
       ],
       "consumed_by": [
         "honeydrunk-governor"
@@ -1342,6 +1352,11 @@
           "ISecretStore",
           "IConfigProvider",
           "HoneyDrunk.Vault"
+        ],
+        "honeydrunk-audit": [
+          "IAuditLog",
+          "IAuditQuery",
+          "HoneyDrunk.Audit.Abstractions"
         ]
       }
     },
@@ -1360,7 +1375,7 @@
       "consumes_detail": {}
     },
     {
-      "id": "pulse",
+      "id": "honeydrunk-pulse",
       "consumes": [
         "honeydrunk-kernel",
         "honeydrunk-transport",
@@ -1381,7 +1396,7 @@
         "honeydrunk-signal",
         "honeysentinel",
         "memorybank",
-        "operator",
+        "honeydrunk-operator",
         "review",
         "audit-agent",
         "honeydrunk-console",
@@ -1433,7 +1448,7 @@
       "id": "review",
       "consumes": [
         "honeydrunk-vault",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [],
       "exposes": {
@@ -1465,7 +1480,7 @@
       "id": "tether",
       "consumes": [
         "honeydrunk-vault",
-        "pulse"
+        "honeydrunk-pulse"
       ],
       "consumed_by": [],
       "exposes": {
@@ -1503,6 +1518,95 @@
           "HoneyDrunk.Vault"
         ]
       }
+    },
+    {
+      "id": "honeydrunk-infrastructure",
+      "consumes": [
+        "honeydrunk-actions"
+      ],
+      "consumed_by": [],
+      "exposes": {
+        "contracts": ["modules/", "platform/", "nodes/"],
+        "packages": []
+      },
+      "blocked_by": [],
+      "consumes_detail": {
+        "honeydrunk-actions": [
+          "job-deploy-bicep.yml",
+          "job-bicep-lint.yml"
+        ]
+      }
+    },
+    {
+      "id": "honeydrunk-audit",
+      "consumes": [
+        "honeydrunk-kernel",
+        "honeydrunk-data"
+      ],
+      "consumes_optional": [
+        "honeydrunk-pulse"
+      ],
+      "consumed_by": [
+        "honeydrunk-auth",
+        "honeydrunk-operator"
+      ],
+      "exposes": {
+        "contracts": [
+          "IAuditLog",
+          "IAuditQuery",
+          "AuditEntry"
+        ],
+        "packages": [
+          "HoneyDrunk.Audit.Abstractions"
+        ]
+      },
+      "blocked_by": [],
+      "consumes_detail": {
+        "honeydrunk-kernel": [
+          "IGridContext",
+          "INodeLifecycle",
+          "IHealthContributor",
+          "ITelemetryActivityFactory",
+          "HoneyDrunk.Kernel.Abstractions"
+        ],
+        "honeydrunk-data": [
+          "IRepository",
+          "IUnitOfWork",
+          "HoneyDrunk.Data"
+        ],
+        "honeydrunk-pulse": {
+          "optional": true,
+          "contracts": [
+            "operational telemetry emit (no runtime dependency on Pulse)"
+          ]
+        }
+      }
+    },
+    {
+      "id": "honeydrunk-observe",
+      "consumes": [
+        "honeydrunk-kernel",
+        "honeydrunk-vault"
+      ],
+      "consumed_by": [],
+      "exposes": {
+        "contracts": [
+          "IObservationEvent"
+        ],
+        "packages": []
+      },
+      "blocked_by": [],
+      "consumes_detail": {
+        "honeydrunk-kernel": [
+          "IGridContext",
+          "INodeLifecycle",
+          "HoneyDrunk.Kernel.Abstractions"
+        ],
+        "honeydrunk-vault": [
+          "ISecretStore",
+          "HoneyDrunk.Vault"
+        ]
+      }
     }
   ],
   "edges": [
@@ -1518,13 +1622,18 @@
     },
     {
       "dependency": "grid",
-      "dependent": "operator",
+      "dependent": "honeydrunk-operator",
       "reason": "Depends on production-ready HoneyDrunk.Grid services"
     },
     {
       "dependency": "hivexp",
       "dependent": "hivegigs",
       "reason": "Builds on HiveXP for core infrastructure capabilities"
+    },
+    {
+      "dependency": "honeydrunk-actions",
+      "dependent": "honeydrunk-infrastructure",
+      "reason": "Consumes the deploy + lint reusable workflows (job-deploy-bicep.yml, job-bicep-lint.yml) to validate and apply Bicep"
     },
     {
       "dependency": "honeydrunk-agentkit",
@@ -1562,7 +1671,7 @@
       "reason": "Requires Data's persistence layer for storage guarantees"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "honeydrunk-data",
       "reason": "Integrates Pulse for schema and migration telemetry"
     },
@@ -1628,7 +1737,7 @@
     },
     {
       "dependency": "honeydrunk-kernel",
-      "dependent": "pulse",
+      "dependent": "honeydrunk-pulse",
       "reason": "Uses Kernel Abstractions for GridContext, telemetry primitives, and lifecycle hooks in OpenTelemetry wiring"
     },
     {
@@ -1638,7 +1747,7 @@
     },
     {
       "dependency": "honeydrunk-kernel",
-      "dependent": "operator",
+      "dependent": "honeydrunk-operator",
       "reason": "Uses Kernel's context propagation and lifecycle hooks for system-wide operations"
     },
     {
@@ -1688,12 +1797,12 @@
     },
     {
       "dependency": "honeydrunk-transport",
-      "dependent": "operator",
+      "dependent": "honeydrunk-operator",
       "reason": "Relies on Transport for messaging, events, and inter-node communication"
     },
     {
       "dependency": "honeydrunk-transport",
-      "dependent": "pulse",
+      "dependent": "honeydrunk-pulse",
       "reason": "Relies on Transport for messaging, events, and inter-node communication"
     },
     {
@@ -1763,12 +1872,12 @@
     },
     {
       "dependency": "honeydrunk-vault",
-      "dependent": "operator",
+      "dependent": "honeydrunk-operator",
       "reason": "Secures founder credentials and system-level access tokens"
     },
     {
       "dependency": "honeydrunk-vault",
-      "dependent": "pulse",
+      "dependent": "honeydrunk-pulse",
       "reason": "Securely stores API keys and connection strings for telemetry ingestion endpoints"
     },
     {
@@ -1847,82 +1956,82 @@
       "reason": "Requires Meta.AtlasSync for neural synchronization layer"
     },
     {
-      "dependency": "operator",
+      "dependency": "honeydrunk-operator",
       "dependent": "honeydrunk-governor",
       "reason": "Requires HoneyDrunk.Operator for founder-facing persona and the hive’s single coherent identity."
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "arcadia",
       "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "breachlab-exe",
       "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "dreammarket",
       "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "grid",
       "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "honeydrunk-agentkit",
       "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "honeydrunk-assets",
       "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "honeydrunk-clarity",
       "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "honeydrunk-clientportalos",
       "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "honeydrunk-collector",
       "reason": "Uses Pulse's distributed tracing and structured logging"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "honeydrunk-notify",
       "reason": "Integrates Pulse for delivery audit, trace correlation, and notification telemetry"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "honeydrunk-signal",
       "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "honeysentinel",
       "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "memorybank",
       "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
     },
     {
-      "dependency": "pulse",
-      "dependent": "operator",
+      "dependency": "honeydrunk-pulse",
+      "dependent": "honeydrunk-operator",
       "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "review",
       "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
     },
@@ -1962,12 +2071,12 @@
       "reason": "Stores governance policies and agent credentials"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "audit-agent",
       "reason": "Emits audit events and governance telemetry"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "honeydrunk-console",
       "reason": "Displays real-time system health and metrics"
     },
@@ -1987,7 +2096,7 @@
       "reason": "Stores user preferences and league configurations"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "draft",
       "reason": "Tracks engagement metrics and league activity"
     },
@@ -1997,7 +2106,7 @@
       "reason": "Manages player save data and game configuration"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "game-prototype",
       "reason": "Captures gameplay telemetry and analytics"
     },
@@ -2007,7 +2116,7 @@
       "reason": "Encrypts personal relationship data"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "tether",
       "reason": "Tracks connection health and reminder patterns"
     },
@@ -2022,7 +2131,7 @@
       "reason": "Secures payout credentials and fee configurations"
     },
     {
-      "dependency": "pulse",
+      "dependency": "honeydrunk-pulse",
       "dependent": "honeymech-sim",
       "reason": "Captures simulation metrics and performance data"
     },
@@ -2040,6 +2149,41 @@
       "dependency": "honeydrunk-vault",
       "dependent": "honeydrunk-vault-rotation",
       "reason": "ISecretStore for reading existing secrets and writing rotated versions"
+    },
+    {
+      "dependency": "honeydrunk-kernel",
+      "dependent": "honeydrunk-audit",
+      "reason": "IGridContext, lifecycle, health, and telemetry primitives for the audit Node runtime"
+    },
+    {
+      "dependency": "honeydrunk-data",
+      "dependent": "honeydrunk-audit",
+      "reason": "IRepository and IUnitOfWork back the Data-backed, append-only audit store (ADR-0031)"
+    },
+    {
+      "dependency": "honeydrunk-pulse",
+      "dependent": "honeydrunk-audit",
+      "reason": "Audit emits its own operational telemetry to Pulse — no runtime dependency on Pulse (Audit is the system of record, Pulse is not)"
+    },
+    {
+      "dependency": "honeydrunk-audit",
+      "dependent": "honeydrunk-auth",
+      "reason": "Auth is the first emitter — records login attempts and authorization grants/denials through IAuditLog"
+    },
+    {
+      "dependency": "honeydrunk-audit",
+      "dependent": "honeydrunk-operator",
+      "reason": "Operator reconciled as consumer/emitter — records privileged-action execution and reads the forensic surface via IAuditQuery"
+    },
+    {
+      "dependency": "honeydrunk-kernel",
+      "dependent": "honeydrunk-observe",
+      "reason": "IGridContext and lifecycle primitives for the observation Node runtime"
+    },
+    {
+      "dependency": "honeydrunk-vault",
+      "dependent": "honeydrunk-observe",
+      "reason": "ISecretStore for connector credential resolution across external provider slots"
     }
   ]
 }
