@@ -125,13 +125,13 @@
   },
   {
     "id": "svc-studios-website",
-    "type": "web-app",
+    "type": "service",
     "name": "honeydrunk-website",
     "owner": "Meta",
     "tier": "prod-critical",
     "runtime": {
       "language": "typescript",
-      "target": "nextjs"
+      "target": "next.js"
     },
     "region": "global",
     "envs": [
@@ -162,7 +162,7 @@
     },
     "signal": "Live",
     "long_description": {
-      "overview": "HoneyDrunk Studios public website. Next.js 16 app deployed on Vercel. Primary public interface for the ecosystem, showcasing Nodes, Services, ADRs, PDRs, build-in-public timeline, and Grid visualization.",
+      "overview": "HoneyDrunk Studios public website",
       "why_it_exists": "Public-facing presence for HoneyDrunk ecosystem. Transparency layer for build-in-public philosophy.",
       "primary_audience": "Developers, potential contributors, community following the build-in-public journey.",
       "value_props": [
@@ -183,7 +183,8 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "hosting": "vercel"
   },
   {
     "id": "svc-deploy-webhookrelay",
@@ -252,11 +253,11 @@
     "id": "svc-pulse-collector",
     "type": "service",
     "name": "Pulse.Collector",
-    "owner": "HoneyNet",
+    "owner": "Ops",
     "tier": "internal",
     "runtime": {
       "language": "dotnet",
-      "target": "container"
+      "target": "net10.0"
     },
     "region": "eastus",
     "envs": [
@@ -293,7 +294,7 @@
     },
     "signal": "Seed",
     "long_description": {
-      "overview": "Central ingestion point for all telemetry data flowing into Pulse. Handles OTLP traces, metrics, and logs, routing to sinks and analytics.",
+      "overview": "Deployable OTLP receiver that ingests traces, logs, and metrics and fans out to configured sinks",
       "why_it_exists": "Consolidates observability data and enforces schema consistency.",
       "primary_audience": "Ops and observability teams within the Hive.",
       "value_props": [
@@ -313,17 +314,18 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "hosting": "container"
   },
   {
     "id": "svc-notify-worker",
-    "type": "worker",
+    "type": "service",
     "name": "HoneyDrunk.Notify.Worker",
     "owner": "Ops",
     "tier": "prod-critical",
     "runtime": {
       "language": "dotnet",
-      "target": "container"
+      "target": "net10.0"
     },
     "region": "eastus",
     "envs": [
@@ -354,7 +356,7 @@
     },
     "signal": "Live",
     "long_description": {
-      "overview": "Background worker that dequeues and dispatches notifications across multiple channels (email, SMS, push). Processes notification templates and handles delivery failures with retry logic.",
+      "overview": "Background worker that dequeues and dispatches notifications",
       "why_it_exists": "Decouples notification dispatch from business logic, enabling reliable async delivery with observability.",
       "primary_audience": "All Nodes requiring notification capabilities.",
       "value_props": [
@@ -375,17 +377,18 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "hosting": "container"
   },
   {
     "id": "svc-notify-functions",
-    "type": "function-app",
+    "type": "service",
     "name": "HoneyDrunk.Notify.Functions",
     "owner": "Ops",
     "tier": "prod",
     "runtime": {
       "language": "dotnet",
-      "target": "azure-functions"
+      "target": "net10.0"
     },
     "region": "eastus",
     "envs": [
@@ -418,7 +421,7 @@
     },
     "signal": "Live",
     "long_description": {
-      "overview": "Azure Functions for notification processing. Provides HTTP endpoints for immediate send operations and webhook handlers for delivery status callbacks from providers.",
+      "overview": "Azure Functions for notification processing",
       "why_it_exists": "Serverless alternative to worker for lightweight, event-driven notification scenarios.",
       "primary_audience": "Services requiring immediate notification dispatch without queue latency.",
       "value_props": [
@@ -439,7 +442,8 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "hosting": "azure-functions"
   },
   {
     "id": "svc-honeyhub-projects-api",
@@ -485,7 +489,7 @@
         "audit.traces"
       ]
     },
-    "signal": "Seed",
+    "signal": "Archive",
     "long_description": {
       "overview": "Project catalog and CRUD for HoneyHub. Provides a clean API surface for managing projects, relationships, and audit data.",
       "why_it_exists": "HoneyHub needs a first-party API to anchor PM workflows and public-facing views.",
@@ -496,7 +500,7 @@
         "Auth and audit built-in"
       ],
       "monetization_signal": "Internal service powering HoneyHub experiences.",
-      "roadmap_focus": "Add search, tags, and cross-node linking.",
+      "roadmap_focus": "Archived with HoneyHub; no active development planned.",
       "grid_relationship": "Consumes Auth, Vault, Transport, Data; emits events to Pulse and Transport.",
       "integration_depth": "medium",
       "demo_path": "Create a project → see Project.Created event and audit trail.",

@@ -376,7 +376,7 @@ export default function NodeDetailPage({ params }: { params: Promise<{ id: strin
                     </div>
                   ) : (
                     <p className="text-sm" style={{ color: colors.slateLight }}>
-                      No dependencies — foundational node
+                      No dependencies recorded
                     </p>
                   )}
                 </div>

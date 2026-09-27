@@ -10,6 +10,7 @@ import CtaBand from '@/components/CtaBand';
 import LandingFooter from '@/components/LandingFooter';
 import Header from '@/components/Header';
 import HeroBoot from '@/components/hero/HeroBoot';
+import CurrentFocus from '@/components/CurrentFocus';
 
 const STORAGE_KEY = 'hd.jacked_in';
 
@@ -53,6 +54,7 @@ export default function Home() {
       {/* Add top padding to account for absolute positioned header */}
       <div className="pt-24 space-y-0">
         <ValueProps />
+        <CurrentFocus />
         <FeaturedNodes nodes={featuredNodes} />
         <Spotlights />
         <BuildInPublic />

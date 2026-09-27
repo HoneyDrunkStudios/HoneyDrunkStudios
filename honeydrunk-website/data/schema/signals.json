@@ -256,7 +256,7 @@
     "desc": "Major Flow Index overhaul with three-section architecture: (1) Implemented Active/Completed flow separation—separated living work from completed milestones with getActiveFlowNodes() and getCompletedFlowNodes() functions. Active section (🔥 orange) shows current priorities, Completed section (✅ green) showcases done work, All section (📊 blue) provides unified view. (2) Updated flow tier colors: Active tier → cyber orange (#FF8C00), Supporting tier → neon yellow (#FFFF00), maintaining neon pink for Critical. (3) Enhanced UX with pointer cursors and cyberpunk hover effects—all buttons feature color-matched glows, smooth transitions, and tactile feedback. (4) HoneyDrunk.Actions signal upgraded Seed → Wiring, jumping to Flow Index #1 (92) with proper energy baseline. (5) HoneyDrunk.Standards marked done=true, demonstrating cooldown mechanics while maintaining high Flow due to foundational importance. Flow Index now provides clear separation between active roadmap and completed achievements with enhanced visual feedback.",
     "tags": [
       "Core",
-      "Ops", 
+      "Ops",
       "HoneyDrunk.Standards",
       "HoneyDrunk.Actions",
       "HoneyDrunk.Grid"
@@ -432,6 +432,18 @@
     "desc": "Locked in the cyberpunk realism color palette: Aurum Gold, Electric Blue, Violet Flux against Deep Space. Zero-bloat typography with Space Grotesk, Inter, and JetBrains Mono.",
     "tags": [
       "Meta"
+    ],
+    "sector": "Meta"
+  },
+  {
+    "date": "2026-09-26",
+    "title": "Studio reset: published packages and the next creative tracks",
+    "desc": "Published and verified 61 public NuGet packages: 52 updates and 9 first publications, with downstream dependencies reconciled. Three unimplemented AI provider packages remain unreleased. Current focus is Pocket Quests (internal working name), the first game, AI learning, and hands-on robotics. Pocket Quests has an empty configured repository and a product plan, not a shipped app; the first game remains in concept planning. Blender experiments produced editable scenes and renders. HoneyHub is archived. The website catalog now includes Payments, public package versions, refreshed relationships and service descriptions. Lore ingestion safeguards and the review runner were repaired. Read the personal devlog at https://tatteddev.com/blog/i-ran-my-dev-studio-from-the-couch/.",
+    "tags": [
+      "studio-update",
+      "packages",
+      "Pocket Quests",
+      "HoneyDrunk.Architecture"
     ],
     "sector": "Meta"
   }
