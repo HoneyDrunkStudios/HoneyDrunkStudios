@@ -153,7 +153,10 @@
         "honeydrunk-kernel",
         "honeydrunk-pulse"
       ],
-      "consumed_by": [],
+      "consumed_by": [
+        "honeyhub",
+        "honeydrunk-operator"
+      ],
       "exposes": {
         "contracts": [],
         "packages": []
@@ -300,9 +303,7 @@
     {
       "id": "honeydrunk-actions",
       "consumes": [],
-      "consumed_by": [
-        "honeydrunk-infrastructure"
-      ],
+      "consumed_by": [],
       "exposes": {
         "contracts": [
           "job-deploy-bicep.yml",
@@ -396,10 +397,7 @@
         "honeydrunk-vault"
       ],
       "consumed_by": [
-        "hivegigs",
-        "hivexp",
-        "honeydrunk-web-rest",
-        "honeydrunk-capabilities"
+        "honeydrunk-web-rest"
       ],
       "exposes": {
         "contracts": [
@@ -439,6 +437,7 @@
         ]
       },
       "consumed_by_planned": [
+        "honeydrunk-capabilities",
         "honeydrunk-operator",
         "honeydrunk-audit"
       ],
@@ -448,6 +447,7 @@
       "id": "honeydrunk-build",
       "consumes": [],
       "consumed_by": [
+        "honeydrunk-actions",
         "honeydrunk-pipelines"
       ],
       "exposes": {
@@ -681,11 +681,7 @@
         "honeydrunk-pulse"
       ],
       "consumed_by": [
-        "honeydrunk-testing",
-        "honeydrunk-audit",
-        "honeydrunk-memory",
-        "honeydrunk-knowledge",
-        "honeydrunk-flow"
+        "honeydrunk-audit"
       ],
       "exposes": {
         "contracts": [
@@ -739,6 +735,9 @@
         ]
       },
       "consumed_by_planned": [
+        "honeydrunk-memory",
+        "honeydrunk-knowledge",
+        "honeydrunk-flow",
         "honeydrunk-operator"
       ],
       "dependency_evidence": "Published NuGet artifact dependency declarations verified 2026-09-26"
@@ -814,30 +813,19 @@
       "id": "honeydrunk-kernel",
       "consumes": [],
       "consumed_by": [
-        "grid",
-        "honeydrunk-web-rest",
-        "honeydrunk-agentkit",
-        "honeydrunk-auth",
-        "honeydrunk-clientportalos",
-        "honeydrunk-notify",
-        "honeydrunk-communications",
-        "honeydrunk-data",
-        "honeydrunk-governor",
-        "honeydrunk-testing",
         "honeydrunk-transport",
         "honeydrunk-vault",
-        "honeydrunk-operator",
-        "honeydrunk-pulse",
         "honeydrunk-vault-rotation",
-        "honeydrunk-audit",
+        "honeydrunk-auth",
+        "honeydrunk-web-rest",
+        "honeydrunk-data",
+        "honeydrunk-notify",
+        "honeydrunk-pulse",
+        "honeydrunk-communications",
         "honeydrunk-payments",
         "honeydrunk-ai",
-        "honeydrunk-capabilities",
-        "honeydrunk-agents",
-        "honeydrunk-memory",
-        "honeydrunk-knowledge",
-        "honeydrunk-flow",
-        "honeydrunk-evals"
+        "honeydrunk-audit",
+        "honeydrunk-operator"
       ],
       "exposes": {
         "contracts": [
@@ -900,6 +888,11 @@
       "blocked_by": [],
       "consumes_detail": {},
       "consumed_by_planned": [
+        "honeydrunk-capabilities",
+        "honeydrunk-agents",
+        "honeydrunk-memory",
+        "honeydrunk-knowledge",
+        "honeydrunk-flow",
         "honeydrunk-observe"
       ],
       "dependency_evidence": "Published NuGet artifact dependency declarations verified 2026-09-26"
@@ -995,6 +988,7 @@
       "id": "honeydrunk-tools",
       "consumes": [],
       "consumed_by": [
+        "honeydrunk-actions",
         "honeydrunk-deploy",
         "honeydrunk-pipelines"
       ],
@@ -1012,16 +1006,8 @@
         "honeydrunk-kernel"
       ],
       "consumed_by": [
-        "hivegigs",
-        "hivexp",
         "honeydrunk-web-rest",
-        "honeydrunk-agentkit",
-        "honeydrunk-assets",
-        "honeydrunk-clientportalos",
-        "honeydrunk-collector",
-        "honeydrunk-console",
-        "honeydrunk-data",
-        "honeydrunk-flow"
+        "honeydrunk-data"
       ],
       "exposes": {
         "contracts": [
@@ -1057,7 +1043,9 @@
           "HoneyDrunk.Kernel.Abstractions"
         ]
       },
-      "consumed_by_planned": [],
+      "consumed_by_planned": [
+        "honeydrunk-flow"
+      ],
       "dependency_evidence": "Published NuGet artifact dependency declarations verified 2026-09-26"
     },
     {
@@ -1066,35 +1054,13 @@
         "honeydrunk-kernel"
       ],
       "consumed_by": [
-        "arcadia",
-        "breachlab-exe",
-        "draft",
-        "dreammarket",
-        "game-prototype",
-        "hivegigs",
-        "hivexp",
-        "honeydrunk-web-rest",
-        "honeydrunk-agentkit",
-        "honeydrunk-assets",
         "honeydrunk-auth",
-        "honeydrunk-clarity",
-        "honeydrunk-clientportalos",
-        "honeydrunk-collector",
-        "honeydrunk-notify",
-        "honeydrunk-console",
+        "honeydrunk-ai",
         "honeydrunk-data",
-        "honeydrunk-governor",
-        "honeydrunk-signal",
-        "honeysentinel",
-        "invoice",
-        "marketcore",
-        "memorybank",
+        "honeydrunk-notify",
         "honeydrunk-operator",
         "honeydrunk-pulse",
-        "review",
-        "tether",
-        "honeydrunk-vault-rotation",
-        "honeydrunk-ai"
+        "honeydrunk-web-rest"
       ],
       "exposes": {
         "contracts": [
@@ -1127,6 +1093,7 @@
         ]
       },
       "consumed_by_planned": [
+        "honeydrunk-vault-rotation",
         "honeydrunk-observe"
       ],
       "dependency_evidence": "Published NuGet artifact dependency declarations verified 2026-09-26"
@@ -1134,12 +1101,7 @@
     {
       "id": "honeyhub",
       "consumes": [],
-      "consumed_by": [
-        "forge",
-        "honeyconnect",
-        "honeydrunk-clarity",
-        "honeydrunk-signal"
-      ],
+      "consumed_by": [],
       "exposes": {
         "contracts": [
           "DispatchSession",
@@ -1351,10 +1313,7 @@
         "honeydrunk-kernel",
         "honeydrunk-vault"
       ],
-      "consumed_by": [
-        "honeydrunk-governor",
-        "honeydrunk-evals"
-      ],
+      "consumed_by": [],
       "exposes": {
         "contracts": [
           "IApprovalGate",
@@ -1386,6 +1345,7 @@
         "honeydrunk-capabilities",
         "honeydrunk-agents",
         "honeydrunk-flow",
+        "honeydrunk-evals",
         "honeydrunk-sim"
       ],
       "dependency_evidence": "Published NuGet artifact dependency declarations verified 2026-09-26"
@@ -1411,27 +1371,7 @@
         "honeydrunk-kernel",
         "honeydrunk-vault"
       ],
-      "consumed_by": [
-        "arcadia",
-        "audit-agent",
-        "breachlab-exe",
-        "draft",
-        "dreammarket",
-        "game-prototype",
-        "grid",
-        "honeydrunk-agentkit",
-        "honeydrunk-assets",
-        "honeydrunk-clarity",
-        "honeydrunk-clientportalos",
-        "honeydrunk-collector",
-        "honeydrunk-console",
-        "honeydrunk-signal",
-        "honeymech-sim",
-        "honeysentinel",
-        "memorybank",
-        "review",
-        "tether"
-      ],
+      "consumed_by": [],
       "exposes": {
         "contracts": [
           "ITraceSink",
@@ -1590,8 +1530,7 @@
       ],
       "consumed_by": [
         "honeydrunk-auth",
-        "honeydrunk-operator",
-        "honeydrunk-evals"
+        "honeydrunk-operator"
       ],
       "exposes": {
         "contracts": [
@@ -1709,15 +1648,14 @@
         "honeydrunk-kernel",
         "honeydrunk-vault"
       ],
-      "consumed_by": [
+      "consumed_by": [],
+      "consumed_by_planned": [
         "honeydrunk-agents",
         "honeydrunk-memory",
         "honeydrunk-knowledge",
         "honeydrunk-evals",
         "honeydrunk-sim",
-        "honeydrunk-lore"
-      ],
-      "consumed_by_planned": [
+        "honeydrunk-lore",
         "honeyhub"
       ],
       "blocked_by": [],
@@ -1753,11 +1691,10 @@
         "honeydrunk-kernel",
         "honeydrunk-auth"
       ],
-      "consumed_by": [
-        "honeydrunk-agents",
-        "honeydrunk-evals"
+      "consumed_by": [],
+      "consumed_by_planned": [
+        "honeydrunk-agents"
       ],
-      "consumed_by_planned": [],
       "blocked_by": [],
       "exposes": {
         "contracts": [
@@ -1790,13 +1727,12 @@
         "honeydrunk-ai",
         "honeydrunk-capabilities"
       ],
-      "consumed_by": [
+      "consumed_by": [],
+      "consumed_by_planned": [
         "honeydrunk-flow",
-        "honeydrunk-evals",
         "honeydrunk-sim",
         "honeydrunk-lore"
       ],
-      "consumed_by_planned": [],
       "blocked_by": [],
       "exposes": {
         "contracts": [
@@ -1837,9 +1773,7 @@
         "honeydrunk-data",
         "honeydrunk-ai"
       ],
-      "consumed_by": [
-        "honeydrunk-evals"
-      ],
+      "consumed_by": [],
       "consumed_by_planned": [],
       "blocked_by": [],
       "exposes": {
@@ -1881,12 +1815,11 @@
         "honeydrunk-data",
         "honeydrunk-ai"
       ],
-      "consumed_by": [
-        "honeydrunk-evals",
+      "consumed_by": [],
+      "consumed_by_planned": [
         "honeydrunk-sim",
         "honeydrunk-lore"
       ],
-      "consumed_by_planned": [],
       "blocked_by": [],
       "exposes": {
         "contracts": [
@@ -1926,10 +1859,10 @@
         "honeydrunk-data",
         "honeydrunk-transport"
       ],
-      "consumed_by": [
+      "consumed_by": [],
+      "consumed_by_planned": [
         "honeydrunk-lore"
       ],
-      "consumed_by_planned": [],
       "blocked_by": [],
       "exposes": {
         "contracts": [

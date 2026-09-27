@@ -39,6 +39,7 @@ interface RelationshipsSchema {
     consumes: string[];
     consumed_by: string[];
     consumed_by_planned?: string[]; // Planned but not yet implemented dependents
+    dependency_evidence?: string;
     blocked_by: string[];
     consumes_detail: Record<string, string[]>; // nodeId -> [contract/package names]
     exposes: {
@@ -88,11 +89,17 @@ export function getNodeContractInfo(nodeId: string): NodeContractInfo | null {
   const inProgress: string[] = [];
   const planned: string[] = [];
   
-  for (const depId of nodeContract.consumed_by) {
+  const explicitPlans = new Set(nodeContract.consumed_by_planned || []);
+  const dependents = [...new Set([...nodeContract.consumed_by, ...explicitPlans])];
+  for (const depId of dependents) {
     const depNode = allNodes.find(n => n.id === depId);
-    if (!depNode) continue;
+    if (!depNode || depNode.signal === 'Archive') continue;
+    const source = relationships.nodes.find(n => n.id === depId);
+    const publishedDependency = Boolean(source?.dependency_evidence && source.consumes.includes(nodeId));
     
-    if (IMPLEMENTED_SIGNALS.includes(depNode.signal)) {
+    if (explicitPlans.has(depId)) {
+      planned.push(depId);
+    } else if (publishedDependency || IMPLEMENTED_SIGNALS.includes(depNode.signal)) {
       implemented.push(depId);
     } else if (IN_PROGRESS_SIGNALS.includes(depNode.signal)) {
       inProgress.push(depId);
