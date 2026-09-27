@@ -1024,7 +1024,7 @@
       ],
       "monetization_signal": "Internal-first. Agent runtime is the execution engine for all AI-driven features.",
       "roadmap_focus": "Core lifecycle contracts, execution context, tool invoker integration with Capabilities.",
-      "grid_relationship": "Consumes Kernel (context, lifecycle, identity), AI (inference), Capabilities (tool registry). Consumed by Flow (agent chaining), HoneyHub (agent execution surface).",
+      "grid_relationship": "Consumes Kernel (context, lifecycle, identity), AI (inference), Capabilities (tool registry). Planned consumer: Flow (agent chaining). HoneyHub integration is retired.",
       "integration_depth": "deep",
       "demo_path": "Register an agent → trigger execution → observe lifecycle stages → agent calls a tool via IToolInvoker → writes memory → completes.",
       "signal_quote": "Autonomy with purpose.",
@@ -1136,7 +1136,7 @@
       ],
       "monetization_signal": "Internal-first. Knowledge infrastructure enables premium AI features.",
       "roadmap_focus": "Core contracts (IKnowledgeStore, IDocumentIngester, IRetrievalPipeline), InMemory provider, basic markdown ingestion.",
-      "grid_relationship": "Consumes Kernel (context), AI (embeddings), Data (persistence patterns). Consumed by Agents (knowledge retrieval), Lore (knowledge compilation), HoneyHub (context for planning).",
+      "grid_relationship": "Consumes Kernel (context), AI (embeddings), Data (persistence patterns). Planned consumers: Agents (knowledge retrieval) and Lore (knowledge compilation). HoneyHub integration is retired.",
       "integration_depth": "medium",
       "demo_path": "Ingest a set of markdown files → query with a natural language question → receive ranked results with source attribution.",
       "signal_quote": "Know what the world knows.",
@@ -1192,7 +1192,7 @@
       ],
       "monetization_signal": "Internal-first. Workflow orchestration enables complex product features.",
       "roadmap_focus": "Core contracts (IWorkflow, IWorkflowEngine, IWorkflowStep), simple sequential execution, state persistence via Data.",
-      "grid_relationship": "Consumes Kernel (context, lifecycle), Agents (agent execution), Data (state persistence), Transport (async step coordination). Consumed by HoneyHub (workflow triggering).",
+      "grid_relationship": "Consumes Kernel (context, lifecycle), Agents (agent execution), Data (state persistence), Transport (async step coordination). The former HoneyHub workflow-triggering integration is retired.",
       "integration_depth": "deep",
       "demo_path": "Define a two-step workflow → first step runs an agent → second step runs on agent output → observe state persistence and telemetry.",
       "signal_quote": "Complex work, simple steps.",
@@ -1292,7 +1292,7 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Evals"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Evals is the quality layer for AI behavior in the Grid. It runs prompts against models, scores outputs against expected criteria (factuality, relevance, safety, format compliance), detects regressions when models or prompts change, and compares performance across multiple providers. Evaluation results are emitted as Pulse signals so HoneyHub can correlate quality metrics to specific deployments or model changes.",
+      "overview": "HoneyDrunk.Evals is the quality layer for AI behavior in the Grid. It runs prompts against models, scores outputs against expected criteria (factuality, relevance, safety, format compliance), detects regressions when models or prompts change, and compares performance across multiple providers. Evaluation results are emitted as Pulse signals for correlation with deployments or model changes by future consumers. The former HoneyHub integration is retired.",
       "why_it_exists": "Model upgrades and prompt changes can silently degrade output quality. Evals provides automated regression detection so quality issues are caught before they reach production.",
       "primary_audience": "AI developers and prompt engineers who need confidence that changes don't break existing behavior.",
       "value_props": [
@@ -1305,7 +1305,7 @@
       ],
       "monetization_signal": "Internal-first. Eval infrastructure enables confident model upgrades.",
       "roadmap_focus": "Definitive D3 contracts (IEvaluator, IEvalScorer, IEvalSuite, IEvalTarget, EvalCase, EvalReport), default ChatTarget with the D6 router-bypass model pin, rubric + model-as-judge scorers, observation-only Operator scoring (D7), Providers.InMemory report store, Pulse signal emission with the D10 content carve-out.",
-      "grid_relationship": "Consumes Kernel (TenantId, telemetry), AI (IChatClient/IEmbeddingGenerator/IModelProvider/ModelCapabilityDeclaration for targets + model-as-judge), Operator (ISafetyFilter/ICostGuard as observation-only scoring signals), Audit (IAuditLog observation), and — at the contract level for deferred targets — Agents, Capabilities, Knowledge, Memory. Emits eval signals to Pulse (no runtime edge). Consumed by Agents, Knowledge, Memory, Flow, Sim, Lore, and HoneyHub when live.",
+      "grid_relationship": "Consumes Kernel (TenantId, telemetry), AI (IChatClient/IEmbeddingGenerator/IModelProvider/ModelCapabilityDeclaration for targets + model-as-judge), Operator (ISafetyFilter/ICostGuard as observation-only scoring signals), Audit (IAuditLog observation), and — at the contract level for deferred targets — Agents, Capabilities, Knowledge, Memory. Emits eval signals to Pulse (no runtime edge). Future consumers include Agents, Knowledge, Memory, Flow, Sim and Lore. HoneyHub integration is retired.",
       "integration_depth": "medium",
       "demo_path": "Define an eval dataset → run against two models → compare scores → observe Pulse signals for regression detection.",
       "signal_quote": "Trust, but verify.",
@@ -1398,7 +1398,7 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Signal"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Signal is the creative intelligence layer — an AI system that helps indie developers, artists, and studios craft authentic, platform-native content with less friction. It learns a creator's tone, cadence, and visual aesthetic, then generates copy, captions, and schedules tailored for each channel. Signal doesn't automate creativity; it amplifies it by removing the mechanical overhead of self-promotion. It integrates with Pulse to measure engagement, AgentKit to personalize interactions, and HoneyHub to sync content with project milestones. Over time, Signal will evolve into a network of adaptive creative agents — each representing a studio, project, or individual voice — learning from community trends and cross-platform analytics. It will host campaign templates, sponsorship workflows, and AI-curated trend forecasts, transforming social strategy into a living organism. Signal earns its keep by letting creativity speak louder than algorithms — it keeps the Hive visible, human, and alive.",
+      "overview": "HoneyDrunk.Signal is the creative intelligence layer — an AI system that helps indie developers, artists, and studios craft authentic, platform-native content with less friction. It learns a creator's tone, cadence, and visual aesthetic, then generates copy, captions, and schedules tailored for each channel. Signal doesn't automate creativity; it amplifies it by removing the mechanical overhead of self-promotion. Its proposed integrations include Pulse for engagement and AgentKit for personalization. The former HoneyHub milestone-sync idea is retired. Over time, Signal will evolve into a network of adaptive creative agents — each representing a studio, project, or individual voice — learning from community trends and cross-platform analytics. It will host campaign templates, sponsorship workflows, and AI-curated trend forecasts, transforming social strategy into a living organism. Signal earns its keep by letting creativity speak louder than algorithms — it keeps the Hive visible, human, and alive.",
       "why_it_exists": "HoneyDrunk.Signal exists to prevent inconsistency and reinvention across the Grid.",
       "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
       "value_props": [
@@ -2559,7 +2559,7 @@
       ],
       "monetization_signal": "Internal core Node; indirectly monetized through Market nodes using XP loops.",
       "roadmap_focus": "Expand XP events to support multi-category weighting and decay models.",
-      "grid_relationship": "Connects with: HiveGigs, HoneyHub, HoneyPlay, MarketCore.",
+      "grid_relationship": "Proposed connections: HiveGigs, HoneyPlay, MarketCore. HoneyHub integration is retired.",
       "integration_depth": "high",
       "demo_path": "Show XP transaction lifecycle: event → ledger → visible level change.",
       "signal_quote": "Growth is a pattern, not a prize.",
