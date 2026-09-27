@@ -21,7 +21,7 @@
       "agents"
     ],
     "long_description": {
-      "overview": "Pure semantic contracts for HoneyDrunk.OS Grid. Provides zero-dependency abstractions for Grid context (three-tier model: GridContext, NodeContext, OperationContext), Node lifecycle orchestration, strongly-typed identity primitives (CorrelationId, CausationId, NodeId, TenantId, etc.), telemetry interfaces, transport binder contracts, structured error handling (HoneyDrunkException, ErrorCode, IErrorClassifier), agent execution contracts, and hosting abstractions (INodeDescriptor, GridOptions, IModule).",
+      "overview": "Pure zero-dependency contracts for the Grid context model, lifecycle, and identity",
       "why_it_exists": "A clean dependency graph requires explicit contracts at the foundation. Everything builds on these interfaces. Safe for libraries and SDKs—no runtime weight.",
       "primary_audience": "All HoneyDrunk modules and services; library authors building Grid-aware components without pulling in implementations.",
       "value_props": [
@@ -135,7 +135,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.8.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Kernel.Abstractions/0.8.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-data-abstractions",
@@ -153,7 +156,7 @@
       "foundation"
     ],
     "long_description": {
-      "overview": "Provider-agnostic persistence contracts defining how nodes interact with durable storage without coupling to databases or ORMs.",
+      "overview": "Repository, unit of work, and tenant access contracts",
       "why_it_exists": "Prevents provider leakage and inconsistent persistence patterns across the Grid.",
       "primary_audience": "Service and node developers consuming persistence capabilities.",
       "value_props": [
@@ -172,7 +175,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.7.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Data.Abstractions/0.7.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-data-entityframework",
@@ -189,7 +195,7 @@
       "persistence"
     ],
     "long_description": {
-      "overview": "Entity Framework Core implementation of HoneyDrunk.Data persistence contracts.",
+      "overview": "EF Core repository and unit of work implementation",
       "why_it_exists": "Provides a production-ready ORM provider while keeping EF Core isolated behind Data contracts.",
       "primary_audience": "Service developers using EF Core–backed persistence.",
       "value_props": [
@@ -208,7 +214,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.7.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Data.EntityFramework/0.7.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-data-sqlserver",
@@ -225,7 +234,7 @@
       "migrations"
     ],
     "long_description": {
-      "overview": "SQL Server–specific persistence adapter implementing HoneyDrunk.Data contracts with standardized schema and migration conventions.",
+      "overview": "SQL Server / Azure SQL specialization",
       "why_it_exists": "Most Grid deployments target SQL Server initially and need consistent, auditable persistence behavior.",
       "primary_audience": "Service owners deploying on SQL Server.",
       "value_props": [
@@ -244,7 +253,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.7.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Data.SqlServer/0.7.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-data-migrations",
@@ -280,7 +292,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.7.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Data.Migrations/0.7.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-data-testing",
@@ -353,7 +368,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.7.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Data.Outbox.Abstractions/0.7.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-data-outbox",
@@ -389,7 +407,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.7.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Data.Outbox/0.7.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-data-outbox-dispatcher",
@@ -427,13 +448,16 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.7.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Data.Outbox.Dispatcher/0.7.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-auth",
     "type": "module",
     "name": "HoneyDrunk.Auth",
-    "parent": null,
+    "parent": "honeydrunk-auth",
     "slot": "runtime",
     "signal": "Live",
     "integration_depth": "deep",
@@ -446,7 +470,7 @@
       "vault"
     ],
     "long_description": {
-      "overview": "Core authentication and authorization runtime for HoneyDrunk Grid nodes. Provides JWT Bearer token validation via Vault-backed signing keys, policy-based authorization evaluation, and lifecycle integration with Kernel. This is a Grid node component—not a standalone library—requiring Kernel as its host runtime.",
+      "overview": "JWT validation, signing key management, policy evaluation",
       "why_it_exists": "Ensures consistent authentication and authorization discipline across all Grid nodes. Prevents scattered auth implementations and guarantees uniform identity checks regardless of entrypoint.",
       "primary_audience": "Service owners building HTTP APIs, gateways, and any Grid node requiring request authentication.",
       "value_props": [
@@ -466,7 +490,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.6.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Auth/0.6.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-auth-abstractions",
@@ -484,7 +511,7 @@
       "foundation"
     ],
     "long_description": {
-      "overview": "Provider-agnostic authentication and authorization contracts for the Grid. Defines identity primitives and policy boundaries without coupling to any specific web framework.",
+      "overview": "Auth contracts — token validation, policy evaluation interfaces",
       "why_it_exists": "Prevents framework lock-in and keeps identity policy consistent across nodes, runtimes, and entrypoints.",
       "primary_audience": "Node and service developers consuming Auth contracts, plus maintainers implementing auth providers.",
       "value_props": [
@@ -521,7 +548,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.6.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Auth.Abstractions/0.6.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-auth-aspnetcore",
@@ -539,7 +569,7 @@
       "policy"
     ],
     "long_description": {
-      "overview": "ASP.NET Core adapter that integrates HoneyDrunk.Auth contracts into the web pipeline for request authentication and policy enforcement.",
+      "overview": "ASP.NET Core middleware integration for Auth",
       "why_it_exists": "Most nodes expose HTTP surfaces early. This module provides first-class integration with ASP.NET Core so services can adopt Auth with minimal wiring.",
       "primary_audience": "Service owners building HTTP APIs and gateways.",
       "value_props": [
@@ -558,7 +588,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.6.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Auth.AspNetCore/0.6.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-transport-messaging-inmemory",
@@ -575,7 +608,7 @@
       "channel-based"
     ],
     "long_description": {
-      "overview": "In-process message broker for testing Transport applications. Implements the full Transport abstraction (ITransportPublisher, ITransportConsumer) with Channel-based observable queues. Runs the exact same middleware pipeline, handler resolution, and context propagation logic as production transports—not a mock, but a real transport implementation.",
+      "overview": "In-memory broker for testing",
       "why_it_exists": "Developers need deterministic, fast integration tests that exercise the complete pipeline without external infrastructure.",
       "primary_audience": "Service developers writing integration tests for handlers and middleware.",
       "value_props": [
@@ -596,7 +629,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.7.2",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Transport.InMemory/0.7.2",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-transport-messaging-storagequeue",
@@ -613,7 +649,7 @@
       "cost-effective"
     ],
     "long_description": {
-      "overview": "Azure Storage Queue adapter for HoneyDrunk.Transport. A cost-effective (~10x cheaper than Service Bus), high-volume messaging solution for simple point-to-point queue scenarios. Features automatic poison queue handling, exponential backoff polling, and two-level concurrency control.",
+      "overview": "Azure Storage Queue transport provider",
       "why_it_exists": "High-volume workloads need durable queues at low cost without the complexity of full-fledged brokers.",
       "primary_audience": "Teams deploying on Azure with simple FIFO/background jobs requiring millions of messages per day.",
       "value_props": [
@@ -633,7 +669,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.7.2",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Transport.StorageQueue/0.7.2",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-transport-messaging-servicebus",
@@ -653,7 +692,7 @@
       "enterprise"
     ],
     "long_description": {
-      "overview": "Azure Service Bus adapter for enterprise messaging scenarios. Supports topics/subscriptions (pub/sub), sessions (ordered processing), transactional receive (PeekLock), duplicate detection, and blob storage fallback for publish failures. Ideal for high-throughput, high-correctness workloads where ordering, transactions, and DLQ behavior matter.",
+      "overview": "Azure Service Bus transport provider",
       "why_it_exists": "Mission-critical, event-driven services on Azure need high-throughput pub/sub with robust delivery semantics, ordering guarantees, and transactional behavior.",
       "primary_audience": "Production services requiring topics, sessions, transactions, and enterprise-grade message size support (up to 100MB).",
       "value_props": [
@@ -675,7 +714,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.7.2",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Transport.AzureServiceBus/0.7.2",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-telemetry-abstractions",
@@ -690,7 +732,7 @@
       "contracts"
     ],
     "long_description": {
-      "overview": "Common telemetry contracts and helpers shared by adapters and services: span/metric naming, correlation, and severity conventions.",
+      "overview": "Sink interfaces — ITraceSink, ILogSink, IMetricsSink, IAnalyticsSink, IErrorSink",
       "why_it_exists": "Without shared contracts, telemetry becomes noisy and incomparable.",
       "primary_audience": "Developers instrumenting services and building sinks.",
       "value_props": [
@@ -709,7 +751,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.4.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Telemetry.Abstractions/0.4.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-telemetry-opentelemetry",
@@ -727,7 +772,7 @@
       "logs"
     ],
     "long_description": {
-      "overview": "OpenTelemetry wiring for the HoneyDrunk stack. OTLP exporters, resource detection, and auto-instrumentation presets.",
+      "overview": "OpenTelemetry preconfigured pipelines with Grid context enrichment",
       "why_it_exists": "Standards-based telemetry reduces lock-in and unlocks rich tooling.",
       "primary_audience": "Service owners who want end-to-end traces and metrics quickly.",
       "value_props": [
@@ -746,7 +791,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.4.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Telemetry.OpenTelemetry/0.4.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-telemetry-sink-sentry",
@@ -780,7 +828,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.4.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Telemetry.Sink.Sentry/0.4.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-telemetry-sink-posthog",
@@ -815,7 +866,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.4.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Telemetry.Sink.PostHog/0.4.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-pulse-contracts",
@@ -832,7 +886,7 @@
       "events"
     ],
     "long_description": {
-      "overview": "Shared event contracts for the Pulse telemetry pipeline including PulseIngested and version definitions. Multi-targets netstandard2.0 and net10.0 for broad compatibility.",
+      "overview": "Shared telemetry event models (multi-target: netstandard2.0, net8.0, net10.0)",
       "why_it_exists": "Provides the canonical event schema that Pulse producers and consumers agree on, enabling decoupled telemetry ingestion.",
       "primary_audience": "Services emitting or consuming Pulse telemetry events.",
       "value_props": [
@@ -851,7 +905,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.4.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Pulse.Contracts/0.4.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-telemetry-sink-loki",
@@ -887,7 +944,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.4.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Telemetry.Sink.Loki/0.4.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-telemetry-sink-tempo",
@@ -923,7 +983,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.4.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Telemetry.Sink.Tempo/0.4.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-telemetry-sink-mimir",
@@ -959,7 +1022,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.4.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Telemetry.Sink.Mimir/0.4.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-telemetry-sink-azuremonitor",
@@ -995,7 +1061,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.4.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Telemetry.Sink.AzureMonitor/0.4.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-pulse-collector",
@@ -1054,7 +1123,7 @@
       "contracts"
     ],
     "long_description": {
-      "overview": "Core secrets and configuration management library providing abstractions, caching, orchestration, telemetry, and Kernel lifecycle integration. This package contains no provider implementations—it defines the Vault contract, runtime behavior, and coordination layer. Providers supply the values; this core handles resilience, caching, and distributed tracing.",
+      "overview": "Core Vault client, orchestrator, caching, and resilience",
       "why_it_exists": "A unified, Kernel-aware interface for secrets and configuration that all provider packages plug into.",
       "primary_audience": "Service developers and infrastructure maintainers needing consistent secret/config access patterns.",
       "value_props": [
@@ -1099,7 +1168,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.8.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Vault/0.8.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-vault-providers-azurekeyvault",
@@ -1109,9 +1181,15 @@
     "slot": "provider",
     "signal": "Live",
     "integration_depth": "medium",
-    "tags": ["vault", "azure", "keyvault", "secrets", "config"],
+    "tags": [
+      "vault",
+      "azure",
+      "keyvault",
+      "secrets",
+      "config"
+    ],
     "long_description": {
-      "overview": "Azure Key Vault provider with managed identity support and versioned secret retrieval aligned to Vault contracts.",
+      "overview": "Azure Key Vault secrets provider",
       "why_it_exists": "Production-grade secret management for Azure-hosted nodes.",
       "primary_audience": "Service owners deploying on Azure.",
       "value_props": [
@@ -1127,7 +1205,13 @@
       "stability_tier": "experimental",
       "impact_vector": "security posture"
     },
-    "_dictionary_ref": { "version": "v1", "path": "/schema/node_manifest_dictionary.v1.json" }
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "version": "0.8.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Vault.Providers.AzureKeyVault/0.8.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-vault-providers-aws",
@@ -1137,9 +1221,14 @@
     "slot": "provider",
     "signal": "Live",
     "integration_depth": "shallow",
-    "tags": ["vault", "aws", "secrets", "config"],
+    "tags": [
+      "vault",
+      "aws",
+      "secrets",
+      "config"
+    ],
     "long_description": {
-      "overview": "AWS Secrets Manager provider offering retrieval and caching aligned to Vault contracts.",
+      "overview": "AWS Secrets Manager provider",
       "why_it_exists": "First-class Vault provider support for AWS-hosted nodes.",
       "primary_audience": "Service owners deploying on AWS.",
       "value_props": [
@@ -1155,7 +1244,13 @@
       "stability_tier": "experimental",
       "impact_vector": "security posture"
     },
-    "_dictionary_ref": { "version": "v1", "path": "/schema/node_manifest_dictionary.v1.json" }
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "version": "0.8.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Vault.Providers.Aws/0.8.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-vault-providers-configuration",
@@ -1165,9 +1260,14 @@
     "slot": "provider",
     "signal": "Live",
     "integration_depth": "shallow",
-    "tags": ["vault", "configuration", "dev", "bootstrap"],
+    "tags": [
+      "vault",
+      "configuration",
+      "dev",
+      "bootstrap"
+    ],
     "long_description": {
-      "overview": "Provider that sources secrets and configuration from the application configuration pipeline for bootstrap and controlled environments.",
+      "overview": "IConfiguration bridge provider",
       "why_it_exists": "Enables clean bootstrap and integration with existing configuration sources without bypassing Vault contracts.",
       "primary_audience": "Infrastructure maintainers and developers wiring node configuration.",
       "value_props": [
@@ -1183,7 +1283,13 @@
       "stability_tier": "experimental",
       "impact_vector": "developer velocity"
     },
-    "_dictionary_ref": { "version": "v1", "path": "/schema/node_manifest_dictionary.v1.json" }
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "version": "0.8.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Vault.Providers.Configuration/0.8.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-vault-providers-inmemory",
@@ -1193,9 +1299,14 @@
     "slot": "provider",
     "signal": "Live",
     "integration_depth": "shallow",
-    "tags": ["vault", "inmemory", "test", "dev"],
+    "tags": [
+      "vault",
+      "inmemory",
+      "test",
+      "dev"
+    ],
     "long_description": {
-      "overview": "In-memory provider for tests and local development. Provides deterministic secrets/config without external infrastructure.",
+      "overview": "In-memory secrets store for testing",
       "why_it_exists": "Fast, reliable test and dev loops without cloud services or files.",
       "primary_audience": "Test harnesses and developers running locally.",
       "value_props": [
@@ -1211,7 +1322,13 @@
       "stability_tier": "stable",
       "impact_vector": "developer velocity"
     },
-    "_dictionary_ref": { "version": "v1", "path": "/schema/node_manifest_dictionary.v1.json" }
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "version": "0.8.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Vault.Providers.InMemory/0.8.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-vault-providers-file",
@@ -1221,9 +1338,15 @@
     "slot": "provider",
     "signal": "Live",
     "integration_depth": "shallow",
-    "tags": ["vault", "secrets", "config", "local", "dev"],
+    "tags": [
+      "vault",
+      "secrets",
+      "config",
+      "local",
+      "dev"
+    ],
     "long_description": {
-      "overview": "File-based provider for local and dev scenarios. Loads secrets and configuration from files in a predictable structure for easy rotation and auditing.",
+      "overview": "File-based secrets provider for development",
       "why_it_exists": "Fast local workflows without cloud dependencies.",
       "primary_audience": "Developers running nodes locally.",
       "value_props": [
@@ -1239,7 +1362,13 @@
       "stability_tier": "experimental",
       "impact_vector": "developer velocity"
     },
-    "_dictionary_ref": { "version": "v1", "path": "/schema/node_manifest_dictionary.v1.json" }
+    "_dictionary_ref": {
+      "version": "v1",
+      "path": "/schema/node_manifest_dictionary.v1.json"
+    },
+    "version": "0.8.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Vault.Providers.File/0.8.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "hivegigs-verifier-geo",
@@ -1677,7 +1806,7 @@
       "foundation"
     ],
     "long_description": {
-      "overview": "Pure contracts and constants for HoneyDrunk REST services. Provides standardized response envelopes (ApiResult, ApiErrorResponse), pagination contracts (PageRequest, PageResult), error codes, header constants, and telemetry tags.",
+      "overview": "REST contracts — ApiResult, pagination, validation models",
       "why_it_exists": "Enables consistent API responses across all services without coupling to ASP.NET Core or any runtime framework. Zero NuGet dependencies.",
       "primary_audience": "All REST service developers and consumers needing type-safe API contracts.",
       "value_props": [
@@ -1697,7 +1826,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.5.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Web.Rest.Abstractions/0.5.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-web-rest-aspnetcore",
@@ -1714,7 +1846,7 @@
       "integration"
     ],
     "long_description": {
-      "overview": "ASP.NET Core integration for HoneyDrunk REST conventions. Provides middleware for correlation propagation, exception mapping, and request logging. Includes MVC filters for model validation, minimal API endpoint conventions, and JSON serialization defaults.",
+      "overview": "ASP.NET Core integration — exception mapping, correlation, JSON conventions",
       "why_it_exists": "Ensures consistent API behavior (correlation IDs, error responses, structured logging) across all ASP.NET Core services with minimal configuration.",
       "primary_audience": "ASP.NET Core service developers building REST APIs.",
       "value_props": [
@@ -1735,7 +1867,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.5.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Web.Rest.AspNetCore/0.5.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-notify-abstractions",
@@ -1753,7 +1888,7 @@
       "sms"
     ],
     "long_description": {
-      "overview": "Contracts-only package defining the notification abstractions: INotificationSender, INotificationGateway, INotificationPolicy, ITemplateRenderer, and all envelope/outcome types. Zero runtime dependencies.",
+      "overview": "Notification intake/delivery contracts after ADR-0019 policy-boundary cleanup",
       "why_it_exists": "Separates notification contracts from implementation, enabling provider packages and consumers to depend only on abstractions.",
       "primary_audience": "Service developers sending notifications and notification provider implementors.",
       "value_props": [
@@ -1773,7 +1908,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.5.0",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Notify.Abstractions/0.5.0",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-notify-core",
@@ -1792,7 +1930,7 @@
       "backoff"
     ],
     "long_description": {
-      "overview": "Core runtime implementing NotificationGateway, NotificationDispatcher, sender resolution, template rendering (file-based with token replacement), idempotency, and retry with exponential backoff.",
+      "overview": "Notification delivery runtime with intake mechanics, provider dispatch, and no recipient preference/cadence policy evaluation",
       "why_it_exists": "Provides the orchestration layer that routes notification requests through policies, resolves senders by channel, renders templates, and handles retries with idempotency.",
       "primary_audience": "Service developers integrating notification dispatch into applications.",
       "value_props": [
@@ -1813,7 +1951,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.5.0",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Notify/0.5.0",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-notify-hosting-aspnetcore",
@@ -1850,7 +1991,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.5.0",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Notify.Hosting.AspNetCore/0.5.0",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-notify-provider-email-smtp",
@@ -1886,7 +2030,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.5.0",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Notify.Providers.Email.Smtp/0.5.0",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-notify-provider-email-resend",
@@ -1923,7 +2070,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.5.0",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Notify.Providers.Email.Resend/0.5.0",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-notify-provider-sms-twilio",
@@ -1959,7 +2109,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.5.0",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Notify.Providers.Sms.Twilio/0.5.0",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-notify-queue-abstractions",
@@ -1995,7 +2148,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.5.0",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Notify.Queue.Abstractions/0.5.0",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-notify-queue-inmemory",
@@ -2031,7 +2187,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.5.0",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Notify.Queue.InMemory/0.5.0",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-notify-queue-azure-storage",
@@ -2068,7 +2227,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.5.0",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Notify.Queue.AzureStorage/0.5.0",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-communications-abstractions",
@@ -2086,7 +2248,7 @@
       "cadence"
     ],
     "long_description": {
-      "overview": "Contracts-only package defining the communication orchestration surface: ICommunicationOrchestrator, IMessageIntent/MessageIntent, IRecipientResolver, IPreferenceStore, ICadencePolicy, ICommunicationDecisionLog, and the decision/recipient/cadence value types. Zero runtime dependencies beyond Kernel abstractions.",
+      "overview": "Communication orchestration contracts — intents, preferences, cadence, recipient resolution, decisions, and decision logs",
       "why_it_exists": "Separates the message-decision contract from the orchestration runtime so business-event producers and downstream Nodes depend only on abstractions, not on delivery or store mechanics.",
       "primary_audience": "Node developers triggering user-facing communications from business events, and decision-store/cadence implementors.",
       "value_props": [
@@ -2106,7 +2268,10 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.3.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Communications.Abstractions/0.3.1",
+    "release_verified": "2026-09-26"
   },
   {
     "id": "honeydrunk-communications-core",
@@ -2124,7 +2289,7 @@
       "delegation"
     ],
     "long_description": {
-      "overview": "Core runtime implementing the communication orchestrator: business-event-to-intent mapping, recipient resolution, preference and cadence evaluation, decision logging, and delegation of approved deliveries to Notify through INotificationSender. v0.1.0 ships the public contract surface and a welcome-email runtime slice.",
+      "overview": "Communication orchestration runtime — welcome flow, preference/cadence checks, decision logging, and Notify delegation",
       "why_it_exists": "Provides the single place to reason about a user's full communication lifecycle so preference checks and cadence enforcement are not duplicated across every Node that needs to message users.",
       "primary_audience": "Service developers wiring user-facing communications and product/growth messaging sequences.",
       "value_props": [
@@ -2144,6 +2309,313 @@
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
-    }
+    },
+    "version": "0.3.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Communications/0.3.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-kernel-module",
+    "type": "module",
+    "name": "HoneyDrunk.Kernel",
+    "parent": "honeydrunk-kernel",
+    "slot": "runtime",
+    "signal": "Live",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "Runtime implementations of GridContext, NodeContext, OperationContext, and lifecycle management"
+    },
+    "version": "0.8.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Kernel/0.8.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-transport-module",
+    "type": "module",
+    "name": "HoneyDrunk.Transport",
+    "parent": "honeydrunk-transport",
+    "slot": "runtime",
+    "signal": "Live",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "Core messaging abstractions, middleware pipeline, envelope contracts"
+    },
+    "version": "0.7.2",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Transport/0.7.2",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-data-module",
+    "type": "module",
+    "name": "HoneyDrunk.Data",
+    "parent": "honeydrunk-data",
+    "slot": "runtime",
+    "signal": "Live",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "Provider-neutral data orchestration"
+    },
+    "version": "0.7.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Data/0.7.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-payments-abstractions-module",
+    "type": "module",
+    "name": "HoneyDrunk.Payments.Abstractions",
+    "parent": "honeydrunk-payments",
+    "slot": "contracts",
+    "signal": "Seed",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "Provider-neutral payment contracts for checkout, subscriptions, signed webhooks, and invoice reconciliation"
+    },
+    "version": "0.1.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Payments.Abstractions/0.1.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-payments-stripe-module",
+    "type": "module",
+    "name": "HoneyDrunk.Payments.Stripe",
+    "parent": "honeydrunk-payments",
+    "slot": "providers",
+    "signal": "Seed",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "Stripe.NET payment provider implementation for meter events, Checkout subscriptions, webhooks, and invoice reconciliation"
+    },
+    "version": "0.1.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Payments.Stripe/0.1.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-observe-abstractions-module",
+    "type": "module",
+    "name": "HoneyDrunk.Observe.Abstractions",
+    "parent": "honeydrunk-observe",
+    "slot": "contracts",
+    "signal": "Seed",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "Zero-dependency observation contracts — IObservationTarget, IObservationConnector, and IObservationEvent"
+    },
+    "version": "0.1.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Observe.Abstractions/0.1.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-audit-abstractions-module",
+    "type": "module",
+    "name": "HoneyDrunk.Audit.Abstractions",
+    "parent": "honeydrunk-audit",
+    "slot": "contracts",
+    "signal": "Seed",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "Zero-HoneyDrunk-dependency contracts for the Grid-wide durable audit record — IAuditLog, IAuditQuery, AuditEntry"
+    },
+    "version": "0.2.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Audit.Abstractions/0.2.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-audit-data-module",
+    "type": "module",
+    "name": "HoneyDrunk.Audit.Data",
+    "parent": "honeydrunk-audit",
+    "slot": "runtime",
+    "signal": "Seed",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "Data-backed append-only IAuditLog writer and IAuditQuery reader over HoneyDrunk.Data's IRepository/IUnitOfWork; audit-class retention wiring; DI composition"
+    },
+    "version": "0.2.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Audit.Data/0.2.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-ai-module",
+    "type": "module",
+    "name": "HoneyDrunk.AI",
+    "parent": "honeydrunk-ai",
+    "slot": "runtime",
+    "signal": "Seed",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "HoneyDrunk.AI package in the HoneyDrunk.AI family."
+    },
+    "version": "0.2.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.AI/0.2.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-ai-abstractions-module",
+    "type": "module",
+    "name": "HoneyDrunk.AI.Abstractions",
+    "parent": "honeydrunk-ai",
+    "slot": "contracts",
+    "signal": "Seed",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "HoneyDrunk.AI.Abstractions package in the HoneyDrunk.AI family."
+    },
+    "version": "0.2.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.AI.Abstractions/0.2.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-ai-providers-inmemory-module",
+    "type": "module",
+    "name": "HoneyDrunk.AI.Providers.InMemory",
+    "parent": "honeydrunk-ai",
+    "slot": "testing",
+    "signal": "Seed",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "HoneyDrunk.AI.Providers.InMemory package in the HoneyDrunk.AI family."
+    },
+    "version": "0.2.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.AI.Providers.InMemory/0.2.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-data-aspnetcore-module",
+    "type": "module",
+    "name": "HoneyDrunk.Data.AspNetCore",
+    "parent": "honeydrunk-data",
+    "slot": "hosting",
+    "signal": "Live",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "HoneyDrunk.Data.AspNetCore package in the HoneyDrunk.Data family."
+    },
+    "version": "0.7.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Data.AspNetCore/0.7.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-operator-module",
+    "type": "module",
+    "name": "HoneyDrunk.Operator",
+    "parent": "honeydrunk-operator",
+    "slot": "runtime",
+    "signal": "Seed",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "HoneyDrunk.Operator package in the HoneyDrunk.Operator family."
+    },
+    "version": "0.1.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Operator/0.1.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-operator-abstractions-module",
+    "type": "module",
+    "name": "HoneyDrunk.Operator.Abstractions",
+    "parent": "honeydrunk-operator",
+    "slot": "contracts",
+    "signal": "Seed",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "HoneyDrunk.Operator.Abstractions package in the HoneyDrunk.Operator family."
+    },
+    "version": "0.1.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Operator.Abstractions/0.1.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-operator-testing-module",
+    "type": "module",
+    "name": "HoneyDrunk.Operator.Testing",
+    "parent": "honeydrunk-operator",
+    "slot": "testing",
+    "signal": "Seed",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "HoneyDrunk.Operator.Testing package in the HoneyDrunk.Operator family."
+    },
+    "version": "0.1.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Operator.Testing/0.1.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-standards-module",
+    "type": "module",
+    "name": "HoneyDrunk.Standards",
+    "parent": "honeydrunk-standards",
+    "slot": "runtime",
+    "signal": "Live",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "HoneyDrunk.Standards package in the HoneyDrunk.Standards family."
+    },
+    "version": "0.3.0",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Standards/0.3.0",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-standards-tests-module",
+    "type": "module",
+    "name": "HoneyDrunk.Standards.Tests",
+    "parent": "honeydrunk-standards",
+    "slot": "testing",
+    "signal": "Live",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "HoneyDrunk.Standards.Tests package in the HoneyDrunk.Standards family."
+    },
+    "version": "0.3.0",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Standards.Tests/0.3.0",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-vault-eventgrid-module",
+    "type": "module",
+    "name": "HoneyDrunk.Vault.EventGrid",
+    "parent": "honeydrunk-vault",
+    "slot": "runtime",
+    "signal": "Live",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "HoneyDrunk.Vault.EventGrid package in the HoneyDrunk.Vault family."
+    },
+    "version": "0.8.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Vault.EventGrid/0.8.1",
+    "release_verified": "2026-09-26"
+  },
+  {
+    "id": "honeydrunk-vault-providers-appconfiguration-module",
+    "type": "module",
+    "name": "HoneyDrunk.Vault.Providers.AppConfiguration",
+    "parent": "honeydrunk-vault",
+    "slot": "providers",
+    "signal": "Live",
+    "integration_depth": "medium",
+    "tags": [],
+    "long_description": {
+      "overview": "HoneyDrunk.Vault.Providers.AppConfiguration package in the HoneyDrunk.Vault family."
+    },
+    "version": "0.8.1",
+    "package_url": "https://www.nuget.org/packages/HoneyDrunk.Vault.Providers.AppConfiguration/0.8.1",
+    "release_verified": "2026-09-26"
   }
 ]

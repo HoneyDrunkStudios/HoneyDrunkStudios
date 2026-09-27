@@ -123,19 +123,19 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Actions"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Actions brings HoneyDrunk's engineering discipline to the open world. It's the public CI/CD framework for GitHub repositories, mirroring the rigor of Pipelines but tuned for transparency and collaboration. Actions exists to bridge the gap between closed-source craft and open-source community, letting independent developers participate in the Grid's culture of quality. It standardizes testing, packaging, and deployment for public projects without depending on private infrastructure. Over time, Actions will evolve into a library of \"rituals\" — reusable workflows that carry HoneyDrunk's build philosophy into every ecosystem that touches it. It will gain awareness of Pulse telemetry, dynamically optimizing runtimes and caching to reduce waste and latency. Eventually, it becomes the public-facing circulatory system — how HoneyDrunk teaches the world to ship well. Actions earns its keep by turning excellence into export — a way to extend the Hive's discipline beyond its borders.",
-      "why_it_exists": "HoneyDrunk.Actions exists to prevent inconsistency and reinvention across the Grid.",
+      "overview": "HoneyDrunk.Actions brings HoneyDrunk's engineering discipline to the open world. It's the public CI/CD framework for GitHub repositories, mirroring the rigor of Pipelines but tuned for transparency and collaboration. It standardizes testing, packaging, and deployment for public projects without depending on private infrastructure.",
+      "why_it_exists": "Consistent CI/CD patterns across all public GitHub repos, preventing reinvention of build and test workflows.",
       "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
       "value_props": [
-        "Standardizes github, actions",
+        "Standardizes GitHub Actions workflows",
         "Reduces operational risk with opinionated defaults",
         "Improves developer velocity and interoperability"
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
       "roadmap_focus": "Advance HoneyDrunk.Actions capabilities and harden contracts.",
-      "grid_relationship": "Connects with: honeydrunk-build, honeydrunk-tools.",
+      "grid_relationship": "Connects with: honeydrunk-build.",
       "integration_depth": "medium",
-      "demo_path": "Show a 60-second demo of HoneyDrunk.Actions: input → behavior → outcome.",
+      "demo_path": "Reference a reusable workflow → observe build, test, pack, publish steps → verify artifacts.",
       "signal_quote": "Automation with personality.",
       "stability_tier": "stable",
       "impact_vector": "developer velocity"
@@ -250,7 +250,7 @@
         "Agent aware execution contexts and context serializers for LLM centric components"
       ],
       "monetization_signal": "Internal first. Public SDK patterns may be open core, but Kernel itself is the base runtime that all higher layers depend on.",
-      "roadmap_focus": "v0.4 is a stabilization release. Enforce the three-ID context model across all creation paths. Consolidate hosting around AddHoneyDrunkNode as the canonical API. Align lifecycle, health and readiness behavior with docs. Lock identity registries as the DNS of the Grid. Tighten error classification and telemetry tag consistency. Finalize agent execution context contracts so AgentKit can build on stable primitives. Add local node self-description via INodeDescriptor and INodeManifest—no global registry yet.",
+      "roadmap_focus": "Runtime and Abstractions 0.8.1 published in the September 26 refresh. Focus future adoption on AddHoneyDrunkNode host composition, trusted context propagation, lifecycle/health behavior and integration validation; the earlier v0.4 stabilization plan is historical.",
       "integration_depth": "deep",
       "demo_path": "Minimal Node setup with AddHoneyDrunkGrid and AddHoneyDrunkNode → context flow across async calls → health probe validation → graceful shutdown with lifecycle hooks.",
       "signal_quote": "Where everything begins.",
@@ -407,7 +407,8 @@
           "IAuthenticationProvider",
           "IAuthorizationPolicy"
         ]
-      }
+      },
+      "grid_relationship": "Foundation for all Core nodes. Every node depends on Kernel or Kernel.Abstractions."
     },
     "_dictionary_ref": {
       "version": "v1",
@@ -427,7 +428,7 @@
     "type": "node",
     "name": "HoneyDrunk.Data",
     "short": "Persistence contracts & provider implementations",
-    "description": "Persistence contracts, EF Core and SQL Server provider implementations, transactional outbox with lease-based dispatch, migrations discipline, tenant isolation, and diagnostics.",
+    "description": "Persistence contracts, EF Core and SQL Server provider implementations, transactional outbox with lease-based dispatch, SQL project/DACPAC schema deployment discipline, tenant isolation, and diagnostics.",
     "sector": "Core",
     "signal": "Live",
     "cluster": "foundation",
@@ -436,7 +437,8 @@
     "tags": [
       "database",
       "persistence",
-      "migrations",
+      "schema-deployment",
+      "dacpac",
       "multi-tenant",
       "entityframework",
       "sqlserver",
@@ -448,20 +450,20 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Data"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Data gives the Grid memory and continuity. It defines persistence contracts and provider conventions across every tenant, every node, and every environment, so storage stays predictable and auditable. This Node standardizes migrations, schema versioning, tenant isolation, and persistence telemetry. It includes a transactional outbox pattern with lease-based concurrency for exactly-once message delivery — outbox entries are stored atomically within database transactions and dispatched via a background worker through HoneyDrunk.Transport. It is a guardrail against drift: the same operation should produce the same durable result, regardless of where it runs. As it matures, Data can expose optional hooks for Pulse to report schema health, migration status, and drift signals. Secrets and credentials are provided through the application's configuration pipeline, typically backed by Vault, without Data taking a direct dependency on Vault.",
+      "overview": "HoneyDrunk.Data gives the Grid memory and continuity. It defines persistence contracts and provider conventions across every tenant, every node, and every environment, so storage stays predictable and auditable. This Node standardizes SQL project/DACPAC schema deployment, schema versioning, tenant isolation, and persistence telemetry. It includes a transactional outbox pattern with lease-based concurrency for exactly-once message delivery.",
       "why_it_exists": "HoneyDrunk.Data exists to prevent inconsistency and reinvention across the Grid.",
       "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
       "value_props": [
-        "Standardizes database, migrations, and persistence patterns",
+        "Standardizes database, DACPAC deployment, and persistence patterns",
         "Transactional outbox with lease-based concurrency for exactly-once delivery",
         "Reduces operational risk with opinionated defaults",
         "Improves developer velocity and interoperability"
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
       "roadmap_focus": "Advance HoneyDrunk.Data capabilities and harden contracts.",
-      "grid_relationship": "Consumes Kernel (required) for GridContext, OperationContext, lifecycle hooks, and telemetry primitives. Consumes Transport (via Outbox.Dispatcher) for message publishing. Pulse integration is optional for schema health and migration telemetry. Does not consume Vault directly (configuration provided at app layer). Does not consume Auth.",
+      "grid_relationship": "Consumes Kernel (required) for GridContext, OperationContext, lifecycle hooks, and telemetry primitives. Consumes Transport (via Outbox.Dispatcher) for message publishing.",
       "integration_depth": "medium",
-      "demo_path": "Show a 60-second demo of HoneyDrunk.Data: input → behavior → outcome.",
+      "demo_path": "Register Data with AddHoneyDrunkData() → use repositories with tenant isolation → verify outbox delivery.",
       "signal_quote": "Memory with meaning.",
       "stability_tier": "stable",
       "impact_vector": "developer velocity"
@@ -744,7 +746,7 @@
       "roadmap_focus": "Pulse integration for anomaly detection, secrets-as-code manifests, autonomous credential rotation.",
       "grid_relationship": "Connects with: honeydrunk-kernel, honeydrunk-auth, honeysentinel, breachlab-exe.",
       "integration_depth": "deep",
-      "demo_path": "Show a 60-second demo of HoneyDrunk.Vault: input → behavior → outcome.",
+      "demo_path": "Register Vault with AddVault() → retrieve a secret via ISecretStore → observe caching, resilience, and telemetry.",
       "signal_quote": "Trust, by design.",
       "stability_tier": "stable",
       "impact_vector": "security posture"
@@ -765,7 +767,7 @@
   {
     "id": "honeydrunk-pulse",
     "type": "node",
-    "name": "Pulse",
+    "name": "HoneyDrunk.Pulse",
     "short": "Observability suite (logs/traces/metrics)",
     "description": "Unified observability. Logs, traces, and metrics in one interface. See the heartbeat of The Hive.",
     "sector": "Ops",
@@ -786,19 +788,19 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Pulse"
     },
     "long_description": {
-      "overview": "Pulse is how the Hive feels itself. It's the nervous system that collects, correlates, and interprets telemetry from every corner of the Grid — logs, traces, metrics, and signals that together form a living heartbeat. Every Node reports its state into Pulse's unified pipeline, creating a continuously updated map of operational health and system interdependence. It doesn't just observe; it learns — mapping causality, detecting anomalies, and identifying where the Grid's energy flows or falters. Pulse exists to prevent blindness: in distributed systems, invisibility is the enemy. Over time, Pulse will evolve beyond observability into orchestration — closing the feedback loop by triggering automated mitigations, scaling responses, and postmortem generation. It will expose interfaces for agents, allowing AI to reason over live telemetry and predict failure before it occurs. Eventually, Pulse becomes the Grid's intuition — an emergent intelligence formed not from code, but from the behavior of code. It earns its keep by ensuring no part of HoneyDrunk.OS ever dies quietly.",
-      "why_it_exists": "Pulse exists to prevent inconsistency and reinvention across the Grid.",
+      "overview": "Pulse is how the Hive feels itself. It's the nervous system that collects, correlates, and interprets telemetry from every corner of the Grid — logs, traces, metrics, and signals that together form a living heartbeat. Every Node reports its state into Pulse's unified pipeline, creating a continuously updated map of operational health and system interdependence.",
+      "why_it_exists": "In distributed systems, invisibility is the enemy. Pulse exists to prevent blindness.",
       "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
       "value_props": [
-        "Standardizes observability, monitoring",
+        "Standardizes observability and monitoring",
         "Reduces operational risk with opinionated defaults",
         "Improves developer velocity and interoperability"
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
       "roadmap_focus": "Advance Pulse capabilities and harden contracts.",
-      "grid_relationship": "Connects with: honeydrunk-vault, honeydrunk-transport, honeydrunk-data, honeydrunk-agentkit, honeysentinel, breachlab-exe.",
+      "grid_relationship": "Connects with: honeydrunk-vault, honeydrunk-transport, honeydrunk-data.",
       "integration_depth": "medium",
-      "demo_path": "Show a 60-second demo of Pulse: input → behavior → outcome.",
+      "demo_path": "Configure Pulse sinks → emit telemetry from a Node → observe logs, traces, and metrics in unified dashboard.",
       "signal_quote": "The Hive has a heartbeat.",
       "stability_tier": "beta",
       "impact_vector": "security posture"
@@ -814,14 +816,14 @@
     "done": false,
     "cooldown_days": 14,
     "flow": 100,
-    "public_name": "Pulse"
+    "public_name": "HoneyDrunk.Pulse"
   },
   {
     "id": "honeydrunk-auth",
     "type": "node",
     "name": "HoneyDrunk.Auth",
     "short": "JWT validation + policy enforcement",
-    "description": "Grid node component for authentication and authorization. Provides JWT bearer token validation with Vault-backed signing keys, deterministic policy evaluation, and deep Kernel integration for lifecycle and telemetry. Requires Kernel as host runtime.",
+    "description": "Grid node component for authentication and authorization. Provides JWT bearer token validation with Vault-backed signing keys, deterministic policy evaluation, and deep Kernel integration for lifecycle and telemetry.",
     "sector": "Core",
     "signal": "Live",
     "cluster": "security",
@@ -839,7 +841,7 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Auth"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Auth is a Grid node component—not a standalone library—that standardizes authentication and authorization decisions across nodes and entrypoints. It requires Kernel as its host runtime and provides JWT bearer token validation with Vault-backed signing keys, deterministic policy evaluation, and fail-fast startup validation. Auth ensures consistent identity checks and authorization patterns so every request entering the Grid follows the same security discipline. Key design constraints: authorization evaluation is local, deterministic, and side-effect free. Scope boundaries: Auth validates tokens and evaluates policies. It does not issue tokens, own user identity storage (that's app-specific), or perform OAuth/OIDC flows. Signing keys and auth configuration are provided through Vault. Over time, Auth can evolve to support passkeys, MFA, federated sign-ins, device trust, and context-aware authorization meshes. Future integration with Pulse for session observability and Sentinel for anomaly detection will enable dynamic policy adjustments based on behavior patterns and risk posture.",
+      "overview": "HoneyDrunk.Auth is a Grid node component—not a standalone library—that standardizes authentication and authorization decisions across nodes and entrypoints. It requires Kernel as its host runtime and provides JWT bearer token validation with Vault-backed signing keys, deterministic policy evaluation, and fail-fast startup validation. Auth ensures consistent identity checks and authorization patterns so every request entering the Grid follows the same security discipline.",
       "why_it_exists": "Prevents inconsistent authentication and authorization patterns across nodes, ensuring security discipline is uniform regardless of entrypoint.",
       "primary_audience": "Service owners building HTTP APIs, gateways, and any Grid node requiring request authentication.",
       "value_props": [
@@ -850,8 +852,8 @@
         "Clean separation between auth contracts (Abstractions) and implementations"
       ],
       "monetization_signal": "Open source foundation; enterprise patterns in implementations.",
-      "roadmap_focus": "Passkeys and MFA support. Federated sign-ins and device trust. Pulse integration for session observability. Sentinel integration for anomaly detection. Context-aware authorization mesh.",
-      "grid_relationship": "Consumes Kernel (required) for GridContext, OperationContext, lifecycle hooks, and telemetry. Consumes Vault (required) for signing keys and auth configuration. Exposes auth contracts consumed by Web.Rest and service nodes via three packages: HoneyDrunk.Auth.Abstractions (pure contracts), HoneyDrunk.Auth (runtime), and HoneyDrunk.Auth.AspNetCore (ASP.NET Core integration).",
+      "roadmap_focus": "Passkeys and MFA support. Federated sign-ins and device trust. Pulse integration for session observability.",
+      "grid_relationship": "Consumes Kernel (required) for GridContext, OperationContext, lifecycle hooks, and telemetry. Consumes Vault (required) for signing keys and auth configuration. Exposes auth contracts consumed by Web.Rest.",
       "integration_depth": "deep",
       "demo_path": "Validate a JWT bearer token and evaluate an authorization policy with full telemetry tracing.",
       "signal_quote": "Trust without friction.",
@@ -877,33 +879,43 @@
     "name": "HoneyDrunk.AI",
     "public_name": "HoneyDrunk.AI",
     "short": "Model & provider abstraction layer",
-    "description": "Normalized inference contracts for chat completion, embeddings, and structured output. Provider adapters for OpenAI, Anthropic, Azure OpenAI, and local models. Token/latency telemetry on every call.",
+    "description": "Published inference contracts, routing/runtime, and a deterministic InMemory provider. External OpenAI, Anthropic, and Azure OpenAI providers are unimplemented and unreleased.",
     "sector": "AI",
     "signal": "Seed",
     "cluster": "cognition",
     "energy": 0,
     "priority": 90,
     "flow": 0,
-    "tags": ["inference", "llm", "embeddings", "providers", "openai", "anthropic", "azure-openai", "telemetry"],
+    "tags": [
+      "inference",
+      "llm",
+      "embeddings",
+      "providers",
+      "openai",
+      "anthropic",
+      "azure-openai",
+      "inmemory",
+      "telemetry"
+    ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.AI"
     },
     "long_description": {
-      "overview": "HoneyDrunk.AI is the inference abstraction layer for the Grid. It provides normalized contracts for chat completion, text completion, embeddings, and structured output across multiple model providers. Every inference call emits Pulse telemetry with token counts, latency, model identifiers, and cost estimates. Provider adapters wrap Microsoft.Extensions.AI implementations with Grid context enrichment, Pulse telemetry, and Vault-backed credential resolution.",
+      "overview": "HoneyDrunk.AI provides the Grid's inference contracts, routing/cost runtime and deterministic InMemory provider. Those three packages are published. The OpenAI, Anthropic and Azure OpenAI slots throw NotImplementedException and are deliberately non-packable; external inference requires implementation and validation before publication or product adoption.",
       "why_it_exists": "Model providers change frequently. A provider swap should be a config change, not an agent rewrite. Centralizing inference behind normalized contracts prevents provider lock-in and ensures consistent telemetry.",
       "primary_audience": "AI sector Nodes (Agents, Evals, Sim) and any Grid service that needs model inference.",
       "value_props": [
         "Normalized inference contracts aligned with Microsoft.Extensions.AI",
-        "Pluggable provider adapters (OpenAI, Anthropic, Azure OpenAI, local/ONNX)",
+        "Working InMemory provider; external provider adapters remain unimplemented slots",
         "Automatic token/latency/cost telemetry via Pulse",
         "Vault-backed API key management",
         "Model selection and routing based on capability requirements"
       ],
       "monetization_signal": "Internal-first. Provider abstraction enables cost optimization across models.",
-      "roadmap_focus": "Initial scaffolding with OpenAI and Anthropic providers. Align with Microsoft.Extensions.AI adoption.",
-      "grid_relationship": "Consumes Kernel (context, telemetry), Vault (API keys), Pulse (inference telemetry). Consumed by Agents, Memory, Knowledge, Evals, Sim.",
+      "roadmap_focus": "Contracts, runtime and InMemory provider published. Implement and validate any selected external provider before its first package release; current provider slots are not production inference integrations.",
+      "grid_relationship": "Consumes Kernel (context, telemetry) and Vault (API keys + App Configuration for routing policies and cost-rate tables). Emits inference telemetry consumed by Pulse — no runtime dependency on Pulse. Consumed by Agents, Memory, Knowledge, Evals, Sim, Lore.",
       "integration_depth": "deep",
-      "demo_path": "Register AI with AddHoneyDrunkAI() → configure an OpenAI provider → run a chat completion → observe Pulse telemetry with token counts and latency.",
+      "demo_path": "Compose the AI runtime with the working InMemory provider for deterministic tests. A real external-provider completion awaits implementation and validation.",
       "signal_quote": "Think clearly, speak in any voice.",
       "stability_tier": "planned",
       "impact_vector": "ai capability"
@@ -932,7 +944,14 @@
     "energy": 0,
     "priority": 85,
     "flow": 0,
-    "tags": ["tools", "registry", "permissions", "discovery", "agent-tools", "versioning"],
+    "tags": [
+      "tools",
+      "registry",
+      "permissions",
+      "discovery",
+      "agent-tools",
+      "versioning"
+    ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Capabilities"
     },
@@ -980,7 +999,14 @@
     "energy": 0,
     "priority": 95,
     "flow": 0,
-    "tags": ["agents", "lifecycle", "runtime", "execution-context", "identity", "orchestration"],
+    "tags": [
+      "agents",
+      "lifecycle",
+      "runtime",
+      "execution-context",
+      "identity",
+      "orchestration"
+    ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Agents"
     },
@@ -1029,7 +1055,14 @@
     "energy": 0,
     "priority": 80,
     "flow": 0,
-    "tags": ["memory", "agent-memory", "short-term", "long-term", "scoping", "summarization"],
+    "tags": [
+      "memory",
+      "agent-memory",
+      "short-term",
+      "long-term",
+      "scoping",
+      "summarization"
+    ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Memory"
     },
@@ -1077,7 +1110,15 @@
     "energy": 0,
     "priority": 75,
     "flow": 0,
-    "tags": ["knowledge", "rag", "embeddings", "ingestion", "retrieval", "documents", "search"],
+    "tags": [
+      "knowledge",
+      "rag",
+      "embeddings",
+      "ingestion",
+      "retrieval",
+      "documents",
+      "search"
+    ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Knowledge"
     },
@@ -1126,7 +1167,14 @@
     "energy": 0,
     "priority": 70,
     "flow": 0,
-    "tags": ["workflow", "orchestration", "sagas", "compensation", "pipelines", "long-running"],
+    "tags": [
+      "workflow",
+      "orchestration",
+      "sagas",
+      "compensation",
+      "pipelines",
+      "long-running"
+    ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Flow"
     },
@@ -1175,12 +1223,20 @@
     "energy": 0,
     "priority": 65,
     "flow": 0,
-    "tags": ["safety", "oversight", "circuit-breaker", "cost-control", "audit", "approval", "human-in-the-loop"],
+    "tags": [
+      "safety",
+      "oversight",
+      "circuit-breaker",
+      "cost-control",
+      "audit",
+      "approval",
+      "human-in-the-loop"
+    ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Operator"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Operator is the human control plane for the Hive. It provides approval gates for actions requiring sign-off, safety controls for content filtering and output validation, circuit breakers for emergency stops, cost controls with per-agent/per-workflow budgets, and an immutable audit trail of every AI decision, tool invocation, and human override. Operator is the only Node with authority to halt other AI Nodes.",
+      "overview": "HoneyDrunk.Operator supplies approval, safety, circuit-breaker and cost-control primitives for the Grid's human control boundary. It emits decision records through HoneyDrunk.Audit when composed by the host, with a no-op fallback otherwise. Audit owns IAuditLog, AuditEntry and record persistence; Operator does not own an immutable audit store. Hosts must validate durable state and control integration.",
       "why_it_exists": "The system that decides what to do must never be the system that decides whether it's allowed to do it. Operator provides independent, externally deployable safety controls that don't depend on agent runtime correctness.",
       "primary_audience": "Platform operators, security teams, and anyone responsible for AI safety and cost governance.",
       "value_props": [
@@ -1188,12 +1244,12 @@
         "Circuit breakers — kill switches for agents, inference, or entire workflows",
         "Cost controls — budget limits per agent, per workflow, per time window",
         "Safety filters — validate outputs before they leave the system",
-        "Immutable audit trail of all AI decisions and human overrides",
+        "Decision-event emission through host-composed HoneyDrunk.Audit",
         "Decision policies — auto-approve, auto-deny, or require-human based on rules"
       ],
       "monetization_signal": "Internal-first. Enterprise AI governance is a premium capability.",
-      "roadmap_focus": "Core contracts (IApprovalGate, ICircuitBreaker, ICostGuard, IAuditLog), basic policy engine.",
-      "grid_relationship": "Consumes Kernel (context, identity), Auth (authorization), Data (audit persistence), Pulse (operational telemetry). Consumed by Flow (approval gates), Agents (action constraints), HoneyHub (decision authority surface).",
+      "roadmap_focus": "Published control primitives and runtime require deliberate host composition, persistence validation and enforcement tests. Audit contracts and durable records remain owned by HoneyDrunk.Audit.",
+      "grid_relationship": "Uses Kernel context and host-composed HoneyDrunk.Audit for decision records. Future Agents/Flow integrations must explicitly wire enforcement. The archived HoneyHub design is historical context, not an active consumer commitment.",
       "integration_depth": "deep",
       "demo_path": "Set a cost budget → agent exceeds it → Operator halts execution → observe audit trail entry.",
       "signal_quote": "Power checked. Trust earned.",
@@ -1224,7 +1280,14 @@
     "energy": 0,
     "priority": 55,
     "flow": 0,
-    "tags": ["evaluation", "regression", "quality", "scoring", "model-comparison", "prompts"],
+    "tags": [
+      "evaluation",
+      "regression",
+      "quality",
+      "scoring",
+      "model-comparison",
+      "prompts"
+    ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Evals"
     },
@@ -1241,8 +1304,8 @@
         "Pulse integration for quality signals and alerting"
       ],
       "monetization_signal": "Internal-first. Eval infrastructure enables confident model upgrades.",
-      "roadmap_focus": "Core contracts (IEvaluator, IEvalDataset, IEvalScorer), basic model-as-judge scorer, Pulse signal emission.",
-      "grid_relationship": "Consumes AI (inference for running evaluations), Pulse (emitting eval metrics). Consumed by HoneyHub (quality correlation to features).",
+      "roadmap_focus": "Definitive D3 contracts (IEvaluator, IEvalScorer, IEvalSuite, IEvalTarget, EvalCase, EvalReport), default ChatTarget with the D6 router-bypass model pin, rubric + model-as-judge scorers, observation-only Operator scoring (D7), Providers.InMemory report store, Pulse signal emission with the D10 content carve-out.",
+      "grid_relationship": "Consumes Kernel (TenantId, telemetry), AI (IChatClient/IEmbeddingGenerator/IModelProvider/ModelCapabilityDeclaration for targets + model-as-judge), Operator (ISafetyFilter/ICostGuard as observation-only scoring signals), Audit (IAuditLog observation), and — at the contract level for deferred targets — Agents, Capabilities, Knowledge, Memory. Emits eval signals to Pulse (no runtime edge). Consumed by Agents, Knowledge, Memory, Flow, Sim, Lore, and HoneyHub when live.",
       "integration_depth": "medium",
       "demo_path": "Define an eval dataset → run against two models → compare scores → observe Pulse signals for regression detection.",
       "signal_quote": "Trust, but verify.",
@@ -1273,7 +1336,14 @@
     "energy": 0,
     "priority": 40,
     "flow": 0,
-    "tags": ["simulation", "risk", "planning", "dry-run", "validation", "scenarios"],
+    "tags": [
+      "simulation",
+      "risk",
+      "planning",
+      "dry-run",
+      "validation",
+      "scenarios"
+    ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Sim"
     },
@@ -1750,13 +1820,13 @@
     "id": "game-prototype",
     "type": "node",
     "name": "Game #1 (TBD)",
-    "short": "Original IP prototype",
-    "description": "First original game IP in development. Details TBD. Prototyping the fun.",
+    "short": "First original game — concept and production planning",
+    "description": "Early planning for the first game in an original shared universe. Genre and playable scope remain undecided; no playable build has shipped.",
     "sector": "HoneyPlay",
     "signal": "Seed",
     "cluster": "gaming",
     "energy": 29,
-    "priority": 19,
+    "priority": 80,
     "tags": [
       "game",
       "prototype",
@@ -1764,7 +1834,7 @@
     ],
     "links": {},
     "long_description": {
-      "overview": "The first original HoneyDrunk game serves as both artistic statement and technological showcase — a living benchmark for what the Grid can produce when all systems converge. It's less a single title and more a proving ground for HoneyPlay's storytelling frameworks, AI-assisted design tools, and feedback loops between Pulse, AgentKit, and Hub. The game will be developed publicly, embracing transparency to inspire and test every layer of the ecosystem. Each development milestone — from concept to prototype to alpha — will feed back into reusable components for future creators. Over time, the project will evolve alongside HoneyDrunk.OS itself, integrating adaptive narrative systems and procedural world logic born from our agent infrastructure. It will set the creative tone for the studio: stylized, emotionally intelligent, and technically fearless. This game earns its keep not through sales but through influence — it proves that the Hive can dream and ship in equal measure.",
+      "overview": "Early planning for the first game in an original shared universe. Genre and playable scope remain undecided; no playable build has shipped.",
       "why_it_exists": "Game #1 (TBD) exists to prevent inconsistency and reinvention across the Grid.",
       "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
       "value_props": [
@@ -1773,7 +1843,7 @@
         "Improves developer velocity and interoperability"
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
-      "roadmap_focus": "Advance Game #1 (TBD) capabilities and harden contracts.",
+      "roadmap_focus": "Choose a small playable slice, then validate the art and production workflow. Blender scene experiments verify tooling, not game completion.",
       "grid_relationship": "Connects with: —.",
       "integration_depth": "medium",
       "demo_path": "Show a 60-second demo of Game #1 (TBD): input → behavior → outcome.",
@@ -1797,37 +1867,45 @@
   {
     "id": "honeyhub",
     "type": "node",
-    "name": "HoneyHub",
-    "short": "AI-assisted PM/creator platform",
-    "description": "AI-powered project management and learning workflow for creators. Sprint cadence, tasks, and guidance.",
+    "name": "HoneyDrunk.HoneyHub",
+    "short": "Archived local agent cockpit experiment",
+    "description": "Archived on September 26, 2026. Code and history are preserved; no active development is planned.",
     "sector": "Meta",
-    "signal": "Seed",
-    "cluster": "ecosystem",
-    "energy": 34,
-    "priority": 48,
+    "signal": "Archive",
+    "cluster": "orchestration",
+    "energy": 0,
+    "priority": 0,
     "tags": [
-      "ai",
-      "pm",
-      "platform"
+      "agent-cockpit",
+      "local-runner-bridge",
+      "pwa",
+      "tauri-class-shell",
+      "rust-bridge",
+      "usage-governance",
+      "dispatch-session"
     ],
-    "links": {},
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.HoneyHub"
+    },
     "long_description": {
-      "overview": "HoneyHub is the creative cockpit of the Hive — an intelligent workspace for builders, artists, and developers to design, learn, and execute projects inside the HoneyDrunk ecosystem. It's both project manager and mentor, using data from Vault, Pipelines, and Pulse to give every user a real-time picture of progress, blockers, and opportunities. HoneyHub guides creators through structured sprints and skill development paths, dynamically balancing learning and execution. Over time, it will evolve into a fully agentic studio companion — capable of generating project briefs, breaking them into actionable tasks, and sourcing tutorials or tools that match a user's skill gaps. The Hub integrates directly with the Grid's telemetry, transforming raw data into feedback loops that improve both user performance and product quality. Its eventual role is to serve as the front-end to HoneyDrunk.OS — a control tower where every Node, agent, and creative system can be monitored and steered. HoneyHub earns its keep by fusing discipline and discovery, making creative ambition scalable for individuals and teams alike.",
-      "why_it_exists": "HoneyHub exists to prevent inconsistency and reinvention across the Grid.",
-      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "overview": "Archived experiment. HoneyDrunk.HoneyHub is the Agent Cockpit Node: one shared React and Vite PWA across mobile and desktop, wrapped by a Tauri-class desktop shell that bundles a local Rust runner bridge. The v1 cockpit drives local Codex, Claude Code, and Copilot sessions through their official CLIs under the user's own local auth, records DispatchSession and UsageSignal metadata locally, and provides usage visibility, session control, and advisory governance.",
+      "why_it_exists": "Developers using local AI coding agents need one trusted surface to start sessions, watch progress, answer blocking questions, interrupt runs, see artifacts, and understand usage without turning HoneyHub into a terminal or hosted execution service. Since PRD-0011 Amendment 2 (agent-first IDE) HoneyHub deliberately does own an in-app editor and LSP code intelligence, governed by ADR-0097 and ADR-0102.",
+      "primary_audience": "HoneyDrunk operators and individual developers governing local AI coding-agent sessions from desktop and mobile.",
       "value_props": [
-        "Standardizes ai, pm",
-        "Reduces operational risk with opinionated defaults",
-        "Improves developer velocity and interoperability"
+        "Start, watch, reply to, stop, and resume local AI coding-agent sessions from one cockpit",
+        "One shared responsive PWA for desktop and mobile, plus a Tauri-class shell that bundles the local bridge",
+        "Local-first session and transcript storage with explicit sync opt-in",
+        "UsageSignal fidelity model for exact, derived, and estimated usage visibility",
+        "PRs-as-artifacts write boundary so durable changes remain reviewable"
       ],
-      "monetization_signal": "Internal-first; open-core where appropriate.",
-      "roadmap_focus": "Advance HoneyHub capabilities and harden contracts.",
-      "grid_relationship": "Connects with: honeydrunk-signal, forge, grid.",
-      "integration_depth": "medium",
-      "demo_path": "Show a 60-second demo of HoneyHub: input → behavior → outcome.",
-      "signal_quote": "Learning that builds.",
-      "stability_tier": "experimental",
-      "impact_vector": "design coherence"
+      "monetization_signal": "Free local cockpit at v1. The only gated paid candidate is BYOK cloud execution after validation, and cloud execution is BYO API key only, never subscription auth.",
+      "roadmap_focus": "Archived; no active development planned.",
+      "grid_relationship": "No live runtime Grid-Node dependency at v1. Later reads Architecture as the structural backend for the Dev-surface layer and consumes HoneyDrunk.AI's IRoutingPolicy for routing.",
+      "integration_depth": "shallow",
+      "demo_path": "Pair the PWA to the local bridge -> start a Claude Code session in an allowlisted repo -> watch the stream -> reply or stop -> view artifacts and exact usage.",
+      "signal_quote": "Run the agents without losing the thread.",
+      "stability_tier": "seed",
+      "impact_vector": "developer velocity"
     },
     "_dictionary_ref": {
       "version": "v1",
@@ -1839,7 +1917,7 @@
     "time_pressure": 0,
     "done": false,
     "cooldown_days": 14,
-    "flow": 43,
+    "flow": 0,
     "public_name": "HoneyHub"
   },
   {
@@ -2840,46 +2918,50 @@
     "id": "honeydrunk-standards",
     "type": "node",
     "name": "HoneyDrunk.Standards",
-    "short": "Org-wide code style & lint rules",
-    "description": "Language-agnostic standards: .editorconfig/.globalconfig, lint configs, naming rules, and contribution etiquette applied across the Hive.",
-    "sector": "Core",
+    "short": "Shared analyzers, EditorConfig & build tooling",
+    "description": "The Grid-wide home for shared code-quality tooling — StyleCop + EditorConfig analyzers, the test-stack Directory.Build.props defaults, coverlet.runsettings coverage templates, and build-time analyzer rules referenced by invariants 26, 27, and 58. Library-only, no deployable, no vault.",
+    "sector": "Meta",
     "signal": "Live",
-    "cluster": "foundation",
+    "cluster": "governance",
     "energy": 0,
-    "priority": 0,
+    "priority": 60,
     "tags": [
-      "standards",
-      "editorconfig",
       "analyzers",
-      "lint",
-      "docs"
+      "stylecop",
+      "editorconfig",
+      "build-tooling",
+      "coverage",
+      "standards",
+      "msbuild"
     ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Standards"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Standards is the Hive's shared discipline layer — a lightweight repository of style guides and static configurations that keep every codebase readable and consistent. It ships .editorconfig/.globalconfig, analyzer rule selections, ESLint/Prettier presets, commit etiquette, and PR guidance so teams write with one voice even across languages and engines.",
-      "why_it_exists": "Prevent stylistic drift, reduce review noise, and make repos feel first-party the moment they're cloned.",
-      "primary_audience": "All contributors across C#, TS/JS, and docs.",
+      "overview": "HoneyDrunk.Standards is the Grid's shared build-and-quality tooling repo. It packages the StyleCop and EditorConfig analyzer set that every .NET project in the Grid references (invariant 26), the canonical solution-version conventions (invariant 27), and — per ADR-0047 — the shared test-stack Directory.Build.props fragment, the per-tier coverlet.runsettings coverage templates, and the build-time analyzer rule that fails test projects containing Thread.Sleep (invariant 51). It contains no runtime behavior, no service, and no secrets; it ships analyzer and MSBuild build-asset packages consumed at compile time by every other Node.",
+      "why_it_exists": "Without one shared tooling home, code-quality settings, analyzer versions, and test-stack defaults drift independently in every repo. Standards exists so analyzer rules, EditorConfig, and the committed test stack are defined once and consumed everywhere.",
+      "primary_audience": "Every Node repo's build — Standards is referenced by all .NET projects in the Grid for analyzers and shared build defaults.",
       "value_props": [
-        "One set of rules across all repos",
-        "No secrets or feeds; safe as public submodule",
-        "Cuts PR noise by standardizing nits up front"
+        "One canonical StyleCop + EditorConfig analyzer set referenced Grid-wide (invariant 26)",
+        "Shared test-stack Directory.Build.props defaults (xUnit + NSubstitute + AwesomeAssertions + coverlet) per ADR-0047 D2",
+        "Per-tier coverlet.runsettings coverage-threshold templates per ADR-0047 D3",
+        "Build-time analyzer rules enforcing constitution invariants (e.g. no Thread.Sleep in test code, invariant 51)",
+        "Consumed at compile time only — no runtime dependency, no deployable, no vault"
       ],
-      "monetization_signal": "N/A — cultural backbone that improves velocity and perceived quality.",
-      "roadmap_focus": "Expand beyond C# and TS to shaders/Unreal configs; add pre-commit hooks; publish a small handbook.",
-      "grid_relationship": "Consumed by every Node as a submodule or read-only folder; Build applies mechanical enforcement; Pipelines verify conformance.",
-      "integration_depth": "light",
-      "demo_path": "Add submodule at /.hd/standards → open solution → see consistent analyzer and formatting behavior immediately.",
-      "signal_quote": "Consistency is a feature.",
-      "stability_tier": "beta",
-      "impact_vector": "developer experience"
+      "monetization_signal": "Internal tooling infrastructure.",
+      "roadmap_focus": "Host the ADR-0047 test-stack props fragment, coverage templates, and the Thread.Sleep analyzer rule. Keep the analyzer set and EditorConfig aligned with the constitution.",
+      "grid_relationship": "Referenced by every .NET Node project as a compile-time analyzer/build-assets dependency (PrivateAssets: all). No runtime dependencies; no Node depends on Standards at runtime.",
+      "integration_depth": "shallow",
+      "demo_path": "Reference HoneyDrunk.Standards analyzers on a new project → observe StyleCop + EditorConfig enforcement → add a Thread.Sleep to a test project → observe the build fail.",
+      "signal_quote": "One standard, every repo.",
+      "stability_tier": "stable",
+      "impact_vector": "code quality"
     },
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
-    "foundational": true,
+    "foundational": false,
     "strategy_base": 10,
     "tier": "none",
     "time_pressure": 0,
@@ -2976,7 +3058,7 @@
       "roadmap_focus": "Production deployment stabilization, provider coverage, push/webhook channels, and delivery reliability. Adaptive recipient send policy belongs in Communications.",
       "grid_relationship": "Consumes Kernel for Grid context, lifecycle hooks, and telemetry. Provider credentials are injected at deploy time via Azure Key Vault (not the HoneyDrunk.Vault package).",
       "integration_depth": "medium",
-      "demo_path": "Send a notification via INotificationSender → provider dispatches email/SMS → track delivery status → view telemetry in Pulse.",
+      "demo_path": "Receive a notification request via INotificationSender → intake validates delivery shape → provider dispatches email/SMS → track delivery status.",
       "signal_quote": "When the Hive speaks, it's heard everywhere.",
       "stability_tier": "beta",
       "impact_vector": "communication reliability"
@@ -2989,7 +3071,7 @@
     "strategy_base": 21,
     "tier": "none",
     "time_pressure": 3,
-    "done": true,
+    "done": false,
     "cooldown_days": 14,
     "flow": 29,
     "public_name": "HoneyDrunk.Notify"
@@ -3102,20 +3184,27 @@
     "type": "node",
     "name": "HoneyDrunk.Architecture",
     "public_name": "HoneyDrunk.Architecture",
-    "short": "Grid command center & agent hub",
-    "description": "Canonical architecture knowledge base — ADRs, catalogs, routing rules, issue templates, and agent workflows that govern how the Grid evolves.",
+    "short": "Studio planning, learning & Grid architecture",
+    "description": "Shared HoneyDrunk Studios home for projects, experiments, learning, professional growth, and canonical Grid architecture context.",
     "sector": "Meta",
     "signal": "Live",
     "cluster": "governance",
     "energy": 50,
     "priority": 80,
     "flow": 60,
-    "tags": ["architecture", "adrs", "governance", "agents", "catalogs", "routing"],
+    "tags": [
+      "architecture",
+      "adrs",
+      "governance",
+      "agents",
+      "catalogs",
+      "routing"
+    ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Architecture"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Architecture is the command center of the Grid. It holds the canonical catalogs (nodes, modules, services, relationships), constitution (manifesto, invariants, sector taxonomy), architecture decision records, routing rules for agent workflows, and issue/sync packet generation. No code, no packages — pure knowledge infrastructure that agents and humans use to understand and evolve the Hive.",
+      "overview": "HoneyDrunk.Architecture is the studio's shared planning and knowledge home. It holds Grid catalogs, technical invariants, decisions, product ideas, learning paths and experiment notes. Direct founder intent drives work; issues and packets are optional coordination tools. Application implementation stays in the owning repo; small illustrative learning experiments may live here. The repository name and integration paths remain unchanged.",
       "why_it_exists": "Without a single source of architectural truth, decisions scatter across repos, agents lack context, and the Grid drifts.",
       "primary_audience": "Architecture agents, Copilot workflows, and HoneyDrunk maintainers making cross-cutting decisions.",
       "value_props": [
@@ -3126,7 +3215,7 @@
         "Constitution and invariants that define Grid-wide rules"
       ],
       "monetization_signal": "Internal governance infrastructure.",
-      "roadmap_focus": "Converge with website data. Expand agent workflows. Add initiative tracking and roadmap generation.",
+      "roadmap_focus": "Keep useful technical context current, support selected studio work, and track learning with lightweight evidence.",
       "grid_relationship": "Referenced by all agents and copilot instructions. No runtime dependencies.",
       "integration_depth": "shallow",
       "demo_path": "Ask the ADR Composer agent a trade-off question → observe context loading from catalogs → review the generated ADR.",
@@ -3158,7 +3247,14 @@
     "energy": 40,
     "priority": 70,
     "flow": 55,
-    "tags": ["website", "nextjs", "react", "threejs", "visualization", "public"],
+    "tags": [
+      "website",
+      "nextjs",
+      "react",
+      "threejs",
+      "visualization",
+      "public"
+    ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Studios"
     },
@@ -3199,14 +3295,21 @@
     "name": "HoneyDrunk.Lore",
     "public_name": "HoneyDrunk.Lore",
     "short": "LLM-compiled living knowledge wiki",
-    "description": "The Hive's compiled knowledge surface. Ingests raw sources, LLM-compiles into a structured browsable wiki, self-maintains indexes and backlinks, runs health checks, and answers complex queries. Living knowledge that grows with every interaction.",
+    "description": "Flat-file wiki maintained by LLMs. Ingests raw sources, compiles structured markdown, self-maintains indexes and backlinks, answers queries, and runs health checks. Consumed by agents and the solo developer as the ecosystem's compiled research surface.",
     "sector": "Meta",
     "signal": "Seed",
     "cluster": "knowledge",
     "energy": 0,
     "priority": 60,
     "flow": 0,
-    "tags": ["knowledge-base", "wiki", "llm-compiled", "obsidian", "markdown", "research", "self-maintaining"],
+    "tags": [
+      "knowledge",
+      "wiki",
+      "lore",
+      "ai",
+      "flat-file",
+      "obsidian"
+    ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Lore"
     },
@@ -3255,7 +3358,13 @@
     "energy": 0,
     "priority": 0,
     "flow": 0,
-    "tags": ["infrastructure", "rotation", "secrets", "functions", "azure"],
+    "tags": [
+      "infrastructure",
+      "rotation",
+      "secrets",
+      "functions",
+      "azure"
+    ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Vault.Rotation"
     },
@@ -3272,7 +3381,7 @@
       "roadmap_focus": "Scaffold baseline Function runtime, then integrate provider adapters and observability.",
       "grid_relationship": "Depends on Kernel and Vault, writes rotated values into deployable Node vaults.",
       "integration_depth": "medium",
-      "demo_path": "Trigger rotation run \u2192 write new secret version \u2192 observe downstream refresh event path.",
+      "demo_path": "Trigger rotation run → write new secret version → observe downstream refresh event path.",
       "signal_quote": "Rotate once, protect everywhere.",
       "stability_tier": "seed",
       "impact_vector": "security posture"
@@ -3301,7 +3410,15 @@
     "energy": 0,
     "priority": 25,
     "flow": 20,
-    "tags": ["orchestration", "workflows", "campaigns", "preferences", "suppression", "cadence", "messaging"],
+    "tags": [
+      "orchestration",
+      "workflows",
+      "campaigns",
+      "preferences",
+      "suppression",
+      "cadence",
+      "messaging"
+    ],
     "links": {
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Communications"
     },
@@ -3398,7 +3515,7 @@
     "signal": "Seed",
     "cluster": "security",
     "energy": 0,
-    "priority": 20,
+    "priority": 0,
     "flow": 0,
     "tags": [
       "audit",
@@ -3425,7 +3542,7 @@
         "Phase-1 honest limitation: append-only-by-interface, NOT tamper-evident"
       ],
       "monetization_signal": "Internal-first Core primitive. A future tenant-facing forensics Service is a deferred capability behind the now-existing boundary.",
-      "roadmap_focus": "Stand up the Node, Abstractions package, and Data-backed append-only store (ADR-0031). Auth wired as first emitter and Operator reconciled as consumer/emitter follow as separate packets. Hash-chain/WORM tamper-evidence and the tenant-facing forensics Service are deferred behind the boundary, each gated on a stated trigger.",
+      "roadmap_focus": "Abstractions and Data-backed runtime packages are published. Future adoption must validate host DI lifetimes, durable store composition, authorized queries and emitter transaction boundaries. Phase 1 remains append-only by interface; hash-chain/WORM tamper-evidence and a tenant-facing forensics service remain future scope.",
       "grid_relationship": "Consumes Kernel (IGridContext, lifecycle, health, telemetry) and Data (IRepository, IUnitOfWork for the append-only store). Emits its own operational telemetry consumed by Pulse — no runtime dependency on Pulse. Consumed by Auth (first emitter) and Operator (reconciled consumer/emitter). Downstream Nodes compile only against HoneyDrunk.Audit.Abstractions.",
       "integration_depth": "medium",
       "demo_path": "Write an AuditEntry through IAuditLog → read it back through IAuditQuery against the in-memory fixture → observe append-only (no update/delete on the IAuditLog surface).",
@@ -3450,12 +3567,12 @@
     "name": "HoneyDrunk.Observe",
     "public_name": "HoneyDrunk.Observe",
     "short": "External project observation layer",
-    "description": "Inbound observation contracts and provider-slot connector packages for monitoring external projects and services the Grid does not own.",
+    "description": "Published observation contracts for external projects. Runtime composition and GitHub, Azure, and HTTP connectors remain planned.",
     "sector": "Ops",
     "signal": "Seed",
     "cluster": "observability",
     "energy": 0,
-    "priority": 20,
+    "priority": 0,
     "flow": 0,
     "tags": [
       "observation",
@@ -3471,20 +3588,20 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Observe"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Observe is the inbound observation layer of the Grid. It lets the Hive watch external projects — any codebase or service outside HoneyDrunk — with the same operational visibility that Pulse gives internal Nodes. The repo owns observation contracts, connector composition, event normalization, and provider-slot connector packages such as GitHub, Azure, and HTTP.",
-      "why_it_exists": "Pulse handles outbound telemetry from Grid Nodes to sinks. Observe handles inbound observation from external systems into the Grid. Without it, the Hive cannot see projects it does not own, which blocks future HoneyHub planning inputs.",
-      "primary_audience": "Grid operators wiring external systems into the Hive; future HoneyHub planning surfaces consuming external-project signals.",
+      "overview": "HoneyDrunk.Observe defines the Grid's inbound observation boundary for external projects and services. The published Abstractions package contains observation-target, provider-slot and normalized-event contracts. Runtime composition, observation state and GitHub/Azure/HTTP connectors are planned, not implemented monitoring capabilities.",
+      "why_it_exists": "Pulse handles outbound telemetry from Grid Nodes to sinks. Observe defines the opposite boundary for future inbound external-system signals without coupling it to a particular planning product.",
+      "primary_audience": "Grid operators designing future external-system observation and planning integrations.",
       "value_props": [
         "Canonical observation event model across heterogeneous external sources",
-        "Provider-slot connector packages shipped from one repo",
-        "Vault-backed credential resolution for every connector",
-        "Independent from HoneyHub so intake can ship before planning"
+        "Provider-slot contracts for future connectors",
+        "Future connector credential composition belongs behind the Vault boundary",
+        "Independent of the archived HoneyHub product"
       ],
       "monetization_signal": "Internal-first.",
-      "roadmap_focus": "Phase 1: contracts and repo scaffolding. Phase 2: GitHub connector as the first useful increment. Phase 3: HoneyHub integration after the planning surface is live.",
-      "grid_relationship": "Consumes Kernel for context and lifecycle. Consumes Vault for connector credential resolution. Does not route outbound telemetry to sinks — that is Pulse's opposite-direction boundary.",
+      "roadmap_focus": "Contracts package published; runtime and a first useful connector require separately selected implementation work. No HoneyHub integration is planned following its archival.",
+      "grid_relationship": "Future runtime and connector composition can use Kernel and Vault. Current publication is contracts only. Outbound telemetry routing remains Pulse's opposite-direction boundary.",
       "integration_depth": "medium",
-      "demo_path": "Register an observation target → connector intakes external event → runtime normalizes to IObservationEvent → event visible in observation state.",
+      "demo_path": "Inspect the published observation contracts. A live target-to-connector-to-observation-state demo awaits runtime and connector implementation.",
       "signal_quote": "See what the Hive does not own.",
       "stability_tier": "seed",
       "impact_vector": "external visibility"
@@ -3499,7 +3616,95 @@
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
     }
+  },
+  {
+    "id": "honeydrunk-payments",
+    "type": "node",
+    "name": "HoneyDrunk.Payments",
+    "public_name": "HoneyDrunk.Payments",
+    "short": "Provider-neutral payment and billing integrations",
+    "description": "Shared payment-provider boundary for HoneyDrunk products. Owns provider-neutral payment contracts and provider packages such as Stripe so product nodes do not carry SDK-specific billing code.",
+    "sector": "Ops",
+    "signal": "Seed",
+    "cluster": "commercial",
+    "energy": 0,
+    "priority": 30,
+    "flow": 0,
+    "tags": [
+      "payments",
+      "billing",
+      "stripe",
+      "subscriptions",
+      "webhooks",
+      "invoice-reconciliation",
+      "provider-boundary"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Payments"
+    },
+    "long_description": {
+      "overview": "HoneyDrunk.Payments is the shared payment-provider boundary for hosted products. Product nodes keep product pricing, tenant binding, and business policy, while Payments exposes provider-neutral contracts and provider implementations for checkout, subscription lifecycle, webhook normalization, invoice reconciliation, and metered billing transport.",
+      "why_it_exists": "To keep Stripe and future payment providers behind a reusable provider boundary instead of embedding payment SDK code in each product repository.",
+      "primary_audience": "Product-node owners that need checkout, subscriptions, billing webhook intake, and invoice reconciliation without depending directly on a payment provider SDK.",
+      "value_props": [
+        "Provider-neutral payment contracts for product code",
+        "Stripe.NET implementation for subscriptions, webhooks, invoices, and meter events",
+        "A clear provider-slot pattern for future providers such as Paddle or LemonSqueezy",
+        "Keeps product repos focused on tenant policy, pricing, and product-specific billing state"
+      ],
+      "monetization_signal": "Commercial infrastructure shared by hosted HoneyDrunk products.",
+      "roadmap_focus": "Abstractions and Stripe provider packages are published. Future product adoption must validate provider composition, webhook verification, idempotency and billing-state persistence while keeping pricing and account policy in the product.",
+      "grid_relationship": "Consumes Kernel billing-event primitives for metered usage emission. Product nodes use the abstractions layer, with provider packages selected in composition.",
+      "integration_depth": "medium",
+      "demo_path": "Product node depends on HoneyDrunk.Payments.Abstractions -> composition registers HoneyDrunk.Payments.Stripe -> checkout and webhook flows return provider-neutral snapshots.",
+      "signal_quote": "Providers behind contracts.",
+      "stability_tier": "seed",
+      "impact_vector": "commercial optionality"
+    },
+    "foundational": false,
+    "strategy_base": 18,
+    "tier": "none",
+    "time_pressure": 3,
+    "done": false,
+    "cooldown_days": 14
+  },
+  {
+    "id": "pocket-quests",
+    "type": "node",
+    "name": "Pocket Quests",
+    "public_name": "Pocket Quests",
+    "short": "Your real life, reflected in a world of personal quests",
+    "description": "A mobile-first personal quest giver: your character and room grow with your goals, everyday actions, and discoveries. Internal working name; public release name remains open.",
+    "sector": "Market",
+    "signal": "Seed",
+    "cluster": "personal-growth",
+    "energy": 0,
+    "priority": 85,
+    "tags": [
+      "quests",
+      "personal-growth",
+      "mobile",
+      "exploration",
+      "2d"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.PocketQuests"
+    },
+    "long_description": {
+      "overview": "A virtual self and world that reflect what you do, where you go, what interests you, and who you want to become. Pocket Quests combines personal goals, calendar tasks and recurring quests with an evolving 2D character, room decoration, and optional real-place exploration.",
+      "why_it_exists": "Make everyday progress useful and enjoyable, starting with one person and growing through actual use.",
+      "primary_audience": "People who want a playful way to organize self-chosen goals and adventures.",
+      "value_props": [
+        "Custom goals and editable quest suggestions",
+        "Daily and weekly tasks alongside a day/week schedule",
+        "Character progression and unlockable room items",
+        "Later exploration quests, puzzles, and a personal atlas"
+      ],
+      "roadmap_focus": "Planning and repository setup only. Next: one goal, a scheduled quest, completion, and one character or room unlock. No app features have shipped.",
+      "grid_relationship": "Evaluate existing HoneyDrunk components for backend, identity, data, audit, operations, and deployment; integrations are planned, not implemented.",
+      "signal_quote": "A little quest giver in your pocket.",
+      "stability_tier": "concept",
+      "impact_vector": "personal usefulness"
+    }
   }
 ]
-
-

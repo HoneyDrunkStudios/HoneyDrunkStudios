@@ -65,6 +65,9 @@ export default function ModulesIndexPage() {
             <p className="text-base md:text-lg px-1 md:px-2" style={{ color: colors.slateLight }}>
               Extensions that dock into Node slots. Modules implement adapters, providers, sinks, and harnesses.
             </p>
+            <p className="text-sm" style={{ color: colors.slateLight, marginTop: '12px' }}>
+              Published versions were verified on NuGet on September 26, 2026. Lifecycle signals describe the broader node roadmap; a published package does not mean every planned capability is implemented.
+            </p>
           </header>
 
           {/* Modules grouped by Parent Node */}
@@ -169,6 +172,11 @@ export default function ModulesIndexPage() {
                                   }}>
                                     {module.name}
                                   </h3>
+                                  {module.version && (
+                                    <span className="font-mono text-xs" style={{ color: colors.signalGreen }}>
+                                      NuGet v{module.version}
+                                    </span>
+                                  )}
                                   {statusColor && (
                                     <span
                                       className="rounded font-mono flex items-center"

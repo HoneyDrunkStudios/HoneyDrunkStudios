@@ -55,6 +55,9 @@ export interface Node {
 }
 
 export interface Module {
+  version?: string;
+  package_url?: string;
+  release_verified?: string;
   id: string;
   type: 'module';
   name: string;

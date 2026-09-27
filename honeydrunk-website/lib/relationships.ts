@@ -258,7 +258,7 @@ function generateRoleInGrid(
   
   // Foundation vs Consumer
   if (upstream.length === 0) {
-    parts.push(`${node.name} is a foundational node with no internal Grid dependencies`);
+    parts.push(`${node.name} has no internal Grid dependencies recorded`);
   } else if (upstream.filter(u => u.isFoundational).length === upstream.length) {
     parts.push(`Builds directly on foundational infrastructure`);
   } else {

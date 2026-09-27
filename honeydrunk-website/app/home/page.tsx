@@ -1,4 +1,5 @@
 import { getFeaturedNodes } from '@/lib/nodes';
+import CurrentFocus from '@/components/CurrentFocus';
 import ValueProps from '@/components/ValueProps';
 import FeaturedNodes from '@/components/FeaturedNodes';
 import Spotlights from '@/components/Spotlights';
@@ -16,6 +17,7 @@ export default function HomePage() {
       {/* Add top padding to account for absolute positioned header */}
       <div className="pt-24 space-y-16">
         <ValueProps />
+        <CurrentFocus />
         <FeaturedNodes nodes={featuredNodes} />
         <Spotlights />
         <BuildInPublic />
