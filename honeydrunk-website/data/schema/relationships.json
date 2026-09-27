@@ -114,9 +114,7 @@
     },
     {
       "id": "forge",
-      "consumes": [
-        "honeyhub"
-      ],
+      "consumes": [],
       "consumed_by": [],
       "exposes": {
         "contracts": [],
@@ -154,7 +152,6 @@
         "honeydrunk-pulse"
       ],
       "consumed_by": [
-        "honeyhub",
         "honeydrunk-operator"
       ],
       "exposes": {
@@ -248,9 +245,7 @@
     },
     {
       "id": "honeyconnect",
-      "consumes": [
-        "honeyhub"
-      ],
+      "consumes": [],
       "consumed_by": [],
       "exposes": {
         "contracts": [],
@@ -463,7 +458,6 @@
       "consumes": [
         "honeydrunk-agentkit",
         "honeydrunk-vault",
-        "honeyhub",
         "meta-atlassync",
         "honeydrunk-pulse"
       ],
@@ -918,7 +912,6 @@
       "consumes": [
         "honeydrunk-agentkit",
         "honeydrunk-vault",
-        "honeyhub",
         "honeydrunk-pulse"
       ],
       "consumed_by": [],
@@ -1620,9 +1613,7 @@
       "id": "honeydrunk-architecture",
       "consumes": [],
       "consumed_by": [],
-      "consumed_by_planned": [
-        "honeyhub"
-      ],
+      "consumed_by_planned": [],
       "blocked_by": [],
       "exposes": {
         "contracts": [],
@@ -1655,8 +1646,7 @@
         "honeydrunk-knowledge",
         "honeydrunk-evals",
         "honeydrunk-sim",
-        "honeydrunk-lore",
-        "honeyhub"
+        "honeydrunk-lore"
       ],
       "blocked_by": [],
       "exposes": {
@@ -1918,8 +1908,7 @@
         "honeydrunk-memory",
         "honeydrunk-flow",
         "honeydrunk-sim",
-        "honeydrunk-lore",
-        "honeyhub"
+        "honeydrunk-lore"
       ],
       "blocked_by": [],
       "exposes": {
@@ -2052,11 +2041,6 @@
       "dependency": "audit-agent",
       "dependent": "honeydrunk-governor",
       "reason": "Integrates with Audit.Agent for operational support"
-    },
-    {
-      "dependency": "grid",
-      "dependent": "honeyhub",
-      "reason": "Depends on production-ready HoneyDrunk.Grid services"
     },
     {
       "dependency": "grid",
@@ -2322,26 +2306,6 @@
       "dependency": "honeydrunk-vault",
       "dependent": "review",
       "reason": "Builds on HoneyDrunk.Vault for core infrastructure capabilities"
-    },
-    {
-      "dependency": "honeyhub",
-      "dependent": "forge",
-      "reason": "Requires HoneyHub for ai-assisted pm/creator platform"
-    },
-    {
-      "dependency": "honeyhub",
-      "dependent": "honeyconnect",
-      "reason": "Requires HoneyHub for ai-assisted pm/creator platform"
-    },
-    {
-      "dependency": "honeyhub",
-      "dependent": "honeydrunk-clarity",
-      "reason": "Requires HoneyHub for ai-assisted pm/creator platform"
-    },
-    {
-      "dependency": "honeyhub",
-      "dependent": "honeydrunk-signal",
-      "reason": "Requires HoneyHub for ai-assisted pm/creator platform"
     },
     {
       "dependency": "honeymech-sim",

@@ -1561,7 +1561,7 @@
     "long_description": {
       "overview": "Standardized ingestion of XP events from Nodes via Transport envelopes.",
       "why_it_exists": "Prevents bespoke XP plumbing per product.",
-      "primary_audience": "Any Node emitting XP (Gigs, HoneyHub, HoneyPlay).",
+      "primary_audience": "Future nodes emitting XP, such as Gigs and HoneyPlay; HoneyHub is archived.",
       "value_props": [
         "Idempotent ingest",
         "Schema validation",
