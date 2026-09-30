@@ -126,23 +126,14 @@
     },
     {
       "id": "game-prototype",
-      "consumes": [
-        "honeydrunk-vault",
-        "honeydrunk-pulse"
-      ],
+      "consumes": [],
       "consumed_by": [],
       "exposes": {
         "contracts": [],
         "packages": []
       },
       "blocked_by": [],
-      "consumes_detail": {
-        "honeydrunk-vault": [
-          "ISecretStore",
-          "IConfigProvider",
-          "HoneyDrunk.Vault"
-        ]
-      },
+      "consumes_detail": {},
       "consumed_by_planned": []
     },
     {
@@ -2025,8 +2016,47 @@
     },
     {
       "id": "pocket-quests",
-      "consumes": [],
+      "consumes": [
+        "honeydrunk-identity",
+        "honeydrunk-ui"
+      ],
       "consumed_by": [],
+      "blocked_by": [],
+      "consumes_detail": {
+        "honeydrunk-identity": [
+          "Local account API/source integration; PR 1 unmerged; packages unpublished"
+        ],
+        "honeydrunk-ui": [
+          "@honeydrunk/ui-tokens — pinned local workspace snapshot",
+          "@honeydrunk/ui-native — pinned local workspace snapshot; npm unpublished"
+        ]
+      },
+      "exposes": {
+        "contracts": [],
+        "packages": []
+      },
+      "consumed_by_planned": []
+    },
+    {
+      "id": "honeydrunk-identity",
+      "consumes": [],
+      "consumed_by": [
+        "pocket-quests"
+      ],
+      "blocked_by": [],
+      "consumes_detail": {},
+      "exposes": {
+        "contracts": [],
+        "packages": []
+      },
+      "consumed_by_planned": []
+    },
+    {
+      "id": "honeydrunk-ui",
+      "consumes": [],
+      "consumed_by": [
+        "pocket-quests"
+      ],
       "blocked_by": [],
       "consumes_detail": {},
       "exposes": {
@@ -2504,16 +2534,6 @@
     },
     {
       "dependency": "honeydrunk-vault",
-      "dependent": "game-prototype",
-      "reason": "Manages player save data and game configuration"
-    },
-    {
-      "dependency": "honeydrunk-pulse",
-      "dependent": "game-prototype",
-      "reason": "Captures gameplay telemetry and analytics"
-    },
-    {
-      "dependency": "honeydrunk-vault",
       "dependent": "tether",
       "reason": "Encrypts personal relationship data"
     },
@@ -2586,6 +2606,16 @@
       "dependency": "honeydrunk-vault",
       "dependent": "honeydrunk-observe",
       "reason": "ISecretStore for connector credential resolution across external provider slots"
+    },
+    {
+      "dependency": "honeydrunk-identity",
+      "dependent": "pocket-quests",
+      "reason": "Local backend account integration under review; full signed-in quest use and production release remain unverified."
+    },
+    {
+      "dependency": "honeydrunk-ui",
+      "dependent": "pocket-quests",
+      "reason": "Local workspace snapshots pinned to committed UI source with file integrity checks; no npm publication. Product theme and quest presentation remain app-owned."
     }
   ]
 }
