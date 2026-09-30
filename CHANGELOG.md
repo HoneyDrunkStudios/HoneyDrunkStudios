@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Label Identity/UI entries as observed project progress with formal Grid registration deferred; local dependency cards do not imply ADR acceptance or completed standup.
+
 - Correct Node Contract data to show local Pocket Quests Identity/UI integrations with release limits; remove unsupported MagicShop Pulse/Vault edges and distinguish game custody from shared secret storage.
 
 - Update studio focus and Pocket Quests/Magic Shop detail copy from planning-only status to verified local implementation/first-playable progress. Explain shared UI/themeability and Identity review with confirmed public UI source and passing checks, while distinguishing unpublished npm packages, unproven full login/native validation and unknown game acceptance.

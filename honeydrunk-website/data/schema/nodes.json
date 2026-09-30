@@ -3713,7 +3713,7 @@
     "name": "HoneyDrunk.Identity",
     "public_name": "HoneyDrunk.Identity",
     "short": "Shared accounts — implementation under review",
-    "description": "Shared account implementation used by the local Pocket Quests backend. PR 1 is open, not merged; complete signed-in quest use remains unverified. Client packages are not published.",
+    "description": "Shared account implementation used by the local Pocket Quests backend. PR 1 is open, not merged; complete signed-in quest use remains unverified. Client packages are not published. This is a project progress record; formal Grid registration remains deferred.",
     "sector": "Core",
     "signal": "Wiring",
     "cluster": "shared-foundations",
@@ -3727,9 +3727,9 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Identity"
     },
     "long_description": {
-      "overview": "Shared account implementation used by the local Pocket Quests backend. PR 1 is open, not merged; complete signed-in quest use remains unverified. Client packages are not published.",
+      "overview": "Shared account implementation used by the local Pocket Quests backend. PR 1 is open, not merged; complete signed-in quest use remains unverified. Client packages are not published. This is a project progress record; formal Grid registration remains deferred.",
       "roadmap_focus": "Validate consumer integration and complete separately authorized review/release gates.",
-      "grid_relationship": "Pocket Quests has local integration; no production consumer release is claimed.",
+      "grid_relationship": "Pocket Quests has local integration; no production consumer release is claimed. This website describes observed project integration, not completed canonical registration or acceptance of the Proposed Identity/Web.UI ADRs.",
       "stability_tier": "experimental",
       "impact_vector": "reuse"
     }
@@ -3740,7 +3740,7 @@
     "name": "HoneyDrunk.UI",
     "public_name": "HoneyDrunk.UI",
     "short": "Themeable UI — public source, local consumers",
-    "description": "Public shared UI source with a platform-neutral theme contract and native primitives. Pocket Quests uses revision-pinned local snapshots with file integrity checks. npm packages are not published; native verification remains pending.",
+    "description": "Public shared UI source with a platform-neutral theme contract and native primitives. Pocket Quests uses revision-pinned local snapshots with file integrity checks. npm packages are not published; native verification remains pending. This is a project progress record; formal Grid registration remains deferred.",
     "sector": "Meta",
     "signal": "Wiring",
     "cluster": "shared-foundations",
@@ -3755,9 +3755,9 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.UI"
     },
     "long_description": {
-      "overview": "Public shared UI source with a platform-neutral theme contract and native primitives. Pocket Quests uses revision-pinned local snapshots with file integrity checks. npm packages are not published; native verification remains pending.",
+      "overview": "Public shared UI source with a platform-neutral theme contract and native primitives. Pocket Quests uses revision-pinned local snapshots with file integrity checks. npm packages are not published; native verification remains pending. This is a project progress record; formal Grid registration remains deferred.",
       "roadmap_focus": "Validate consumer integration and complete separately authorized review/release gates.",
-      "grid_relationship": "Pocket Quests has local integration; no production consumer release is claimed.",
+      "grid_relationship": "Pocket Quests has local integration; no production consumer release is claimed. This website describes observed project integration, not completed canonical registration or acceptance of the Proposed Identity/Web.UI ADRs.",
       "stability_tier": "experimental",
       "impact_vector": "reuse"
     }
