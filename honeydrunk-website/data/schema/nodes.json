@@ -3182,8 +3182,8 @@
   {
     "id": "honeydrunk-architecture",
     "type": "node",
-    "name": "HoneyDrunk.Architecture",
-    "public_name": "HoneyDrunk.Architecture",
+    "name": "HoneyDrunk.Studio",
+    "public_name": "HoneyDrunk.Studio",
     "short": "Studio planning, learning & Grid architecture",
     "description": "Shared HoneyDrunk Studios home for projects, experiments, learning, professional growth, and canonical Grid architecture context.",
     "sector": "Meta",
@@ -3201,17 +3201,17 @@
       "routing"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Architecture"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Studio"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Architecture is the studio's shared planning and knowledge home. It holds Grid catalogs, technical invariants, decisions, product ideas, learning paths and experiment notes. Direct founder intent drives work; issues and packets are optional coordination tools. Application implementation stays in the owning repo; small illustrative learning experiments may live here. The repository name and integration paths remain unchanged.",
+      "overview": "HoneyDrunk.Studio is the studio's shared planning and knowledge home. It holds Grid catalogs, technical invariants, decisions, product ideas, learning paths and experiment notes. Direct founder intent drives work; issues are optional coordination tools. Application implementation stays in the owning repo; small illustrative learning experiments may live here.",
       "why_it_exists": "Without a single source of architectural truth, decisions scatter across repos, agents lack context, and the Grid drifts.",
       "primary_audience": "Architecture agents, Copilot workflows, and HoneyDrunk maintainers making cross-cutting decisions.",
       "value_props": [
         "Single source of truth for Grid topology and node catalogs",
         "Architecture Decision Records with full context and cascade analysis",
         "Agent routing rules that direct work to the correct repos",
-        "Issue and site-sync packet generation for cross-repo coordination",
+        "Lightweight planning and reviewable evidence for cross-repo coordination",
         "Constitution and invariants that define Grid-wide rules"
       ],
       "monetization_signal": "Internal governance infrastructure.",
