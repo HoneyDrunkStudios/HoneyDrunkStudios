@@ -1819,11 +1819,11 @@
   {
     "id": "game-prototype",
     "type": "node",
-    "name": "Game #1 (TBD)",
-    "short": "First original game — concept and production planning",
-    "description": "Early planning for the first game in an original shared universe. Genre and playable scope remain undecided; no playable build has shipped.",
+    "name": "Magic Shop (working title)",
+    "short": "First-person magical shop game — first playable",
+    "description": "A Unity magical shop game with a committed first playable. Player acceptance, balance and performance remain to be verified through playtesting.",
     "sector": "HoneyPlay",
-    "signal": "Seed",
+    "signal": "Wiring",
     "cluster": "gaming",
     "energy": 29,
     "priority": 80,
@@ -1834,22 +1834,22 @@
     ],
     "links": {},
     "long_description": {
-      "overview": "Early planning for the first game in an original shared universe. Genre and playable scope remain undecided; no playable build has shipped.",
-      "why_it_exists": "Game #1 (TBD) exists to prevent inconsistency and reinvention across the Grid.",
-      "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
+      "overview": "A Unity magical shop game with a committed first playable. Player acceptance, balance and performance remain to be verified through playtesting.",
+      "why_it_exists": "Explore an original world through appraisal, crafting and running a magical shop.",
+      "primary_audience": "Players interested in a stylized first-person shop game.",
       "value_props": [
-        "Standardizes game, prototype",
-        "Reduces operational risk with opinionated defaults",
-        "Improves developer velocity and interoperability"
+        "Appraisal and shop management",
+        "Forge, alchemy and enchanting",
+        "A completed design guiding first-playable iteration"
       ],
-      "monetization_signal": "Internal-first; open-core where appropriate.",
-      "roadmap_focus": "Choose a small playable slice, then validate the art and production workflow. Blender scene experiments verify tooling, not game completion.",
-      "grid_relationship": "Connects with: —.",
+      "monetization_signal": "No public release or pricing commitment.",
+      "roadmap_focus": "Capture founder playtest results and iterate against the completed game design; actual playtest outcomes remain unknown.",
+      "grid_relationship": "Standalone Unity implementation with local saves and settings. No HoneyDrunk.Pulse or HoneyDrunk.Vault package integration is verified; in-game vault custody is a game mechanic.",
       "integration_depth": "medium",
-      "demo_path": "Show a 60-second demo of Game #1 (TBD): input → behavior → outcome.",
+      "demo_path": "First playable exists; public demo availability is not confirmed.",
       "signal_quote": "Play the manifesto.",
       "stability_tier": "experimental",
-      "impact_vector": "design coherence"
+      "impact_vector": "player experience"
     },
     "_dictionary_ref": {
       "version": "v1",
@@ -1862,7 +1862,7 @@
     "done": false,
     "cooldown_days": 14,
     "flow": 23,
-    "public_name": "Game #1 (TBD)"
+    "public_name": "Magic Shop (working title)"
   },
   {
     "id": "honeyhub",
@@ -3674,9 +3674,9 @@
     "name": "Pocket Quests",
     "public_name": "Pocket Quests",
     "short": "Your real life, reflected in a world of personal quests",
-    "description": "A mobile-first personal quest giver: your character and room grow with your goals, everyday actions, and discoveries. Internal working name; public release name remains open.",
+    "description": "A mobile personal quest app with local implementation of quests, planning, progression and profile rewards. Full signed-in use and native-device testing remain to be verified. Working name; release name remains open.",
     "sector": "Market",
-    "signal": "Seed",
+    "signal": "Wiring",
     "cluster": "personal-growth",
     "energy": 0,
     "priority": 85,
@@ -3691,20 +3691,75 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.PocketQuests"
     },
     "long_description": {
-      "overview": "A virtual self and world that reflect what you do, where you go, what interests you, and who you want to become. Pocket Quests combines personal goals, calendar tasks and recurring quests with an evolving 2D character, room decoration, and optional real-place exploration.",
+      "overview": "A mobile personal quest app with local implementation of quests, planning, progression and profile rewards. Full signed-in use and native-device testing remain to be verified. Working name; release name remains open. Avatar, room decoration and real-place discovery remain broader future ideas.",
       "why_it_exists": "Make everyday progress useful and enjoyable, starting with one person and growing through actual use.",
       "primary_audience": "People who want a playful way to organize self-chosen goals and adventures.",
       "value_props": [
-        "Custom goals and editable quest suggestions",
-        "Daily and weekly tasks alongside a day/week schedule",
-        "Character progression and unlockable room items",
-        "Later exploration quests, puzzles, and a personal atlas"
+        "Fixed system quests and editable personal quests",
+        "Planning and recurring quests",
+        "XP, skill progression and profile rewards",
+        "Later avatar, room and exploration ideas"
       ],
-      "roadmap_focus": "Planning and repository setup only. Next: one goal, a scheduled quest, completion, and one character or room unlock. No app features have shipped.",
-      "grid_relationship": "Evaluate existing HoneyDrunk components for backend, identity, data, audit, operations, and deployment; integrations are planned, not implemented.",
+      "roadmap_focus": "Verify complete authenticated account-to-quest use and native-device behavior. Local implementation is not a production release.",
+      "grid_relationship": "Local backend composition includes the shared Identity implementation under review. HoneyDrunk.UI source is public; this app consumes source-revision-pinned local snapshots with file integrity checks rather than published npm packages. Its navy, teal and gold theme and quest presentation remain app-owned.",
       "signal_quote": "A little quest giver in your pocket.",
-      "stability_tier": "concept",
+      "stability_tier": "experimental",
       "impact_vector": "personal usefulness"
+    }
+  },
+  {
+    "id": "honeydrunk-identity",
+    "type": "node",
+    "name": "HoneyDrunk.Identity",
+    "public_name": "HoneyDrunk.Identity",
+    "short": "Shared accounts — implementation under review",
+    "description": "Shared account implementation used by the local Pocket Quests backend. PR 1 is open, not merged; complete signed-in quest use remains unverified. Client packages are not published. This is a project progress record; formal Grid registration remains deferred.",
+    "sector": "Core",
+    "signal": "Wiring",
+    "cluster": "shared-foundations",
+    "energy": 0,
+    "priority": 0,
+    "tags": [
+      "accounts",
+      "identity"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Identity"
+    },
+    "long_description": {
+      "overview": "Shared account implementation used by the local Pocket Quests backend. PR 1 is open, not merged; complete signed-in quest use remains unverified. Client packages are not published. This is a project progress record; formal Grid registration remains deferred.",
+      "roadmap_focus": "Validate consumer integration and complete separately authorized review/release gates.",
+      "grid_relationship": "Pocket Quests has local integration; no production consumer release is claimed. This website describes observed project integration, not completed canonical registration or acceptance of the Proposed Identity/Web.UI ADRs.",
+      "stability_tier": "experimental",
+      "impact_vector": "reuse"
+    }
+  },
+  {
+    "id": "honeydrunk-ui",
+    "type": "node",
+    "name": "HoneyDrunk.UI",
+    "public_name": "HoneyDrunk.UI",
+    "short": "Themeable UI — public source, local consumers",
+    "description": "Public shared UI source with a platform-neutral theme contract and native primitives. Pocket Quests uses revision-pinned local snapshots with file integrity checks. npm packages are not published; native verification remains pending. This is a project progress record; formal Grid registration remains deferred.",
+    "sector": "Meta",
+    "signal": "Wiring",
+    "cluster": "shared-foundations",
+    "energy": 0,
+    "priority": 0,
+    "tags": [
+      "ui",
+      "theme",
+      "native"
+    ],
+    "links": {
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.UI"
+    },
+    "long_description": {
+      "overview": "Public shared UI source with a platform-neutral theme contract and native primitives. Pocket Quests uses revision-pinned local snapshots with file integrity checks. npm packages are not published; native verification remains pending. This is a project progress record; formal Grid registration remains deferred.",
+      "roadmap_focus": "Validate consumer integration and complete separately authorized review/release gates.",
+      "grid_relationship": "Pocket Quests has local integration; no production consumer release is claimed. This website describes observed project integration, not completed canonical registration or acceptance of the Proposed Identity/Web.UI ADRs.",
+      "stability_tier": "experimental",
+      "impact_vector": "reuse"
     }
   }
 ]
