@@ -4,8 +4,8 @@ import { colors } from '@/lib/tokens';
 const tracks = [
   { name: 'Pocket Quests', status: 'Local implementation', href: '/nodes/pocket-quests', text: 'Personal quests, planning, progression, and profile rewards now have a local app and backend implementation. Full signed-in quest use and native-device testing remain to be verified. Pocket Quests is a working name.' },
   { name: 'Magic Shop', status: 'First playable', href: '/nodes/game-prototype', text: 'A first-person magical shop game with a committed Unity first playable. Appraisal, crafting, and shop management follow the completed game design. Playtest results and player acceptance remain to be confirmed. Magic Shop is a working title.' },
-  { name: 'AI learning', status: 'Curriculum ready', href: 'https://github.com/HoneyDrunkStudios/HoneyDrunk.Architecture/tree/main/learning/paths/ai-engineering', text: 'A 32-week path with hands-on experiments and a progress tracker. The aim is to understand, build, and evaluate AI systems; the learning sessions are not yet completed.' },
-  { name: 'Hands-on robotics', status: 'Getting started', href: 'https://github.com/HoneyDrunkStudios/HoneyDrunk.Architecture', text: 'Start with the Arduino kit already on hand: identify the kit and its guide, then work through small physical experiments. No robot build has been completed yet.' },
+  { name: 'AI learning', status: 'Curriculum ready', href: 'https://github.com/HoneyDrunkStudios/HoneyDrunk.Studio/tree/main/learning/paths/ai-engineering', text: 'A 32-week path with hands-on experiments and a progress tracker. The aim is to understand, build, and evaluate AI systems; the learning sessions are not yet completed.' },
+  { name: 'Hands-on robotics', status: 'Getting started', href: 'https://github.com/HoneyDrunkStudios/HoneyDrunk.Studio', text: 'Start with the Arduino kit already on hand: identify the kit and its guide, then work through small physical experiments. No robot build has been completed yet.' },
 ];
 
 export default function CurrentFocus() {

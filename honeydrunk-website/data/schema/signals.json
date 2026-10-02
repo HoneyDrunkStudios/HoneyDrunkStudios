@@ -8,7 +8,7 @@
       "Ops",
       "HoneyDrunk.Audit",
       "HoneyDrunk.Observe",
-      "HoneyDrunk.Architecture"
+      "HoneyDrunk.Studio"
     ],
     "sector": "Core"
   },
@@ -20,7 +20,7 @@
       "Ops",
       "HoneyDrunk.Infrastructure",
       "HoneyDrunk.Actions",
-      "HoneyDrunk.Architecture"
+      "HoneyDrunk.Studio"
     ],
     "sector": "Ops"
   },
@@ -32,7 +32,7 @@
       "Ops",
       "HoneyDrunk.Communications",
       "HoneyDrunk.Notify",
-      "HoneyDrunk.Architecture"
+      "HoneyDrunk.Studio"
     ],
     "sector": "Ops"
   },
@@ -46,7 +46,7 @@
       "HoneyDrunk.Vault",
       "HoneyDrunk.Vault.Rotation",
       "HoneyDrunk.Notify",
-      "HoneyDrunk.Architecture"
+      "HoneyDrunk.Studio"
     ],
     "sector": "Core"
   },
@@ -60,7 +60,7 @@
       "HoneyDrunk.Studios",
       "HoneyDrunk.Notify",
       "Pulse",
-      "HoneyDrunk.Architecture"
+      "HoneyDrunk.Studio"
     ],
     "sector": "Meta"
   },
@@ -75,7 +75,7 @@
       "HoneyDrunk.Transport",
       "HoneyDrunk.Vault",
       "HoneyDrunk.Data",
-      "HoneyDrunk.Architecture"
+      "HoneyDrunk.Studio"
     ],
     "sector": "Core"
   },
@@ -88,7 +88,7 @@
       "AI",
       "HoneyDrunk.Operator",
       "HoneyDrunk.Sim",
-      "HoneyDrunk.Architecture"
+      "HoneyDrunk.Studio"
     ],
     "sector": "Meta"
   },
@@ -101,7 +101,7 @@
       "HoneyDrunk.Vault",
       "HoneyDrunk.Data",
       "HoneyDrunk.Kernel",
-      "HoneyDrunk.Architecture"
+      "HoneyDrunk.Studio"
     ],
     "sector": "Core"
   },
@@ -113,7 +113,7 @@
       "Core",
       "HoneyDrunk.Kernel",
       "HoneyDrunk.Studios",
-      "HoneyDrunk.Architecture"
+      "HoneyDrunk.Studio"
     ],
     "sector": "Core"
   },
@@ -127,7 +127,7 @@
       "HoneyDrunk.Data",
       "HoneyDrunk.Transport",
       "Pulse",
-      "HoneyDrunk.Architecture"
+      "HoneyDrunk.Studio"
     ],
     "sector": "Core"
   },
@@ -338,7 +338,7 @@
     "tags": [
       "Meta",
       "HoneyDrunk.Grid",
-      "HoneyDrunk.Architecture"
+      "HoneyDrunk.Studio"
     ],
     "sector": "Meta"
   },
@@ -422,7 +422,7 @@
     "tags": [
       "Meta",
       "HoneyDrunk.Signal",
-      "HoneyDrunk.Architecture"
+      "HoneyDrunk.Studio"
     ],
     "sector": "Meta"
   },
@@ -443,7 +443,7 @@
       "studio-update",
       "packages",
       "Pocket Quests",
-      "HoneyDrunk.Architecture"
+      "HoneyDrunk.Studio"
     ],
     "sector": "Meta"
   }
