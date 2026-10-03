@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Correct the September 26 and October 3 signal tags to use the existing `Meta` sector, remove the unsupported `packages` tag and duplicate Pocket Quests identifier, and validate signal tags against existing catalogs before builds. Preserve the older timeline aliases without permitting them in new entries.
+
 - Label Identity/UI entries as observed project progress with formal Grid registration deferred; local dependency cards do not imply ADR acceptance or completed standup.
 
 - Correct Node Contract data to show local Pocket Quests Identity/UI integrations with release limits; remove unsupported MagicShop Pulse/Vault edges and distinguish game custody from shared secret storage.

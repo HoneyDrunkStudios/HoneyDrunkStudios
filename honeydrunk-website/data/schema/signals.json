@@ -4,9 +4,8 @@
     "title": "Studio progress: Pocket Quests prototype and Magic Shop iteration",
     "desc": "Pocket Quests has an approved charcoal, cream and gold modern-fantasy direction. The founder reports the private session-only prototype working: a character sheet, separate quest actions, XP breakdowns, Undo and optional timers. Avatar, room and adventure-location interactions remain illustrative; the prototype has no GPS, backend or push notifications. Production implementation is local and in progress, with native-device, real-sign-in and dependency acceptance still open. Magic Shop has merged its four-room graybox, Unity modernization and fixes from a scripted keyboard-and-mouse playtest. The latest game change reports 67 Core, 10 EditMode and 7 PlayMode tests passing, a successful Windows build and a clean smoke test; founder feel, lighting and readability acceptance and held-arrow-key look remain unverified. Five studio tracks now include cybersecurity alongside AI and robotics learning; no course completion is claimed. Living PRDs and GDDs own selected scope and evidence. Ticket generation is retired, review remains, Actions owns current reusable checks, and Pipelines is deprecated. These are development notes, not public product releases.",
     "tags": [
-      "studio-update",
+      "Meta",
       "Pocket Quests",
-      "pocket-quests",
       "game-prototype",
       "HoneyDrunk.Studio",
       "HoneyDrunk.Actions",
@@ -430,8 +429,7 @@
     "title": "Studio reset: published packages and the next creative tracks",
     "desc": "Published and verified 61 public NuGet packages: 52 updates and 9 first publications, with downstream dependencies reconciled. Three unimplemented AI provider packages remain unreleased. Current focus is Pocket Quests (internal working name), the first game, AI learning, and hands-on robotics. Pocket Quests has an empty configured repository and a product plan, not a shipped app; the first game remains in concept planning. Blender experiments produced editable scenes and renders. HoneyHub is archived. The website catalog now includes Payments, public package versions, refreshed relationships and service descriptions. Lore ingestion safeguards and the review runner were repaired.",
     "tags": [
-      "studio-update",
-      "packages",
+      "Meta",
       "Pocket Quests",
       "HoneyDrunk.Studio"
     ],
