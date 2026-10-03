@@ -11,7 +11,6 @@ export interface NodeRelationship {
   direction: 'upstream' | 'downstream'; // upstream = dependency, downstream = dependent
   integrationDepth: string;
   stabilityTier: string;
-  flowScore: number;
   signal: string;
   isFoundational: boolean;
   semanticReason: string; // Why this relationship exists
@@ -233,7 +232,7 @@ function generateDependencyReason(dependent: Node, dependency: Node): string {
   }
   
   if (depId === 'honeydrunk-pipelines') {
-    return `Uses Pipelines for CI/CD orchestration and deployment automation`;
+    return `Historical link to deprecated Pipelines templates; current reusable checks belong to HoneyDrunk.Actions`;
   }
 
   // Generic fallback based on sector and description
@@ -315,7 +314,6 @@ export function getNodeRelationshipMatrix(nodeId: string): NodeRelationshipMatri
         direction: 'upstream',
         integrationDepth: (node.long_description?.integration_depth as string) || 'medium',
         stabilityTier: (depNode.long_description?.stability_tier as string) || 'beta',
-        flowScore: (depNode as any).flow || 0,
         signal: depNode.signal,
         isFoundational: (depNode as any).foundational || false,
         semanticReason: generateDependencyReason(node, depNode),
@@ -325,7 +323,7 @@ export function getNodeRelationshipMatrix(nodeId: string): NodeRelationshipMatri
     })
     .filter((r) => r !== null) as NodeRelationship[];
   
-  const upstream = upstreamRaw.sort((a, b) => b.flowScore - a.flowScore);
+  const upstream = upstreamRaw.sort((a, b) => a.targetNode.name.localeCompare(b.targetNode.name));
   
   // Build downstream relationships (what depends on this node) from relationships.json
   const dependents = getNodeDependents(nodeId);
@@ -339,7 +337,6 @@ export function getNodeRelationshipMatrix(nodeId: string): NodeRelationshipMatri
         direction: 'downstream',
         integrationDepth: (depNode.long_description?.integration_depth as string) || 'medium',
         stabilityTier: (depNode.long_description?.stability_tier as string) || 'beta',
-        flowScore: (depNode as any).flow || 0,
         signal: depNode.signal,
         isFoundational: (depNode as any).foundational || false,
         semanticReason: generateDependencyReason(depNode, node),
@@ -349,7 +346,7 @@ export function getNodeRelationshipMatrix(nodeId: string): NodeRelationshipMatri
     })
     .filter((r) => r !== null) as NodeRelationship[];
   
-  const downstream = downstreamRaw.sort((a, b) => b.flowScore - a.flowScore);
+  const downstream = downstreamRaw.sort((a, b) => a.targetNode.name.localeCompare(b.targetNode.name));
   
   const roleInGrid = generateRoleInGrid(node, upstream, downstream);
   const criticalityScore = downstream.length;

@@ -19,7 +19,6 @@ interface NodeGlyphProps {
   onDrag?: (deltaX: number, deltaY: number) => void;
   onDragEnd?: () => void;
   zoom?: number;
-  useFlowVisuals?: boolean; // Toggle Flow-based coloring instead of Signal
 }
 
 export default function NodeGlyph({
@@ -32,7 +31,6 @@ export default function NodeGlyph({
   onDrag,
   onDragEnd,
   zoom = 1,
-  useFlowVisuals = false,
 }: NodeGlyphProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [pulsePhase, setPulsePhase] = useState(0);
@@ -158,14 +156,8 @@ export default function NodeGlyph({
   const selectedScale = isSelected ? 1.05 : 1;
   const finalScale = pulseScale * hoverScale * selectedScale;
 
-  // Determine color based on mode (Flow or Signal)
-  const visualColor = useFlowVisuals && node.flowMetrics 
-    ? node.flowMetrics.flowColor 
-    : node.signalVisuals.color;
-  
-  const glowIntensity = useFlowVisuals && node.flowMetrics
-    ? node.flowMetrics.flowIndex / 100 // Flow-based glow scales 0-1 with index
-    : node.signalVisuals.glowIntensity;
+  const visualColor = node.signalVisuals.color;
+  const glowIntensity = node.signalVisuals.glowIntensity;
 
   const glowSize = baseSize * 2 * glowIntensity;
   const glowOpacity = node.signalVisuals.opacity * 0.4;
@@ -285,18 +277,6 @@ export default function NodeGlyph({
             <span style={{ color: colors.electricBlue }}>Signal:</span>
             <span style={{ color: node.signalVisuals.color }}>{node.signal}</span>
           </div>
-          {useFlowVisuals && node.flowMetrics && (
-            <>
-              <div className="flex items-center gap-2 text-xs">
-                <span style={{ color: colors.electricBlue }}>Flow Index:</span>
-                <span style={{ color: node.flowMetrics.flowColor }}>{node.flowMetrics.flowIndex}</span>
-              </div>
-              <div className="flex items-center gap-2 text-xs">
-                <span style={{ color: colors.electricBlue }}>Flow Tier:</span>
-                <span style={{ color: node.flowMetrics.flowColor }} className="capitalize">{node.flowMetrics.flowTier}</span>
-              </div>
-            </>
-          )}
           {node.tags && node.tags.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-2 pt-2 border-t" style={{ borderColor: `${colors.electricBlue}30` }}>
               {node.tags.slice(0, 3).map((tag) => (

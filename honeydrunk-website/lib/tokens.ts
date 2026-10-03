@@ -7,7 +7,7 @@
 export const colors = {
   // Primary & Secondary Accents
   aurumGold: '#F5B700',        // Aurum Gold - signature HoneyDrunk hue
-  violetFlux: '#7B61FF',       // Violet Flux - matches TattedDev link glow
+  violetFlux: '#7B61FF',       // Violet Flux accent
   electricBlue: '#00D1FF',     // Electric Edge - data strokes, active grid beams
   neonPink: '#FF2A6D',         // Neon Pink - cyberpunk accent, hot highlights
   chromeTeal: '#14B8A6',       // Chrome Teal - industrial mech, metallic systems

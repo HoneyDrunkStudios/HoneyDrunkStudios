@@ -39,21 +39,13 @@ export interface Node {
   connections?: string[];    // connected node ids (derived from relationships.json)
   energy?: number;           // 0–100 (pulse: how active/observed recently)
   priority?: number;         // 0–100 (compass: strategic importance to the Hive)
-  flow?: number;             // 0–100 (computed server-side: (energy × 0.35) + (priority × 0.65))
   tags?: string[];
   links?: NodeLinks;
   docs?: NodeDocs;           // Documentation links (GitHub READMEs, file guides)
   media?: NodeMedia;
   description?: string;      // longer description for detail view
 
-  // Governance fields (used by server-side Flow computation)
-  foundational?: boolean;    // If true, gets floor boost when dependents are hot
-  strategy_base?: number;    // Base strategic value (0-100)
-  tier?: 'none' | 'internal' | 'prod-critical' | 'platform';
-  time_pressure?: number;    // Manual urgency dial (0-10)
-  done?: boolean;            // True when milestone complete (triggers cooldown)
-  cooldown_days?: number;    // Informative; engine uses multiplier
-  ops_bootstrap?: boolean;   // Temporary sprint boost for ops nodes
+  foundational?: boolean;    // Core infrastructure dependency
 }
 
 // Visual state derived from signal
@@ -78,19 +70,11 @@ export interface NodePosition {
   z?: number; // for depth/parallax
 }
 
-// Flow Index calculation result
-export interface FlowMetrics {
-  flowIndex: number;        // 0–100 weighted: (energy × 0.35) + (priority × 0.65)
-  flowTier: 'critical' | 'active' | 'supporting' | 'dormant' | 'future';
-  flowColor: string;        // visual cue based on flow tier
-}
-
 // Enhanced node with computed visual props
 export interface VisualNode extends Node {
   position: NodePosition;
   signalVisuals: SignalVisuals;
   sectorVisuals: SectorVisuals;
-  flowMetrics: FlowMetrics;
 }
 
 // Filter state
