@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "validate:signals": "node scripts/validate-signal-tags.mjs",
+    "test:signals": "node --test scripts/validate-signal-tags.test.mjs",
+    "prebuild": "npm run validate:signals",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint"
