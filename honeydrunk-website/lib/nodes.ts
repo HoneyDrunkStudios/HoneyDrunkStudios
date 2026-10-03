@@ -4,10 +4,9 @@
  */
 
 import nodesData from '@/data/schema/nodes.json';
-import type { Node, VisualNode, SignalVisuals, SectorVisuals, NodePosition, Signal, Sector, FlowMetrics } from './types';
+import type { Node, VisualNode, SignalVisuals, SectorVisuals, NodePosition, Signal, Sector } from './types';
 import { colors } from './tokens';
 import { getSectorColor, getAllSectors as getSectorsFromConfig, getSectorColorsMap } from './sectors';
-import { getFlowTierFromScore, getAllFlowTiers, formatFlowTierRange } from './flow';
 import { getNodeDependencies } from './relationships';
 
 // Type assertion for imported JSON
@@ -95,42 +94,6 @@ export function getSignalColorsMap(): Record<Signal, string> {
 }
 
 /**
- * Calculate Flow Index and metrics for a node
- * Flow = (Energy × 0.35) + (Priority × 0.65)
- *
- * Flow determines the "living roadmap" — what needs attention next
- * Note: Flow is computed server-side and written to nodes.json.
- * This fallback exists for when flow field is missing.
- */
-function calculateFlowMetrics(node: Node): FlowMetrics {
-  // Prefer server-computed flow if available
-  if (node.flow !== undefined) {
-    const tierConfig = getFlowTierFromScore(node.flow);
-    return {
-      flowIndex: Math.round(node.flow),
-      flowTier: tierConfig.id,
-      flowColor: tierConfig.color,
-    };
-  }
-
-  // Fallback: compute client-side using same formula as server
-  const energy = node.energy ?? 50;    // Default to mid-range if not set
-  const priority = node.priority ?? 50;
-
-  // Flow Index: weighted combination (matches server formula)
-  const flowIndex = (energy * 0.35) + (priority * 0.65);
-
-  // Determine flow tier from score using centralized config
-  const tierConfig = getFlowTierFromScore(flowIndex);
-
-  return {
-    flowIndex: Math.round(flowIndex),
-    flowTier: tierConfig.id,
-    flowColor: tierConfig.color,
-  };
-}
-
-/**
  * Seeded pseudo-random number generator
  * Ensures consistent positions across renders
  */
@@ -206,39 +169,7 @@ export function getNodes(): VisualNode[] {
       position: generateNodePosition(node, index),
       signalVisuals: signalVisualsMap[node.signal],
       sectorVisuals: sectorVisualsMap[node.sector],
-      flowMetrics: calculateFlowMetrics(node),
     }));
-}
-
-/**
- * Get nodes sorted by Flow Index (living roadmap view)
- * High Flow = high priority AND/OR high recent activity
- */
-export function getNodesByFlow(): VisualNode[] {
-  const allNodes = getNodes();
-  return allNodes.sort((a, b) => b.flowMetrics.flowIndex - a.flowMetrics.flowIndex);
-}
-
-/**
- * Get active nodes sorted by Flow Index (excluding completed nodes)
- * Filters out nodes where done === true
- */
-export function getActiveFlowNodes(): VisualNode[] {
-  const allNodes = getNodes();
-  return allNodes
-    .filter(node => node.done !== true)
-    .sort((a, b) => b.flowMetrics.flowIndex - a.flowMetrics.flowIndex);
-}
-
-/**
- * Get completed nodes sorted by Flow Index
- * Only includes nodes where done === true
- */
-export function getCompletedFlowNodes(): VisualNode[] {
-  const allNodes = getNodes();
-  return allNodes
-    .filter(node => node.done === true)
-    .sort((a, b) => b.flowMetrics.flowIndex - a.flowMetrics.flowIndex);
 }
 
 /**
@@ -363,15 +294,3 @@ export function getNodeStats() {
     },
   };
 }
-
-/**
- * Flow tier definitions for documentation and UI
- * Now sourced from flow_tiers.json
- */
-export const flowTierDefinitions = getAllFlowTiers().map(tier => ({
-  tier: tier.id,
-  label: tier.name,
-  range: formatFlowTierRange(tier),
-  color: tier.color,
-  description: tier.description,
-}));

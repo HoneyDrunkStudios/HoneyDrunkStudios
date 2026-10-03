@@ -2,19 +2,20 @@ import Link from 'next/link';
 import { colors } from '@/lib/tokens';
 
 const tracks = [
-  { name: 'Pocket Quests', status: 'Local implementation', href: '/nodes/pocket-quests', text: 'Personal quests, planning, progression, and profile rewards now have a local app and backend implementation. Full signed-in quest use and native-device testing remain to be verified. Pocket Quests is a working name.' },
-  { name: 'Magic Shop', status: 'First playable', href: '/nodes/game-prototype', text: 'A first-person magical shop game with a committed Unity first playable. Appraisal, crafting, and shop management follow the completed game design. Playtest results and player acceptance remain to be confirmed. Magic Shop is a working title.' },
-  { name: 'AI learning', status: 'Curriculum ready', href: 'https://github.com/HoneyDrunkStudios/HoneyDrunk.Studio/tree/main/learning/paths/ai-engineering', text: 'A 32-week path with hands-on experiments and a progress tracker. The aim is to understand, build, and evaluate AI systems; the learning sessions are not yet completed.' },
-  { name: 'Hands-on robotics', status: 'Getting started', href: 'https://github.com/HoneyDrunkStudios/HoneyDrunk.Studio', text: 'Start with the Arduino kit already on hand: identify the kit and its guide, then work through small physical experiments. No robot build has been completed yet.' },
+  { name: 'Pocket Quests', status: 'Prototype approved · app in progress', href: '/nodes/pocket-quests', text: 'A dark, modern fantasy direction in charcoal, cream and gold. A private, session-only prototype explores the character sheet, quests, XP feedback and optional timers. Production implementation is local and in progress; native-device, real-sign-in and dependency acceptance remain open. Pocket Quests is a working name.' },
+  { name: 'Magic Shop', status: 'Graybox and engine updates merged', href: '/nodes/game-prototype', text: 'The Unity first playable now has a four-room layout, modernized engine foundations and fixes from a scripted keyboard-and-mouse playtest. Founder assessment of feel, lighting and readability remains open. Magic Shop is a working title.' },
+  { name: 'AI engineering', status: 'Curriculum ready', href: '/sectors/AI', text: 'An ordered route with 32 exercise units, practical experiments and evidence-based reviews. The learning tracker records demonstrated work; a prepared curriculum does not mean the courses are complete.' },
+  { name: 'Robotics and electronics', status: 'Getting started', href: '/sectors/Cyberware', text: 'Start with the Arduino kit already on hand: identify the board and its guide, then work through small physical experiments. No completed robot build is claimed.' },
+  { name: 'Cybersecurity and ethical hacking', status: 'Curriculum ready', href: '/sectors/HoneyNet', text: 'An ordered, hands-on route beginning with networking foundations and authorized practice. Progress requires coursework and practical evidence; no course completion is claimed.' },
 ];
 
 export default function CurrentFocus() {
   return (
     <section className="px-8 py-12" aria-labelledby="current-focus-title" style={{ backgroundColor: colors.deepSpace }}>
       <div className="max-w-7xl mx-auto">
-        <p className="font-mono text-sm" style={{ color: colors.electricBlue, marginBottom: '12px' }}>STUDIO NOTES · SEPTEMBER 30, 2026</p>
+        <p className="font-mono text-sm" style={{ color: colors.electricBlue, marginBottom: '12px' }}>STUDIO NOTES · OCTOBER 3, 2026</p>
         <h2 id="current-focus-title" className="font-display text-3xl font-bold" style={{ color: colors.offWhite, marginBottom: '16px' }}>What we’re working on</h2>
-        <p style={{ color: colors.slateLight, marginBottom: '24px' }}>Four tracks for the next chapter: useful products, original worlds, and learning by making. These are current intentions, not promises of shipped features.</p>
+        <p style={{ color: colors.slateLight, marginBottom: '24px' }}>Five tracks for the next chapter: useful products, original worlds, and learning by making. These are current intentions, not promises of shipped features.</p>
         <div className="grid gap-6 md:grid-cols-2">
           {tracks.map(track => (
             <Link key={track.name} href={track.href} className="rounded-lg border p-6" style={{ borderColor: `${colors.electricBlue}40`, backgroundColor: colors.gunmetal }}>
@@ -24,8 +25,7 @@ export default function CurrentFocus() {
             </Link>
           ))}
         </div>
-        <p style={{ color: colors.slateLight, marginTop: '24px' }}>Shared foundations are progressing too: HoneyDrunk.UI source is now public, with a platform-neutral theme contract and reusable native components. Its type checks, lint, and five tests pass; npm packages have not been published. Pocket Quests uses local snapshots pinned to a source revision with file integrity checks, with fourteen app tests and responsive web checks passing. Native and complete signed-in quest use remain to be verified. The shared Identity account service is under review. HoneyHub remains archived.</p>
-        <Link href="https://tatteddev.com/blog/i-ran-my-dev-studio-from-the-couch/" className="inline-block font-mono underline" style={{ color: colors.electricBlue, marginTop: '12px' }}>Read the personal devlog: I Ran My Dev Studio From the Couch →</Link>
+        <p style={{ color: colors.slateLight, marginTop: '24px' }}>Shared foundations are progressing too. HoneyDrunk.UI has public source, with further accessibility and reusable component work under local review; npm packages remain unpublished. HoneyDrunk.Actions owns the current reusable CI workflows; the older Pipelines project is deprecated. Living product and game documents guide selected work, with review retained and the old ticket-generation pipeline retired. HoneyHub remains archived.</p>
       </div>
     </section>
   );

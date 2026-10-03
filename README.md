@@ -3,6 +3,18 @@
 
 (Founder-Controlled • AI-Advised • Copilot-Powered • Cyberpunk-Aesthetic • Build-in-Public • Agentic-Driven)  
 
+## Website maintenance — October 3, 2026
+
+The Next.js application lives in `honeydrunk-website/`. Install the lockfile with `npm ci`, then use `npm run dev`, `npm run lint`, `npx tsc --noEmit` and `npm run build` from that directory.
+
+HoneyDrunk.Studio owns current priorities, living product requirements, game design and learning evidence. This website publishes a dated, bounded summary; its catalog and signal feed do not authorize work or establish product acceptance. The longer manifesto below describes studio aspirations, not a list of shipped features.
+
+- `components/CurrentFocus.tsx` presents the five selected tracks.
+- `data/schema/nodes.json` and `signals.json` hold public project descriptions and dated updates. Separate private prototypes, local implementation, merged code, package publication and founder acceptance.
+- Shared navigation lives in `components/Header.tsx` and `LandingFooter.tsx`; `app/sitemap.ts` owns the static sitemap. Keep route removals consistent across these sources, Grid controls, schema metadata and links.
+- Publish studio material only. Private prototype URLs and personal-site promotion do not belong in public navigation or content.
+
+
 ---
 
 ## 🎯 Mission
@@ -200,7 +212,7 @@ Palette → Gold ⚡ Violet ⚡ Blue ⚡ **Matrix Green (HoneyNet)**
 5️⃣ Signal → publish on HoneyDrunkStudios.com
 ```
 Whenever “**What’s next for HoneyDrunk?**” is asked,  
-Copilot checks **HoneyDrunkStudios.com** for live Signal + Node data to determine the next move.
+Read **HoneyDrunk.Studio current focus**, then the selected living PRD, GDD or learning tracker. The website is a public summary, not execution authority.
 
 ---
 
@@ -222,8 +234,7 @@ Next Node      → "What follows Pulse?"
 ---
 
 ## 🗂 Hive Tracker
-Refer to **HoneyDrunkStudios.com** → *Signal* and *Node* pages for real-time progress.  
-This is the **source of truth** for all priorities.
+Refer to **HoneyDrunk.Studio** for selected priorities and source evidence. The website’s *Signal* and *Node* pages are dated public summaries; they do not replace the owning documents.
 
 ---
 

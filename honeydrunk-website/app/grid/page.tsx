@@ -12,7 +12,6 @@ import { getAllSectors, getAllSignals, getGridData, type VisualNode, type Visual
 import type { Sector, Signal } from '@/lib/types';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import TheGrid from '@/components/TheGrid';
-import FlowLanes from '@/components/FlowLanes';
 import FilterChips, { getSignalColor } from '@/components/FilterChips';
 import { getSectorColor } from '@/lib/sectors';
 import SignalLegend from '@/components/SignalLegend';
@@ -31,21 +30,7 @@ function GridContent() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedEntityId, setSelectedEntityId] = useState<string | undefined>();
   const [showFilters, setShowFilters] = useState(true);
-  const [flowMode, setFlowMode] = useState(false);
   const lastUrlRef = useRef<string>('');
-  const filterStateBeforeFlowMode = useRef<boolean>(true);
-
-  // Save filter state and hide when entering Flow Mode, restore when exiting
-  useEffect(() => {
-    if (flowMode) {
-      // Entering Flow Mode - save current state and hide
-      filterStateBeforeFlowMode.current = showFilters;
-      setShowFilters(false);
-    } else {
-      // Exiting Flow Mode - restore previous state
-      setShowFilters(filterStateBeforeFlowMode.current);
-    }
-  }, [flowMode]);
 
   // Initialize from URL params
   useEffect(() => {
@@ -54,7 +39,6 @@ function GridContent() {
     const searchParam = searchParams.get('search');
     const nodeParam = searchParams.get('node');
     const serviceParam = searchParams.get('service');
-    const flowModeParam = searchParams.get('flowMode');
 
     if (sectorsParam) {
       setSelectedSectors(sectorsParam.split(','));
@@ -70,9 +54,6 @@ function GridContent() {
     }
     if (serviceParam) {
       setSelectedEntityId(serviceParam);
-    }
-    if (flowModeParam === 'true') {
-      setFlowMode(true);
     }
   }, [searchParams]);
 
@@ -211,63 +192,41 @@ function GridContent() {
 
       {/* Search and Filter Bar */}
       <div className="absolute top-20 left-0 right-0 z-40 px-8 py-4 flex items-center justify-end gap-4">
-        {/* Search - hidden in Flow Mode */}
-        {!flowMode && (
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search nodes..."
-            className="px-6 py-4 rounded-lg text-sm font-mono
-                     focus:outline-none focus:ring-2"
-            style={{
-              backgroundColor: `${colors.gunmetal}80`,
-              borderWidth: '1px',
-              borderColor: `${colors.slateLight}40`,
-              color: colors.offWhite,
-            }}
-          />
-        )}
+        {/* Search */}
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search nodes..."
+          className="px-6 py-4 rounded-lg text-sm font-mono
+                   focus:outline-none focus:ring-2"
+          style={{
+            backgroundColor: `${colors.gunmetal}80`,
+            borderWidth: '1px',
+            borderColor: `${colors.slateLight}40`,
+            color: colors.offWhite,
+          }}
+        />
 
-        {/* Filter toggle - hidden in Flow Mode */}
-        {!flowMode && (
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className="px-6 py-4 rounded-lg text-sm font-mono cursor-pointer
-                     transition-all duration-200 hover:scale-105 whitespace-nowrap"
-            style={{
-              backgroundColor: showFilters
-                ? `${colors.violetCore}30`
-                : `${colors.gunmetal}80`,
-              borderWidth: '1px',
-              borderColor: showFilters
-                ? colors.violetCore
-                : `${colors.slateLight}40`,
-              color: showFilters ? colors.violetCore : colors.slateLight,
-            }}
-          >
-            {showFilters ? '✓ ' : ''}Filters ({filteredGridData.nodes.length}N / {filteredGridData.modules.length}M)
-          </button>
-        )}
-
-        {/* Flow Mode toggle */}
+        {/* Filter toggle */}
         <button
-          onClick={() => setFlowMode(!flowMode)}
+          onClick={() => setShowFilters(!showFilters)}
           className="px-6 py-4 rounded-lg text-sm font-mono cursor-pointer
                    transition-all duration-200 hover:scale-105 whitespace-nowrap"
           style={{
-            backgroundColor: flowMode
-              ? `${colors.aurumGold}30`
+            backgroundColor: showFilters
+              ? `${colors.violetCore}30`
               : `${colors.gunmetal}80`,
             borderWidth: '1px',
-            borderColor: flowMode
-              ? colors.aurumGold
+            borderColor: showFilters
+              ? colors.violetCore
               : `${colors.slateLight}40`,
-            color: flowMode ? colors.aurumGold : colors.slateLight,
+            color: showFilters ? colors.violetCore : colors.slateLight,
           }}
         >
-          {flowMode ? '✓ ' : ''}Flow Mode
+          {showFilters ? '✓ ' : ''}Filters ({filteredGridData.nodes.length}N / {filteredGridData.modules.length}M)
         </button>
+
       </div>
 
       {/* Filters sidebar */}
@@ -386,56 +345,24 @@ function GridContent() {
         </aside>
       )}
 
-      {/* Main Grid / Flow View */}
+      {/* Main Grid */}
       <div className="relative z-20 w-full h-full pt-20">
-        {flowMode ? (
-          <>
-            {/* Flow Mode Header */}
-            <div
-              className="absolute left-1/2 transform -translate-x-1/2 z-40 px-6 py-3 rounded-lg backdrop-blur-sm border"
-              style={{
-                top: '6.5rem',
-                backgroundColor: `${colors.deepSpace}90`,
-                borderColor: `${colors.aurumGold}40`,
-                maxWidth: '800px',
-              }}
-            >
-              <div className="text-center">
-                <div className="text-sm font-mono font-bold mb-1" style={{ color: colors.aurumGold }}>
-                  Flow Index View
-                </div>
-                <div className="text-xs font-mono" style={{ color: colors.slateLight }}>
-                  Organized by Flow = (Energy × 0.35) + (Priority × 0.65). Higher flow needs attention next.
-                </div>
-              </div>
-            </div>
-            <FlowLanes
-              nodes={filteredGridData.nodes}
-              onNodeClick={(node: VisualNode) => {
-                router.push(`/nodes/${node.id}`);
-              }}
-            />
-          </>
-        ) : (
-          <TheGrid
-            gridData={filteredGridData}
-            selectedEntityId={selectedEntityId}
-            onNodeClick={(node: VisualNode) => {
-              router.push(`/nodes/${node.id}`);
-            }}
-            onModuleClick={(module: VisualModule) => {
-              router.push(`/nodes/${module.parent}#module-${module.id}`);
-            }}
-          />
-        )}
+        <TheGrid
+          gridData={filteredGridData}
+          selectedEntityId={selectedEntityId}
+          onNodeClick={(node: VisualNode) => {
+            router.push(`/nodes/${node.id}`);
+          }}
+          onModuleClick={(module: VisualModule) => {
+            router.push(`/nodes/${module.parent}#module-${module.id}`);
+          }}
+        />
       </div>
 
-      {/* Signal Legend - hidden in Flow Mode */}
-      {!flowMode && (
-        <div className="absolute right-6 z-30" style={{ top: '15rem' }}>
-          <SignalLegend signalColors={signalColorMap} />
-        </div>
-      )}
+      {/* Signal Legend */}
+      <div className="absolute right-6 z-30" style={{ top: '15rem' }}>
+        <SignalLegend signalColors={signalColorMap} />
+      </div>
 
       {/* Footer */}
       <div className="relative z-10">

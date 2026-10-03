@@ -32,7 +32,7 @@
       ],
       "monetization_signal": "Internal-first; open-core patterns possible for public SDKs.",
       "roadmap_focus": "SourceLink defaults, deterministic builds by default, unified pack/publish targets, optional signing hooks.",
-      "grid_relationship": "Consumed by .NET Nodes; Pipelines executes it; Standards defines style it does not enforce.",
+      "grid_relationship": "Consumed by .NET Nodes; current reusable checks live in HoneyDrunk.Actions; Standards defines stylistic rules.",
       "integration_depth": "deep",
       "demo_path": "Enable Directory.Build.props/targets → build locally and in CI → verify identical artifacts and version lineage.",
       "signal_quote": "Mechanics without mystery.",
@@ -44,22 +44,17 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": true,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 75,
     "public_name": "HoneyDrunk.Build"
   },
   {
     "id": "honeydrunk-pipelines",
     "type": "node",
     "name": "HoneyDrunk.Pipelines",
-    "short": "Azure DevOps YAML templates",
-    "description": "Reusable CI/CD templates for Azure DevOps. Internal path with private feed auth, gated releases, package promotion.",
+    "short": "Deprecated Azure DevOps templates",
+    "description": "Deprecated. Retained as historical context; HoneyDrunk.Actions is the current home for reusable CI checks.",
     "sector": "Ops",
-    "signal": "Seed",
+    "signal": "Archive",
     "cluster": "foundation",
     "energy": 29,
     "priority": 81,
@@ -72,20 +67,18 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Pipelines"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Pipelines is the bloodstream of the Grid — every artifact, commit, and release flows through it. It codifies how things move from local intention to global availability, weaving together build, validation, promotion, and deployment under one unified grammar. Pipelines eliminate human drift in release discipline by encoding every pattern as YAML templates shared across the Hive. It carries identity, observability, and risk-awareness in every stage; no release leaves the lab without its own record of lineage and health. In the near term, Pipelines will unify Azure DevOps and GitHub Actions into one language, making hybrid orchestration seamless between private enterprise and public repositories. Later, it will tie into Pulse and Vault, becoming reflexive — capable of gating rollouts based on telemetry or automatically rolling back failed releases. The vision is an infrastructure that's not just continuous but conscious — aware of its own health, timing, and dependencies. Pipelines earns its keep by making velocity safe — transforming release anxiety into a repeatable dance.",
-      "why_it_exists": "HoneyDrunk.Pipelines exists to prevent inconsistency and reinvention across the Grid.",
+      "overview": "Deprecated. Retained as historical context; HoneyDrunk.Actions is the current home for reusable CI checks.",
+      "why_it_exists": "Historical shared Azure DevOps templates, retained as reference after deprecation.",
       "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
       "value_props": [
-        "Standardizes devops, ci-cd",
-        "Reduces operational risk with opinionated defaults",
-        "Improves developer velocity and interoperability"
+        "Historical Azure DevOps template reference"
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
-      "roadmap_focus": "Advance HoneyDrunk.Pipelines capabilities and harden contracts.",
-      "grid_relationship": "Connects with: honeydrunk-build, honeydrunk-deploy, honeydrunk-tools.",
+      "roadmap_focus": "No active roadmap. Current shared workflow work belongs in HoneyDrunk.Actions.",
+      "grid_relationship": "Historical Azure DevOps relationships are retained for context; they do not imply an active deployment or migration.",
       "integration_depth": "deep",
-      "demo_path": "Show a 60-second demo of HoneyDrunk.Pipelines: input → behavior → outcome.",
-      "signal_quote": "Flow without friction.",
+      "demo_path": "Historical template source only; use HoneyDrunk.Actions for current checks.",
+      "signal_quote": "Historical build infrastructure.",
       "stability_tier": "beta",
       "impact_vector": "developer velocity"
     },
@@ -94,13 +87,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 28,
     "tier": "internal",
-    "time_pressure": 5,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 70,
-    "ops_bootstrap": true,
     "public_name": "HoneyDrunk.Pipelines"
   },
   {
@@ -108,7 +95,7 @@
     "type": "node",
     "name": "HoneyDrunk.Actions",
     "short": "GitHub Actions reusable workflows",
-    "description": "Public CI toolkit for OSS repos. Mirrors contracts with Pipelines while staying feed-agnostic.",
+    "description": "Reusable GitHub Actions workflows for current HoneyDrunk build, test and publishing checks. New Node quality-job work remains local and unverified in remote CI as of October 3, 2026.",
     "sector": "Ops",
     "signal": "Live",
     "cluster": "foundation",
@@ -123,7 +110,7 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Actions"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Actions brings HoneyDrunk's engineering discipline to the open world. It's the public CI/CD framework for GitHub repositories, mirroring the rigor of Pipelines but tuned for transparency and collaboration. It standardizes testing, packaging, and deployment for public projects without depending on private infrastructure.",
+      "overview": "HoneyDrunk.Actions is the current home for reusable GitHub Actions workflows. It standardizes build, test, packaging and deployment checks for participating repositories. The older HoneyDrunk.Pipelines project is deprecated; new reusable Node quality-job work remains local and has not been exercised in remote CI.",
       "why_it_exists": "Consistent CI/CD patterns across all public GitHub repos, preventing reinvention of build and test workflows.",
       "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
       "value_props": [
@@ -132,7 +119,7 @@
         "Improves developer velocity and interoperability"
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
-      "roadmap_focus": "Advance HoneyDrunk.Actions capabilities and harden contracts.",
+      "roadmap_focus": "Review and verify locally developed reusable quality jobs in remote CI before claiming adoption or release.",
       "grid_relationship": "Connects with: honeydrunk-build.",
       "integration_depth": "medium",
       "demo_path": "Reference a reusable workflow → observe build, test, pack, publish steps → verify artifacts.",
@@ -145,13 +132,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 28,
     "tier": "platform",
-    "time_pressure": 5,
-    "done": true,
-    "cooldown_days": 14,
-    "flow": 23,
-    "ops_bootstrap": true,
     "public_name": "HoneyDrunk.Actions"
   },
   {
@@ -159,7 +140,7 @@
     "type": "node",
     "name": "HoneyDrunk.Deploy",
     "short": "Release & environment orchestration",
-    "description": "Standardized deployments, environment tagging, artifact promotion, and approvals. Works with Pipelines and Actions.",
+    "description": "Deployment policy concepts for environment tagging, artifact promotion and approvals. The catalog retains historical Pipelines links; active shared CI work belongs to HoneyDrunk.Actions.",
     "sector": "Ops",
     "signal": "Seed",
     "cluster": "infrastructure",
@@ -174,7 +155,7 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Deploy"
     },
     "long_description": {
-      "overview": "Deploy is the final stage of intent — where code becomes running reality. It defines the policies, checks, and choreography that govern how software enters production across the Grid. Each deployment is treated not as a one-time action, but as a ritual encoded in version-controlled manifest files. Deploy integrates with Pipelines, Vault, and Pulse to ensure that every rollout is authorized, monitored, and reversible. It provides the Grid with confidence that change equals progress, not danger. Over time, Deploy will expand to support multi-region blue/green, progressive delivery, and instant rollbacks powered by live telemetry feedback. It will evolve toward declarative infrastructure definitions where environments define themselves and deployments self-heal when they drift. Deploy earns its keep by turning operational chaos into ceremony — when change is predictable, creativity accelerates.",
+      "overview": "Deploy is the final stage of intent — where code becomes running reality. It defines the policies, checks, and choreography that govern how software enters production across the Grid. Each deployment is treated not as a one-time action, but as a ritual encoded in version-controlled manifest files. The earlier design linked Deploy with Pipelines, Vault and Pulse for authorized, monitored and reversible rollouts. Pipelines is now deprecated; that historical design does not establish current integrations. It provides the Grid with confidence that change equals progress, not danger. Over time, Deploy will expand to support multi-region blue/green, progressive delivery, and instant rollbacks powered by live telemetry feedback. It will evolve toward declarative infrastructure definitions where environments define themselves and deployments self-heal when they drift. Deploy earns its keep by turning operational chaos into ceremony — when change is predictable, creativity accelerates.",
       "why_it_exists": "HoneyDrunk.Deploy exists to prevent inconsistency and reinvention across the Grid.",
       "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
       "value_props": [
@@ -196,13 +177,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 26,
     "tier": "internal",
-    "time_pressure": 4,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 45,
-    "ops_bootstrap": true,
     "public_name": "HoneyDrunk.Deploy"
   },
   {
@@ -415,12 +390,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": true,
-    "strategy_base": 10,
     "tier": "none",
-    "time_pressure": 0,
-    "done": true,
-    "cooldown_days": 14,
-    "flow": 45,
     "public_name": "HoneyDrunk.Kernel"
   },
   {
@@ -473,12 +443,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": true,
-    "strategy_base": 30,
     "tier": "none",
-    "time_pressure": 3,
-    "done": true,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "HoneyDrunk.Data"
   },
   {
@@ -533,12 +498,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": true,
-    "strategy_base": 28,
     "tier": "none",
-    "time_pressure": 2,
-    "done": true,
-    "cooldown_days": 14,
-    "flow": 45,
     "public_name": "HoneyDrunk.Transport"
   },
   {
@@ -587,12 +547,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": true,
-    "strategy_base": 22,
     "tier": "none",
-    "time_pressure": 2,
-    "done": true,
-    "cooldown_days": 14,
-    "flow": 35,
     "public_name": "HoneyDrunk.Web.Rest"
   },
   {
@@ -640,12 +595,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 30,
     "public_name": "HoneyDrunk.Testing"
   },
   {
@@ -668,7 +618,7 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Tools"
     },
     "long_description": {
-      "overview": "Tools is the utility belt of the Hive — a collection of cross-platform scripts, CLIs, and automation helpers that make development frictionless. It centralizes the repetitive workflows that developers otherwise rewrite in isolation: packaging, publishing, deployment triggers, and testing shortcuts. Tools ensures that the same commands behave identically whether you're on Windows, macOS, or Linux, bringing parity across the diverse machines of the studio. It reduces tribal knowledge and operational drag, empowering contributors to act with confidence. Over time, Tools will evolve into a modular CLI with contextual awareness — capable of inspecting a repository and offering smart actions. It will also integrate directly with Vault and Pipelines, giving developers a way to trigger secure, auditable operations from their terminal. Tools earns its keep by saving hours that would otherwise evaporate into manual toil. In the Grid, convenience is not luxury — it's velocity.",
+      "overview": "Tools is the utility belt of the Hive — a collection of cross-platform scripts, CLIs, and automation helpers that make development frictionless. It centralizes the repetitive workflows that developers otherwise rewrite in isolation: packaging, publishing, deployment triggers, and testing shortcuts. Tools ensures that the same commands behave identically whether you're on Windows, macOS, or Linux, bringing parity across the diverse machines of the studio. It reduces tribal knowledge and operational drag, empowering contributors to act with confidence. Over time, Tools will evolve into a modular CLI with contextual awareness — capable of inspecting a repository and offering smart actions. The earlier plan proposed Vault and Pipelines integration for secure terminal operations. Pipelines is now deprecated; replacement integration has not been verified. Tools earns its keep by saving hours that would otherwise evaporate into manual toil. In the Grid, convenience is not luxury — it's velocity.",
       "why_it_exists": "HoneyDrunk.Tools exists to prevent inconsistency and reinvention across the Grid.",
       "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
       "value_props": [
@@ -690,13 +640,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 26,
     "tier": "internal",
-    "time_pressure": 4,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 65,
-    "ops_bootstrap": true,
     "public_name": "HoneyDrunk.Tools"
   },
   {
@@ -756,12 +700,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": true,
-    "strategy_base": 18,
     "tier": "none",
-    "time_pressure": 2,
-    "done": true,
-    "cooldown_days": 14,
-    "flow": 45,
     "public_name": "HoneyDrunk.Vault"
   },
   {
@@ -810,12 +749,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 22,
     "tier": "none",
-    "time_pressure": 2,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 100,
     "public_name": "HoneyDrunk.Pulse"
   },
   {
@@ -865,12 +799,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": true,
-    "cooldown_days": 14,
-    "flow": 28,
     "public_name": "HoneyDrunk.Auth"
   },
   {
@@ -885,7 +814,6 @@
     "cluster": "cognition",
     "energy": 0,
     "priority": 90,
-    "flow": 0,
     "tags": [
       "inference",
       "llm",
@@ -921,11 +849,7 @@
       "impact_vector": "ai capability"
     },
     "foundational": true,
-    "strategy_base": 10,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -943,7 +867,6 @@
     "cluster": "cognition",
     "energy": 0,
     "priority": 85,
-    "flow": 0,
     "tags": [
       "tools",
       "registry",
@@ -976,11 +899,7 @@
       "impact_vector": "ai capability"
     },
     "foundational": false,
-    "strategy_base": 10,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -998,7 +917,6 @@
     "cluster": "cognition",
     "energy": 0,
     "priority": 95,
-    "flow": 0,
     "tags": [
       "agents",
       "lifecycle",
@@ -1032,11 +950,7 @@
       "impact_vector": "ai capability"
     },
     "foundational": true,
-    "strategy_base": 10,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -1054,7 +968,6 @@
     "cluster": "cognition",
     "energy": 0,
     "priority": 80,
-    "flow": 0,
     "tags": [
       "memory",
       "agent-memory",
@@ -1087,11 +1000,7 @@
       "impact_vector": "ai capability"
     },
     "foundational": false,
-    "strategy_base": 10,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -1109,7 +1018,6 @@
     "cluster": "cognition",
     "energy": 0,
     "priority": 75,
-    "flow": 0,
     "tags": [
       "knowledge",
       "rag",
@@ -1144,11 +1052,7 @@
       "impact_vector": "ai capability"
     },
     "foundational": false,
-    "strategy_base": 10,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -1166,7 +1070,6 @@
     "cluster": "orchestration",
     "energy": 0,
     "priority": 70,
-    "flow": 0,
     "tags": [
       "workflow",
       "orchestration",
@@ -1200,11 +1103,7 @@
       "impact_vector": "ai capability"
     },
     "foundational": false,
-    "strategy_base": 10,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -1222,7 +1121,6 @@
     "cluster": "governance",
     "energy": 0,
     "priority": 65,
-    "flow": 0,
     "tags": [
       "safety",
       "oversight",
@@ -1257,11 +1155,7 @@
       "impact_vector": "safety"
     },
     "foundational": false,
-    "strategy_base": 10,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -1279,7 +1173,6 @@
     "cluster": "quality",
     "energy": 0,
     "priority": 55,
-    "flow": 0,
     "tags": [
       "evaluation",
       "regression",
@@ -1313,11 +1206,7 @@
       "impact_vector": "ai quality"
     },
     "foundational": false,
-    "strategy_base": 10,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -1335,7 +1224,6 @@
     "cluster": "quality",
     "energy": 0,
     "priority": 40,
-    "flow": 0,
     "tags": [
       "simulation",
       "risk",
@@ -1368,11 +1256,7 @@
       "impact_vector": "safety"
     },
     "foundational": false,
-    "strategy_base": 5,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -1420,12 +1304,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "HoneyDrunk.Signal"
   },
   {
@@ -1468,12 +1347,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 43,
     "public_name": "Ledger"
   },
   {
@@ -1516,12 +1390,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 46,
     "public_name": "Invoice"
   },
   {
@@ -1568,12 +1437,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 26,
     "public_name": "HoneyDrunk.ClientPortalOS"
   },
   {
@@ -1616,12 +1480,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 26,
     "public_name": "Pay"
   },
   {
@@ -1664,12 +1523,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 26,
     "public_name": "Subs"
   },
   {
@@ -1712,12 +1566,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "Forge"
   },
   {
@@ -1760,12 +1609,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "Tether"
   },
   {
@@ -1808,20 +1652,15 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "Draft"
   },
   {
     "id": "game-prototype",
     "type": "node",
     "name": "Magic Shop (working title)",
-    "short": "First-person magical shop game — first playable",
-    "description": "A Unity magical shop game with a committed first playable. Player acceptance, balance and performance remain to be verified through playtesting.",
+    "short": "First-person magical shop game — four-room graybox",
+    "description": "As of October 3, 2026: the first playable, four-room layout graybox, Unity modernization and scripted-playtest fixes are merged. Automated checks and a Windows build are reported passing; founder acceptance of feel, lighting and readability remains open.",
     "sector": "HoneyPlay",
     "signal": "Wiring",
     "cluster": "gaming",
@@ -1834,16 +1673,16 @@
     ],
     "links": {},
     "long_description": {
-      "overview": "A Unity magical shop game with a committed first playable. Player acceptance, balance and performance remain to be verified through playtesting.",
+      "overview": "As of October 3, 2026: the first playable, four-room layout graybox, Unity modernization and scripted-playtest fixes are merged. Automated checks and a Windows build are reported passing; founder acceptance of feel, lighting and readability remains open. The approved GDD 1.1 guides presentation and space. The layout work does not establish completion of its later HUD, screen or interaction changes.",
       "why_it_exists": "Explore an original world through appraisal, crafting and running a magical shop.",
       "primary_audience": "Players interested in a stylized first-person shop game.",
       "value_props": [
-        "Appraisal and shop management",
-        "Forge, alchemy and enchanting",
-        "A completed design guiding first-playable iteration"
+        "Appraisal, crafting and shop management",
+        "A four-room shop layout around the counter",
+        "Scripted keyboard-and-mouse playtest coverage"
       ],
       "monetization_signal": "No public release or pricing commitment.",
-      "roadmap_focus": "Capture founder playtest results and iterate against the completed game design; actual playtest outcomes remain unknown.",
+      "roadmap_focus": "Capture founder playtesting of feel, lighting and readability, and verify held-arrow-key look. Continue only the explicitly selected design slice; the wider GDD 1.1 presentation is not all implemented.",
       "grid_relationship": "Standalone Unity implementation with local saves and settings. No HoneyDrunk.Pulse or HoneyDrunk.Vault package integration is verified; in-game vault custody is a game mechanic.",
       "integration_depth": "medium",
       "demo_path": "First playable exists; public demo availability is not confirmed.",
@@ -1856,12 +1695,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "Magic Shop (working title)"
   },
   {
@@ -1912,12 +1746,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 0,
     "public_name": "HoneyHub"
   },
   {
@@ -1960,12 +1789,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "HoneyConnect"
   },
   {
@@ -2010,12 +1834,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 69,
     "public_name": "HoneyDrunk.Grid"
   },
   {
@@ -2059,12 +1878,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "HoneyMech.Courier"
   },
   {
@@ -2108,12 +1922,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 36,
     "public_name": "HoneyMech.Sim"
   },
   {
@@ -2157,12 +1966,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "HoneyMech.Servo"
   },
   {
@@ -2207,12 +2011,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "Archive.Legacy"
   },
   {
@@ -2258,12 +2057,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "BreachLab.exe"
   },
   {
@@ -2309,12 +2103,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 31,
     "public_name": "HoneyDrunk.Sentinel"
   },
   {
@@ -2361,12 +2150,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "Re:View"
   },
   {
@@ -2412,12 +2196,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "MemoryBank"
   },
   {
@@ -2464,12 +2243,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "DreamMarket"
   },
   {
@@ -2519,12 +2293,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "Arcadia"
   },
   {
@@ -2571,12 +2340,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 31,
     "public_name": "HiveXP"
   },
   {
@@ -2623,12 +2387,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 23,
     "public_name": "HiveGigs"
   },
   {
@@ -2669,14 +2428,9 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "energy": 29,
     "priority": 19,
-    "flow": 23,
     "public_name": "Meta.DevPortal"
   },
   {
@@ -2716,14 +2470,9 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "energy": 29,
     "priority": 19,
-    "flow": 23,
     "public_name": "Meta.PackagePublisher"
   },
   {
@@ -2763,14 +2512,9 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "energy": 30,
     "priority": 37,
-    "flow": 35,
     "public_name": "Meta.AtlasSync"
   },
   {
@@ -2810,14 +2554,9 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "energy": 31,
     "priority": 39,
-    "flow": 36,
     "public_name": "MarketCore"
   },
   {
@@ -2857,14 +2596,9 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "energy": 29,
     "priority": 24,
-    "flow": 26,
     "public_name": "HoneyDrunk.Console"
   },
   {
@@ -2904,14 +2638,9 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 20,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "energy": 30,
     "priority": 42,
-    "flow": 38,
     "public_name": "Audit.Agent"
   },
   {
@@ -2962,12 +2691,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 10,
     "tier": "none",
-    "time_pressure": 0,
-    "done": true,
-    "cooldown_days": 14,
-    "flow": 0,
     "public_name": "HoneyDrunk.Standards"
   },
   {
@@ -3013,12 +2737,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 22,
     "tier": "internal",
-    "time_pressure": 3,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 50,
     "public_name": "HoneyDrunk.Collector"
   },
   {
@@ -3068,12 +2787,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 21,
     "tier": "none",
-    "time_pressure": 3,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 29,
     "public_name": "HoneyDrunk.Notify"
   },
   {
@@ -3119,12 +2833,7 @@
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
     "foundational": false,
-    "strategy_base": 22,
     "tier": "internal",
-    "time_pressure": 2,
-    "done": false,
-    "cooldown_days": 14,
-    "flow": 39,
     "public_name": "HoneyDrunk.Assets"
   },
   {
@@ -3148,7 +2857,6 @@
       "docs": null
     },
     "tier": "internal",
-    "ops_bootstrap": false,
     "foundational": false,
     "purpose": [
       "Provide a physical Grid shard for storage, networking, and virtualization.",
@@ -3170,13 +2878,8 @@
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
     },
-    "strategy_base": 20,
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "energy": 29,
     "priority": 29,
-    "flow": 29,
     "public_name": "HoneyDrunk.HomeLab"
   },
   {
@@ -3185,13 +2888,12 @@
     "name": "HoneyDrunk.Studio",
     "public_name": "HoneyDrunk.Studio",
     "short": "Studio planning, learning & Grid architecture",
-    "description": "Shared HoneyDrunk Studios home for projects, experiments, learning, professional growth, and canonical Grid architecture context.",
+    "description": "The renamed studio home for living product requirements, game design, learning evidence and canonical Grid architecture.",
     "sector": "Meta",
     "signal": "Live",
     "cluster": "governance",
     "energy": 50,
     "priority": 80,
-    "flow": 60,
     "tags": [
       "architecture",
       "adrs",
@@ -3204,7 +2906,7 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Studio"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Studio is the studio's shared planning and knowledge home. It holds Grid catalogs, technical invariants, decisions, product ideas, learning paths and experiment notes. Direct founder intent drives work; issues are optional coordination tools. Application implementation stays in the owning repo; small illustrative learning experiments may live here.",
+      "overview": "HoneyDrunk.Studio is the renamed shared planning and knowledge home for the studio. Living PRDs and GDDs own selected product scope, decisions and progress; learning trackers own demonstrated learning. Current focus links the five selected tracks. The work-item and ticket-generation pipeline is retired, while meaningful review remains. Application implementation stays in its owning repository.",
       "why_it_exists": "Without a single source of architectural truth, decisions scatter across repos, agents lack context, and the Grid drifts.",
       "primary_audience": "Architecture agents, Copilot workflows, and HoneyDrunk maintainers making cross-cutting decisions.",
       "value_props": [
@@ -3218,17 +2920,13 @@
       "roadmap_focus": "Keep useful technical context current, support selected studio work, and track learning with lightweight evidence.",
       "grid_relationship": "Referenced by all agents and copilot instructions. No runtime dependencies.",
       "integration_depth": "shallow",
-      "demo_path": "Ask the ADR Composer agent a trade-off question → observe context loading from catalogs → review the generated ADR.",
+      "demo_path": "Start from current focus, open the selected living PRD, GDD or learning tracker, and follow its dated evidence.",
       "signal_quote": "Know the map. Tend the garden.",
       "stability_tier": "stable",
       "impact_vector": "architectural clarity"
     },
     "foundational": false,
-    "strategy_base": 15,
     "tier": "none",
-    "time_pressure": 0,
-    "done": true,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -3246,7 +2944,6 @@
     "cluster": "visualization",
     "energy": 40,
     "priority": 70,
-    "flow": 55,
     "tags": [
       "website",
       "nextjs",
@@ -3279,11 +2976,7 @@
       "impact_vector": "community engagement"
     },
     "foundational": false,
-    "strategy_base": 15,
     "tier": "none",
-    "time_pressure": 0,
-    "done": true,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -3301,7 +2994,6 @@
     "cluster": "knowledge",
     "energy": 0,
     "priority": 60,
-    "flow": 0,
     "tags": [
       "knowledge",
       "wiki",
@@ -3335,11 +3027,7 @@
       "impact_vector": "knowledge"
     },
     "foundational": false,
-    "strategy_base": 10,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -3357,7 +3045,6 @@
     "cluster": "security",
     "energy": 0,
     "priority": 0,
-    "flow": 0,
     "tags": [
       "infrastructure",
       "rotation",
@@ -3387,11 +3074,7 @@
       "impact_vector": "security posture"
     },
     "foundational": false,
-    "strategy_base": 10,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -3409,7 +3092,6 @@
     "cluster": "orchestration",
     "energy": 0,
     "priority": 25,
-    "flow": 20,
     "tags": [
       "orchestration",
       "workflows",
@@ -3444,11 +3126,7 @@
       "impact_vector": "communication intelligence"
     },
     "foundational": false,
-    "strategy_base": 15,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -3466,7 +3144,6 @@
     "cluster": "foundation",
     "energy": 0,
     "priority": 20,
-    "flow": 0,
     "tags": [
       "bicep",
       "iac",
@@ -3494,11 +3171,7 @@
       "impact_vector": "bus-factor / reproducibility"
     },
     "foundational": false,
-    "strategy_base": 0,
     "tier": "platform",
-    "time_pressure": 3,
-    "done": false,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -3516,7 +3189,6 @@
     "cluster": "security",
     "energy": 0,
     "priority": 0,
-    "flow": 0,
     "tags": [
       "audit",
       "security",
@@ -3551,11 +3223,7 @@
       "impact_vector": "security posture"
     },
     "foundational": false,
-    "strategy_base": 0,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -3573,7 +3241,6 @@
     "cluster": "observability",
     "energy": 0,
     "priority": 0,
-    "flow": 0,
     "tags": [
       "observation",
       "external",
@@ -3607,11 +3274,7 @@
       "impact_vector": "external visibility"
     },
     "foundational": false,
-    "strategy_base": 0,
     "tier": "none",
-    "time_pressure": 0,
-    "done": false,
-    "cooldown_days": 14,
     "_dictionary_ref": {
       "version": "v1",
       "path": "/schema/node_manifest_dictionary.v1.json"
@@ -3629,7 +3292,6 @@
     "cluster": "commercial",
     "energy": 0,
     "priority": 30,
-    "flow": 0,
     "tags": [
       "payments",
       "billing",
@@ -3662,11 +3324,7 @@
       "impact_vector": "commercial optionality"
     },
     "foundational": false,
-    "strategy_base": 18,
-    "tier": "none",
-    "time_pressure": 3,
-    "done": false,
-    "cooldown_days": 14
+    "tier": "none"
   },
   {
     "id": "pocket-quests",
@@ -3674,7 +3332,7 @@
     "name": "Pocket Quests",
     "public_name": "Pocket Quests",
     "short": "Your real life, reflected in a world of personal quests",
-    "description": "A mobile personal quest app with local implementation of quests, planning, progression and profile rewards. Full signed-in use and native-device testing remain to be verified. Working name; release name remains open.",
+    "description": "As of October 3, 2026: an approved modern-fantasy visual direction and a private session-only prototype; local production implementation is in progress. Native-device, real-sign-in and dependency acceptance remain open; there is no public release. Working name; release name remains open.",
     "sector": "Market",
     "signal": "Wiring",
     "cluster": "personal-growth",
@@ -3691,17 +3349,17 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.PocketQuests"
     },
     "long_description": {
-      "overview": "A mobile personal quest app with local implementation of quests, planning, progression and profile rewards. Full signed-in use and native-device testing remain to be verified. Working name; release name remains open. Avatar, room decoration and real-place discovery remain broader future ideas.",
+      "overview": "As of October 3, 2026: an approved modern-fantasy visual direction and a private session-only prototype; local production implementation is in progress. Native-device, real-sign-in and dependency acceptance remain open; there is no public release. Working name; release name remains open. The charcoal, cream and gold design separates a Home character sheet from accepting, tracking and completing quests, with XP breakdowns, Undo and optional session timers. Avatar, room and adventure-location interactions are illustrative prototype explorations, not released features.",
       "why_it_exists": "Make everyday progress useful and enjoyable, starting with one person and growing through actual use.",
       "primary_audience": "People who want a playful way to organize self-chosen goals and adventures.",
       "value_props": [
-        "Fixed system quests and editable personal quests",
-        "Planning and recurring quests",
-        "XP, skill progression and profile rewards",
-        "Later avatar, room and exploration ideas"
+        "Self-chosen quests and visible XP feedback",
+        "A character sheet and separate quest management",
+        "Optional timers for suitable quests",
+        "Avatar, room and adventure concepts explored in a private prototype"
       ],
-      "roadmap_focus": "Verify complete authenticated account-to-quest use and native-device behavior. Local implementation is not a production release.",
-      "grid_relationship": "Local backend composition includes the shared Identity implementation under review. HoneyDrunk.UI source is public; this app consumes source-revision-pinned local snapshots with file integrity checks rather than published npm packages. Its navy, teal and gold theme and quest presentation remain app-owned.",
+      "roadmap_focus": "Validate the selected production slice on native devices, with real sign-in and dependency acceptance still open. Celebration and explicit level-up feedback now have local implementation; local tests do not resolve release gates or establish founder acceptance. Deeper avatar and room interaction remain later work. Prototype locations are mock data; the prototype has no GPS, backend or push notifications.",
+      "grid_relationship": "Production implementation and shared UI integration remain local work under review. HoneyDrunk.UI has public source; npm packages are not published. Shared mechanics belong in their owning packages, while the charcoal, cream and gold theme and quest rules stay app-owned.",
       "signal_quote": "A little quest giver in your pocket.",
       "stability_tier": "experimental",
       "impact_vector": "personal usefulness"
@@ -3740,7 +3398,7 @@
     "name": "HoneyDrunk.UI",
     "public_name": "HoneyDrunk.UI",
     "short": "Themeable UI — public source, local consumers",
-    "description": "Public shared UI source with a platform-neutral theme contract and native primitives. Pocket Quests uses revision-pinned local snapshots with file integrity checks. npm packages are not published; native verification remains pending. This is a project progress record; formal Grid registration remains deferred.",
+    "description": "Public shared UI source with a platform-neutral theme contract and native primitives. Further accessibility and reusable component work remains local and under review as of October 3, 2026; npm packages are not published. Formal Grid registration remains deferred.",
     "sector": "Meta",
     "signal": "Wiring",
     "cluster": "shared-foundations",
@@ -3755,7 +3413,7 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.UI"
     },
     "long_description": {
-      "overview": "Public shared UI source with a platform-neutral theme contract and native primitives. Pocket Quests uses revision-pinned local snapshots with file integrity checks. npm packages are not published; native verification remains pending. This is a project progress record; formal Grid registration remains deferred.",
+      "overview": "Public shared UI source with a platform-neutral theme contract and native primitives. Further accessibility and reusable component work remains local and under review as of October 3, 2026; npm packages are not published. Formal Grid registration remains deferred.",
       "roadmap_focus": "Validate consumer integration and complete separately authorized review/release gates.",
       "grid_relationship": "Pocket Quests has local integration; no production consumer release is claimed. This website describes observed project integration, not completed canonical registration or acceptance of the Proposed Identity/Web.UI ADRs.",
       "stability_tier": "experimental",

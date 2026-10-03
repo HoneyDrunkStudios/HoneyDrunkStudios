@@ -16,7 +16,6 @@ export default function Header() {
 
   const navLinks: Array<{ href: string; label: string; hideOnMobile?: boolean; highlight?: boolean }> = [
     { href: '/grid', label: 'GRID', hideOnMobile: true },
-    { href: '/flow', label: 'FLOW' },
     { href: '/sectors', label: 'SECTORS' },
     { href: '/nodes', label: 'NODES' },
     { href: '/services', label: 'SERVICES' },

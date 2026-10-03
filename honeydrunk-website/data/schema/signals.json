@@ -1,5 +1,20 @@
 [
   {
+    "date": "2026-10-03",
+    "title": "Studio progress: Pocket Quests prototype and Magic Shop iteration",
+    "desc": "Pocket Quests has an approved charcoal, cream and gold modern-fantasy direction. The founder reports the private session-only prototype working: a character sheet, separate quest actions, XP breakdowns, Undo and optional timers. Avatar, room and adventure-location interactions remain illustrative; the prototype has no GPS, backend or push notifications. Production implementation is local and in progress, with native-device, real-sign-in and dependency acceptance still open. Magic Shop has merged its four-room graybox, Unity modernization and fixes from a scripted keyboard-and-mouse playtest. The latest game change reports 67 Core, 10 EditMode and 7 PlayMode tests passing, a successful Windows build and a clean smoke test; founder feel, lighting and readability acceptance and held-arrow-key look remain unverified. Five studio tracks now include cybersecurity alongside AI and robotics learning; no course completion is claimed. Living PRDs and GDDs own selected scope and evidence. Ticket generation is retired, review remains, Actions owns current reusable checks, and Pipelines is deprecated. These are development notes, not public product releases.",
+    "tags": [
+      "studio-update",
+      "Pocket Quests",
+      "pocket-quests",
+      "game-prototype",
+      "HoneyDrunk.Studio",
+      "HoneyDrunk.Actions",
+      "HoneyDrunk.UI"
+    ],
+    "sector": "Meta"
+  },
+  {
     "date": "2026-06-07",
     "title": "Site Sync: Audit and Observe Nodes Published",
     "desc": "Followed up the ADR-0077 Infrastructure sync by publishing two more canonical Architecture nodes to the site (verified against main, 2026-06-07). Added HoneyDrunk.Audit as a new Seed node in the Core sector (security cluster) — the Grid's durable, attributable system of record for security and privileged-action events (login attempts, authorization grants and denials, privileged-action execution). Append-only by interface (IAuditLog exposes no update or delete), Data-backed, with audit-class retention distinct from observability; Phase 1 is append-only-by-interface, not yet tamper-evident. Audit consumes Kernel and Data, emits its own operational telemetry to Pulse with no runtime dependency on Pulse, and is consumed by Auth (first emitter) and Operator (reconciled consumer/emitter); downstream Nodes compile only against HoneyDrunk.Audit.Abstractions. Signal quote: 'Who did what, when, against what, and was it allowed.' Also added HoneyDrunk.Observe as a new Seed node in the Ops sector (observability cluster) — the Grid's inbound observation layer for watching external projects the Hive does not own, owning observation contracts, connector composition, event normalization, and provider-slot connector packages (GitHub, Azure, HTTP). Observe consumes Kernel for context/lifecycle and Vault for connector credential resolution; it does not route outbound telemetry to sinks — that is Pulse's opposite-direction boundary. Signal quote: 'See what the Hive does not own.' Added both relationship entries and the matching dependency edges (Kernel→Audit, Data→Audit, Pulse→Audit telemetry-only, Audit→Auth, Audit→Operator, Kernel→Observe, Vault→Observe) and updated the consumed_by/consumes lists on Kernel, Data, Vault, Auth, and Operator accordingly. Append-only add — no renames or deletions.",
@@ -82,7 +97,7 @@
   {
     "date": "2026-01-12",
     "title": "Operator, Clarity, Sim: Authority Boundaries Locked",
-    "desc": "Major architectural clarity pass on three critical nodes. Rewrote HoneyDrunk.Operator from a 'persona interface' to what it actually is: an internal control plane for operating the Hive. Operator is human-operated, provides unified visibility across nodes and environments, owns operational intent (safety modes, circuit breakers, cost limits), and enables audited intervention during incidents. Operator does not make decisions, does not deliberate, does not act as a persona or advisor. Signal quote: 'Control without opinion. Authority without authorship.' Updated HoneyDrunk.Clarity to be explicitly advisory-only. Clarity explains, teaches, proposes, and drafts artifacts (ADRs, RFCs, migration plans)—but never acts. Added explicit does_not_do and context_safety properties. Clarity may propose; Clarity never acts. Signal quote: 'Explain everything. Change nothing.' Replaced HoneyDrunk.VEE with HoneyDrunk.Sim as the Grid's simulation layer. Sim is the Virtual Execution Environment that models impact of proposed decisions before they touch reality—producing blast radius, risk posture, cost projections, and failure-mode forecasts. Sim produces evidence; Governor decides; Clarity explains; Operator acts. Signal quote: 'Model reality before you touch it.' Updated all cross-references across Governor, Clarity, and related nodes to use Sim instead of VEE. Finally, realigned Flow values to reflect the conceptual spine: Pulse (100), AgentKit (95), Governor (90) as the foundational layer; Build/Pipelines/Tools as operational stabilizers (75/70/65); Operator/Collector/Deploy as safety and scale (55/50/45). Build-in-public: cleaner authority boundaries, no more persona confusion, explicit separation between advisory, governance, simulation, and control.",
+    "desc": "Major architectural clarity pass on three critical nodes. Rewrote HoneyDrunk.Operator from a 'persona interface' to what it actually is: an internal control plane for operating the Hive. Operator is human-operated, provides unified visibility across nodes and environments, owns operational intent (safety modes, circuit breakers, cost limits), and enables audited intervention during incidents. Operator does not make decisions, does not deliberate, does not act as a persona or advisor. Signal quote: 'Control without opinion. Authority without authorship.' Updated HoneyDrunk.Clarity to be explicitly advisory-only. Clarity explains, teaches, proposes, and drafts artifacts (ADRs, RFCs, migration plans)—but never acts. Added explicit does_not_do and context_safety properties. Clarity may propose; Clarity never acts. Signal quote: 'Explain everything. Change nothing.' Replaced HoneyDrunk.VEE with HoneyDrunk.Sim as the Grid's simulation layer. Sim is the Virtual Execution Environment that models impact of proposed decisions before they touch reality—producing blast radius, risk posture, cost projections, and failure-mode forecasts. Sim produces evidence; Governor decides; Clarity explains; Operator acts. Signal quote: 'Model reality before you touch it.' Updated all cross-references across Governor, Clarity, and related nodes to use Sim instead of VEE. Build-in-public: cleaner authority boundaries, no more persona confusion, explicit separation between advisory, governance, simulation, and control.",
     "tags": [
       "Meta",
       "AI",
@@ -133,8 +148,8 @@
   },
   {
     "date": "2025-11-19",
-    "title": "Governor, Operator, and Flow: Persona First; Governance Next",
-    "desc": "Added HoneyDrunk.Governor (AI) as the deliberation layer and rewired the Operator node to be the Founder‑facing persona and single voice of the Hive. Operator now accepts Founder intent, submits RFCs to Governor for debate (Governor may use VEE for simulation), and returns validated plans and narrative as a coherent single voice. We corrected dependency direction: Kernel is no longer dependent on Auth (Auth depends on Kernel), and Deploy no longer depends on Actions (relationship recorded via links, not hard dependency). Recomputed Flow and ran validation — all acceptance criteria passed. This change separates identity (Operator) from governance (Governor) and simulation (VEE), clarifying responsibilities for safer agentic decision-making and clear audit trails (Audit.Agent).",
+    "title": "Governor and Operator: Persona First; Governance Next",
+    "desc": "Added HoneyDrunk.Governor (AI) as the deliberation layer and rewired the Operator node to be the Founder‑facing persona and single voice of the Hive. Operator now accepts Founder intent, submits RFCs to Governor for debate (Governor may use VEE for simulation), and returns validated plans and narrative as a coherent single voice. We corrected dependency direction: Kernel is no longer dependent on Auth (Auth depends on Kernel), and Deploy no longer depends on Actions (relationship recorded via links, not hard dependency). This change separates identity (Operator) from governance (Governor) and simulation (VEE), clarifying responsibilities for safer agentic decision-making and clear audit trails (Audit.Agent).",
     "tags": [
       "AI",
       "Meta",
@@ -165,7 +180,7 @@
   {
     "date": "2025-11-13",
     "title": "Transport Complete — Data & Vault Take Priority",
-    "desc": "Major milestone: HoneyDrunk.Transport marked done=true and signal upgraded Awake → Live, representing the messaging backbone now powering the entire ecosystem. Transport ships with production-ready outbox patterns, event primitives, and three complete adapter implementations (InMemory, StorageQueues, AzureServiceBus) — all at Live signal. With transport infrastructure complete, the roadmap pivots to persistence and security layers. Flow Index recomputed with new priorities: (1) HoneyDrunk.Vault (Flow: 91) now leads as top priority — zero-trust secrets and configuration management with slot architecture for pluggable providers. (2) HoneyDrunk.Data (Flow: 86) takes second position — database conventions, migrations, tenant isolation, and outbox integration. Strategy adjustments: Data boosted to priority=100, energy=85, strategy_base=30 with increased time_pressure=3; Vault elevated to priority=98, energy=82, strategy_base=18. Transport joins Kernel, Standards, and Actions in completed infrastructure (capped at Flow 45 due to done status). The shift reflects architectural reality: with messaging solved, the Hive now focuses on persistence patterns and secrets management as the next foundational layers. Signal quote from Transport: 'Every message finds its way.' Next phase targets Data's migration tooling and Vault's provider abstraction slots.",
+    "desc": "Major milestone: HoneyDrunk.Transport signal upgraded Awake → Live, representing the messaging backbone now powering the entire ecosystem. Transport ships with production-ready outbox patterns, event primitives, and three complete adapter implementations (InMemory, StorageQueues, AzureServiceBus) — all at Live signal. With transport infrastructure complete, the roadmap pivots to persistence and security layers. The shift reflects architectural reality: with messaging solved, the Hive now focuses on persistence patterns and secrets management as the next foundational layers. Signal quote from Transport: 'Every message finds its way.' Next phase targets Data's migration tooling and Vault's provider abstraction slots.",
     "tags": [
       "Core",
       "HoneyDrunk.Transport",
@@ -194,7 +209,7 @@
   {
     "date": "2025-11-11",
     "title": "HoneyDrunk.Clarity Manifested — The Hive's Human Interface",
-    "desc": "HoneyDrunk.Clarity (Flow: 24) joins the Grid as the AI sector's first human-facing companion—an in-studio guide wired directly into the Hive's intelligence. Clarity is context-aware across code editors, DCC tools (Blender, Photoshop), and game engines, providing precise answers rooted in HoneyDrunk.Kernel patterns, Standards rules, and Meta.AtlasSync knowledge. Unlike generic copilots, Clarity understands your active stack—repo, scene, file, task—and surfaces guidance from AgentKit, Pulse telemetry, Vault configs, and HoneyHub workflows in real time. Built for indie devs and small studios drowning in tabs and documentation, Clarity bridges tools through a single assistant surface: ask about C# best practices, Unity pipeline issues, or deployment flows without leaving your workspace. Phase 1 targets VS Code/JetBrains/VS extensions with HoneyDrunk-native intelligence; Phase 2 adds cross-tool overlays and team memory; Phase 3 couples with Operator/VEE for automated fixes. Dependencies: AgentKit (agent lifecycle), Pulse (context/telemetry), Vault (secure config), Meta.AtlasSync (synchronized knowledge), Standards (patterns), HoneyHub (task integration). Monetization path: core experience free or bundled with HoneyHub; Pro tiers for studios with private knowledge ingestion, org policies, multi-seat management, and telemetry insights. Signal quote: 'Know what to do next, wherever you are.' Clarity transforms the Grid from infrastructure into conversation.",
+    "desc": "HoneyDrunk.Clarity joins the Grid as the AI sector's first human-facing companion—an in-studio guide wired directly into the Hive's intelligence. Clarity is context-aware across code editors, DCC tools (Blender, Photoshop), and game engines, providing precise answers rooted in HoneyDrunk.Kernel patterns, Standards rules, and Meta.AtlasSync knowledge. Unlike generic copilots, Clarity understands your active stack—repo, scene, file, task—and surfaces guidance from AgentKit, Pulse telemetry, Vault configs, and HoneyHub workflows in real time. Built for indie devs and small studios drowning in tabs and documentation, Clarity bridges tools through a single assistant surface: ask about C# best practices, Unity pipeline issues, or deployment flows without leaving your workspace. Phase 1 targets VS Code/JetBrains/VS extensions with HoneyDrunk-native intelligence; Phase 2 adds cross-tool overlays and team memory; Phase 3 couples with Operator/VEE for automated fixes. Dependencies: AgentKit (agent lifecycle), Pulse (context/telemetry), Vault (secure config), Meta.AtlasSync (synchronized knowledge), Standards (patterns), HoneyHub (task integration). Monetization path: core experience free or bundled with HoneyHub; Pro tiers for studios with private knowledge ingestion, org policies, multi-seat management, and telemetry insights. Signal quote: 'Know what to do next, wherever you are.' Clarity transforms the Grid from infrastructure into conversation.",
     "tags": [
       "AI",
       "HoneyDrunk.Agents",
@@ -209,7 +224,7 @@
   {
     "date": "2025-11-10",
     "title": "Infrastructure Expansion — Collector, Notify, and Assets Join the Grid",
-    "desc": "Three critical infrastructure nodes added to the Grid, expanding observability, communication, and storage capabilities. HoneyDrunk.Collector (Flow: 58) establishes telemetry ingestion with OTLP support, schema enforcement, and self-healing buffers—forming the inbound nerve ending feeding Pulse. HoneyDrunk.Notify (Flow: 55) unifies outbound notifications across email, push, SMS, and webhooks with templated delivery and Pulse-tracked reliability. HoneyDrunk.Assets (Flow: 57) provides centralized storage for digital artifacts with Vault encryption, signed URL delivery, and content-addressed versioning. All three nodes integrate deeply with existing infrastructure: depending on Vault for auth, Transport for event relay, and Pulse for metrics. Collector and Assets land in Ops and Core respectively, establishing foundation for observability SaaS and secure media delivery patterns. BuildLog component deployed to node detail pages, surfacing recent signals and updates for improved discoverability. Package updates applied: Next.js 16.0.0→16.0.1, React 19.1.0→19.2.0, Tailwind 4.1.14→4.1.17, @types/node upgraded ^20→^22 for Vercel compatibility.",
+    "desc": "Three critical infrastructure nodes added to the Grid, expanding observability, communication, and storage capabilities. HoneyDrunk.Collector establishes telemetry ingestion with OTLP support, schema enforcement, and self-healing buffers—forming the inbound nerve ending feeding Pulse. HoneyDrunk.Notify unifies outbound notifications across email, push, SMS, and webhooks with templated delivery and Pulse-tracked reliability. HoneyDrunk.Assets provides centralized storage for digital artifacts with Vault encryption, signed URL delivery, and content-addressed versioning. All three nodes integrate deeply with existing infrastructure: depending on Vault for auth, Transport for event relay, and Pulse for metrics. Collector and Assets land in Ops and Core respectively, establishing foundation for observability SaaS and secure media delivery patterns. BuildLog component deployed to node detail pages, surfacing recent signals and updates for improved discoverability. Package updates applied: Next.js 16.0.0→16.0.1, React 19.1.0→19.2.0, Tailwind 4.1.14→4.1.17, @types/node upgraded ^20→^22 for Vercel compatibility.",
     "tags": [
       "Ops",
       "Core",
@@ -225,7 +240,7 @@
   {
     "date": "2025-11-08",
     "title": "HoneyDrunk.Actions Live — Public CI/CD Framework Complete",
-    "desc": "HoneyDrunk.Actions officially shipped: signal upgraded Wiring → Live, marked done=true, and repository links standardized to HoneyDrunk.[NodeName] format across the Grid. Actions is now the public-facing CI/CD framework for GitHub repositories—a library of reusable workflows that bring HoneyDrunk's engineering discipline to the open world. With standardized testing, packaging, and deployment pipelines, Actions bridges closed-source craft and open-source community. The framework mirrors the rigor of Pipelines while staying feed-agnostic and transparent. Flow Index adjusted: Actions capped at 45 due to completion cooldown (98% penalty), while active work—Transport (90), Data (86), Tools (77)—dominates the roadmap. Repository standardization applied: 16 nodes updated from lowercase slugs (e.g., /actions, /vault, /grid) to proper Pascal case (e.g., /HoneyDrunk.Actions, /HoneyDrunk.Vault, /HoneyDrunk.Grid) for consistency with naming conventions. HoneyDrunk.Actions joins Standards and Kernel in the Completed section, representing shipped foundational infrastructure powering the entire ecosystem.",
+    "desc": "HoneyDrunk.Actions officially shipped: signal upgraded Wiring → Live, and repository links standardized to HoneyDrunk.[NodeName] format across the Grid. Actions is now the public-facing CI/CD framework for GitHub repositories—a library of reusable workflows that bring HoneyDrunk's engineering discipline to the open world. With standardized testing, packaging, and deployment pipelines, Actions bridges closed-source craft and open-source community. The framework mirrors the rigor of Pipelines while staying feed-agnostic and transparent. Repository standardization applied: 16 nodes updated from lowercase slugs (e.g., /actions, /vault, /grid) to proper Pascal case (e.g., /HoneyDrunk.Actions, /HoneyDrunk.Vault, /HoneyDrunk.Grid) for consistency with naming conventions.",
     "tags": [
       "Ops",
       "Core",
@@ -237,8 +252,8 @@
   },
   {
     "date": "2025-11-07",
-    "title": "Kernel Complete & Flow Cooldown Enforcement — Done Node Hard Cap",
-    "desc": "Major milestone: HoneyDrunk.Kernel marked done=true and signal upgraded Seed → Live, representing the foundational layer now powering the entire ecosystem. Simultaneously overhauled flow cooldown mechanics to dramatically deprioritize completed work: (1) Cooldown multipliers reduced from 0.6/0.8 to 0.02/0.05 for priority/energy, applying 98% penalty to done nodes. (2) Implemented hard cap system in compute-flow.js — any done node automatically capped at Flow ≤ 45 regardless of centrality or foundational status. (3) Foundational floor guardrail disabled (percentile: 70 → 0) to prevent lifting completed nodes. (4) Kernel and Standards both dropped from Flow 73 to 45, clearing space for active development. (5) Adjusted Transport (strategy_base: 28, Awake), Data (strategy_base: 26, Awake), and Vault (strategy_base: 15, Awake) to establish clear 2nd/3rd/4th priority positions (Flow: 90/86/80). Flow Index now accurately reflects active roadmap: Actions (94), Transport (90), Data (86), Vault (80) lead active work, while completed Kernel and Standards sit at 45. Architecture enables completed foundational nodes to fade from priority view while remaining part of the Grid's history.",
+    "title": "Kernel Live — Foundational Infrastructure",
+    "desc": "HoneyDrunk.Kernel signal upgraded Seed → Live, recording the foundational infrastructure milestone.",
     "tags": [
       "Core",
       "HoneyDrunk.Kernel",
@@ -252,8 +267,8 @@
   },
   {
     "date": "2025-11-02",
-    "title": "Flow Index Redesign — Active/Completed Separation & Standards Live",
-    "desc": "Major Flow Index overhaul with three-section architecture: (1) Implemented Active/Completed flow separation—separated living work from completed milestones with getActiveFlowNodes() and getCompletedFlowNodes() functions. Active section (🔥 orange) shows current priorities, Completed section (✅ green) showcases done work, All section (📊 blue) provides unified view. (2) Updated flow tier colors: Active tier → cyber orange (#FF8C00), Supporting tier → neon yellow (#FFFF00), maintaining neon pink for Critical. (3) Enhanced UX with pointer cursors and cyberpunk hover effects—all buttons feature color-matched glows, smooth transitions, and tactile feedback. (4) HoneyDrunk.Actions signal upgraded Seed → Wiring, jumping to Flow Index #1 (92) with proper energy baseline. (5) HoneyDrunk.Standards marked done=true, demonstrating cooldown mechanics while maintaining high Flow due to foundational importance. Flow Index now provides clear separation between active roadmap and completed achievements with enhanced visual feedback.",
+    "title": "Standards Milestone and Actions Development",
+    "desc": "HoneyDrunk.Standards recorded its completed infrastructure milestone. HoneyDrunk.Actions signal upgraded Seed → Wiring. Buttons gained pointer cursors and color-matched hover effects.",
     "tags": [
       "Core",
       "Ops",
@@ -266,28 +281,13 @@
   {
     "date": "2025-11-01",
     "title": "Grid Reality Sync — Standards Foundation & Signal Reset",
-    "desc": "Major synchronization between Grid state and reality: (1) Added HoneyDrunk.Standards (Wiring, Core) as #1 priority foundational node—org-wide code style, lint rules, .editorconfig/.globalconfig consumed by all 38 nodes as dependency. Refactored HoneyDrunk.Build to delegate stylistic enforcement to Standards, keeping Build focused on MSBuild mechanics. (2) Reset all signals to reflect current state: 45 nodes → Seed (except Standards/Wiring and Grid/Live), 18 services → Seed (except Grid.Visualizer/Live), 25 modules → Seed. Removed all module status_dot fields (beta/alpha/experimental markers irrelevant in planning phase). (3) Fixed FlowLanes component to use flow_tiers.json instead of hardcoded tiers—replaced \"archived\" with correct \"future\" tier. (4) Fixed Echo signal visibility in /grid filters and legend (was missing due to incomplete signal list from entities). (5) Fixed hexagon click navigation on /grid while preserving drag-to-reposition behavior—moved click detection from onClick to mouseUp with 10px drag threshold. Flow recomputed: Standards (Flow: 96, Priority: 100, Energy: 89) now anchors the Grid as the discipline layer. Grid accurately reflects 3 live entities (Grid node, Grid.Visualizer service, Standards in active development) and 88 conceptual/future entities.",
+    "desc": "Major synchronization between Grid state and reality: (1) Added HoneyDrunk.Standards (Wiring, Core) as #1 priority foundational node—org-wide code style, lint rules, .editorconfig/.globalconfig consumed by all 38 nodes as dependency. Refactored HoneyDrunk.Build to delegate stylistic enforcement to Standards, keeping Build focused on MSBuild mechanics. (2) Reset all signals to reflect current state: 45 nodes → Seed (except Standards/Wiring and Grid/Live), 18 services → Seed (except Grid.Visualizer/Live), 25 modules → Seed. Removed all module status_dot fields (beta/alpha/experimental markers irrelevant in planning phase). (3) Fixed Echo signal visibility in /grid filters and legend (was missing due to incomplete signal list from entities). (4) Fixed hexagon click navigation on /grid while preserving drag-to-reposition behavior—moved click detection from onClick to mouseUp with 10px drag threshold. Grid accurately reflects 3 live entities (Grid node, Grid.Visualizer service, Standards in active development) and 88 conceptual/future entities.",
     "tags": [
       "Core",
       "Ops",
       "HoneyDrunk.Standards",
       "HoneyDrunk.Build",
       "HoneyDrunk.Grid"
-    ],
-    "sector": "Core"
-  },
-  {
-    "date": "2025-10-30",
-    "title": "Flow Physics Overhaul — SCC-Aware Prioritization",
-    "desc": "Fixed two critical issues bending the Flow computation: (1) Ops bootstrap boost reduced from +80 to +20—was warping the map and letting Ops permanently eclipse Core foundational nodes. (2) Implemented Tarjan's algorithm for strongly connected components (SCCs) to handle 27 circular dependencies. Ancestor override now works on the acyclic SCC DAG, with smart normalization inside cycles (foundational nodes get maxPriority - 5, others equalize). Updated 10 key nodes with tuned time_pressure and strategy_base parameters. Results: Kernel (100) and Vault (100) now anchor the top, Transport (85) and Web.Rest (82) follow as foundational, Pipelines (80) holds reasonable position. Foundational nodes exempt from WIP sequencing penalties. Core physics now stable—bootstrap gives temporary lift without permanent throne, cycles handled gracefully.",
-    "tags": [
-      "Core",
-      "Ops",
-      "HoneyDrunk.Kernel",
-      "HoneyDrunk.Transport",
-      "HoneyDrunk.Web.Rest",
-      "HoneyDrunk.Data",
-      "HoneyDrunk.Pipelines"
     ],
     "sector": "Core"
   },
@@ -334,7 +334,7 @@
   {
     "date": "2025-10-26",
     "title": "Entity Architecture — Sectors, Nodes, Services, Modules",
-    "desc": "Clarified The Grid's entity hierarchy: Sectors (Core, Ops, Creator, Life, HoneyPlay, Cyberware, HoneyNet, Meta) are top-level divisions. Nodes are projects/systems within sectors. Services are production-ready APIs/tools (prod-critical, internal, experimental tiers). Modules are reusable components within nodes. Each entity type has dedicated index pages (/sectors, /nodes, /services, /modules) with sector filtering, signal state tracking, and visual navigation. The taxonomy now maps cleanly across Grid, Flow Index, and Signal systems.",
+    "desc": "Clarified The Grid's entity hierarchy: Sectors (Core, Ops, Creator, Life, HoneyPlay, Cyberware, HoneyNet, Meta) are top-level divisions. Nodes are projects/systems within sectors. Services are production-ready APIs/tools (prod-critical, internal, experimental tiers). Modules are reusable components within nodes. Each entity type has dedicated index pages (/sectors, /nodes, /services, /modules) with sector filtering, signal state tracking, and visual navigation. The taxonomy now maps cleanly across Grid and Signal systems.",
     "tags": [
       "Meta",
       "HoneyDrunk.Grid",
@@ -355,7 +355,7 @@
   {
     "date": "2025-10-26",
     "title": "Mobile UX Polish — Responsive Refinements",
-    "desc": "Systematic mobile optimization across 8+ pages: toast notifications (wider/shorter), responsive button text (\"VIEW SECTORS\" mobile, \"VIEW THE GRID\" desktop), centered headers with text-center md:text-left pattern, Flow cards compact styling, filter pills size reduction (4px/12px padding, 11px font), modules accordion compact design, footer tagline addition, HiveConsole [X] button on mobile. Inline styles for pixel-perfect control over Tailwind limitations.",
+    "desc": "Systematic mobile optimization across 8+ pages: toast notifications (wider/shorter), responsive button text (\"VIEW SECTORS\" mobile, \"VIEW THE GRID\" desktop), centered headers with text-center md:text-left pattern, filter pills size reduction (4px/12px padding, 11px font), modules accordion compact design, footer tagline addition, HiveConsole [X] button on mobile. Inline styles for pixel-perfect control over Tailwind limitations.",
     "tags": [
       "Meta",
       "HoneyDrunk.Studios"
@@ -365,7 +365,7 @@
   {
     "date": "2025-10-26",
     "title": "Navigation & Layout — Mobile-First Routing",
-    "desc": "Enhanced navigation logic: mobile users land on /sectors (sector hub), desktop users on /grid (interactive visualization). Footer console helper text hidden on mobile, tagline \"Boot. Build. Refactor. Evolve.\" added. Systematic spacing with inline marginBottom styles across About Flow page headings. Improved readability and mobile-first experience across The Grid.",
+    "desc": "Enhanced navigation logic: mobile users land on /sectors (sector hub), desktop users on /grid (interactive visualization). Footer console helper text hidden on mobile, tagline \"Boot. Build. Refactor. Evolve.\" added. Improved readability and mobile-first experience across The Grid.",
     "tags": [
       "Meta",
       "HoneyDrunk.Studios"
@@ -384,16 +384,6 @@
       "Pulse"
     ],
     "sector": "HoneyNet"
-  },
-  {
-    "date": "2025-10-24",
-    "title": "Flow Index System — Living Roadmap",
-    "desc": "Implemented complete Flow Index system: Flow = (Energy × 0.4) + (Priority × 0.6). Five-tier classification (Critical/Active/Stable/Dormant/Archived). Flow-based visual mode in Grid with dynamic glow intensity. New /flow page with sortable rankings, /about/flow documentation, Flow Tier filtering in /nodes, and global header navigation. The Hive now breathes—showing what needs attention next.",
-    "tags": [
-      "Meta",
-      "HoneyDrunk.Grid"
-    ],
-    "sector": "Meta"
   },
   {
     "date": "2025-10-24",
@@ -438,7 +428,7 @@
   {
     "date": "2026-09-26",
     "title": "Studio reset: published packages and the next creative tracks",
-    "desc": "Published and verified 61 public NuGet packages: 52 updates and 9 first publications, with downstream dependencies reconciled. Three unimplemented AI provider packages remain unreleased. Current focus is Pocket Quests (internal working name), the first game, AI learning, and hands-on robotics. Pocket Quests has an empty configured repository and a product plan, not a shipped app; the first game remains in concept planning. Blender experiments produced editable scenes and renders. HoneyHub is archived. The website catalog now includes Payments, public package versions, refreshed relationships and service descriptions. Lore ingestion safeguards and the review runner were repaired. Read the personal devlog at https://tatteddev.com/blog/i-ran-my-dev-studio-from-the-couch/.",
+    "desc": "Published and verified 61 public NuGet packages: 52 updates and 9 first publications, with downstream dependencies reconciled. Three unimplemented AI provider packages remain unreleased. Current focus is Pocket Quests (internal working name), the first game, AI learning, and hands-on robotics. Pocket Quests has an empty configured repository and a product plan, not a shipped app; the first game remains in concept planning. Blender experiments produced editable scenes and renders. HoneyHub is archived. The website catalog now includes Payments, public package versions, refreshed relationships and service descriptions. Lore ingestion safeguards and the review runner were repaired.",
     "tags": [
       "studio-update",
       "packages",

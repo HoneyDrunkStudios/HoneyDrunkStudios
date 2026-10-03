@@ -1,9 +1,7 @@
-import Link from 'next/link';
 import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import { colors } from '@/lib/tokens';
-import { flowTierDefinitions } from '@/lib/nodes';
 
 export const metadata = {
   title: 'About — HoneyDrunk Studios',
@@ -265,94 +263,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Flow Index System */}
-        <section className="space-y-4 md:space-y-6 text-center md:text-left">
-          <div style={{ marginBottom: '24px' }}>
-            <h2
-              className="text-2xl md:text-3xl lg:text-4xl font-display font-bold pt-2 md:pt-4"
-              style={{ color: colors.aurumGold, marginBottom: '12px' }}
-            >
-              The Flow Index
-            </h2>
-            <p className="px-1 md:px-2 text-sm md:text-base" style={{ color: colors.slateLight }}>
-              The living roadmap. Flow = (Energy × 0.4) + (Priority × 0.6)
-            </p>
-          </div>
-
-          <div
-            className="p-6 md:p-8 rounded-lg border-2 space-y-4"
-            style={{
-              backgroundColor: `${colors.gunmetal}80`,
-              borderColor: colors.aurumGold,
-              boxShadow: `0 0 30px ${colors.aurumGold}20`,
-            }}
-          >
-            <p className="text-sm md:text-base leading-relaxed" style={{ color: colors.slateLight }}>
-              Flow Index tells us <span className="font-bold" style={{ color: colors.offWhite }}>what needs attention next</span>. 
-              Not a static backlog—a breathing calculation based on current energy and strategic priority.
-            </p>
-
-            <div className="grid gap-3 md:gap-4">
-              {flowTierDefinitions.map((item) => (
-                <div
-                  key={item.label}
-                  className="flex items-center gap-4 p-3 md:p-4 rounded-lg border"
-                  style={{
-                    backgroundColor: `${item.color}10`,
-                    borderColor: `${item.color}40`,
-                  }}
-                >
-                  <div className="flex-shrink-0 w-16 text-center">
-                    <div
-                      className="font-mono font-bold text-xs"
-                      style={{
-                        color: item.color,
-                        textShadow: `0 0 8px ${item.color}60`,
-                      }}
-                    >
-                      {item.range}
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-display font-bold text-sm mb-1" style={{ color: item.color }}>
-                      {item.label}
-                    </div>
-                    <div className="text-xs" style={{ color: colors.slateLight }}>
-                      {item.description.split('—')[1]?.trim() || item.description}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3 pt-4">
-              <Link
-                href="/about/flow"
-                className="px-6 py-3 rounded-lg text-center text-sm font-mono font-bold uppercase tracking-wider
-                           transition-all duration-200 hover:scale-105"
-                style={{
-                  backgroundColor: colors.aurumGold,
-                  color: colors.deepSpace,
-                  boxShadow: `0 0 20px ${colors.aurumGold}40`,
-                }}
-              >
-                Learn More
-              </Link>
-              <Link
-                href="/flow"
-                className="px-6 py-3 rounded-lg text-center text-sm font-mono font-bold uppercase tracking-wider
-                           transition-all duration-200 hover:scale-105 border-2"
-                style={{
-                  backgroundColor: `${colors.aurumGold}20`,
-                  borderColor: colors.aurumGold,
-                  color: colors.aurumGold,
-                }}
-              >
-                View Flow Index
-              </Link>
-            </div>
-          </div>
-        </section>
 
         </div>
       </div>

@@ -134,7 +134,6 @@ export default function LandingFooter() {
             <ul className="space-y-2">
               {[
                 { label: 'Grid', href: '/grid' },
-                { label: 'Flow', href: '/flow' },
                 { label: 'Sectors', href: '/sectors' },
                 { label: 'Nodes', href: '/nodes' },
                 { label: 'Modules', href: '/modules' },

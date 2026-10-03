@@ -8,6 +8,12 @@
 
 - Update studio focus and Pocket Quests/Magic Shop detail copy from planning-only status to verified local implementation/first-playable progress. Explain shared UI/themeability and Identity review with confirmed public UI source and passing checks, while distinguishing unpublished npm packages, unproven full login/native validation and unknown game acceptance.
 
+## 2026-10-03
+
+- Reconcile the five studio tracks and dated Pocket Quests, Magic Shop and shared-foundation progress, distinguishing private prototypes, local implementation, merged game work and pending founder/native acceptance.
+- Remove the obsolete Flow planning pages, Grid mode, metrics, calculation engine, configuration, navigation and public signal references; the node API intentionally no longer returns retired `flow` scores or calculation-only fields. Retain the unrelated HoneyDrunk.Flow runtime catalog and ordinary animation terminology.
+- Remove personal TattedDev website links and the devlog callout. Keep remaining routes and metadata intact; identify deprecated Pipelines relationships as historical and current reusable checks as Actions-owned.
+
 ## 2026-09-26
 
 - Refresh the website dependency lockfile to remediate all 29 open GitHub Dependabot alerts observed on this date. Raise the Next.js and ESLint config minimum to 16.3.6 and the PostCSS override to 8.5.28.
