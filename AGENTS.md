@@ -9,3 +9,11 @@ Work within the selected request. Preserve unrelated changes and use a separate 
 ## Verification
 
 From `honeydrunk-website/`: `npm ci`, `npm run lint`, `npx tsc --noEmit`, `npm run test:signals`, `npm run build`. Verify visible route/navigation changes in a browser and check schema/tag consistency. Building a site is not authorization to deploy it.
+
+## Code Review Rules
+
+Apply the [shared review criteria](https://github.com/HoneyDrunkStudios/HoneyDrunk.Standards/blob/main/HoneyDrunk.Standards/docs/CONVENTIONS.md#code-review) to changed behavior, using the repository boundaries above. Report actionable findings with the failing path, concrete impact and a small corrective action; disclose unavailable evidence. These rules grant no cross-repository access or merge authority.
+
+- Keep the public Next.js site separate from private planning and product acceptance. Check published claims against authorized, dated evidence; do not expose private prototypes, personal context or credentials, or turn historical material into current capability claims.
+- Trace changed routes/data rendering for unsafe HTML or URL handling, broken navigation, accessibility and client/server data leakage. Flag unbounded fetching, unnecessary client payloads or rendering work using a concrete affected page.
+- Require relevant route/content tests and visual/responsive evidence for changed UI. Preserve the existing framework and shared site patterns; do not add speculative design systems or reintroduce removed navigation from stale history.
