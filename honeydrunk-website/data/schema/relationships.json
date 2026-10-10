@@ -293,7 +293,9 @@
       "exposes": {
         "contracts": [
           "job-deploy-bicep.yml",
-          "job-bicep-lint.yml"
+          "job-bicep-lint.yml",
+          "job-terraform-validate.yml",
+          "job-secret-scan.yml"
         ],
         "packages": []
       },
@@ -1497,8 +1499,8 @@
       "blocked_by": [],
       "consumes_detail": {
         "honeydrunk-actions": [
-          "job-deploy-bicep.yml",
-          "job-bicep-lint.yml"
+          "job-terraform-validate.yml",
+          "job-secret-scan.yml"
         ]
       },
       "consumed_by_planned": []
@@ -2085,7 +2087,7 @@
     {
       "dependency": "honeydrunk-actions",
       "dependent": "honeydrunk-infrastructure",
-      "reason": "Consumes the deploy + lint reusable workflows (job-deploy-bicep.yml, job-bicep-lint.yml) to validate and apply Bicep"
+      "reason": "Consumes job-terraform-validate.yml and job-secret-scan.yml for credential-free source checks; live state adoption and apply are separate and no apply workflow is provided"
     },
     {
       "dependency": "honeydrunk-agentkit",
