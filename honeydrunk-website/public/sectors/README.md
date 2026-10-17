@@ -23,7 +23,7 @@ Each sector needs a header image that captures its essence in cyberpunk realism 
 - **Content**: Abstract, atmospheric visuals that evoke the sector's philosophy
 
 ## Usage
-Images are referenced in `data/schema/sectors.json` via the `headerImage` field:
+Images are referenced in `src/data/schema/sectors.json` via the `headerImage` field:
 ```json
 "headerImage": "/sectors/core.jpg"
 ```
