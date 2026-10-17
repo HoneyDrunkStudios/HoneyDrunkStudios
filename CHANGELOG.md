@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Move honeydrunkstudios.com hosting from Vercel to Cloudflare Workers via the OpenNext Cloudflare adapter: add `wrangler.jsonc`, `open-next.config.ts` and the preview/deploy scripts, serve `next/image` through the Images binding, carry the `vercel.json` security headers into `next.config.ts`, document the Workers Builds settings and the DNS cutover, and ignore the OpenNext and Wrangler build output.
+
 - Correct the September 26 and October 3 signal tags to use the existing `Meta` sector, remove the unsupported `packages` tag and duplicate Pocket Quests identifier, and validate signal tags against existing catalogs before builds. Preserve the older timeline aliases without permitting them in new entries.
 
 - Label Identity/UI entries as observed project progress with formal Grid registration deferred; local dependency cards do not imply ADR acceptance or completed standup.

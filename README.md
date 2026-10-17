@@ -17,6 +17,28 @@ HoneyDrunk.Studio owns current priorities, living product requirements, game des
 - Shared navigation lives in `src/components/Header.tsx` and `LandingFooter.tsx`; `src/app/sitemap.ts` owns the static sitemap. Keep route removals consistent across these sources, Grid controls, schema metadata and links.
 - Publish studio material only. Private prototype URLs and personal-site promotion do not belong in public navigation or content.
 
+## Hosting — Cloudflare Workers (October 17, 2026)
+
+honeydrunkstudios.com is served by the `honeydrunk-website` Cloudflare Worker, built from `honeydrunk-website/` with the OpenNext Cloudflare adapter (`@opennextjs/cloudflare`). This replaces Vercel hosting; `vercel.json` is gone and its security headers now live in `next.config.ts`.
+
+- `honeydrunk-website/wrangler.jsonc` holds the Worker name, account, custom domains (apex and `www`), static assets, the Images binding that serves `next/image`, and observability. Public configuration only; no secrets.
+- `honeydrunk-website/open-next.config.ts` configures no incremental cache. Every route is static, SSG or a route handler over bundled JSON. Add an R2 or KV cache before introducing ISR or `revalidate`.
+- From `honeydrunk-website/`: `npm run preview` builds the Worker and serves it locally in workerd; `npm run deploy` builds and deploys from a logged-in Wrangler session; `npm run cf-typegen` regenerates binding types; `npx wrangler deploy --dry-run` validates the configuration without an account.
+- `next/image` requests go through the Cloudflare Images binding. The Free plan includes 5,000 unique transformations per month and refuses new ones beyond that rather than billing. The site has two `next/image` call sites, so ordinary traffic stays well inside the allowance.
+
+Production deploys run on Cloudflare Workers Builds from `main`. No API token or GitHub secret is involved. Dashboard settings: Compute (Workers & Pages) → Create → Import a repository → `HoneyDrunkStudios/HoneyDrunkStudios`; root directory `honeydrunk-website`; build command `npx opennextjs-cloudflare build`; deploy command `npx opennextjs-cloudflare deploy`; production branch `main`; non-production branch builds off. `NEXT_PUBLIC_SITE_URL` defaults to the production URL in code; set it as a build variable only if it must differ.
+
+### Cutover from Vercel
+
+The first production build is the cutover. Wrangler runs non-interactively on Workers Builds and replaces any DNS record that conflicts with a declared custom domain, so the moment the first build deploys, `honeydrunkstudios.com` and `www.honeydrunkstudios.com` point at the Worker.
+
+1. Record the current Vercel DNS records for the apex and `www` in the honeydrunkstudios.com zone (type, name, target, proxy status). They are the rollback.
+2. Optional: verify the bundle locally with `npm run preview` before connecting the repository.
+3. Connect the repository in Workers Builds with the settings above and let the first build run.
+4. Verify on the live domain: home, `/grid`, `/nodes/<id>`, `/services/<id>`, `/api/nodes/stats`, `/sitemap.xml`, an unknown path returns the site 404, the header logo and gallery images render, and responses carry `X-Content-Type-Options`, `X-Frame-Options` and `X-XSS-Protection`.
+5. Rollback, if needed: remove both custom domains from the Worker (Settings → Domains & Routes), recreate the records from step 1 in the DNS tab, and the Vercel deployment serves again. Code-level rollback: Workers → honeydrunk-website → Deployments → roll back to a previous version.
+6. After a clean day, remove the project from Vercel.
+
 
 ---
 
