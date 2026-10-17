@@ -17,14 +17,14 @@ export function readSignalCatalogs() {
   return Object.fromEntries(
     ['signals', 'sectors', 'nodes', 'modules', 'services'].map(name => [
       name,
-      JSON.parse(readFileSync(new URL(`../data/schema/${name}.json`, import.meta.url), 'utf8')),
+      JSON.parse(readFileSync(new URL(`../src/data/schema/${name}.json`, import.meta.url), 'utf8')),
     ]),
   );
 }
 
 export function validateSignalTags({ signals, sectors, nodes, modules, services }) {
   const sectorIds = new Set(sectors.sectors.map(sector => sector.id));
-  // Match app/signal/page.tsx; derive the allowlist from the existing catalogs.
+  // Match src/app/signal/page.tsx; derive the allowlist from the existing catalogs.
   const allowedTags = new Map(
     [['sector', sectors.sectors], ['node', nodes], ['module', modules], ['service', services]]
       .flatMap(([kind, entries]) => entries.flatMap(entry => [

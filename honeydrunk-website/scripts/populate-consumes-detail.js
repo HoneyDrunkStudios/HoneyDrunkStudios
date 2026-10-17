@@ -10,7 +10,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const relPath = path.join(__dirname, '../data/schema/relationships.json');
+const relPath = path.join(__dirname, '../src/data/schema/relationships.json');
 const rel = JSON.parse(fs.readFileSync(relPath, 'utf8'));
 
 // Build a map of nodeId -> exposes for quick lookup

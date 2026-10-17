@@ -51,6 +51,7 @@ Generated\ Files/
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
+!honeydrunk-website/src/components/BuildLog.tsx
 *.trx
 
 # NUnit

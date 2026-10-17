@@ -1,4 +1,6 @@
 # 🐝 HoneyDrunk Studios — Hive Operations Manifest v4.0  
+
+Application source lives in `honeydrunk-website/src/`; public assets, scripts and framework configuration remain at the application root. The `@/` import alias resolves to `src/`.
 *(HoneyDrunk.OS • The Grid • Build-in-Public Cyberpunk Edition)*  
 
 (Founder-Controlled • AI-Advised • Copilot-Powered • Cyberpunk-Aesthetic • Build-in-Public • Agentic-Driven)  
@@ -9,10 +11,10 @@ The Next.js application lives in `honeydrunk-website/`. Install the lockfile wit
 
 HoneyDrunk.Studio owns current priorities, living product requirements, game design and learning evidence. This website publishes a dated, bounded summary; its catalog and signal feed do not authorize work or establish product acceptance. The longer manifesto below describes studio aspirations, not a list of shipped features.
 
-- `components/CurrentFocus.tsx` presents the five selected tracks.
-- `data/schema/nodes.json` and `signals.json` hold public project descriptions and dated updates. Separate private prototypes, local implementation, merged code, package publication and founder acceptance.
+- `src/components/CurrentFocus.tsx` presents the five selected tracks.
+- `src/data/schema/nodes.json` and `signals.json` hold public project descriptions and dated updates. Separate private prototypes, local implementation, merged code, package publication and founder acceptance.
 - Signal feed tags use existing sector IDs/names from `sectors.json` or registered entity IDs/names from `nodes.json`, `modules.json` and `services.json`, matching the feed's sector resolver. Do not invent editorial tags such as `studio-update` or `packages`. Use one label per referenced entity. `npm run validate:signals` checks the whole feed before each build; `npm run test:signals` exercises rejection cases. Six older entries retain their exact historical `Pulse`/`HoneyHub` aliases; these are entry-specific exceptions, not allowed tags for new updates.
-- Shared navigation lives in `components/Header.tsx` and `LandingFooter.tsx`; `app/sitemap.ts` owns the static sitemap. Keep route removals consistent across these sources, Grid controls, schema metadata and links.
+- Shared navigation lives in `src/components/Header.tsx` and `LandingFooter.tsx`; `src/app/sitemap.ts` owns the static sitemap. Keep route removals consistent across these sources, Grid controls, schema metadata and links.
 - Publish studio material only. Private prototype URLs and personal-site promotion do not belong in public navigation or content.
 
 

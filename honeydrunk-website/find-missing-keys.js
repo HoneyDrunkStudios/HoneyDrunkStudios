@@ -1,5 +1,5 @@
 const fs = require('fs');
-const nodes = JSON.parse(fs.readFileSync('./data/schema/nodes.json', 'utf8'));
+const nodes = JSON.parse(fs.readFileSync('./src/data/schema/nodes.json', 'utf8'));
 
 console.log('=== Finding Nodes Missing Description Key ===\n');
 
