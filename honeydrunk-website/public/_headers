@@ -1,0 +1,12 @@
+# Cloudflare serves these files without invoking the Worker, so next.config.ts
+# headers never reach them. Keep the three names and values aligned with
+# securityHeaders in next.config.ts.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+
+# Hashed Next.js chunks. One rule sets Cache-Control; a second rule for the
+# same header would be joined with a comma instead of replacing it.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable

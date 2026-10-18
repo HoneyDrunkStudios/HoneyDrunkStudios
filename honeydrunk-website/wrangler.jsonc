@@ -12,6 +12,8 @@
     { "pattern": "www.honeydrunkstudios.com", "custom_domain": true }
   ],
   "assets": {
+    // Served ahead of the Worker. public/_headers supplies the security
+    // headers and the /_next/static cache policy for these files.
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },

@@ -19,9 +19,10 @@ HoneyDrunk.Studio owns current priorities, living product requirements, game des
 
 ## Hosting — Cloudflare Workers (October 17, 2026)
 
-honeydrunkstudios.com is served by the `honeydrunk-website` Cloudflare Worker, built from `honeydrunk-website/` with the OpenNext Cloudflare adapter (`@opennextjs/cloudflare`). This replaces Vercel hosting; `vercel.json` is gone and its security headers now live in `next.config.ts`.
+honeydrunkstudios.com is served by the `honeydrunk-website` Cloudflare Worker, built from `honeydrunk-website/` with the OpenNext Cloudflare adapter (`@opennextjs/cloudflare`). This replaces Vercel hosting. `vercel.json` is gone. Worker responses take the security headers from `next.config.ts`. Static assets take the same headers, and `/_next/static/*` takes a one-year immutable cache, from `honeydrunk-website/public/_headers`.
 
 - `honeydrunk-website/wrangler.jsonc` holds the Worker name, account, custom domains (apex and `www`), static assets, the Images binding that serves `next/image`, and observability. Public configuration only; no secrets.
+- `honeydrunk-website/public/_headers` is the Cloudflare Workers static-asset header file. Cloudflare serves `robots.txt`, images and `/_next/static/*` without invoking the Worker, so the `next.config.ts` headers do not apply to them. The file sets `X-Content-Type-Options`, `X-Frame-Options` and `X-XSS-Protection` on every static asset, and `Cache-Control: public, max-age=31536000, immutable` on `/_next/static/*`.
 - `honeydrunk-website/open-next.config.ts` configures no incremental cache. Every route is static, SSG or a route handler over bundled JSON. Add an R2 or KV cache before introducing ISR or `revalidate`.
 - From `honeydrunk-website/`: `npm run preview` builds the Worker and serves it locally in workerd; `npm run deploy` builds and deploys from a logged-in Wrangler session; `npm run cf-typegen` regenerates binding types; `npx wrangler deploy --dry-run` validates the configuration without an account.
 - `next/image` requests go through the Cloudflare Images binding. The Free plan includes 5,000 unique transformations per month and refuses new ones beyond that rather than billing. The site has two `next/image` call sites, so ordinary traffic stays well inside the allowance.
@@ -30,14 +31,18 @@ Production deploys run on Cloudflare Workers Builds from `main`. No API token or
 
 ### Cutover from Vercel
 
-The first production build is the cutover. Wrangler runs non-interactively on Workers Builds and replaces any DNS record that conflicts with a declared custom domain, so the moment the first build deploys, `honeydrunkstudios.com` and `www.honeydrunkstudios.com` point at the Worker.
+The first production deploy is the cutover, and it has to start immediately after the Vercel DNS records are gone. Cloudflare will not create a Worker custom domain on a hostname that already has a CNAME. Workers Builds runs Wrangler non-interactively and leaves existing records in place, so a first deploy made while those records remain fails and honeydrunkstudios.com stays on Vercel.
 
-1. Record the current Vercel DNS records for the apex and `www` in the honeydrunkstudios.com zone (type, name, target, proxy status). They are the rollback.
-2. Optional: verify the bundle locally with `npm run preview` before connecting the repository.
-3. Connect the repository in Workers Builds with the settings above and let the first build run.
-4. Verify on the live domain: home, `/grid`, `/nodes/<id>`, `/services/<id>`, `/api/nodes/stats`, `/sitemap.xml`, an unknown path returns the site 404, the header logo and gallery images render, and responses carry `X-Content-Type-Options`, `X-Frame-Options` and `X-XSS-Protection`.
-5. Rollback, if needed: remove both custom domains from the Worker (Settings → Domains & Routes), recreate the records from step 1 in the DNS tab, and the Vercel deployment serves again. Code-level rollback: Workers → honeydrunk-website → Deployments → roll back to a previous version.
-6. After a clean day, remove the project from Vercel.
+Finish every step that leaves DNS alone before touching the zone. The downtime window opens when the Vercel records are deleted and closes when the Worker custom domains are live, so delete the records only when the Workers Builds import is filled in and waiting on the confirm button, then confirm it in the same sitting.
+
+1. Record the current Vercel DNS records for the apex and `www` in the honeydrunkstudios.com zone (type, name, target, proxy status). They are the rollback. Leave them in place.
+2. Optional: verify the bundle locally with `npm run preview`. Do this before deleting any DNS records.
+3. Open Workers Builds and fill in the settings above (repository `HoneyDrunkStudios/HoneyDrunkStudios`, root directory, build command, deploy command, production branch `main`, non-production branch builds off). Do not confirm the import. Confirming it starts the first deploy. The site is still served by Vercel.
+4. Immediately before that deploy, delete the Vercel DNS records recorded in step 1 for `honeydrunkstudios.com` and `www`. This opens the downtime window.
+5. Confirm the Workers Builds import so the first build and deploy start at once. Wrangler creates the apex and `www` custom domains on the hostnames cleared in step 4.
+6. Verify on the live domain: home, `/grid`, `/nodes/<id>`, `/services/<id>`, `/api/nodes/stats`, `/sitemap.xml`, an unknown path returns the site 404, and the header logo and gallery images render. Document responses and static assets (`/robots.txt`, `/honeydrunk.png`, `/_next/static/*`) carry `X-Content-Type-Options`, `X-Frame-Options` and `X-XSS-Protection`. `/_next/static/*` also carries `Cache-Control: public, max-age=31536000, immutable`.
+7. Rollback, if needed: remove both custom domains from the Worker (Settings → Domains & Routes), recreate the records from step 1 in the DNS tab, and the Vercel deployment serves again. Code-level rollback: Workers → honeydrunk-website → Deployments → roll back to a previous version.
+8. After a clean day, remove the project from Vercel.
 
 
 ---
