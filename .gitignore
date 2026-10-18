@@ -564,5 +564,9 @@ stats.json
 
 # Lighthouse CI
 .lighthouseci/
-n u l  
- 
+
+# Cloudflare Workers (OpenNext)
+.open-next/
+.wrangler/
+.dev.vars*
+cloudflare-env.d.ts
