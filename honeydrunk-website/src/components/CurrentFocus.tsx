@@ -1,31 +1,30 @@
 import Link from 'next/link';
 import { colors } from '@/lib/tokens';
 
-const tracks = [
-  { name: 'Pocket Quests', status: 'Prototype approved · app in progress', href: '/nodes/pocket-quests', text: 'A dark, modern fantasy direction in charcoal, cream and gold. A private, session-only prototype explores the character sheet, quests, XP feedback and optional timers. Production implementation is local and in progress; native-device, real-sign-in and dependency acceptance remain open. Pocket Quests is a working name.' },
-  { name: 'Magic Shop', status: 'Graybox and engine updates merged', href: '/nodes/game-prototype', text: 'The Unity first playable now has a four-room layout, modernized engine foundations and fixes from a scripted keyboard-and-mouse playtest. Founder assessment of feel, lighting and readability remains open. Magic Shop is a working title.' },
-  { name: 'AI engineering', status: 'Curriculum ready', href: '/sectors/AI', text: 'An ordered route with 32 exercise units, practical experiments and evidence-based reviews. The learning tracker records demonstrated work; a prepared curriculum does not mean the courses are complete.' },
-  { name: 'Robotics and electronics', status: 'Getting started', href: '/sectors/Cyberware', text: 'Start with the Arduino kit already on hand: identify the board and its guide, then work through small physical experiments. No completed robot build is claimed.' },
-  { name: 'Cybersecurity and ethical hacking', status: 'Curriculum ready', href: '/sectors/HoneyNet', text: 'An ordered, hands-on route beginning with networking foundations and authorized practice. Progress requires coursework and practical evidence; no course completion is claimed.' },
+const projects = [
+  { name: 'Pocket Quests', status: 'Mobile app · in development', href: '/nodes/pocket-quests', text: 'Everyday plans become quests in an illustrated adventure journal. Recent work adds daily planning, place discovery and saved places, with avatar customization and quest-management tools under development. Pocket Quests is a working name; the app is not publicly released.' },
+  { name: 'Magic Shop', status: 'Unity game · in development', href: '/nodes/game-prototype', text: 'Run a magical shop and guild hall: appraise finds, craft goods, and get to know returning adventurers. Recent development expands table stories, town errands, finer orders and the economy. Visual development is exploring the shop’s look alongside the playable systems. Working title; no public release announced.' },
+  { name: 'A shared fantasy universe', status: 'Worldbuilding · visual development', href: '/sectors/honeyplay', text: 'A connected setting for original games, with elemental powers, peoples, creatures and places. Current work develops the universe’s lore, bestiary and visual language, giving each game a world to draw from.' },
+  { name: 'Shared software foundations', status: 'Libraries · engineering tools', href: '/nodes?sector=Core', text: 'Reusable .NET libraries and studio tooling support the apps and games: account services, data access, messaging, secrets, code standards and build workflows. Published packages, development services and future concepts each have their own status in the Grid.' },
 ];
 
 export default function CurrentFocus() {
   return (
     <section className="px-8 py-12" aria-labelledby="current-focus-title" style={{ backgroundColor: colors.deepSpace }}>
       <div className="max-w-7xl mx-auto">
-        <p className="font-mono text-sm" style={{ color: colors.electricBlue, marginBottom: '12px' }}>STUDIO NOTES · OCTOBER 3, 2026</p>
-        <h2 id="current-focus-title" className="font-display text-3xl font-bold" style={{ color: colors.offWhite, marginBottom: '16px' }}>What we’re working on</h2>
-        <p style={{ color: colors.slateLight, marginBottom: '24px' }}>Five tracks for the next chapter: useful products, original worlds, and learning by making. These are current intentions, not promises of shipped features.</p>
+        <p className="font-mono text-sm" style={{ color: colors.electricBlue, marginBottom: '12px' }}>STUDIO UPDATE · NOVEMBER 5, 2026</p>
+        <h1 id="current-focus-title" className="font-display text-3xl font-bold" style={{ color: colors.offWhite, marginBottom: '16px' }}>What we’re working on</h1>
+        <p style={{ color: colors.slateLight, marginBottom: '24px' }}>Useful apps, original games, and the worlds and software behind them. Here’s what’s taking shape at HoneyDrunk Studios.</p>
         <div className="grid gap-6 md:grid-cols-2">
-          {tracks.map(track => (
-            <Link key={track.name} href={track.href} className="rounded-lg border p-6" style={{ borderColor: `${colors.electricBlue}40`, backgroundColor: colors.gunmetal }}>
-              <p className="font-mono text-xs" style={{ color: colors.aurumGold, marginBottom: '8px' }}>{track.status}</p>
-              <h3 className="font-display text-xl font-bold" style={{ color: colors.offWhite, marginBottom: '12px' }}>{track.name}</h3>
-              <p style={{ color: colors.slateLight }}>{track.text}</p>
+          {projects.map(project => (
+            <Link key={project.name} href={project.href} className="rounded-lg border p-6 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4" style={{ borderColor: `${colors.electricBlue}40`, backgroundColor: colors.gunmetal, outlineColor: colors.electricBlue }}>
+              <p className="font-mono text-xs" style={{ color: colors.aurumGold, marginBottom: '8px' }}>{project.status}</p>
+              <h2 className="font-display text-xl font-bold" style={{ color: colors.offWhite, marginBottom: '12px' }}>{project.name}</h2>
+              <p style={{ color: colors.slateLight }}>{project.text}</p>
             </Link>
           ))}
         </div>
-        <p style={{ color: colors.slateLight, marginTop: '24px' }}>Shared foundations are progressing too. HoneyDrunk.UI has public source, with further accessibility and reusable component work under local review; npm packages remain unpublished. HoneyDrunk.Actions owns the current reusable CI workflows; the older Pipelines project is deprecated. Living product and game documents guide selected work, with review retained and the old ticket-generation pipeline retired. HoneyHub remains archived.</p>
+        <p style={{ color: colors.slateLight, marginTop: '24px' }}>Explore the Grid for project details, or read Signal for dated studio updates. Development progress and concept art are shared along the way; public releases are announced separately.</p>
       </div>
     </section>
   );

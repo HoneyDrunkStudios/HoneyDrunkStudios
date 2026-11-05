@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/Header";
 import CyberpunkEffects from "@/components/CyberpunkEffects";
 import PageTransition from "@/components/PageTransition";
 import HiveConsole from "@/components/HiveConsole";
@@ -11,8 +10,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://honeydrunkstudios.c
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "HoneyDrunk Studios — The Grid",
-  description: "Building the HoneyDrunk Grid — open systems, tools, games, and cyberware that empower creators. Structure meets soul. Code meets art.",
-  keywords: ["honeydrunk", "build-in-public", "agents", "creative-tech", "zero-bloat", "cyberpunk", "cyberware", "the grid", "creative coding"],
+  description: "An independent studio building useful apps, original games, a shared fantasy universe, and reusable software. Structure meets soul. Code meets art.",
+  keywords: ["honeydrunk", "build-in-public", "agents", "creative-tech", "zero-bloat", "cyberpunk", "indie games", "mobile apps", "worldbuilding", "the grid", "creative coding"],
   authors: [{ name: "HoneyDrunk Studios" }],
   creator: "HoneyDrunk Studios",
   publisher: "HoneyDrunk Studios",
@@ -29,7 +28,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "HoneyDrunk Studios — The Grid",
-    description: "Building the HoneyDrunk Grid — open systems, tools, games, and cyberware that empower creators.",
+    description: "An independent studio building useful apps, original games, a shared fantasy universe, and reusable software. Structure meets soul. Code meets art.",
     url: siteUrl,
     siteName: "HoneyDrunk Studios",
     images: [
@@ -46,9 +45,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "HoneyDrunk Studios — The Grid",
-    description: "Building the HoneyDrunk Grid — open systems, tools, games, and cyberware that empower creators.",
+    description: "An independent studio building useful apps, original games, a shared fantasy universe, and reusable software. Structure meets soul. Code meets art.",
     images: [`${siteUrl}/neoncity-og.png`],
-    creator: "@honeydrunk",
+    creator: "@HoneyDrunkLab",
   },
   verification: {
     // Add your verification tokens here when ready
@@ -68,15 +67,11 @@ export default function RootLayout({
     name: 'HoneyDrunk Studios',
     url: siteUrl,
     logo: `${siteUrl}/neoncity-og.png`,
-    description: 'Building the HoneyDrunk Grid — open systems, tools, games, and cyberware that empower creators.',
+    description: 'An independent studio building useful apps, original games, a shared fantasy universe, and reusable software. Structure meets soul. Code meets art.',
     sameAs: [
-      'https://twitter.com/honeydrunk',
+      'https://x.com/HoneyDrunkLab',
       'https://github.com/honeydrunkstudios',
     ],
-    founder: {
-      '@type': 'Person',
-      name: 'HoneyDrunk Studios Team',
-    },
   };
 
   return (
@@ -91,7 +86,6 @@ export default function RootLayout({
         <CyberpunkEffects />
         <PageTransition />
         <GridPulse />
-        <Header />
         {children}
         <HiveConsole />
       </body>

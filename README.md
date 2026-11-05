@@ -11,7 +11,7 @@ The Next.js application lives in `honeydrunk-website/`. Install the lockfile wit
 
 HoneyDrunk.Studio owns current priorities, living product requirements, game design and learning evidence. This website publishes a dated, bounded summary; its catalog and signal feed do not authorize work or establish product acceptance. The longer manifesto below describes studio aspirations, not a list of shipped features.
 
-- `src/components/CurrentFocus.tsx` presents the five selected tracks.
+- `src/components/CurrentFocus.tsx` presents a dated public summary of apps, games, shared-universe development and software foundations. Personal learning plans stay off the public homepage.
 - `src/data/schema/nodes.json` and `signals.json` hold public project descriptions and dated updates. Separate private prototypes, local implementation, merged code, package publication and founder acceptance.
 - Signal feed tags use existing sector IDs/names from `sectors.json` or registered entity IDs/names from `nodes.json`, `modules.json` and `services.json`, matching the feed's sector resolver. Do not invent editorial tags such as `studio-update` or `packages`. Use one label per referenced entity. `npm run validate:signals` checks the whole feed before each build; `npm run test:signals` exercises rejection cases. Six older entries retain their exact historical `Pulse`/`HoneyHub` aliases; these are entry-specific exceptions, not allowed tags for new updates.
 - Shared navigation lives in `src/components/Header.tsx` and `LandingFooter.tsx`; `src/app/sitemap.ts` owns the static sitemap. Keep route removals consistent across these sources, Grid controls, schema metadata and links.

@@ -17,13 +17,13 @@ const props = [
   {
     title: 'Build in Public',
     description:
-      'Every Node ships with devlogs, visuals, and lessons.\nTransparency isn\'t marketing — it\'s the message.',
+      'Dated studio updates, public source, and visual development.\nFollow projects from first concept to release.',
     accent: colors.aurumGold,
   },
   {
     title: 'Agentic by Design',
     description:
-      'From observability to robotics, agents amplify the creator.\nAutomation with intention. Intelligence with soul.',
+      'AI supports engineering and creative exploration.\nHuman direction, review, and craft shape the result.',
     accent: colors.electricBlue,
   },
   {

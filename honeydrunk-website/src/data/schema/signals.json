@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-11-05",
+    "title": "Studio update: quest journals, a magical guild hall and a shared world",
+    "desc": "Pocket Quests V1 development now includes merged daily planning, place discovery and saved-place work, with avatar customization and operator quest-management tools in development and review. The app uses an illustrated adventure-journal presentation. Magic Shop has expanded from its early shop graybox into shopkeeping and guild-hall systems, with recent merged work on table stories, town errands, finer orders and the economy. Visual exploration is testing the shop’s look and customers; candidate images are not final game assets. Shared-universe work develops lore, creatures and visual references. Reusable software and engineering tools continue to support the studio. These are development updates; no public app or game release is announced.",
+    "tags": [
+      "Meta",
+      "pocket-quests",
+      "game-prototype",
+      "HoneyPlay"
+    ],
+    "sector": "Meta"
+  },
+  {
     "date": "2026-10-03",
     "title": "Studio progress: Pocket Quests prototype and Magic Shop iteration",
     "desc": "Pocket Quests has an approved charcoal, cream and gold modern-fantasy direction. The founder reports the private session-only prototype working: a character sheet, separate quest actions, XP breakdowns, Undo and optional timers. Avatar, room and adventure-location interactions remain illustrative; the prototype has no GPS, backend or push notifications. Production implementation is local and in progress, with native-device, real-sign-in and dependency acceptance still open. Magic Shop has merged its four-room graybox, Unity modernization and fixes from a scripted keyboard-and-mouse playtest. The latest game change reports 67 Core, 10 EditMode and 7 PlayMode tests passing, a successful Windows build and a clean smoke test; founder feel, lighting and readability acceptance and held-arrow-key look remain unverified. Five studio tracks now include cybersecurity alongside AI and robotics learning; no course completion is claimed. Living PRDs and GDDs own selected scope and evidence. Ticket generation is retired, review remains, Actions owns current reusable checks, and Pipelines is deprecated. These are development notes, not public product releases.",

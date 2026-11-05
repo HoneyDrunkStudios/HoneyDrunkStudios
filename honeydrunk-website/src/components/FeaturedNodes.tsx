@@ -48,7 +48,7 @@ export default function FeaturedNodes({ nodes }: FeaturedNodesProps) {
           className="text-center text-base font-mono w-full"
           style={{ color: colors.slateLight, marginBottom: '60px' }}
         >
-          Live systems. Active experiments. The Grid in motion.
+          Published software and projects in development. Explore each project’s current stage.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

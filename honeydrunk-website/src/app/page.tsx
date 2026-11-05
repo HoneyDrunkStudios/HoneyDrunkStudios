@@ -26,24 +26,27 @@ export default function Home() {
     setIsChecking(false);
   }, []);
 
-  // Show nothing while checking to prevent flash
+  // Keep navigation available while checking the intro preference.
   if (isChecking) {
-    return null;
+    return <Header />;
   }
 
   // Show boot sequence if not jacked in yet
   if (!hasJackedIn) {
     return (
-      <HeroBoot
-        onBootComplete={() => {
-          sessionStorage.setItem(STORAGE_KEY, 'true');
-          setHasJackedIn(true);
-        }}
-        onExploreGrid={() => {
-          sessionStorage.setItem(STORAGE_KEY, 'true');
-          setHasJackedIn(true);
-        }}
-      />
+      <>
+        <Header />
+        <HeroBoot
+          onBootComplete={() => {
+            sessionStorage.setItem(STORAGE_KEY, 'true');
+            setHasJackedIn(true);
+          }}
+          onExploreGrid={() => {
+            sessionStorage.setItem(STORAGE_KEY, 'true');
+            setHasJackedIn(true);
+          }}
+        />
+      </>
     );
   }
 
@@ -53,8 +56,8 @@ export default function Home() {
       <Header />
       {/* Add top padding to account for absolute positioned header */}
       <div className="pt-24 space-y-0">
-        <ValueProps />
         <CurrentFocus />
+        <ValueProps />
         <FeaturedNodes nodes={featuredNodes} />
         <Spotlights />
         <BuildInPublic />

@@ -176,7 +176,7 @@ export default function LandingFooter() {
                 { label: 'About', href: '/about' },
                 { label: 'Brand', href: '/brand' },
                 { label: 'Signal', href: '/signal' },
-                { label: 'Status', href: '/status' },
+                { label: 'Status demo', href: '/status' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
@@ -276,7 +276,7 @@ export default function LandingFooter() {
                 className="text-xs font-mono"
                 style={{ color: colors.slateLight }}
               >
-                Hive heartbeat: operational
+                Hive heartbeat: visual effect
               </span>
             </div>
 
