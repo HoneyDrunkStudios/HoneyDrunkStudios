@@ -16,8 +16,8 @@ export default function HomePage() {
       <Header />
       {/* Add top padding to account for absolute positioned header */}
       <div className="pt-24 space-y-16">
-        <ValueProps />
         <CurrentFocus />
+        <ValueProps />
         <FeaturedNodes nodes={featuredNodes} />
         <Spotlights />
         <BuildInPublic />

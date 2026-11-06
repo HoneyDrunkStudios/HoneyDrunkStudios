@@ -61,7 +61,7 @@ function NodesContent() {
               Nodes
             </h1>
             <p className="text-base md:text-lg px-1 md:px-2" style={{ color: colors.slateLight }}>
-              Product platforms in The Grid. Each Node defines stable contracts and exposes slots where Modules dock.
+              Apps, games, libraries and experiments in the Grid. Seed entries are concepts; development and published projects carry their own status.
             </p>
 
             {/* Sector Filters */}

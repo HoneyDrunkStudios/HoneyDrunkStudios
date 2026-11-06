@@ -36,7 +36,7 @@ export default function SectorsHub() {
               Sectors
             </h1>
             <p className="text-base md:text-lg px-1 md:px-2" style={{ color: colors.slateLight }}>
-              The Grid is organized into sectors—each a distinct domain with its own purpose, projects, and signal strength.
+              Explore the studio’s software, games and areas of experimentation. Sectors organize both current projects and future concepts; they are not a list of available products.
             </p>
           </header>
 

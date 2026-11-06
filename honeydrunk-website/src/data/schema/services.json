@@ -14,10 +14,7 @@
       "prod"
     ],
     "depends_on": [
-      "grid",
-      "honeydrunk-transport",
-      "honeydrunk-pulse",
-      "honeydrunk-vault"
+      "grid"
     ],
     "interfaces": {
       "http": [
@@ -34,18 +31,18 @@
     },
     "signal": "Live",
     "long_description": {
-      "overview": "The live front-end of The Hive: renders all Nodes, Modules, and Services with signal-based animation. Public-facing, neon-lit visualization that keeps the ecosystem transparent.",
+      "overview": "The public website visualizes bundled project catalogs and documented relationships. Signal contains dated editorial updates; the status dashboard is a simulation.",
       "why_it_exists": "To make the state of The Grid observable to contributors and the community.",
       "primary_audience": "Developers, contributors, and anyone tracking HoneyDrunk’s build-in-public roadmap.",
       "value_props": [
-        "Visualizes Node and Service dependencies in real time",
-        "Acts as the public dashboard for Hive activity",
-        "Serves as the canonical source for Grid states and Signals"
+        "Browse a project relationship graph",
+        "Explore the studio’s sectors and catalog",
+        "Read dated development updates"
       ],
       "monetization_signal": "Internal showcase; potential for interactive SaaS dashboard in future.",
-      "roadmap_focus": "Add Services lane, module dock views, and live signal updates via WebSockets.",
-      "grid_relationship": "Consumes HoneyDrunk.Grid and Pulse data to render the map and state of each entity.",
-      "integration_depth": "deep",
+      "roadmap_focus": "Maintain clear public project summaries and usable catalog navigation.",
+      "grid_relationship": "Reads bundled JSON in the website; it does not consume live Pulse telemetry or a running registry service.",
+      "integration_depth": "shallow",
       "demo_path": "Open honeydrunkstudios.com → explore the lattice.",
       "signal_quote": "The lattice, lit.",
       "stability_tier": "critical",

@@ -33,8 +33,8 @@ export const commands: Record<string, CommandHandler> = {
       '  list.nodes        — Enumerate active projects',
       '  decrypt.archive   — Reveal vault fragment',
       '  trace.signal      — Ping the grid',
-      '  uptime            — Check hive vital signs',
-      '  status            — View grid status dashboard',
+      '  uptime            — Show fictional Grid uptime',
+      '  status            — View simulated status dashboard',
       '  run.snake         — Load recreational process',
       '  open.gallery      — Cycle visual feed',
       '  clear             — Clear console output',
@@ -112,7 +112,7 @@ export const commands: Record<string, CommandHandler> = {
         '> [■■■■■■■■■■] 100%',
         '> signal trace complete.',
         '',
-        '> All nodes responding. Grid stable.',
+        '> Visual effect complete. No live services were contacted.',
       ],
       animated: true,
     };
@@ -174,7 +174,7 @@ export const commands: Record<string, CommandHandler> = {
     return {
       output: [
         '> accessing grid status dashboard...',
-        '> telemetry stream active.',
+        '> simulated dashboard; no live telemetry connected.',
         '',
         '> redirecting to /status',
       ],
@@ -239,7 +239,7 @@ export const commands: Record<string, CommandHandler> = {
     }
 
     return {
-      output,
+      output: ['> Fictional Grid telemetry — simulated, not service monitoring.', ...output],
       breath: true,
     };
   },

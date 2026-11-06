@@ -83,7 +83,7 @@ export default function ServicesIndexPage() {
               Services
             </h1>
             <p className="text-base md:text-lg px-1 md:px-2" style={{ color: colors.slateLight }}>
-              Deployed runtimes consuming Nodes and Modules. APIs, workers, agents, and webapps.
+              A catalog of APIs, workers, agents and web apps, including planned services. A catalog entry does not establish a running or publicly available service.
             </p>
           </header>
 

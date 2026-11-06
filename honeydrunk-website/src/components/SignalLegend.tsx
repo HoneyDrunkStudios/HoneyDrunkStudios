@@ -13,10 +13,10 @@ interface SignalLegendProps {
 }
 
 const signalDescriptions: Record<string, string> = {
-  Seed: 'Queued/Backlog',
+  Seed: 'Concept',
   Awake: 'Planning/Starting',
   Wiring: 'Active Development',
-  Live: 'Production/Deployed',
+  Live: 'Published/In Use',
   Echo: 'Maintenance/Iteration',
   Archive: 'Retired/Deprecated',
 };

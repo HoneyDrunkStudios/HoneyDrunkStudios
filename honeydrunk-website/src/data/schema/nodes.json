@@ -1659,8 +1659,8 @@
     "id": "game-prototype",
     "type": "node",
     "name": "Magic Shop (working title)",
-    "short": "First-person magical shop game — four-room graybox",
-    "description": "As of October 3, 2026: the first playable, four-room layout graybox, Unity modernization and scripted-playtest fixes are merged. Automated checks and a Windows build are reported passing; founder acceptance of feel, lighting and readability remains open.",
+    "short": "A magical shop and guild hall in a shared fantasy world",
+    "description": "As of November 5, 2026: a standalone Unity game in active development, combining appraisal, crafting, shopkeeping and a guild hall of returning adventurers. Recent merged work adds table stories, town errands, finer orders and an economy pass. Working title; no public release announced.",
     "sector": "HoneyPlay",
     "signal": "Wiring",
     "cluster": "gaming",
@@ -1673,16 +1673,17 @@
     ],
     "links": {},
     "long_description": {
-      "overview": "As of October 3, 2026: the first playable, four-room layout graybox, Unity modernization and scripted-playtest fixes are merged. Automated checks and a Windows build are reported passing; founder acceptance of feel, lighting and readability remains open. The approved GDD 1.1 guides presentation and space. The layout work does not establish completion of its later HUD, screen or interaction changes.",
-      "why_it_exists": "Explore an original world through appraisal, crafting and running a magical shop.",
-      "primary_audience": "Players interested in a stylized first-person shop game.",
+      "overview": "As of November 5, 2026: a standalone Unity game in active development, combining appraisal, crafting, shopkeeping and a guild hall of returning adventurers. Recent merged work adds table stories, town errands, finer orders and an economy pass. Working title; no public release announced. Visual development is exploring the bright corner shop and its customers alongside the playable systems; candidate imagery is not final in-game art.",
+      "why_it_exists": "Explore an original fantasy world through the everyday work of a magical shop and guild hall.",
+      "primary_audience": "Players who enjoy shopkeeping, crafting and a cast of returning fantasy adventurers.",
       "value_props": [
         "Appraisal, crafting and shop management",
-        "A four-room shop layout around the counter",
-        "Scripted keyboard-and-mouse playtest coverage"
+        "A guild hall with returning adventurers and their stories",
+        "Town errands, orders and an evolving economy",
+        "Shared-universe lore and ongoing visual development"
       ],
       "monetization_signal": "No public release or pricing commitment.",
-      "roadmap_focus": "Capture founder playtesting of feel, lighting and readability, and verify held-arrow-key look. Continue only the explicitly selected design slice; the wider GDD 1.1 presentation is not all implemented.",
+      "roadmap_focus": "Iterate on the playable shop and guild-hall systems, assess the experience through playtesting, and explore the visual direction. Merged systems and art candidates do not establish release acceptance.",
       "grid_relationship": "Standalone Unity implementation with local saves and settings. No HoneyDrunk.Pulse or HoneyDrunk.Vault package integration is verified; in-game vault custody is a game mechanic.",
       "integration_depth": "medium",
       "demo_path": "First playable exists; public demo availability is not confirmed.",
@@ -1796,8 +1797,8 @@
     "id": "grid",
     "type": "node",
     "name": "HoneyDrunk.Grid",
-    "short": "Service registry & node orchestration",
-    "description": "Live registry of Nodes, statuses, and dependencies. Service discovery and inter-Node protocol surface.",
+    "short": "Interactive map of studio projects and their relationships",
+    "description": "The public Grid maps projects, catalog statuses and relationships from bundled JSON. It is an editorial snapshot, not a live service registry or health monitor.",
     "sector": "Meta",
     "signal": "Live",
     "cluster": "ecosystem",
@@ -1812,19 +1813,19 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunkStudios"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Grid is the consciousness of the Hive — a living registry that maps every Node, service, and dependency in real time. It's both the architectural blueprint and the operating brain, ensuring the ecosystem knows what exists, how it connects, and where it's drifting. The Grid continuously ingests manifests from each Node, forming a dynamic dependency graph visualized through the public Grid Visualizer. It acts as a single source of operational truth for humans and agents alike. Over time, it will evolve from static registry to autonomous orchestrator — capable of detecting unhealthy Nodes, triggering redeployments, and suggesting refactors through telemetry-driven insight. It will also serve as the governance layer for open-source participation, controlling what enters or exits the Hive. The long-term goal is full systemic awareness — a platform where architecture becomes self-documenting and self-healing. The Grid earns its keep by making the invisible visible — a mirror for the mind of the machine.",
+      "overview": "The public Grid maps projects, catalog statuses and relationships from bundled JSON. It is an editorial snapshot, not a live service registry or health monitor.",
       "why_it_exists": "HoneyDrunk.Grid exists to prevent inconsistency and reinvention across the Grid.",
       "primary_audience": "HoneyDrunk maintainers, contributors, and service owners.",
       "value_props": [
-        "Standardizes registry, orchestration",
-        "Reduces operational risk with opinionated defaults",
-        "Improves developer velocity and interoperability"
+        "Browse projects by sector and development stage",
+        "Explore documented relationships",
+        "Navigate to project details and dated updates"
       ],
       "monetization_signal": "Internal-first; open-core where appropriate.",
-      "roadmap_focus": "Advance HoneyDrunk.Grid capabilities and harden contracts.",
-      "grid_relationship": "Connects with: honeydrunk-kernel, honeydrunk-pulse.",
+      "roadmap_focus": "Keep the public map and its project summaries aligned with verified studio work.",
+      "grid_relationship": "Reads bundled website catalogs; no live Kernel or Pulse service connection is implemented.",
       "integration_depth": "medium",
-      "demo_path": "Show a 60-second demo of HoneyDrunk.Grid: input → behavior → outcome.",
+      "demo_path": "Open /grid, filter projects, and select a node to explore its details.",
       "signal_quote": "The map is alive.",
       "stability_tier": "experimental",
       "impact_vector": "design coherence"
@@ -2887,8 +2888,8 @@
     "type": "node",
     "name": "HoneyDrunk.Studio",
     "public_name": "HoneyDrunk.Studio",
-    "short": "Studio planning, learning & Grid architecture",
-    "description": "The renamed studio home for living product requirements, game design, learning evidence and canonical Grid architecture.",
+    "short": "Studio planning, game design and Grid architecture",
+    "description": "The studio home for living product requirements, game design, shared-universe lore and canonical Grid architecture.",
     "sector": "Meta",
     "signal": "Live",
     "cluster": "governance",
@@ -2906,7 +2907,7 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Studio"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Studio is the renamed shared planning and knowledge home for the studio. Living PRDs and GDDs own selected product scope, decisions and progress; learning trackers own demonstrated learning. Current focus links the five selected tracks. The work-item and ticket-generation pipeline is retired, while meaningful review remains. Application implementation stays in its owning repository.",
+      "overview": "HoneyDrunk.Studio is the shared planning and knowledge home for products, games, the fantasy universe and Grid architecture. Living product and game documents own selected scope and dated progress. Application implementation stays in its owning repository.",
       "why_it_exists": "Without a single source of architectural truth, decisions scatter across repos, agents lack context, and the Grid drifts.",
       "primary_audience": "Architecture agents, Copilot workflows, and HoneyDrunk maintainers making cross-cutting decisions.",
       "value_props": [
@@ -2917,10 +2918,10 @@
         "Constitution and invariants that define Grid-wide rules"
       ],
       "monetization_signal": "Internal governance infrastructure.",
-      "roadmap_focus": "Keep useful technical context current, support selected studio work, and track learning with lightweight evidence.",
+      "roadmap_focus": "Keep product, game and architecture decisions aligned with the work being built.",
       "grid_relationship": "Referenced by all agents and copilot instructions. No runtime dependencies.",
       "integration_depth": "shallow",
-      "demo_path": "Start from current focus, open the selected living PRD, GDD or learning tracker, and follow its dated evidence.",
+      "demo_path": "Open a product, game or architecture document and follow its dated evidence.",
       "signal_quote": "Know the map. Tend the garden.",
       "stability_tier": "stable",
       "impact_vector": "architectural clarity"
@@ -2938,7 +2939,7 @@
     "name": "HoneyDrunk.Studios",
     "public_name": "HoneyDrunk.Studios",
     "short": "Public website & Grid visualizer",
-    "description": "The live front-end of The Hive — renders all Nodes, Sectors, and signals with neon-lit visualization. Next.js 16, React 19, Three.js WebGL.",
+    "description": "The public studio website: apps, games, software catalogs and dated updates. Built with Next.js 16 and React 19, hosted on Cloudflare Workers.",
     "sector": "Meta",
     "signal": "Live",
     "cluster": "visualization",
@@ -2953,24 +2954,24 @@
       "public"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Studios"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunkStudios"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Studios is the public face of the Hive — a Next.js 16 application that renders the Grid as an interactive, neon-lit visualization. It displays every Node, Sector, signal timeline entry, and relationship using static JSON data imported directly (no CMS, no database). The flagship /grid route renders an interactive Three.js WebGL scene. The site serves as both a developer portal and a build-in-public showcase.",
+      "overview": "The public HoneyDrunk website presents studio projects, sectors, relationships and dated updates. Next.js 16 and React 19 render bundled JSON catalogs; the interactive Grid uses an SVG graph. Cloudflare Workers hosts the site. Catalog updates are editorial, and the status dashboard is a labeled simulation.",
       "why_it_exists": "To make the state of The Grid observable to contributors and the community. Transparency as a feature.",
       "primary_audience": "Developers, contributors, and anyone tracking HoneyDrunk's build-in-public roadmap.",
       "value_props": [
-        "Interactive 3D Grid visualization via Three.js",
-        "Real-time reflection of architecture state via static JSON",
-        "Signal timeline showing build-in-public progress",
-        "Sector and Node deep-dive pages with rich descriptions",
-        "Deployed on Vercel with automatic previews"
+        "An interactive map of studio projects",
+        "Dated project descriptions from bundled catalogs",
+        "A Signal timeline of studio updates",
+        "Sector and project detail pages",
+        "Hosted on Cloudflare Workers"
       ],
       "monetization_signal": "Public-facing brand and developer relations.",
-      "roadmap_focus": "Converge data with Architecture repo. Add live status indicators. Expand module and service detail pages.",
+      "roadmap_focus": "Keep public content current, clear and accessible as apps, games and shared software develop.",
       "grid_relationship": "Consumes Architecture catalogs as source of truth for data/schema files. No runtime Node dependencies.",
       "integration_depth": "shallow",
-      "demo_path": "Visit honeydrunkstudios.com → explore /grid WebGL → browse /nodes → check /signal timeline.",
+      "demo_path": "Visit honeydrunkstudios.com, explore the Grid, browse project details, and read Signal.",
       "signal_quote": "See the Hive breathe.",
       "stability_tier": "stable",
       "impact_vector": "community engagement"
@@ -3332,7 +3333,7 @@
     "name": "Pocket Quests",
     "public_name": "Pocket Quests",
     "short": "Your real life, reflected in a world of personal quests",
-    "description": "As of October 3, 2026: an approved modern-fantasy visual direction and a private session-only prototype; local production implementation is in progress. Native-device, real-sign-in and dependency acceptance remain open; there is no public release. Working name; release name remains open.",
+    "description": "As of November 5, 2026: an illustrated mobile quest journal in active V1 development. Daily planning, place discovery and saved-place work are merged; avatar customization and operator quest-management features are in development and review. Working name; no public release announced.",
     "sector": "Market",
     "signal": "Wiring",
     "cluster": "personal-growth",
@@ -3349,17 +3350,17 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.PocketQuests"
     },
     "long_description": {
-      "overview": "As of October 3, 2026: an approved modern-fantasy visual direction and a private session-only prototype; local production implementation is in progress. Native-device, real-sign-in and dependency acceptance remain open; there is no public release. Working name; release name remains open. The charcoal, cream and gold design separates a Home character sheet from accepting, tracking and completing quests, with XP breakdowns, Undo and optional session timers. Avatar, room and adventure-location interactions are illustrative prototype explorations, not released features.",
+      "overview": "As of November 5, 2026: an illustrated mobile quest journal in active V1 development. Daily planning, place discovery and saved-place work are merged; avatar customization and operator quest-management features are in development and review. Working name; no public release announced. Plan self-chosen activities, complete quests, and see progress through a character sheet, XP and rewards. Recent work uses an illustrated adventure-journal presentation.",
       "why_it_exists": "Make everyday progress useful and enjoyable, starting with one person and growing through actual use.",
       "primary_audience": "People who want a playful way to organize self-chosen goals and adventures.",
       "value_props": [
-        "Self-chosen quests and visible XP feedback",
-        "A character sheet and separate quest management",
-        "Optional timers for suitable quests",
-        "Avatar, room and adventure concepts explored in a private prototype"
+        "Everyday plans organized as quests",
+        "Character progress, XP feedback and rewards",
+        "Daily planning and private saved places",
+        "Avatar customization and operator quest tools in development"
       ],
-      "roadmap_focus": "Validate the selected production slice on native devices, with real sign-in and dependency acceptance still open. Celebration and explicit level-up feedback now have local implementation; local tests do not resolve release gates or establish founder acceptance. Deeper avatar and room interaction remain later work. Prototype locations are mock data; the prototype has no GPS, backend or push notifications.",
-      "grid_relationship": "Production implementation and shared UI integration remain local work under review. HoneyDrunk.UI has public source; npm packages are not published. Shared mechanics belong in their owning packages, while the charcoal, cream and gold theme and quest rules stay app-owned.",
+      "roadmap_focus": "Continue selected V1 features and development walkthroughs. Native-device and provider sign-in acceptance remain separate from merged code and automated tests. App Store preparation is deferred.",
+      "grid_relationship": "Uses shared Identity account services and reusable UI foundations. Product themes and quest rules remain app-owned; development integration does not establish a public consumer release.",
       "signal_quote": "A little quest giver in your pocket.",
       "stability_tier": "experimental",
       "impact_vector": "personal usefulness"
@@ -3370,8 +3371,8 @@
     "type": "node",
     "name": "HoneyDrunk.Identity",
     "public_name": "HoneyDrunk.Identity",
-    "short": "Shared accounts — implementation under review",
-    "description": "Shared account implementation used by the local Pocket Quests backend. PR 1 is open, not merged; complete signed-in quest use remains unverified. Client packages are not published. This is a project progress record; formal Grid registration remains deferred.",
+    "short": "Shared accounts for studio applications",
+    "description": "As of November 5, 2026: the shared account-service foundation is merged and a development deployment supports Pocket Quests integration work. Development operation is distinct from a production release or completed native-provider acceptance.",
     "sector": "Core",
     "signal": "Wiring",
     "cluster": "shared-foundations",
@@ -3385,9 +3386,9 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Identity"
     },
     "long_description": {
-      "overview": "Shared account implementation used by the local Pocket Quests backend. PR 1 is open, not merged; complete signed-in quest use remains unverified. Client packages are not published. This is a project progress record; formal Grid registration remains deferred.",
+      "overview": "As of November 5, 2026: the shared account-service foundation is merged and a development deployment supports Pocket Quests integration work. Development operation is distinct from a production release or completed native-provider acceptance.",
       "roadmap_focus": "Validate consumer integration and complete separately authorized review/release gates.",
-      "grid_relationship": "Pocket Quests has local integration; no production consumer release is claimed. This website describes observed project integration, not completed canonical registration or acceptance of the Proposed Identity/Web.UI ADRs.",
+      "grid_relationship": "Shared accounts and lifecycle contracts for Pocket Quests. Product-specific progress and quest data stay in the app; account integration does not establish production release acceptance.",
       "stability_tier": "experimental",
       "impact_vector": "reuse"
     }

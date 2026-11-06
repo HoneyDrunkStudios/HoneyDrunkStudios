@@ -542,7 +542,7 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                     textAlign: 'center',
                   }}
                 >
-                  Building the HoneyDrunk Grid — open systems, tools, games, and cyberware that empower creators.
+                  Useful apps. Original games. Shared worlds. Built with independent spirit and reusable software.
                 </p>
               </motion.div>
             )}

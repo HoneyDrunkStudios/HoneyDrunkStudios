@@ -5,7 +5,7 @@ import { colors } from '@/lib/tokens';
 
 export const metadata = {
   title: 'About — HoneyDrunk Studios',
-  description: 'The manifesto, philosophy, and story behind HoneyDrunk Studios.',
+  description: 'An independent, founder-led studio making apps, games, shared worlds and reusable software.',
 };
 
 export default function AboutPage() {
@@ -45,19 +45,19 @@ export default function AboutPage() {
 
           <div className="space-y-4 md:space-y-5 text-base md:text-lg leading-relaxed px-1 md:px-2">
             <p>
-              HoneyDrunk Studios is a living experiment in structured creativity — a studio, a network, and a movement.
-              We build open systems, creative tools, and original worlds that prove you can be disciplined and imaginative.
+              HoneyDrunk Studios is an independent studio led by a solo founder, bringing software engineering, game development and worldbuilding together.
+              We build useful apps, reusable software and original worlds with a distinctive cyberpunk identity.
             </p>
 
             <p>
-              The Grid is our infrastructure and our metaphor — interlinked Nodes pulsing with energy, linked by purpose, evolving in real time.
-              Some Nodes are frameworks. Some are apps. Some are games. All feed the Hive.
+              The Grid is our map of the work: libraries, tools, apps, games and experiments.
+              It includes published software, projects in development and early concepts. Each project’s status describes its stage.
             </p>
 
             <p>
               <strong>Our mission is simple:</strong>
               <br />
-              Build tools that empower creators. Build experiences that inspire players. Share everything.
+              Build useful software. Create worlds worth spending time in. Share the work as it develops.
             </p>
           </div>
         </section>
@@ -81,11 +81,11 @@ export default function AboutPage() {
             </p>
 
             <p>
-              We design <strong>apps and platforms</strong> that turn fragmented workflows into creative ecosystems.
+              We develop <strong>apps</strong> such as Pocket Quests, an illustrated quest journal for everyday plans and progress.
             </p>
 
             <p>
-              We craft <strong>games and simulations</strong> where story, system, and soul converge.
+              We craft <strong>original games</strong>, including the Magic Shop project, and build a shared fantasy setting through lore, creatures and visual development.
             </p>
 
             <p>
@@ -111,7 +111,7 @@ export default function AboutPage() {
             {[
               {
                 title: 'Build in Public',
-                desc: 'Transparent development. Every Node, every decision, every failure shared openly. Visibility breeds accountability; accountability breeds craft.',
+                desc: 'Dated project updates, public source where available, and an honest distinction between ideas, development builds and releases.',
               },
               {
                 title: 'Zero-Bloat',
@@ -119,7 +119,7 @@ export default function AboutPage() {
               },
               {
                 title: 'Agents Amplify',
-                desc: 'AI as co-creator. From observability to robotics, agents strengthen human intention, not override it.',
+                desc: 'AI assists engineering, documentation and visual exploration. Creative direction, review and release decisions remain with the founder.',
               },
               {
                 title: 'Cross-Domain Creativity',
@@ -204,9 +204,9 @@ export default function AboutPage() {
               { signal: 'Seed', color: colors.slateLight, desc: 'Concept stage — idea germinating, potential energy.' },
               { signal: 'Awake', color: colors.violetCore, desc: 'Prototyping and testing — form emerging.' },
               { signal: 'Wiring', color: colors.aurumGold, desc: 'Active development — systems connecting, energy building.' },
-              { signal: 'Live', color: colors.signalGreen, desc: 'In production — serving its purpose.' },
+              { signal: 'Live', color: colors.signalGreen, desc: 'Published or in use — see the project for its release and environment limits.' },
               { signal: 'Echo', color: colors.electricBlue, desc: 'Maintenance — stable, occasional updates.' },
-              { signal: 'Archive', color: colors.neonPink, desc: 'Retired — lessons preserved, memory honored.' },
+              { signal: 'Archive', color: colors.neonPink, desc: 'Retired — source and project history preserved.' },
             ].map((item) => (
               <div
                 key={item.signal}
@@ -251,10 +251,10 @@ export default function AboutPage() {
             </h2>
             <div className="max-w-2xl mx-auto space-y-3 text-base md:text-lg leading-relaxed">
               <p>
-                HoneyDrunk Studios is a <strong>build-in-public cyberpunk collective</strong>.
+                HoneyDrunk Studios is an <strong>independent, founder-led creative technology studio</strong>.
               </p>
               <p>
-                We make systems, tools, and worlds that connect creators, code, and consciousness.
+                We make apps, games, reusable software and connected fantasy worlds.
               </p>
               <p>
                 Every Node we ship — from SDK to game — strengthens the same Hive.

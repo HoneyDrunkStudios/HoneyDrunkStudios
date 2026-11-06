@@ -138,36 +138,17 @@
     },
     {
       "id": "grid",
-      "consumes": [
-        "honeydrunk-kernel",
-        "honeydrunk-pulse"
-      ],
-      "consumed_by": [
-        "honeydrunk-operator"
-      ],
+      "consumes": [],
+      "consumed_by": [],
       "exposes": {
         "contracts": [],
         "packages": []
       },
       "blocked_by": [],
-      "consumes_detail": {
-        "honeydrunk-kernel": [
-          "IGridContext",
-          "IGridContextAccessor",
-          "INodeContext",
-          "IOperationContext",
-          "NodeLifecycleStage",
-          "INodeLifecycle",
-          "IHealthContributor",
-          "IReadinessContributor",
-          "ITelemetryActivityFactory",
-          "INodeDescriptor",
-          "INodeManifest",
-          "HoneyDrunk.Kernel",
-          "HoneyDrunk.Kernel.Abstractions"
-        ]
-      },
-      "consumed_by_planned": []
+      "consumes_detail": {},
+      "consumed_by_planned": [
+        "honeydrunk-operator"
+      ]
     },
     {
       "id": "hivegigs",
@@ -2075,11 +2056,6 @@
       "reason": "Integrates with Audit.Agent for operational support"
     },
     {
-      "dependency": "grid",
-      "dependent": "honeydrunk-operator",
-      "reason": "Depends on production-ready HoneyDrunk.Grid services"
-    },
-    {
       "dependency": "hivexp",
       "dependent": "hivegigs",
       "reason": "Builds on HiveXP for core infrastructure capabilities"
@@ -2133,11 +2109,6 @@
       "dependency": "honeydrunk-deploy",
       "dependent": "honeydrunk-pipelines",
       "reason": "Integrates with HoneyDrunk.Deploy for operational support"
-    },
-    {
-      "dependency": "honeydrunk-kernel",
-      "dependent": "grid",
-      "reason": "Builds on HoneyDrunk.Kernel for core infrastructure capabilities"
     },
     {
       "dependency": "honeydrunk-kernel",
@@ -2407,11 +2378,6 @@
     {
       "dependency": "honeydrunk-pulse",
       "dependent": "dreammarket",
-      "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
-    },
-    {
-      "dependency": "honeydrunk-pulse",
-      "dependent": "grid",
       "reason": "Integrates Pulse for telemetry, observability, and trace correlation"
     },
     {

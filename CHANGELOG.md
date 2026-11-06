@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Replace the newsletter placeholder with a working studio-update link. Reconcile the website’s own catalog and relationship claims with its bundled-data implementation and Cloudflare hosting.
+
+- Remove duplicate page navigation from the root layout, retaining navigation during the homepage intro; keep the logo out of the document heading hierarchy.
+
+- Refresh November 5 studio positioning and Pocket Quests/Magic Shop progress; remove personal learning tracks from current public content. Clarify the independent studio identity, development versus release status, sector concepts and simulated status/console metrics. Correct the social metadata to the studio account; retain dated historical signals.
+
 - Move honeydrunkstudios.com hosting from Vercel to Cloudflare Workers via the OpenNext Cloudflare adapter: add `wrangler.jsonc`, `open-next.config.ts` and the preview/deploy scripts, serve `next/image` through the Images binding, carry the `vercel.json` security headers into `next.config.ts` for Worker responses and into `public/_headers` for static assets, cache `/_next/static/*` as `public, max-age=31536000, immutable`, document the Workers Builds settings and a cutover that deletes the Vercel DNS records immediately before the first deploy, and ignore the OpenNext and Wrangler build output.
 
 - Correct the September 26 and October 3 signal tags to use the existing `Meta` sector, remove the unsupported `packages` tag and duplicate Pocket Quests identifier, and validate signal tags against existing catalogs before builds. Preserve the older timeline aliases without permitting them in new entries.

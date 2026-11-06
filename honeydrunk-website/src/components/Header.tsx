@@ -52,7 +52,7 @@ export default function Header() {
                 filter: 'drop-shadow(0 0 10px rgba(255, 42, 109, 0.5))',
               }}
             />
-            <h1
+            <span
               className="text-lg md:text-2xl font-mono font-bold uppercase tracking-wider"
               style={{
                 color: colors.neonPink,
@@ -60,7 +60,7 @@ export default function Header() {
               }}
             >
               [HONEYDRUNK]
-            </h1>
+            </span>
           </Link>
 
           {/* Desktop Navigation - Only on large screens */}

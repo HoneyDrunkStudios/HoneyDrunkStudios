@@ -126,10 +126,10 @@ export default function StatusPage() {
           {/* Page Title */}
           <header className="space-y-3 md:space-y-4">
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold py-2 md:py-4 holographic-text">
-              Grid Status
+              Grid Status Demo
             </h1>
             <p className="text-base md:text-lg" style={{ color: colors.slateLight }}>
-              Real-time telemetry from the HoneyDrunk Grid.
+              A fictional dashboard for the Grid’s visual identity. All statuses, uptime, latency and activity below are simulated in your browser; this page does not monitor studio services.
             </p>
           </header>
 
@@ -153,13 +153,13 @@ export default function StatusPage() {
                 />
                 <div>
                   <h2 className="text-2xl md:text-3xl font-display font-bold">
-                    All Systems{' '}
+                    Demo systems{' '}
                     <span style={{ color: overallColor }}>
                       {getStatusLabel(overallStatus)}
                     </span>
                   </h2>
                   <p className="text-sm md:text-base" style={{ color: colors.slateLight }}>
-                    Grid continuity: {formattedUptime}
+                    Time since the fictional Grid boot: {formattedUptime}
                   </p>
                 </div>
               </div>
@@ -183,7 +183,7 @@ export default function StatusPage() {
               className="text-2xl md:text-3xl lg:text-4xl font-display font-bold"
               style={{ color: colors.electricBlue }}
             >
-              Node Status
+              Simulated Node Status
             </h2>
 
             <div className="grid gap-4">
@@ -278,7 +278,7 @@ export default function StatusPage() {
                   {responseTime}ms
                 </div>
                 <div className="text-xs mt-1" style={{ color: colors.slateLight }}>
-                  Average latency
+                  Simulated latency
                 </div>
               </div>
 
@@ -296,7 +296,7 @@ export default function StatusPage() {
                   {services.filter(s => s.status === 'operational').length}/{services.length}
                 </div>
                 <div className="text-xs mt-1" style={{ color: colors.slateLight }}>
-                  Services online
+                  Demo services online
                 </div>
               </div>
 
@@ -314,7 +314,7 @@ export default function StatusPage() {
                   0
                 </div>
                 <div className="text-xs mt-1" style={{ color: colors.slateLight }}>
-                  Last 30 days
+                  Illustrative value
                 </div>
               </div>
             </div>
@@ -326,7 +326,7 @@ export default function StatusPage() {
               className="text-2xl md:text-3xl lg:text-4xl font-display font-bold"
               style={{ color: colors.neonPink }}
             >
-              Recent Activity
+              Simulated Activity
             </h2>
 
             <div
@@ -343,10 +343,10 @@ export default function StatusPage() {
                   </div>
                   <div className="flex-1">
                     <div className="font-bold mb-1" style={{ color: colors.signalGreen }}>
-                      All Systems Operational
+                      Demo Systems Operational
                     </div>
                     <div className="text-sm" style={{ color: colors.slateLight }}>
-                      Grid operating at optimal capacity. No incidents reported.
+                      Generated sample activity. No live incident data is connected.
                     </div>
                   </div>
                 </div>
@@ -363,9 +363,9 @@ export default function StatusPage() {
             }}
           >
             <p className="text-sm" style={{ color: colors.slateLight }}>
-              Experiencing issues? Check the{' '}
+              Try the{' '}
               <span className="font-mono" style={{ color: colors.electricBlue }}>uptime</span>{' '}
-              command in the Hive Console or contact support.
+              command in the Hive Console to explore more fictional Grid effects.
             </p>
           </section>
         </div>
