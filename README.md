@@ -9,7 +9,7 @@ Application source lives in `honeydrunk-website/src/`; public assets, scripts an
 
 The Next.js application lives in `honeydrunk-website/`. Install the lockfile with `npm ci`, then use `npm run dev`, `npm run lint`, `npx tsc --noEmit` and `npm run build` from that directory.
 
-HoneyDrunk.Studio owns current priorities, living product requirements, game design and learning evidence. This website publishes a dated, bounded summary; its catalog and signal feed do not authorize work or establish product acceptance. The longer manifesto below describes studio aspirations, not a list of shipped features.
+HoneyDrunk.Documentation owns current priorities, living product requirements, game design and learning evidence. This website publishes a dated, bounded summary; its catalog and signal feed do not authorize work or establish product acceptance. The longer manifesto below describes studio aspirations, not a list of shipped features.
 
 - `src/components/CurrentFocus.tsx` presents a dated public summary of apps, games, shared-universe development and software foundations. Personal learning plans stay off the public homepage.
 - `src/data/schema/nodes.json` and `signals.json` hold public project descriptions and dated updates. Separate private prototypes, local implementation, merged code, package publication and founder acceptance.
@@ -242,7 +242,7 @@ Palette → Gold ⚡ Violet ⚡ Blue ⚡ **Matrix Green (HoneyNet)**
 5️⃣ Signal → publish on HoneyDrunkStudios.com
 ```
 Whenever “**What’s next for HoneyDrunk?**” is asked,  
-Read **HoneyDrunk.Studio current focus**, then the selected living PRD, GDD or learning tracker. The website is a public summary, not execution authority.
+Read **HoneyDrunk.Documentation current focus**, then the selected living PRD, GDD or learning tracker. The website is a public summary, not execution authority.
 
 ---
 
@@ -264,7 +264,7 @@ Next Node      → "What follows Pulse?"
 ---
 
 ## 🗂 Hive Tracker
-Refer to **HoneyDrunk.Studio** for selected priorities and source evidence. The website’s *Signal* and *Node* pages are dated public summaries; they do not replace the owning documents.
+Refer to **HoneyDrunk.Documentation** for selected priorities and source evidence. The website’s *Signal* and *Node* pages are dated public summaries; they do not replace the owning documents.
 
 ---
 

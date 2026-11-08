@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Show HoneyDrunk Documentation under its new name and repository URL. Keep existing signal associations on the stable catalog ID.
+
 - Replace the newsletter placeholder with a working studio-update link. Reconcile the website’s own catalog and relationship claims with its bundled-data implementation and Cloudflare hosting.
 
 - Remove duplicate page navigation from the root layout, retaining navigation during the homepage intro; keep the logo out of the document heading hierarchy.
