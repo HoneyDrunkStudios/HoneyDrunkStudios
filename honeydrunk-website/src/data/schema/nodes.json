@@ -2886,8 +2886,8 @@
   {
     "id": "honeydrunk-architecture",
     "type": "node",
-    "name": "HoneyDrunk.Studio",
-    "public_name": "HoneyDrunk.Studio",
+    "name": "HoneyDrunk.Documentation",
+    "public_name": "HoneyDrunk Documentation",
     "short": "Studio planning, game design and Grid architecture",
     "description": "The studio home for living product requirements, game design, shared-universe lore and canonical Grid architecture.",
     "sector": "Meta",
@@ -2904,10 +2904,10 @@
       "routing"
     ],
     "links": {
-      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Studio"
+      "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.Documentation"
     },
     "long_description": {
-      "overview": "HoneyDrunk.Studio is the shared planning and knowledge home for products, games, the fantasy universe and Grid architecture. Living product and game documents own selected scope and dated progress. Application implementation stays in its owning repository.",
+      "overview": "HoneyDrunk Documentation is the shared planning and knowledge home for products, games, the fantasy universe and Grid architecture. Living product and game documents own selected scope and dated progress. Application implementation stays in its owning repository.",
       "why_it_exists": "Without a single source of architectural truth, decisions scatter across repos, agents lack context, and the Grid drifts.",
       "primary_audience": "Architecture agents, Copilot workflows, and HoneyDrunk maintainers making cross-cutting decisions.",
       "value_props": [

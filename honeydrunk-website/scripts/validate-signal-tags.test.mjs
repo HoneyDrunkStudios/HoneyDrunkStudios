@@ -16,7 +16,7 @@ test('rejects the invented tags from the recent studio updates', () => {
 
 test('accepts registered sector and entity names and IDs without a parallel tag list', () => {
   const catalogs = readSignalCatalogs();
-  catalogs.signals[0].tags = ['Meta', 'HoneyDrunk.Studio', 'pocket-quests', 'game-prototype', catalogs.modules[0].name, catalogs.services[0].id];
+  catalogs.signals[0].tags = ['Meta', 'HoneyDrunk.Documentation', 'pocket-quests', 'game-prototype', catalogs.modules[0].name, catalogs.services[0].id];
   assert.deepEqual(validateSignalTags(catalogs), []);
 });
 

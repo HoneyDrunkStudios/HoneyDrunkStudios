@@ -98,7 +98,7 @@
       "color": "#FFFF00",
       "colorToken": "neonYellow",
       "description": "Studio documentation, code standards and the website that maps projects and their public updates.",
-      "overview": "Meta holds the studio’s planning, documentation and shared engineering standards. HoneyDrunk.Studio owns product and architecture decisions; this website publishes bounded, dated summaries. HoneyHub remains archived. Proposed portals and knowledge tools are catalog concepts, not available hosted products.",
+      "overview": "Meta holds the studio’s planning, documentation and shared engineering standards. HoneyDrunk.Documentation owns product and architecture decisions; this website publishes bounded, dated summaries. HoneyHub remains archived. Proposed portals and knowledge tools are catalog concepts, not available hosted products.",
       "philosophy": "Understanding is the only form of immortality the Hive allows.",
       "headerImage": "/sectors/meta.png",
       "tagline": "Know the map. Tend the garden.",
