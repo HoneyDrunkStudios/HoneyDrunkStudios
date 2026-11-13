@@ -1,5 +1,53 @@
 [
   {
+    "date": "2026-11-13",
+    "title": "Magic Shop devlog: a modern city outside, a guild hall within",
+    "desc": "Magic Shop’s latest merged art pass brings the game into a modern city with magic. The old guild house now has a café-like interior: oak tables on black steel, a tablet till, an espresso machine and a stove at the hearth. Outside, lit shopfronts and a tram replace the placeholder street. Ten newly modelled townsfolk and hunters wear contemporary clothes, with a shared calm standing idle. Two waiting guests now sit in armchairs beside the stove, and the hall has its own street sign and framed honours. These changes are in the development build; the full look still needs a founder playtest, and no public game release is announced.",
+    "tags": [
+      "HoneyPlay",
+      "game-prototype"
+    ],
+    "sector": "HoneyPlay"
+  },
+  {
+    "date": "2026-11-13",
+    "title": "Pocket Quests devlog: a field journal, a traveler and a room of your own",
+    "desc": "The merged Playful Field Journal redesign gives Home, quest cards, onboarding and Settings a more consistent illustrated presentation. A guided first adventure and System, Light and Dark display choices join the daily quest flow. The traveler and wardrobe now use registered body, face and hair layers, with an additional Petite build, a front-facing pose and automatic appearance saves. A full-screen Room replaces the Explore tab, with keepsakes earned at level milestones and outfits and rooms at rank milestones. The operator’s quest workshop and reviewed publishing tools are also merged. This is V1 development progress, not an app-store release; physical-device walkthroughs and real-provider acceptance remain separate checks.",
+    "tags": [
+      "Market",
+      "pocket-quests"
+    ],
+    "sector": "Market"
+  },
+  {
+    "date": "2026-11-13",
+    "title": "Agent platform devlog: read-only operations and durable memory",
+    "desc": "Recent merged work makes agent activity easier to inspect and gives memory a durable storage option. HoneyDrunk.Agents exposes a versioned read contract for workloads, finished runs, pending approvals and recent audit records. HoneyDrunk.Admin’s new Agents area reads that contract and distinguishes unavailable or stale information from an empty result. The interface is read-only: it does not approve, start, cancel, pause or resume work. HoneyDrunk.Memory now has a Data-backed provider with tenant, project and agent isolation, so configured hosts can retain memory across restarts. These are implemented foundations; production host rollout, configuration and package publication are separate milestones.",
+    "tags": [
+      "AI",
+      "honeydrunk-agents",
+      "honeydrunk-memory",
+      "honeydrunk-operator",
+      "honeydrunk-audit"
+    ],
+    "sector": "AI"
+  },
+  {
+    "date": "2026-11-13",
+    "title": "Engineering devlog: moving the studio foundations to .NET 11",
+    "desc": "The studio’s .NET 11 upgrade is merged across the shared libraries and application backends, including Pocket Quests. The migration updates SDK, runtime and build tooling while retaining .NET 10 compatibility where individual contract packages still require it. Data and application changes preserve SQL Server 2019 compatibility, and the shared Actions work strengthens compiled API compatibility checks. Follow-up fixes cover shutdown disposal, background-worker cancellation and the browser test harness. Source merges, published package versions and deployed applications are tracked separately; this update does not announce a blanket package release or production rollout.",
+    "tags": [
+      "Core",
+      "Ops",
+      "honeydrunk-kernel",
+      "honeydrunk-data",
+      "honeydrunk-transport",
+      "honeydrunk-actions",
+      "pocket-quests"
+    ],
+    "sector": "Core"
+  },
+  {
     "date": "2026-11-05",
     "title": "Studio update: quest journals, a magical guild hall and a shared world",
     "desc": "Pocket Quests V1 development now includes merged daily planning, place discovery and saved-place work, with avatar customization and operator quest-management tools in development and review. The app uses an illustrated adventure-journal presentation. Magic Shop has expanded from its early shop graybox into shopkeeping and guild-hall systems, with recent merged work on table stories, town errands, finer orders and the economy. Visual exploration is testing the shop’s look and customers; candidate images are not final game assets. Shared-universe work develops lore, creatures and visual references. Reusable software and engineering tools continue to support the studio. These are development updates; no public app or game release is announced.",
