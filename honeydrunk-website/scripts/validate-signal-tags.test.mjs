@@ -30,7 +30,7 @@ test('historical aliases cannot be reused in a new signal', () => {
 
 test('rejects two tags identifying the same registered entity', () => {
   const catalogs = readSignalCatalogs();
-  catalogs.signals[0].tags.push('pocket-quests');
+  catalogs.signals[0].tags = ['Pocket Quests', 'pocket-quests'];
   assert.ok(validateSignalTags(catalogs).some(error => error.includes('duplicate tag reference "pocket-quests"')));
 });
 

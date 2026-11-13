@@ -1660,7 +1660,7 @@
     "type": "node",
     "name": "Magic Shop (working title)",
     "short": "A magical shop and guild hall in a shared fantasy world",
-    "description": "As of November 5, 2026: a standalone Unity game in active development, combining appraisal, crafting, shopkeeping and a guild hall of returning adventurers. Recent merged work adds table stories, town errands, finer orders and an economy pass. Working title; no public release announced.",
+    "description": "As of November 13, 2026: a standalone Unity game in active development, combining appraisal, crafting, shopkeeping and a guild hall of returning adventurers. The latest merged art pass brings a café-like guild hall, a modern magical city street and a new cast in contemporary clothes into the development build. Working title; no public release announced.",
     "sector": "HoneyPlay",
     "signal": "Wiring",
     "cluster": "gaming",
@@ -1673,7 +1673,7 @@
     ],
     "links": {},
     "long_description": {
-      "overview": "As of November 5, 2026: a standalone Unity game in active development, combining appraisal, crafting, shopkeeping and a guild hall of returning adventurers. Recent merged work adds table stories, town errands, finer orders and an economy pass. Working title; no public release announced. Visual development is exploring the bright corner shop and its customers alongside the playable systems; candidate imagery is not final in-game art.",
+      "overview": "As of November 13, 2026: a standalone Unity game in active development, combining appraisal, crafting, shopkeeping and a guild hall of returning adventurers. The latest merged art pass brings a café-like guild hall, a modern magical city street and a new cast in contemporary clothes into the development build. Working title; no public release announced. The hall now includes seated guests beside the stove, a street sign and framed honours. A founder playtest of the complete look remains outstanding.",
       "why_it_exists": "Explore an original fantasy world through the everyday work of a magical shop and guild hall.",
       "primary_audience": "Players who enjoy shopkeeping, crafting and a cast of returning fantasy adventurers.",
       "value_props": [
@@ -1683,7 +1683,7 @@
         "Shared-universe lore and ongoing visual development"
       ],
       "monetization_signal": "No public release or pricing commitment.",
-      "roadmap_focus": "Iterate on the playable shop and guild-hall systems, assess the experience through playtesting, and explore the visual direction. Merged systems and art candidates do not establish release acceptance.",
+      "roadmap_focus": "Playtest the complete modern-city art pass alongside the shop and guild-hall systems. Merged systems and in-game art do not establish release acceptance.",
       "grid_relationship": "Standalone Unity implementation with local saves and settings. No HoneyDrunk.Pulse or HoneyDrunk.Vault package integration is verified; in-game vault custody is a game mechanic.",
       "integration_depth": "medium",
       "demo_path": "First playable exists; public demo availability is not confirmed.",
@@ -3333,7 +3333,7 @@
     "name": "Pocket Quests",
     "public_name": "Pocket Quests",
     "short": "Your real life, reflected in a world of personal quests",
-    "description": "As of November 5, 2026: an illustrated mobile quest journal in active V1 development. Daily planning, place discovery and saved-place work are merged; avatar customization and operator quest-management features are in development and review. Working name; no public release announced.",
+    "description": "As of November 13, 2026: an illustrated mobile quest journal in active V1 development. The field-journal redesign, layered traveler wardrobe, full-screen room and operator quest-management tools are merged alongside daily planning and saved places. Working name; no public release announced.",
     "sector": "Market",
     "signal": "Wiring",
     "cluster": "personal-growth",
@@ -3350,14 +3350,14 @@
       "repo": "https://github.com/HoneyDrunkStudios/HoneyDrunk.PocketQuests"
     },
     "long_description": {
-      "overview": "As of November 5, 2026: an illustrated mobile quest journal in active V1 development. Daily planning, place discovery and saved-place work are merged; avatar customization and operator quest-management features are in development and review. Working name; no public release announced. Plan self-chosen activities, complete quests, and see progress through a character sheet, XP and rewards. Recent work uses an illustrated adventure-journal presentation.",
+      "overview": "As of November 13, 2026: an illustrated mobile quest journal in active V1 development. The field-journal redesign, layered traveler wardrobe, full-screen room and operator quest-management tools are merged alongside daily planning and saved places. Working name; no public release announced. Plan self-chosen activities, complete quests, and see progress through a character sheet, XP and rewards. The latest redesign adds a guided first adventure, display themes and rooms with milestone keepsakes.",
       "why_it_exists": "Make everyday progress useful and enjoyable, starting with one person and growing through actual use.",
       "primary_audience": "People who want a playful way to organize self-chosen goals and adventures.",
       "value_props": [
         "Everyday plans organized as quests",
         "Character progress, XP feedback and rewards",
         "Daily planning and private saved places",
-        "Avatar customization and operator quest tools in development"
+        "A layered traveler wardrobe, milestone keepsakes and operator quest tools"
       ],
       "roadmap_focus": "Continue selected V1 features and development walkthroughs. Native-device and provider sign-in acceptance remain separate from merged code and automated tests. App Store preparation is deferred.",
       "grid_relationship": "Uses shared Identity account services and reusable UI foundations. Product themes and quest rules remain app-owned; development integration does not establish a public consumer release.",
