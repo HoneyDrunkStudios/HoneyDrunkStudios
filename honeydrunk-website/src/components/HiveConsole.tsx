@@ -8,8 +8,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { colors, zIndex } from '@/lib/tokens';
-import { commands, executeCommand } from '@/lib/console/commands';
-import { registerConsoleCallback } from './LandingFooter';
+import { executeCommand } from '@/lib/console/commands';
+import { useRouter } from 'next/navigation';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 
 interface HistoryEntry {
@@ -18,6 +18,7 @@ interface HistoryEntry {
 }
 
 export default function HiveConsole() {
+  const router = useRouter();
   const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
@@ -40,26 +41,6 @@ export default function HiveConsole() {
       previousFocusRef.current.focus();
       previousFocusRef.current = null;
     }
-  }, []);
-
-  // Register callback for external console opening
-  useEffect(() => {
-    registerConsoleCallback((command?: string) => {
-      previousFocusRef.current = document.activeElement as HTMLElement;
-      setIsOpen(true);
-
-      // If command provided, execute it
-      if (command) {
-        setInput(command);
-        setTimeout(() => {
-          // Trigger submit
-          const form = inputRef.current?.closest('form');
-          if (form) {
-            form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-          }
-        }, 100);
-      }
-    });
   }, []);
 
   // Listen for backtick to open
@@ -129,6 +110,11 @@ export default function HiveConsole() {
 
     // Execute command
     const result = await executeCommand(cmd);
+    if (result.navigateTo) {
+      handleClose();
+      router.push(result.navigateTo);
+      return;
+    }
 
     // Trigger breath effect if requested
     if (result.breath) {
@@ -145,7 +131,7 @@ export default function HiveConsole() {
     if (result.animated) {
       // Type out animated results
       setIsTyping(true);
-      let currentOutput: string[] = [];
+      const currentOutput: string[] = [];
 
       for (const line of result.output) {
         currentOutput.push(line);

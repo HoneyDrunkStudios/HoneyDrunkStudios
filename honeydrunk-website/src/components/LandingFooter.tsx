@@ -6,22 +6,16 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { resetIntro } from '@/lib/introPreference';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { motion } from 'framer-motion';
 import { colors } from '@/lib/tokens';
 import SnakeModal from './SnakeModal';
 import GalleryModal from './GalleryModal';
 
-const STORAGE_KEY = 'hd.jacked_in';
-
-
-// Global callback for console open
-let openConsoleCallback: ((command?: string) => void) | null = null;
-
-export function registerConsoleCallback(callback: (command?: string) => void) {
-  openConsoleCallback = callback;
-}
-
 export default function LandingFooter() {
+  const router = useRouter();
   const currentYear = new Date().getFullYear();
   const [snakeOpen, setSnakeOpen] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
@@ -42,11 +36,8 @@ export default function LandingFooter() {
 
   const handleResetIntro = () => {
     console.log('[Analytics] reset_intro_clicked');
-    // Clear sessionStorage and reload to show intro again
-    if (typeof window !== 'undefined') {
-      sessionStorage.removeItem(STORAGE_KEY);
-      window.location.href = '/';
-    }
+    resetIntro();
+    router.push('/');
   };
 
   const handleOpenConsole = () => {
@@ -55,10 +46,7 @@ export default function LandingFooter() {
     window.dispatchEvent(event);
   };
 
-  // Check for reduced motion preference
-  const prefersReducedMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <>

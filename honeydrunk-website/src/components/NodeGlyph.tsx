@@ -38,7 +38,6 @@ export default function NodeGlyph({
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [dragDistance, setDragDistance] = useState(0);
-  const [hasDragged, setHasDragged] = useState(false);
   const dragZoomRef = useRef(1);
   const cumulativeDeltaRef = useRef({ x: 0, y: 0 });
   const lastUpdateTimeRef = useRef(0);
@@ -84,7 +83,6 @@ export default function NodeGlyph({
     e.preventDefault(); // Prevent any default behavior
     setIsDragging(true);
     setDragDistance(0);
-    setHasDragged(false);
     setDragStart({ x: e.clientX, y: e.clientY });
     cumulativeDeltaRef.current = { x: 0, y: 0 }; // Reset cumulative delta
     dragZoomRef.current = zoom; // Capture zoom at drag start
@@ -107,11 +105,6 @@ export default function NodeGlyph({
       // Track total distance moved for click detection
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
       setDragDistance(distance);
-
-      // Mark as dragged if moved more than 10 pixels
-      if (distance > 10) {
-        setHasDragged(true);
-      }
 
       // Throttle updates to ~60fps (16ms) for better performance
       const now = Date.now();
@@ -136,7 +129,6 @@ export default function NodeGlyph({
       // Reset dragDistance after a delay to allow click handler to check it
       setTimeout(() => {
         setDragDistance(0);
-        setHasDragged(false);
       }, 100);
     };
 

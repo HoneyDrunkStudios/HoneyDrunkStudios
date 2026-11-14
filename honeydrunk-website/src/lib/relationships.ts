@@ -67,8 +67,6 @@ export interface NodeContractInfo {
 const IMPLEMENTED_SIGNALS = ['Live', 'Echo'];
 // Signals that indicate in-progress dependencies  
 const IN_PROGRESS_SIGNALS = ['Wiring'];
-// Signals that indicate planned/future dependencies
-const PLANNED_SIGNALS = ['Seed', 'Awake'];
 
 /**
  * Get node contract information from relationships.json
@@ -315,7 +313,7 @@ export function getNodeRelationshipMatrix(nodeId: string): NodeRelationshipMatri
         integrationDepth: (node.long_description?.integration_depth as string) || 'medium',
         stabilityTier: (depNode.long_description?.stability_tier as string) || 'beta',
         signal: depNode.signal,
-        isFoundational: (depNode as any).foundational || false,
+        isFoundational: 'foundational' in depNode && depNode.foundational === true,
         semanticReason: generateDependencyReason(node, depNode),
         impactVector: (depNode.long_description?.impact_vector as string) || 'system stability',
       };
@@ -338,7 +336,7 @@ export function getNodeRelationshipMatrix(nodeId: string): NodeRelationshipMatri
         integrationDepth: (depNode.long_description?.integration_depth as string) || 'medium',
         stabilityTier: (depNode.long_description?.stability_tier as string) || 'beta',
         signal: depNode.signal,
-        isFoundational: (depNode as any).foundational || false,
+        isFoundational: 'foundational' in depNode && depNode.foundational === true,
         semanticReason: generateDependencyReason(depNode, node),
         impactVector: (depNode.long_description?.impact_vector as string) || 'system stability',
       };

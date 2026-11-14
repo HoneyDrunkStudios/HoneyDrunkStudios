@@ -6,7 +6,7 @@
 import nodesData from '@/data/schema/nodes.json';
 import type { Node, VisualNode, SignalVisuals, SectorVisuals, NodePosition, Signal, Sector } from './types';
 import { colors } from './tokens';
-import { getSectorColor, getAllSectors as getSectorsFromConfig, getSectorColorsMap } from './sectors';
+import { getSectorColor, getAllSectors as getSectorsFromConfig } from './sectors';
 import { getNodeDependencies } from './relationships';
 
 // Type assertion for imported JSON

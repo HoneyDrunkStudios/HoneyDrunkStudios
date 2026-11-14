@@ -14,6 +14,7 @@ import {
 
 export interface CommandResult {
   output: string[];
+  navigateTo?: '/status';
   animated?: boolean; // If true, type out the result
   breath?: boolean; // If true, trigger visual breath effect
 }
@@ -167,11 +168,8 @@ export const commands: Record<string, CommandHandler> = {
   },
 
   status: () => {
-    // Navigate to status page
-    if (typeof window !== 'undefined') {
-      window.location.href = '/status';
-    }
     return {
+      navigateTo: '/status',
       output: [
         '> accessing grid status dashboard...',
         '> simulated dashboard; no live telemetry connected.',

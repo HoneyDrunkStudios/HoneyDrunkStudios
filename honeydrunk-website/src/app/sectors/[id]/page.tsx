@@ -8,7 +8,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { colors } from '@/lib/tokens';
-import { getSectorConfig, getAllSectorConfigs } from '@/lib/sectors';
+import { getAllSectorConfigs } from '@/lib/sectors';
 import { getNodes, getModules, getServices } from '@/lib/entities';
 import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
@@ -242,7 +242,7 @@ export default function SectorDetailPage({ params }: { params: Promise<{ id: str
                   textShadow: `0 0 30px ${sector.color}50`,
                 }}
               >
-                "{sector.philosophy}"
+                &quot;{sector.philosophy}&quot;
               </blockquote>
             </div>
           </section>

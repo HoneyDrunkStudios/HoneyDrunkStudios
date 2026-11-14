@@ -38,8 +38,6 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
     // Hold-to-press state
     const [exploreProgress, setExploreProgress] = useState(0);
     const [signalProgress, setSignalProgress] = useState(0);
-    const [isHoldingExplore, setIsHoldingExplore] = useState(false);
-    const [isHoldingSignal, setIsHoldingSignal] = useState(false);
     const holdAnimationRef = useRef<number | null>(null);
     const holdStartRef = useRef<number>(0);
     const holdDuration = 1000; // ms to hold for activation
@@ -116,11 +114,6 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
 
     // Hold-to-press handlers
     const startHold = (buttonType: 'explore' | 'signal') => {
-      if (buttonType === 'explore') {
-        setIsHoldingExplore(true);
-      } else {
-        setIsHoldingSignal(true);
-      }
       holdStartRef.current = performance.now();
       
       const animate = (currentTime: number) => {
@@ -131,7 +124,6 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
           setExploreProgress(progress);
           
           if (progress >= 100) {
-            setIsHoldingExplore(false);
             onExploreGrid?.();
             setExploreProgress(0);
             return;
@@ -140,15 +132,13 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
           setSignalProgress(progress);
           
           if (progress >= 100) {
-            setIsHoldingSignal(false);
             onFollowSignal?.();
             setSignalProgress(0);
             return;
           }
         }
 
-        // Continue animation if still holding
-        const isStillHolding = buttonType === 'explore' ? isHoldingExplore : isHoldingSignal;
+        // The release handler cancels this frame when the hold ends.
         if (progress < 100) {
           holdAnimationRef.current = requestAnimationFrame(animate);
         }
@@ -188,10 +178,8 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
       }
       
       if (buttonType === 'explore') {
-        setIsHoldingExplore(false);
         setExploreProgress(0);
       } else {
-        setIsHoldingSignal(false);
         setSignalProgress(0);
       }
     };
@@ -589,7 +577,7 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                   onBlur={(e) => {
                     e.currentTarget.style.boxShadow = `0 0 30px ${colors.aurumGold}60, inset 0 0 10px ${colors.aurumGold}20`;
                   }}
-                  onMouseEnter={(e) => {
+                  onMouseEnter={() => {
                     if (!prefersReducedMotion) {
                       triggerButtonEffects(exploreButtonRef);
                     }
@@ -640,7 +628,7 @@ const HeroCopy = forwardRef<HeroCopyHandle, HeroCopyProps>(
                   onBlur={(e) => {
                     e.currentTarget.style.boxShadow = `0 0 20px ${colors.electricBlue}40`;
                   }}
-                  onMouseEnter={(e) => {
+                  onMouseEnter={() => {
                     if (!prefersReducedMotion) {
                       triggerButtonEffects(signalButtonRef);
                     }

@@ -1,5 +1,5 @@
 /**
- * populate-consumes-detail.js
+ * populate-consumes-detail.mjs
  * Populates consumes_detail for each node based on what contracts/packages 
  * are exposed by its dependencies.
  * 
@@ -7,10 +7,10 @@
  * but you can refine manually after.
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'node:fs';
+import path from 'node:path';
 
-const relPath = path.join(__dirname, '../src/data/schema/relationships.json');
+const relPath = path.join(import.meta.dirname, '../src/data/schema/relationships.json');
 const rel = JSON.parse(fs.readFileSync(relPath, 'utf8'));
 
 // Build a map of nodeId -> exposes for quick lookup

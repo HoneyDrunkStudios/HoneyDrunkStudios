@@ -23,7 +23,6 @@ interface EntityCardProps {
 }
 
 export default function EntityCard({
-  id,
   name,
   signal,
   signalColor,

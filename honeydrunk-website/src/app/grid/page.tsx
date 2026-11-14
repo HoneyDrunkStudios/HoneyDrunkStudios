@@ -4,12 +4,13 @@
  * /grid — Full Grid view with filters
  */
 
-import { useState, useEffect, Suspense, useMemo, useRef } from 'react';
+import { useState, Suspense, useMemo, useSyncExternalStore } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { getGridQuery, subscribeToGridQuery, updateGridFilters } from '@/lib/gridQuery';
 import Link from 'next/link';
-import { getAllSectors as getNodesAllSectors, getAllSignals as getNodesAllSignals } from '@/lib/nodes';
-import { getAllSectors, getAllSignals, getGridData, type VisualNode, type VisualService, type VisualModule } from '@/lib/entities';
-import type { Sector, Signal } from '@/lib/types';
+import { getAllSignals as getNodesAllSignals } from '@/lib/nodes';
+import { getAllSectors, getGridData, type VisualNode, type VisualModule } from '@/lib/entities';
+import type { Signal } from '@/lib/types';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
 import TheGrid from '@/components/TheGrid';
 import FilterChips, { getSignalColor } from '@/components/FilterChips';
@@ -23,62 +24,18 @@ import { useIsMobile } from '@/lib/hooks/useIsMobile';
 function GridContent() {
   const isMobile = useIsMobile();
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const serverQuery = useSearchParams().toString();
+  const query = useSyncExternalStore(subscribeToGridQuery, getGridQuery, () => serverQuery);
+  const searchParams = useMemo(() => new URLSearchParams(query), [query]);
 
-  const [selectedSectors, setSelectedSectors] = useState<string[]>([]);
-  const [selectedSignals, setSelectedSignals] = useState<string[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedEntityId, setSelectedEntityId] = useState<string | undefined>();
+  const selectedSectors = useMemo(() => searchParams.get('sectors')?.split(',').filter(Boolean) || [], [searchParams]);
+  const selectedSignals = useMemo(() => searchParams.get('signals')?.split(',').filter((signal): signal is Signal =>
+    getNodesAllSignals().some(knownSignal => knownSignal === signal)) || [], [searchParams]);
+  const searchQuery = searchParams.get('search') || '';
+  const selectedEntityId = searchParams.get('service') || searchParams.get('node') || undefined;
   const [showFilters, setShowFilters] = useState(true);
-  const lastUrlRef = useRef<string>('');
 
-  // Initialize from URL params
-  useEffect(() => {
-    const sectorsParam = searchParams.get('sectors');
-    const signalsParam = searchParams.get('signals');
-    const searchParam = searchParams.get('search');
-    const nodeParam = searchParams.get('node');
-    const serviceParam = searchParams.get('service');
-
-    if (sectorsParam) {
-      setSelectedSectors(sectorsParam.split(','));
-    }
-    if (signalsParam) {
-      setSelectedSignals(signalsParam.split(','));
-    }
-    if (searchParam) {
-      setSearchQuery(searchParam);
-    }
-    if (nodeParam) {
-      setSelectedEntityId(nodeParam);
-    }
-    if (serviceParam) {
-      setSelectedEntityId(serviceParam);
-    }
-  }, [searchParams]);
-
-  // Update URL when filters change - but only if actually changed
-  useEffect(() => {
-    const params = new URLSearchParams();
-
-    if (selectedSectors.length > 0) {
-      params.set('sectors', selectedSectors.join(','));
-    }
-    if (selectedSignals.length > 0) {
-      params.set('signals', selectedSignals.join(','));
-    }
-    if (searchQuery) {
-      params.set('search', searchQuery);
-    }
-
-    const newUrl = params.toString() ? `/grid?${params.toString()}` : '/grid';
-    
-    // Only update if URL actually changed
-    if (newUrl !== lastUrlRef.current) {
-      lastUrlRef.current = newUrl;
-      router.replace(newUrl, { scroll: false });
-    }
-  }, [selectedSectors, selectedSignals, searchQuery, router]);
+  const updateFilters = updateGridFilters;
 
   const allSectors = getAllSectors();
   const allSignals = getNodesAllSignals(); // Use complete signal list, not just signals in use
@@ -88,7 +45,7 @@ function GridContent() {
     const allPossibleSignals = getNodesAllSignals();
     const map: Record<string, string> = {};
     allPossibleSignals.forEach(signal => {
-      map[signal] = getSignalColor(signal as any);
+      map[signal] = getSignalColor(signal);
     });
     return map;
   }, []);
@@ -105,7 +62,7 @@ function GridContent() {
 
     const filteredNodes = fullGridData.nodes.filter(node => {
       const matchesSector = selectedSectors.length === 0 || selectedSectors.includes(node.sector);
-      const matchesSignal = selectedSignals.length === 0 || selectedSignals.includes(node.signal);
+      const matchesSignal = selectedSignals.length === 0 || selectedSignals.some(signal => signal === node.signal);
       const matchesSearch = !searchQuery ||
         node.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         node.short?.toLowerCase().includes(searchQuery.toLowerCase());
@@ -196,7 +153,7 @@ function GridContent() {
         <input
           type="text"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => updateFilters({ search: e.target.value })}
           placeholder="Search nodes..."
           className="px-6 py-4 rounded-lg text-sm font-mono
                    focus:outline-none focus:ring-2"
@@ -242,18 +199,18 @@ function GridContent() {
         >
           <FilterChips
             label="Sector"
-            options={allSectors as any[]}
-            selected={selectedSectors as any[]}
-            onChange={setSelectedSectors as any}
-            getColor={getSectorColor as any}
+            options={allSectors}
+            selected={selectedSectors}
+            onChange={(sectors) => updateFilters({ sectors: sectors.join(',') })}
+            getColor={getSectorColor}
           />
 
           <FilterChips
             label="Signal"
-            options={allSignals as any[]}
-            selected={selectedSignals as any[]}
-            onChange={setSelectedSignals as any}
-            getColor={getSignalColor as any}
+            options={allSignals}
+            selected={selectedSignals}
+            onChange={(signals) => updateFilters({ signals: signals.join(',') })}
+            getColor={getSignalColor}
           />
 
           {(selectedSectors.length > 0 ||
@@ -261,9 +218,7 @@ function GridContent() {
             searchQuery) && (
             <button
               onClick={() => {
-                setSelectedSectors([]);
-                setSelectedSignals([]);
-                setSearchQuery('');
+                updateFilters({ sectors: '', signals: '', search: '' });
               }}
               className="w-full px-4 py-3 rounded-lg text-xs font-mono cursor-pointer
                        transition-all duration-200 hover:scale-105"

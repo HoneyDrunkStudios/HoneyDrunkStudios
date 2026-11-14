@@ -10,17 +10,24 @@ import { colors } from '@/lib/tokens';
 
 export default function PageTransition() {
   const pathname = usePathname();
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  return <TransitionOverlay key={pathname} pathname={pathname ?? ''} />;
+}
+
+function TransitionOverlay({ pathname }: { pathname: string }) {
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  // Stable sector label avoids hydration mismatches and changing on re-renders.
+  const sectorCode = Array.from(pathname).reduce(
+    (hash, character) => (Math.imul(hash, 31) + character.charCodeAt(0)) >>> 0,
+    0
+  ).toString(16).padStart(8, '0').toUpperCase();
 
   useEffect(() => {
-    setIsTransitioning(true);
-
     const timer = setTimeout(() => {
       setIsTransitioning(false);
     }, 400);
 
     return () => clearTimeout(timer);
-  }, [pathname]);
+  }, []);
 
   if (!isTransitioning) return null;
 
@@ -67,7 +74,7 @@ export default function PageTransition() {
         }}
       >
         {`> LOADING_SECTOR...
-> 0x${Math.random().toString(16).substring(2, 10).toUpperCase()}
+> 0x${sectorCode}
 > INITIALIZING_NODES...
 > SYNC_COMPLETE`}
       </div>

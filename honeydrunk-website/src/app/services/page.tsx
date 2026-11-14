@@ -9,7 +9,6 @@ import EntityCard from '@/components/EntityCard';
 import { colors } from '@/lib/tokens';
 import { getServices } from '@/lib/entities';
 import { getAllSectorConfigs } from '@/lib/sectors';
-import Link from 'next/link';
 
 // Signal color mapping
 const signalColors: Record<string, string> = {

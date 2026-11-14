@@ -5,7 +5,7 @@
  * Renders nodes and their attached modules with proper visual hierarchy
  */
 
-import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback, useSyncExternalStore } from 'react';
 import type { GridData, VisualNode, VisualModule, GridEdge, GridPosition } from '@/lib/entities';
 import { colors } from '@/lib/tokens';
 
@@ -19,35 +19,49 @@ interface TheGridProps {
 
 const STORAGE_KEY = 'honeydrunk_grid_positions';
 
-export default function TheGrid({
+const subscribeToHydration = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
+function loadNodePositions(): Record<string, GridPosition> {
+  try {
+    const saved: unknown = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    if (!saved || typeof saved !== 'object' || Array.isArray(saved)) return {};
+    return Object.fromEntries(Object.entries(saved).filter((entry): entry is [string, GridPosition] => {
+      const position: unknown = entry[1];
+      return typeof position === 'object' && position !== null &&
+        'x' in position && typeof position.x === 'number' && Number.isFinite(position.x) &&
+        'y' in position && typeof position.y === 'number' && Number.isFinite(position.y);
+    }));
+  } catch (error) {
+    console.error('Failed to load node positions:', error);
+    return {};
+  }
+}
+
+export default function TheGrid(props: TheGridProps) {
+  // Mount the interactive canvas only after hydration so its initial positions
+  // can come from browser storage without mismatching the server markup.
+  const hydrated = useSyncExternalStore(subscribeToHydration, getClientSnapshot, getServerSnapshot);
+  return hydrated ? <InteractiveGrid {...props} /> : null;
+}
+
+function InteractiveGrid({
   gridData,
   selectedEntityId,
   onNodeClick,
   onModuleClick,
   className = '',
 }: TheGridProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(0.8); // Start at 80% zoom
   const [isPanning, setIsPanning] = useState(false);
   const [panStart, setPanStart] = useState({ x: 0, y: 0 });
   const [hoveredId, setHoveredId] = useState<string | undefined>();
-  const [nodePositions, setNodePositions] = useState<Record<string, GridPosition>>({});
+  const [nodePositions, setNodePositions] = useState<Record<string, GridPosition>>(loadNodePositions);
   const [isDraggingNode, setIsDraggingNode] = useState(false);
   const [dragDistance, setDragDistance] = useState(0);
   const dragStateRef = useRef<{ nodeId: string; startPos: GridPosition; startMouse: { x: number; y: number } } | null>(null);
-
-  // Load saved positions from localStorage
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        setNodePositions(JSON.parse(saved));
-      }
-    } catch (error) {
-      console.error('Failed to load node positions:', error);
-    }
-  }, []);
 
   // Save positions to localStorage whenever they change
   useEffect(() => {
@@ -60,19 +74,13 @@ export default function TheGrid({
     }
   }, [nodePositions]);
 
-  // Get node position (custom or default)
-  const getNodePosition = (node: VisualNode): GridPosition => {
-    return nodePositions[node.id] || node.position;
-  };
-
   // Apply custom positions to nodes - memoized to prevent re-renders
   const nodesWithPositions = useMemo(() => 
     gridData.nodes.map(node => ({
       ...node,
       position: nodePositions[node.id] || node.position,
     })),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [gridData.nodes, JSON.stringify(nodePositions)]
+    [gridData.nodes, nodePositions]
   );
 
   // Recalculate module positions based on updated parent node positions - memoized
@@ -116,17 +124,14 @@ export default function TheGrid({
     });
   }, [gridData.edges, nodesWithPositions, modulesWithPositions]);
 
-  // Center view on mount and when gridData changes
+  // Center once when the first non-empty canvas attaches
   const hasInitialized = useRef(false);
 
-  useEffect(() => {
+  const centerContainer = useCallback((container: HTMLDivElement | null) => {
     // Only run on initial mount, not on subsequent updates
     if (hasInitialized.current) return;
     
-    if (!containerRef.current) return;
-    if (gridData.nodes.length === 0) return;
-
-    const container = containerRef.current;
+    if (!container || nodesWithPositions.length === 0) return;
 
     // Calculate bounds of all entities (nodes and modules)
     const allX = [
@@ -143,14 +148,9 @@ export default function TheGrid({
     const minX = Math.min(...allX);
     const maxX = Math.max(...allX);
     const minY = Math.min(...allY);
-    const maxY = Math.max(...allY);
-    
-    const contentWidth = maxX - minX;
-    const contentHeight = maxY - minY;
 
     // Center horizontally, but position toward top vertically
     const contentCenterX = (minX + maxX) / 2;
-    const contentCenterY = (minY + maxY) / 2;
     
     const viewportCenterX = container.clientWidth / 2;
     
@@ -257,129 +257,6 @@ export default function TheGrid({
     const delta = e.deltaY * -0.001;
     setZoom((prev) => Math.min(Math.max(0.5, prev + delta), 2));
   };
-
-  // Memoized Edge component
-  const GridEdge = React.memo(({ edge, index }: { edge: GridEdge; index: number }) => {
-    const isHighlighted = edge.from === selectedEntityId ||
-                         edge.to === selectedEntityId ||
-                         edge.from === hoveredId ||
-                         edge.to === hoveredId;
-
-    const strokeDasharray = edge.style === 'dotted' ? '8,4' : undefined;
-
-    return (
-      <g>
-        {/* Glow layer */}
-        <line
-          x1={edge.fromPos.x}
-          y1={edge.fromPos.y}
-          x2={edge.toPos.x}
-          y2={edge.toPos.y}
-          stroke={edge.color}
-          strokeWidth={isHighlighted ? 8 : 4}
-          opacity={isHighlighted ? 0.2 : 0.05}
-          strokeLinecap="round"
-        />
-        {/* Main line */}
-        <line
-          x1={edge.fromPos.x}
-          y1={edge.fromPos.y}
-          x2={edge.toPos.x}
-          y2={edge.toPos.y}
-          stroke={edge.color}
-          strokeWidth={isHighlighted ? 2 : 1}
-          strokeDasharray={strokeDasharray}
-          opacity={isHighlighted ? 0.7 : 0.2}
-          strokeLinecap="round"
-        />
-      </g>
-    );
-  });
-  GridEdge.displayName = 'GridEdge';
-
-  // Render connection edges with updated positions
-  const renderEdges = useCallback(() => {
-    return edgesWithPositions.map((edge, idx) => (
-      <GridEdge key={`edge-${idx}`} edge={edge} index={idx} />
-    ));
-  }, [edgesWithPositions, selectedEntityId, hoveredId]);
-
-  // Memoized GridNode component
-  const GridNode = React.memo(({ node, dragDistance }: { node: VisualNode; dragDistance: number }) => {
-    const isSelected = node.id === selectedEntityId;
-    const isHovered = node.id === hoveredId;
-    const size = 80;
-
-    // Create hexagon points
-    const points = useMemo(() => {
-      const pts: string[] = [];
-      for (let i = 0; i < 6; i++) {
-        const angle = (Math.PI / 3) * i - Math.PI / 2;
-        const x = node.position.x + size * Math.cos(angle);
-        const y = node.position.y + size * Math.sin(angle);
-        pts.push(`${x},${y}`);
-      }
-      return pts.join(' ');
-    }, [node.position.x, node.position.y]);
-
-    return (
-      <g
-        onMouseEnter={() => setHoveredId(node.id)}
-        onMouseLeave={() => setHoveredId(undefined)}
-        onMouseDown={(e) => handleNodeDragStart(e, node.id)}
-        // Click handled in mouseUp via handleNodeDragEnd
-        style={{ cursor: isDraggingNode ? 'grabbing' : 'grab' }}
-      >
-        {/* Glow */}
-        <polygon
-          points={points}
-          fill={node.sectorColor}
-          opacity={0.2}
-          filter={isSelected || isHovered ? `url(#glow-node)` : undefined}
-        />
-        {/* Main hex */}
-        <polygon
-          points={points}
-          fill={`${node.sectorColor}60`}
-          stroke={isSelected ? node.signalColor : node.sectorColor}
-          strokeWidth={isSelected || isHovered ? 3 : 2}
-          opacity={isHovered ? 1 : 0.95}
-        />
-        {/* Node name */}
-        <text
-          x={node.position.x}
-          y={node.position.y}
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fill={colors.offWhite}
-          fontSize="12"
-          fontFamily="monospace"
-          fontWeight="bold"
-          pointerEvents="none"
-          style={{
-            textShadow: `0 0 10px ${node.sectorColor}`,
-          }}
-        >
-          {node.name.startsWith('HoneyDrunk.') ? node.name.split('.').pop() : node.name}
-        </text>
-        {/* Signal indicator dot */}
-        <circle
-          cx={node.position.x}
-          cy={node.position.y + 14}
-          r={6}
-          fill={node.signalColor}
-          opacity={0.9}
-          filter="url(#signal-glow)"
-          pointerEvents="none"
-        />
-      </g>
-    );
-  });
-  GridNode.displayName = 'GridNode';
-
-  const renderNode = useCallback((node: VisualNode) => {
-    return <GridNode key={node.id} node={node} dragDistance={dragDistance} />;
-  }, [selectedEntityId, hoveredId, isDraggingNode, dragDistance]);
 
   // Render a module as a larger, more descriptive chip
   const renderModule = useCallback((module: VisualModule) => {
@@ -537,7 +414,7 @@ export default function TheGrid({
 
   return (
     <div
-      ref={containerRef}
+      ref={centerContainer}
       className={`relative w-full h-full overflow-hidden ${className}`}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
@@ -598,10 +475,16 @@ export default function TheGrid({
           </defs>
 
           {/* Render edges first (background) */}
-          {renderEdges()}
+          {edgesWithPositions.map((edge, index) => (
+            <GridEdgeView key={`edge-${index}`} edge={edge} selectedEntityId={selectedEntityId} hoveredId={hoveredId} />
+          ))}
 
           {/* Render nodes (with custom positions) */}
-          {nodesWithPositions.map(renderNode)}
+          {nodesWithPositions.map(node => (
+            <GridNodeView key={node.id} node={node} selectedEntityId={selectedEntityId}
+              hoveredId={hoveredId} setHoveredId={setHoveredId}
+              handleNodeDragStart={handleNodeDragStart} isDraggingNode={isDraggingNode} />
+          ))}
 
           {/* Render modules (with updated positions based on parent nodes) */}
           {modulesWithPositions.map(renderModule)}
@@ -649,3 +532,121 @@ export default function TheGrid({
     </div>
   );
 }
+
+// Memoized Edge component
+const GridEdgeView = React.memo(function GridEdgeView({ edge, selectedEntityId, hoveredId }: { edge: GridEdge; selectedEntityId?: string; hoveredId?: string }) {
+  const isHighlighted = edge.from === selectedEntityId ||
+                       edge.to === selectedEntityId ||
+                       edge.from === hoveredId ||
+                       edge.to === hoveredId;
+
+  const strokeDasharray = edge.style === 'dotted' ? '8,4' : undefined;
+
+  return (
+    <g>
+      {/* Glow layer */}
+      <line
+        x1={edge.fromPos.x}
+        y1={edge.fromPos.y}
+        x2={edge.toPos.x}
+        y2={edge.toPos.y}
+        stroke={edge.color}
+        strokeWidth={isHighlighted ? 8 : 4}
+        opacity={isHighlighted ? 0.2 : 0.05}
+        strokeLinecap="round"
+      />
+      {/* Main line */}
+      <line
+        x1={edge.fromPos.x}
+        y1={edge.fromPos.y}
+        x2={edge.toPos.x}
+        y2={edge.toPos.y}
+        stroke={edge.color}
+        strokeWidth={isHighlighted ? 2 : 1}
+        strokeDasharray={strokeDasharray}
+        opacity={isHighlighted ? 0.7 : 0.2}
+        strokeLinecap="round"
+      />
+    </g>
+  );
+});
+
+
+// Memoized GridNode component
+const GridNodeView = React.memo(function GridNodeView({ node, selectedEntityId, hoveredId, setHoveredId, handleNodeDragStart, isDraggingNode }: {
+node: VisualNode;
+selectedEntityId?: string;
+hoveredId?: string;
+setHoveredId: (id: string | undefined) => void;
+handleNodeDragStart: (event: React.MouseEvent, nodeId: string) => void;
+isDraggingNode: boolean;
+}) {
+  const isSelected = node.id === selectedEntityId;
+  const isHovered = node.id === hoveredId;
+  const size = 80;
+
+  // Create hexagon points
+  const points = useMemo(() => {
+    const pts: string[] = [];
+    for (let i = 0; i < 6; i++) {
+      const angle = (Math.PI / 3) * i - Math.PI / 2;
+      const x = node.position.x + size * Math.cos(angle);
+      const y = node.position.y + size * Math.sin(angle);
+      pts.push(`${x},${y}`);
+    }
+    return pts.join(' ');
+  }, [node.position.x, node.position.y]);
+
+  return (
+    <g
+      onMouseEnter={() => setHoveredId(node.id)}
+      onMouseLeave={() => setHoveredId(undefined)}
+      onMouseDown={(e) => handleNodeDragStart(e, node.id)}
+      // Click handled in mouseUp via handleNodeDragEnd
+      style={{ cursor: isDraggingNode ? 'grabbing' : 'grab' }}
+    >
+      {/* Glow */}
+      <polygon
+        points={points}
+        fill={node.sectorColor}
+        opacity={0.2}
+        filter={isSelected || isHovered ? `url(#glow-node)` : undefined}
+      />
+      {/* Main hex */}
+      <polygon
+        points={points}
+        fill={`${node.sectorColor}60`}
+        stroke={isSelected ? node.signalColor : node.sectorColor}
+        strokeWidth={isSelected || isHovered ? 3 : 2}
+        opacity={isHovered ? 1 : 0.95}
+      />
+      {/* Node name */}
+      <text
+        x={node.position.x}
+        y={node.position.y}
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fill={colors.offWhite}
+        fontSize="12"
+        fontFamily="monospace"
+        fontWeight="bold"
+        pointerEvents="none"
+        style={{
+          textShadow: `0 0 10px ${node.sectorColor}`,
+        }}
+      >
+        {node.name.startsWith('HoneyDrunk.') ? node.name.split('.').pop() : node.name}
+      </text>
+      {/* Signal indicator dot */}
+      <circle
+        cx={node.position.x}
+        cy={node.position.y + 14}
+        r={6}
+        fill={node.signalColor}
+        opacity={0.9}
+        filter="url(#signal-glow)"
+        pointerEvents="none"
+      />
+    </g>
+  );
+});

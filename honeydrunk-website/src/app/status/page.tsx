@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
 import NeonGridCanvas from '@/components/NeonGridCanvas';
@@ -66,22 +66,23 @@ const getStatusLabel = (status: ServiceStatus): string => {
   }
 };
 
+let clockSnapshot: number | null = null;
+const getClockSnapshot = () => clockSnapshot;
+const getServerClockSnapshot = () => null;
+
+function subscribeToClock(notify: () => void): () => void {
+  const tick = () => {
+    clockSnapshot = Date.now();
+    notify();
+  };
+  tick();
+  const interval = setInterval(tick, 1000);
+  return () => clearInterval(interval);
+}
+
 export default function StatusPage() {
-  const [currentTime, setCurrentTime] = useState<number>(Date.now());
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    const interval = setInterval(() => {
-      setCurrentTime(Date.now());
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
+  const currentTime = useSyncExternalStore(subscribeToClock, getClockSnapshot, getServerClockSnapshot);
+  if (currentTime === null) return null;
 
   const uptime = currentTime - HIVE_BOOT_TIMESTAMP;
   const formattedUptime = formatUptime(uptime);
