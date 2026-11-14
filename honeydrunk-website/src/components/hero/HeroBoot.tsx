@@ -6,6 +6,7 @@
  */
 
 import { useRef, useEffect, useState } from 'react';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import HexGridOverlay, { type HexGridOverlayHandle } from './HexGridOverlay';
 import HeroCopy, { type HeroCopyHandle } from './HeroCopy';
@@ -23,19 +24,19 @@ interface HeroBootProps {
 export default function HeroBoot({
   onExploreGrid,
   onFollowSignal,
-  onBootComplete,
 }: HeroBootProps) {
-  const [bootState, setBootState] = useState<BootState>('booting');
+  const [sequenceState, setBootState] = useState<BootState>('booting');
+  const prefersReducedMotion = useReducedMotion();
+  const bootState = prefersReducedMotion ? 'idle' : sequenceState;
+  // Once skipped, the boot sequence stays complete if the preference changes back.
+  if (prefersReducedMotion && sequenceState !== 'idle') {
+    setBootState('idle');
+  }
   const isMobile = useIsMobile();
 
   const hexGridRef = useRef<HexGridOverlayHandle>(null);
   const heroCopyRef = useRef<HeroCopyHandle>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
-
-  // Check for reduced motion preference
-  const prefersReducedMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Track mouse position for parallax
   useEffect(() => {
@@ -51,7 +52,25 @@ export default function HeroBoot({
   }, [prefersReducedMotion]);
 
   useEffect(() => {
-    if (bootState !== 'booting') return;
+    if (bootState !== 'booting' && !prefersReducedMotion) return;
+
+    let timelineFrame = 0;
+    const intensityFrames = new Set<number>();
+    const animateGridIntensity = (from: number, to: number, duration: number) => {
+      const startTime = Date.now();
+      const animate = () => {
+        const progress = Math.min((Date.now() - startTime) / duration, 1);
+        hexGridRef.current?.setIntensity(from + (to - from) * progress);
+        if (progress < 1) {
+          const frame = requestAnimationFrame(() => {
+            intensityFrames.delete(frame);
+            animate();
+          });
+          intensityFrames.add(frame);
+        }
+      };
+      animate();
+    };
 
     // Timeline configuration (in ms from start)
     const timeline = [
@@ -130,7 +149,7 @@ export default function HeroBoot({
       });
 
       if (elapsed < timeline[timeline.length - 1].time + 100) {
-        requestAnimationFrame(runTimeline);
+        timelineFrame = requestAnimationFrame(runTimeline);
       }
     };
 
@@ -141,29 +160,16 @@ export default function HeroBoot({
       heroCopyRef.current?.showHeadline();
       heroCopyRef.current?.showSubline();
       heroCopyRef.current?.showCTAs();
-      setBootState('idle');
       hexGridRef.current?.enterIdle({ heartbeat: false });
       // User must click button (no auto-redirect)
     } else {
-      runTimeline();
+      timelineFrame = requestAnimationFrame(runTimeline);
     }
-  }, [bootState, isMobile, onBootComplete, prefersReducedMotion]);
-
-  // Helper: Animate hive core intensity
-  const animateGridIntensity = (from: number, to: number, duration: number) => {
-    const startTime = Date.now();
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const intensity = from + (to - from) * progress;
-      hexGridRef.current?.setIntensity(intensity);
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
+    return () => {
+      cancelAnimationFrame(timelineFrame);
+      intensityFrames.forEach(cancelAnimationFrame);
     };
-    animate();
-  };
+  }, [bootState, isMobile, prefersReducedMotion]);
 
   const handleExploreGrid = () => {
     console.log('[Analytics] cta_jack_in');

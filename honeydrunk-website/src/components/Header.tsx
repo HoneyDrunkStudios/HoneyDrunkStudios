@@ -8,6 +8,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { colors } from '@/lib/tokens';
+import { completeIntro } from '@/lib/introPreference';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 
 export default function Header() {
@@ -39,7 +40,7 @@ export default function Header() {
             className="flex items-center gap-2 md:gap-3 transition-opacity hover:opacity-80"
             onClick={() => {
               // Ensure user skips boot sequence when clicking home
-              sessionStorage.setItem('hd.jacked_in', 'true');
+              completeIntro();
             }}
           >
             <Image

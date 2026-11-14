@@ -5,8 +5,7 @@
  */
 
 import { colors } from '@/lib/tokens';
-import type { Sector, Signal } from '@/lib/types';
-import { getSectorColor } from '@/lib/sectors';
+import type { Signal } from '@/lib/types';
 
 interface FilterChipsProps<T extends string> {
   options: T[];

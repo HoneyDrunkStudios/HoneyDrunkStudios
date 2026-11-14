@@ -7,7 +7,7 @@ import NeonGridCanvas from '@/components/NeonGridCanvas';
 import SectionTooltip from '@/components/SectionTooltip';
 import BuildLog from '@/components/BuildLog';
 import { colors } from '@/lib/tokens';
-import { getNodeById, getModulesByParent, getServicesByDependency, getNodesBySector, getNodes, getModules, getServices } from '@/lib/entities';
+import { getNodeById, getModulesByParent, getServicesByDependency, getNodes, getModules, getServices } from '@/lib/entities';
 import { getNodeRelationshipMatrix, getNodeContractInfo } from '@/lib/relationships';
 import { getSectorColorsMap } from '@/lib/sectors';
 import Link from 'next/link';
@@ -707,7 +707,7 @@ export default function NodeDetailPage({ params }: { params: Promise<{ id: strin
                   borderColor: `${sectorColor}40`,
                 }}>
                   <blockquote className="text-base font-mono italic" style={{ color: sectorColor }}>
-                    "{node.long_description.signal_quote}"
+                    &quot;{node.long_description.signal_quote}&quot;
                   </blockquote>
                 </section>
               )}

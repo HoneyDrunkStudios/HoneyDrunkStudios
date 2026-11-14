@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore } from 'react';
+import { completeIntro, getIntroPreference, getServerIntroPreference, subscribeToIntroPreference } from '@/lib/introPreference';
 import { getFeaturedNodes } from '@/lib/nodes';
 import ValueProps from '@/components/ValueProps';
 import FeaturedNodes from '@/components/FeaturedNodes';
@@ -12,22 +13,12 @@ import Header from '@/components/Header';
 import HeroBoot from '@/components/hero/HeroBoot';
 import CurrentFocus from '@/components/CurrentFocus';
 
-const STORAGE_KEY = 'hd.jacked_in';
-
 export default function Home() {
   const featuredNodes = getFeaturedNodes();
-  const [hasJackedIn, setHasJackedIn] = useState(false);
-  const [isChecking, setIsChecking] = useState(true);
-
-  useEffect(() => {
-    // Check if user has already jacked in
-    const jackedIn = sessionStorage.getItem(STORAGE_KEY) === 'true';
-    setHasJackedIn(jackedIn);
-    setIsChecking(false);
-  }, []);
+  const hasJackedIn = useSyncExternalStore(subscribeToIntroPreference, getIntroPreference, getServerIntroPreference);
 
   // Keep navigation available while checking the intro preference.
-  if (isChecking) {
+  if (hasJackedIn === null) {
     return <Header />;
   }
 
@@ -37,14 +28,8 @@ export default function Home() {
       <>
         <Header />
         <HeroBoot
-          onBootComplete={() => {
-            sessionStorage.setItem(STORAGE_KEY, 'true');
-            setHasJackedIn(true);
-          }}
-          onExploreGrid={() => {
-            sessionStorage.setItem(STORAGE_KEY, 'true');
-            setHasJackedIn(true);
-          }}
+          onBootComplete={completeIntro}
+          onExploreGrid={completeIntro}
         />
       </>
     );

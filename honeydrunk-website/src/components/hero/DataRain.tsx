@@ -5,7 +5,8 @@
  * Bits and data streaming down the screen in cyberpunk colors
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { colors } from '@/lib/tokens';
 
 interface RainDrop {
@@ -30,23 +31,11 @@ export default function DataRain({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const dropsRef = useRef<RainDrop[]>([]);
   const animationFrameRef = useRef<number | undefined>(undefined);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   // Encoded data symbols - hex, binary, and cryptic characters
   const dataChars = '0123456789ABCDEF<>[]{}()+-*/=|\\^~`!@#$%&?:.;';
 
-  useEffect(() => {
-    // Check for reduced motion preference
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(mediaQuery.matches);
-
-    const handleChange = (e: MediaQueryListEvent) => {
-      setPrefersReducedMotion(e.matches);
-    };
-
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;

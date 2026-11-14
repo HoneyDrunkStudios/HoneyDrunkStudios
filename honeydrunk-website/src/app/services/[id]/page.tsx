@@ -135,7 +135,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               {service.long_description.signal_quote && (
                 <div className="mt-4 pt-4 border-t" style={{ borderColor: `${colors.slateLight}20` }}>
                   <p className="text-lg font-mono italic" style={{ color: tierColor }}>
-                    "{service.long_description.signal_quote}"
+                    &quot;{service.long_description.signal_quote}&quot;
                   </p>
                 </div>
               )}
@@ -513,7 +513,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
 
                   const isNode = entity.type === 'node';
                   const isModule = entity.type === 'module';
-                  const linkHref = isNode ? `/nodes/${entity.id}` : isModule ? `/nodes/${(entity as any).parent}#module-${entity.id}` : '#';
+                  const linkHref = isNode ? `/nodes/${entity.id}` : isModule ? `/nodes/${entity.parent}#module-${entity.id}` : '#';
                   const entityColor = isNode ? colors.violetFlux : isModule ? colors.electricBlue : colors.slateLight;
 
                   return (

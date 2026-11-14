@@ -6,7 +6,8 @@
  */
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useIsPresent } from 'framer-motion';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { colors, zIndex } from '@/lib/tokens';
 
 interface SnakeModalProps {
@@ -26,27 +27,41 @@ interface Position {
 }
 
 export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
+  // A new key also resets rapid reopens while the previous modal is exiting.
+  const [session, setSession] = useState({ isOpen, id: 0 });
+  if (session.isOpen !== isOpen) {
+    setSession({ isOpen, id: session.id + 1 });
+  }
+
+  return (
+    <AnimatePresence>
+      {isOpen && <SnakeGame key={session.id} onClose={onClose} />}
+    </AnimatePresence>
+  );
+}
+
+function generateFood(): Position {
+  return {
+    x: Math.floor(Math.random() * GRID_SIZE),
+    y: Math.floor(Math.random() * GRID_SIZE),
+  };
+}
+
+function SnakeGame({ onClose }: Pick<SnakeModalProps, 'onClose'>) {
+  const isPresent = useIsPresent();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useMediaQuery('(width < 768px)');
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
-
-  // Detect mobile on mount
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
-  }, []);
 
   const snakeRef = useRef<Position[]>([{ x: 10, y: 10 }]);
   const directionRef = useRef<Direction>('RIGHT');
-  const foodRef = useRef<Position>(generateFood());
+  const foodRef = useRef<Position>({ x: 0, y: 0 });
 
-  function generateFood(): Position {
-    return {
-      x: Math.floor(Math.random() * GRID_SIZE),
-      y: Math.floor(Math.random() * GRID_SIZE),
-    };
-  }
+  useEffect(() => {
+    foodRef.current = generateFood();
+  }, []);
 
   const resetGame = () => {
     snakeRef.current = [{ x: 10, y: 10 }];
@@ -57,10 +72,7 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
   };
 
   useEffect(() => {
-    if (!isOpen) {
-      resetGame();
-      return;
-    }
+    if (!isPresent) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -69,6 +81,15 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
     if (!ctx) return;
 
     const CELL_SIZE = isMobile ? CELL_SIZE_MOBILE : CELL_SIZE_DESKTOP;
+
+    const changeDirection = (key: string) => {
+      const current = directionRef.current;
+
+      if (key === 'ArrowUp' && current !== 'DOWN') directionRef.current = 'UP';
+      if (key === 'ArrowDown' && current !== 'UP') directionRef.current = 'DOWN';
+      if (key === 'ArrowLeft' && current !== 'RIGHT') directionRef.current = 'LEFT';
+      if (key === 'ArrowRight' && current !== 'LEFT') directionRef.current = 'RIGHT';
+    };
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -214,16 +235,7 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
         canvas.removeEventListener('touchend', handleTouchEnd);
       }
     };
-  }, [isOpen, gameOver, onClose, isMobile]);
-
-  const changeDirection = (key: string) => {
-    const current = directionRef.current;
-
-    if (key === 'ArrowUp' && current !== 'DOWN') directionRef.current = 'UP';
-    if (key === 'ArrowDown' && current !== 'UP') directionRef.current = 'DOWN';
-    if (key === 'ArrowLeft' && current !== 'RIGHT') directionRef.current = 'LEFT';
-    if (key === 'ArrowRight' && current !== 'LEFT') directionRef.current = 'RIGHT';
-  };
+  }, [isPresent, gameOver, onClose, isMobile]);
 
   const handleDirectionButton = (direction: Direction) => {
     const current = directionRef.current;
@@ -235,9 +247,7 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
   };
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
+    <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -399,8 +409,6 @@ export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
               <span className="hidden md:inline">Arrow keys to move • ESC to exit</span>
             </div>
           </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    </motion.div>
   );
 }

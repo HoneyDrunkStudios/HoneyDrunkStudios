@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, Suspense, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import LandingFooter from '@/components/LandingFooter';
@@ -23,7 +23,6 @@ const signals = signalsData as Signal[];
 
 function SignalContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const sectorFilter = searchParams.get('sector');
   const dateSort = searchParams.get('sort') || 'desc'; // 'desc' or 'asc'
   const [showFilters, setShowFilters] = useState(false);
