@@ -4,8 +4,9 @@
  * /grid — Full Grid view with filters
  */
 
-import { useState, Suspense, useMemo } from 'react';
+import { useState, Suspense, useMemo, useSyncExternalStore } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { getGridQuery, subscribeToGridQuery, updateGridFilters } from '@/lib/gridQuery';
 import Link from 'next/link';
 import { getAllSignals as getNodesAllSignals } from '@/lib/nodes';
 import { getAllSectors, getGridData, type VisualNode, type VisualModule } from '@/lib/entities';
@@ -23,7 +24,9 @@ import { useIsMobile } from '@/lib/hooks/useIsMobile';
 function GridContent() {
   const isMobile = useIsMobile();
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const serverQuery = useSearchParams().toString();
+  const query = useSyncExternalStore(subscribeToGridQuery, getGridQuery, () => serverQuery);
+  const searchParams = useMemo(() => new URLSearchParams(query), [query]);
 
   const selectedSectors = useMemo(() => searchParams.get('sectors')?.split(',').filter(Boolean) || [], [searchParams]);
   const selectedSignals = useMemo(() => searchParams.get('signals')?.split(',').filter((signal): signal is Signal =>
@@ -32,17 +35,7 @@ function GridContent() {
   const selectedEntityId = searchParams.get('service') || searchParams.get('node') || undefined;
   const [showFilters, setShowFilters] = useState(true);
 
-  function updateFilters(updates: Record<string, string>) {
-    const params = new URLSearchParams(searchParams.toString());
-    for (const [key, value] of Object.entries(updates)) {
-      if (value) params.set(key, value);
-      else params.delete(key);
-    }
-    const query = params.toString();
-    // Next.js synchronizes native history changes with useSearchParams. Keeping
-    // filters in the URL also makes back/forward navigation clear removed filters.
-    window.history.replaceState(null, '', query ? `/grid?${query}` : '/grid');
-  }
+  const updateFilters = updateGridFilters;
 
   const allSectors = getAllSectors();
   const allSignals = getNodesAllSignals(); // Use complete signal list, not just signals in use
