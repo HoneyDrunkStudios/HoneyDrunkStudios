@@ -148,14 +148,14 @@ function GridContent() {
       <Header />
 
       {/* Search and Filter Bar */}
-      <div className="absolute top-20 left-0 right-0 z-40 px-8 py-4 flex items-center justify-end gap-4">
+      <div className="absolute top-20 left-0 right-0 z-40 px-8 py-4 flex items-center justify-end gap-4 pointer-events-none">
         {/* Search */}
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => updateFilters({ search: e.target.value })}
           placeholder="Search nodes..."
-          className="px-6 py-4 rounded-lg text-sm font-mono
+          className="px-6 py-4 rounded-lg text-sm font-mono pointer-events-auto
                    focus:outline-none focus:ring-2"
           style={{
             backgroundColor: `${colors.gunmetal}80`,
@@ -168,7 +168,7 @@ function GridContent() {
         {/* Filter toggle */}
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="px-6 py-4 rounded-lg text-sm font-mono cursor-pointer
+          className="px-6 py-4 rounded-lg text-sm font-mono cursor-pointer pointer-events-auto
                    transition-all duration-200 hover:scale-105 whitespace-nowrap"
           style={{
             backgroundColor: showFilters
