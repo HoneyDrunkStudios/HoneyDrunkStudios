@@ -5,7 +5,8 @@
  * 20x20 grid, simple loop, closeable
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useIsPresent } from 'framer-motion';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { colors, zIndex } from '@/lib/tokens';
@@ -19,6 +20,10 @@ const GRID_SIZE = 20;
 const CELL_SIZE_DESKTOP = 20;
 const CELL_SIZE_MOBILE = 14;
 
+const subscribeToHydration = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 
 interface Position {
@@ -27,17 +32,21 @@ interface Position {
 }
 
 export default function SnakeModal({ isOpen, onClose }: SnakeModalProps) {
+  const hydrated = useSyncExternalStore(subscribeToHydration, getClientSnapshot, getServerSnapshot);
   // A new key also resets rapid reopens while the previous modal is exiting.
   const [session, setSession] = useState({ isOpen, id: 0 });
   if (session.isOpen !== isOpen) {
     setSession({ isOpen, id: session.id + 1 });
   }
 
-  return (
+  // A footer can sit below the Grid in its own stacking context. Mount the modal
+  // at the document root so its controls stay above the canvas on every route.
+  return hydrated ? createPortal(
     <AnimatePresence>
       {isOpen && <SnakeGame key={session.id} onClose={onClose} />}
-    </AnimatePresence>
-  );
+    </AnimatePresence>,
+    document.body,
+  ) : null;
 }
 
 function generateFood(): Position {
